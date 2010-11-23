@@ -1,0 +1,460 @@
+<?xml version="1.0"?>
+<!--<?xml-stylesheet type="text/xsl" href="generic.xsl" ?>-->
+
+<document>
+<!-- CML document - carotine - karne - 7/8/00 -->
+<!-- file converted from: MDL .mol -->
+<cml title="carotine" id="cml_carotine_karne" xmlns="x-schema:cml_schema_ie_02.xml">
+	<molecule title="carotine" id="mol_carotine_karne">
+		<atomArray>
+			<atom id="carotine_karne_a_1">
+				<float builtin="x2" units="A">17.3280</float>
+				<float builtin="y2" units="A">2.0032</float>
+				
+				<string builtin="elementType">C</string>
+			</atom>
+			<atom id="carotine_karne_a_2">
+				<float builtin="x2" units="A">16.4766</float>
+				<float builtin="y2" units="A">1.5024</float>
+				
+				<string builtin="elementType">C</string>
+			</atom>
+			<atom id="carotine_karne_a_3">
+				<float builtin="x2" units="A">18.2294</float>
+				<float builtin="y2" units="A">1.5024</float>
+				
+				<string builtin="elementType">C</string>
+			</atom>
+			<atom id="carotine_karne_a_4">
+				<float builtin="x2" units="A">15.6252</float>
+				<float builtin="y2" units="A">2.0032</float>
+				
+				<string builtin="elementType">C</string>
+			</atom>
+			<atom id="carotine_karne_a_5">
+				<float builtin="x2" units="A">19.0808</float>
+				<float builtin="y2" units="A">2.0032</float>
+				
+				<string builtin="elementType">C</string>
+			</atom>
+			<atom id="carotine_karne_a_6">
+				<float builtin="x2" units="A">18.2294</float>
+				<float builtin="y2" units="A">0.5008</float>
+				
+				<string builtin="elementType">C</string>
+			</atom>
+			<atom id="carotine_karne_a_7">
+				<float builtin="x2" units="A">14.7238</float>
+				<float builtin="y2" units="A">1.5024</float>
+				
+				<string builtin="elementType">C</string>
+			</atom>
+			<atom id="carotine_karne_a_8">
+				<float builtin="x2" units="A">15.6252</float>
+				<float builtin="y2" units="A">3.0049</float>
+				
+				<string builtin="elementType">C</string>
+			</atom>
+			<atom id="carotine_karne_a_9">
+				<float builtin="x2" units="A">18.5800</float>
+				<float builtin="y2" units="A">2.8546</float>
+				
+				<string builtin="elementType">C</string>
+			</atom>
+			<atom id="carotine_karne_a_10">
+				<float builtin="x2" units="A">19.5816</float>
+				<float builtin="y2" units="A">2.8546</float>
+				
+				<string builtin="elementType">C</string>
+			</atom>
+			<atom id="carotine_karne_a_11">
+				<float builtin="x2" units="A">19.9322</float>
+				<float builtin="y2" units="A">1.5024</float>
+				
+				<string builtin="elementType">C</string>
+			</atom>
+			<atom id="carotine_karne_a_12">
+				<float builtin="x2" units="A">17.3280</float>
+				<float builtin="y2" units="A">0.0000</float>
+				
+				<string builtin="elementType">C</string>
+			</atom>
+			<atom id="carotine_karne_a_13">
+				<float builtin="x2" units="A">19.0808</float>
+				<float builtin="y2" units="A">0.0000</float>
+				
+				<string builtin="elementType">C</string>
+			</atom>
+			<atom id="carotine_karne_a_14">
+				<float builtin="x2" units="A">13.8724</float>
+				<float builtin="y2" units="A">2.0032</float>
+				
+				<string builtin="elementType">C</string>
+			</atom>
+			<atom id="carotine_karne_a_15">
+				<float builtin="x2" units="A">19.9322</float>
+				<float builtin="y2" units="A">0.5008</float>
+				
+				<string builtin="elementType">C</string>
+			</atom>
+			<atom id="carotine_karne_a_16">
+				<float builtin="x2" units="A">13.0210</float>
+				<float builtin="y2" units="A">1.5024</float>
+				
+				<string builtin="elementType">C</string>
+			</atom>
+			<atom id="carotine_karne_a_17">
+				<float builtin="x2" units="A">12.1196</float>
+				<float builtin="y2" units="A">2.0032</float>
+				
+				<string builtin="elementType">C</string>
+			</atom>
+			<atom id="carotine_karne_a_18">
+				<float builtin="x2" units="A">11.2682</float>
+				<float builtin="y2" units="A">1.5024</float>
+				
+				<string builtin="elementType">C</string>
+			</atom>
+			<atom id="carotine_karne_a_19">
+				<float builtin="x2" units="A">12.1196</float>
+				<float builtin="y2" units="A">3.0049</float>
+				
+				<string builtin="elementType">C</string>
+			</atom>
+			<atom id="carotine_karne_a_20">
+				<float builtin="x2" units="A">10.4168</float>
+				<float builtin="y2" units="A">2.0032</float>
+				
+				<string builtin="elementType">C</string>
+			</atom>
+			<atom id="carotine_karne_a_21">
+				<float builtin="x2" units="A">9.5154</float>
+				<float builtin="y2" units="A">1.5024</float>
+				
+				<string builtin="elementType">C</string>
+			</atom>
+			<atom id="carotine_karne_a_22">
+				<float builtin="x2" units="A">8.6640</float>
+				<float builtin="y2" units="A">2.0032</float>
+				
+				<string builtin="elementType">C</string>
+			</atom>
+			<atom id="carotine_karne_a_23">
+				<float builtin="x2" units="A">7.8126</float>
+				<float builtin="y2" units="A">1.5024</float>
+				
+				<string builtin="elementType">C</string>
+			</atom>
+			<atom id="carotine_karne_a_24">
+				<float builtin="x2" units="A">6.9112</float>
+				<float builtin="y2" units="A">2.0032</float>
+				
+				<string builtin="elementType">C</string>
+			</atom>
+			<atom id="carotine_karne_a_25">
+				<float builtin="x2" units="A">7.8126</float>
+				<float builtin="y2" units="A">0.5008</float>
+				
+				<string builtin="elementType">C</string>
+			</atom>
+			<atom id="carotine_karne_a_26">
+				<float builtin="x2" units="A">6.0598</float>
+				<float builtin="y2" units="A">1.5024</float>
+				
+				<string builtin="elementType">C</string>
+			</atom>
+			<atom id="carotine_karne_a_27">
+				<float builtin="x2" units="A">5.2084</float>
+				<float builtin="y2" units="A">2.0032</float>
+				
+				<string builtin="elementType">C</string>
+			</atom>
+			<atom id="carotine_karne_a_28">
+				<float builtin="x2" units="A">4.3070</float>
+				<float builtin="y2" units="A">1.5024</float>
+				
+				<string builtin="elementType">C</string>
+			</atom>
+			<atom id="carotine_karne_a_29">
+				<float builtin="x2" units="A">3.4556</float>
+				<float builtin="y2" units="A">2.0032</float>
+				
+				<string builtin="elementType">C</string>
+			</atom>
+			<atom id="carotine_karne_a_30">
+				<float builtin="x2" units="A">4.3070</float>
+				<float builtin="y2" units="A">0.5008</float>
+				
+				<string builtin="elementType">C</string>
+			</atom>
+			<atom id="carotine_karne_a_31">
+				<float builtin="x2" units="A">2.6042</float>
+				<float builtin="y2" units="A">1.5024</float>
+				
+				<string builtin="elementType">C</string>
+			</atom>
+			<atom id="carotine_karne_a_32">
+				<float builtin="x2" units="A">1.7028</float>
+				<float builtin="y2" units="A">2.0032</float>
+				
+				<string builtin="elementType">C</string>
+			</atom>
+			<atom id="carotine_karne_a_33">
+				<float builtin="x2" units="A">0.8514</float>
+				<float builtin="y2" units="A">1.5024</float>
+				
+				<string builtin="elementType">C</string>
+			</atom>
+			<atom id="carotine_karne_a_34">
+				<float builtin="x2" units="A">1.7028</float>
+				<float builtin="y2" units="A">3.0049</float>
+				
+				<string builtin="elementType">C</string>
+			</atom>
+			<atom id="carotine_karne_a_35">
+				<float builtin="x2" units="A">1.3522</float>
+				<float builtin="y2" units="A">0.6511</float>
+				
+				<string builtin="elementType">C</string>
+			</atom>
+			<atom id="carotine_karne_a_36">
+				<float builtin="x2" units="A">0.3506</float>
+				<float builtin="y2" units="A">0.6511</float>
+				
+				<string builtin="elementType">C</string>
+			</atom>
+			<atom id="carotine_karne_a_37">
+				<float builtin="x2" units="A">0.0000</float>
+				<float builtin="y2" units="A">2.0032</float>
+				
+				<string builtin="elementType">C</string>
+			</atom>
+			<atom id="carotine_karne_a_38">
+				<float builtin="x2" units="A">2.6042</float>
+				<float builtin="y2" units="A">3.5057</float>
+				
+				<string builtin="elementType">C</string>
+			</atom>
+			<atom id="carotine_karne_a_39">
+				<float builtin="x2" units="A">0.8514</float>
+				<float builtin="y2" units="A">3.5057</float>
+				
+				<string builtin="elementType">C</string>
+			</atom>
+			<atom id="carotine_karne_a_40">
+				<float builtin="x2" units="A">0.0000</float>
+				<float builtin="y2" units="A">3.0049</float>
+				
+				<string builtin="elementType">C</string>
+			</atom>
+		</atomArray>
+		<bondArray>
+			<bond id="carotine_karne_b_1">
+				<string builtin="atomRef">carotine_karne_a_1</string>
+				<string builtin="atomRef">carotine_karne_a_2</string>
+				<string builtin="order" convention="MDL">2</string>
+			</bond>
+			<bond id="carotine_karne_b_2">
+				<string builtin="atomRef">carotine_karne_a_1</string>
+				<string builtin="atomRef">carotine_karne_a_3</string>
+				<string builtin="order" convention="MDL">1</string>
+			</bond>
+			<bond id="carotine_karne_b_3">
+				<string builtin="atomRef">carotine_karne_a_4</string>
+				<string builtin="atomRef">carotine_karne_a_2</string>
+				<string builtin="order" convention="MDL">1</string>
+			</bond>
+			<bond id="carotine_karne_b_4">
+				<string builtin="atomRef">carotine_karne_a_3</string>
+				<string builtin="atomRef">carotine_karne_a_5</string>
+				<string builtin="order" convention="MDL">1</string>
+			</bond>
+			<bond id="carotine_karne_b_5">
+				<string builtin="atomRef">carotine_karne_a_6</string>
+				<string builtin="atomRef">carotine_karne_a_3</string>
+				<string builtin="order" convention="MDL">2</string>
+			</bond>
+			<bond id="carotine_karne_b_6">
+				<string builtin="atomRef">carotine_karne_a_4</string>
+				<string builtin="atomRef">carotine_karne_a_7</string>
+				<string builtin="order" convention="MDL">2</string>
+			</bond>
+			<bond id="carotine_karne_b_7">
+				<string builtin="atomRef">carotine_karne_a_8</string>
+				<string builtin="atomRef">carotine_karne_a_4</string>
+				<string builtin="order" convention="MDL">1</string>
+			</bond>
+			<bond id="carotine_karne_b_8">
+				<string builtin="atomRef">carotine_karne_a_9</string>
+				<string builtin="atomRef">carotine_karne_a_5</string>
+				<string builtin="order" convention="MDL">1</string>
+			</bond>
+			<bond id="carotine_karne_b_9">
+				<string builtin="atomRef">carotine_karne_a_10</string>
+				<string builtin="atomRef">carotine_karne_a_5</string>
+				<string builtin="order" convention="MDL">1</string>
+			</bond>
+			<bond id="carotine_karne_b_10">
+				<string builtin="atomRef">carotine_karne_a_5</string>
+				<string builtin="atomRef">carotine_karne_a_11</string>
+				<string builtin="order" convention="MDL">1</string>
+			</bond>
+			<bond id="carotine_karne_b_11">
+				<string builtin="atomRef">carotine_karne_a_6</string>
+				<string builtin="atomRef">carotine_karne_a_12</string>
+				<string builtin="order" convention="MDL">1</string>
+			</bond>
+			<bond id="carotine_karne_b_12">
+				<string builtin="atomRef">carotine_karne_a_13</string>
+				<string builtin="atomRef">carotine_karne_a_6</string>
+				<string builtin="order" convention="MDL">1</string>
+			</bond>
+			<bond id="carotine_karne_b_13">
+				<string builtin="atomRef">carotine_karne_a_14</string>
+				<string builtin="atomRef">carotine_karne_a_7</string>
+				<string builtin="order" convention="MDL">1</string>
+			</bond>
+			<bond id="carotine_karne_b_14">
+				<string builtin="atomRef">carotine_karne_a_11</string>
+				<string builtin="atomRef">carotine_karne_a_15</string>
+				<string builtin="order" convention="MDL">1</string>
+			</bond>
+			<bond id="carotine_karne_b_15">
+				<string builtin="atomRef">carotine_karne_a_15</string>
+				<string builtin="atomRef">carotine_karne_a_13</string>
+				<string builtin="order" convention="MDL">1</string>
+			</bond>
+			<bond id="carotine_karne_b_16">
+				<string builtin="atomRef">carotine_karne_a_14</string>
+				<string builtin="atomRef">carotine_karne_a_16</string>
+				<string builtin="order" convention="MDL">2</string>
+			</bond>
+			<bond id="carotine_karne_b_17">
+				<string builtin="atomRef">carotine_karne_a_17</string>
+				<string builtin="atomRef">carotine_karne_a_16</string>
+				<string builtin="order" convention="MDL">1</string>
+			</bond>
+			<bond id="carotine_karne_b_18">
+				<string builtin="atomRef">carotine_karne_a_17</string>
+				<string builtin="atomRef">carotine_karne_a_18</string>
+				<string builtin="order" convention="MDL">2</string>
+			</bond>
+			<bond id="carotine_karne_b_19">
+				<string builtin="atomRef">carotine_karne_a_19</string>
+				<string builtin="atomRef">carotine_karne_a_17</string>
+				<string builtin="order" convention="MDL">1</string>
+			</bond>
+			<bond id="carotine_karne_b_20">
+				<string builtin="atomRef">carotine_karne_a_20</string>
+				<string builtin="atomRef">carotine_karne_a_18</string>
+				<string builtin="order" convention="MDL">1</string>
+			</bond>
+			<bond id="carotine_karne_b_21">
+				<string builtin="atomRef">carotine_karne_a_20</string>
+				<string builtin="atomRef">carotine_karne_a_21</string>
+				<string builtin="order" convention="MDL">2</string>
+			</bond>
+			<bond id="carotine_karne_b_22">
+				<string builtin="atomRef">carotine_karne_a_22</string>
+				<string builtin="atomRef">carotine_karne_a_21</string>
+				<string builtin="order" convention="MDL">1</string>
+			</bond>
+			<bond id="carotine_karne_b_23">
+				<string builtin="atomRef">carotine_karne_a_22</string>
+				<string builtin="atomRef">carotine_karne_a_23</string>
+				<string builtin="order" convention="MDL">2</string>
+			</bond>
+			<bond id="carotine_karne_b_24">
+				<string builtin="atomRef">carotine_karne_a_24</string>
+				<string builtin="atomRef">carotine_karne_a_23</string>
+				<string builtin="order" convention="MDL">1</string>
+			</bond>
+			<bond id="carotine_karne_b_25">
+				<string builtin="atomRef">carotine_karne_a_23</string>
+				<string builtin="atomRef">carotine_karne_a_25</string>
+				<string builtin="order" convention="MDL">1</string>
+			</bond>
+			<bond id="carotine_karne_b_26">
+				<string builtin="atomRef">carotine_karne_a_24</string>
+				<string builtin="atomRef">carotine_karne_a_26</string>
+				<string builtin="order" convention="MDL">2</string>
+			</bond>
+			<bond id="carotine_karne_b_27">
+				<string builtin="atomRef">carotine_karne_a_27</string>
+				<string builtin="atomRef">carotine_karne_a_26</string>
+				<string builtin="order" convention="MDL">1</string>
+			</bond>
+			<bond id="carotine_karne_b_28">
+				<string builtin="atomRef">carotine_karne_a_27</string>
+				<string builtin="atomRef">carotine_karne_a_28</string>
+				<string builtin="order" convention="MDL">2</string>
+			</bond>
+			<bond id="carotine_karne_b_29">
+				<string builtin="atomRef">carotine_karne_a_29</string>
+				<string builtin="atomRef">carotine_karne_a_28</string>
+				<string builtin="order" convention="MDL">1</string>
+			</bond>
+			<bond id="carotine_karne_b_30">
+				<string builtin="atomRef">carotine_karne_a_28</string>
+				<string builtin="atomRef">carotine_karne_a_30</string>
+				<string builtin="order" convention="MDL">1</string>
+			</bond>
+			<bond id="carotine_karne_b_31">
+				<string builtin="atomRef">carotine_karne_a_29</string>
+				<string builtin="atomRef">carotine_karne_a_31</string>
+				<string builtin="order" convention="MDL">2</string>
+			</bond>
+			<bond id="carotine_karne_b_32">
+				<string builtin="atomRef">carotine_karne_a_32</string>
+				<string builtin="atomRef">carotine_karne_a_31</string>
+				<string builtin="order" convention="MDL">1</string>
+			</bond>
+			<bond id="carotine_karne_b_33">
+				<string builtin="atomRef">carotine_karne_a_32</string>
+				<string builtin="atomRef">carotine_karne_a_33</string>
+				<string builtin="order" convention="MDL">1</string>
+			</bond>
+			<bond id="carotine_karne_b_34">
+				<string builtin="atomRef">carotine_karne_a_34</string>
+				<string builtin="atomRef">carotine_karne_a_32</string>
+				<string builtin="order" convention="MDL">2</string>
+			</bond>
+			<bond id="carotine_karne_b_35">
+				<string builtin="atomRef">carotine_karne_a_33</string>
+				<string builtin="atomRef">carotine_karne_a_35</string>
+				<string builtin="order" convention="MDL">1</string>
+			</bond>
+			<bond id="carotine_karne_b_36">
+				<string builtin="atomRef">carotine_karne_a_33</string>
+				<string builtin="atomRef">carotine_karne_a_36</string>
+				<string builtin="order" convention="MDL">1</string>
+			</bond>
+			<bond id="carotine_karne_b_37">
+				<string builtin="atomRef">carotine_karne_a_33</string>
+				<string builtin="atomRef">carotine_karne_a_37</string>
+				<string builtin="order" convention="MDL">1</string>
+			</bond>
+			<bond id="carotine_karne_b_38">
+				<string builtin="atomRef">carotine_karne_a_38</string>
+				<string builtin="atomRef">carotine_karne_a_34</string>
+				<string builtin="order" convention="MDL">1</string>
+			</bond>
+			<bond id="carotine_karne_b_39">
+				<string builtin="atomRef">carotine_karne_a_39</string>
+				<string builtin="atomRef">carotine_karne_a_34</string>
+				<string builtin="order" convention="MDL">1</string>
+			</bond>
+			<bond id="carotine_karne_b_40">
+				<string builtin="atomRef">carotine_karne_a_37</string>
+				<string builtin="atomRef">carotine_karne_a_40</string>
+				<string builtin="order" convention="MDL">1</string>
+			</bond>
+			<bond id="carotine_karne_b_41">
+				<string builtin="atomRef">carotine_karne_a_40</string>
+				<string builtin="atomRef">carotine_karne_a_39</string>
+				<string builtin="order" convention="MDL">1</string>
+			</bond>
+		</bondArray>
+	</molecule>
+</cml>
+</document>

@@ -1,0 +1,74 @@
+<molecule convention="MDLMol" id="choline" title="CHOLINE">
+  <date day="27" month="11" year="1995">
+  </date>
+  <atomArray>
+    <atom id="a1">
+      <string builtin="elementType">C</string>
+      <float builtin="x2">-0.0258</float>
+      <float builtin="y2">0.6233</float>
+    </atom>
+    <atom id="a2">
+      <string builtin="elementType">N</string>
+      <integer builtin="formalCharge">1</integer>
+      <float builtin="x2">1.3758</float>
+      <float builtin="y2">0.0057</float>
+    </atom>
+    <atom id="a3">
+      <string builtin="elementType">C</string>
+      <float builtin="x2">-1.0857</float>
+      <float builtin="y2">-0.494</float>
+    </atom>
+    <atom id="a4">
+      <string builtin="elementType">C</string>
+      <float builtin="x2">0.7611</float>
+      <float builtin="y2">-1.3873</float>
+    </atom>
+    <atom id="a5">
+      <string builtin="elementType">C</string>
+      <float builtin="x2">2.7602</float>
+      <float builtin="y2">-0.606</float>
+    </atom>
+    <atom id="a6">
+      <string builtin="elementType">C</string>
+      <float builtin="x2">1.9876</float>
+      <float builtin="y2">1.3873</float>
+    </atom>
+    <atom id="a7">
+      <string builtin="elementType">O</string>
+      <float builtin="x2">-2.4672</float>
+      <float builtin="y2">0.1149</float>
+    </atom>
+  </atomArray>
+  <bondArray>
+    <bond id="b1">
+      <string builtin="atomRef">a1</string>
+      <string builtin="atomRef">a2</string>
+      <string builtin="order">1</string>
+    </bond>
+    <bond id="b2">
+      <string builtin="atomRef">a1</string>
+      <string builtin="atomRef">a3</string>
+      <string builtin="order">1</string>
+    </bond>
+    <bond id="b3">
+      <string builtin="atomRef">a2</string>
+      <string builtin="atomRef">a4</string>
+      <string builtin="order">1</string>
+    </bond>
+    <bond id="b4">
+      <string builtin="atomRef">a2</string>
+      <string builtin="atomRef">a5</string>
+      <string builtin="order">1</string>
+    </bond>
+    <bond id="b5">
+      <string builtin="atomRef">a2</string>
+      <string builtin="atomRef">a6</string>
+      <string builtin="order">1</string>
+    </bond>
+    <bond id="b6">
+      <string builtin="atomRef">a3</string>
+      <string builtin="atomRef">a7</string>
+      <string builtin="order">1</string>
+    </bond>
+  </bondArray>
+</molecule>

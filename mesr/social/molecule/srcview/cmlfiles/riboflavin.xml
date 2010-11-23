@@ -1,0 +1,542 @@
+<?xml version="1.0"?>
+<!--<?xml-stylesheet type="text/xsl" href="generic.xsl" ?>-->
+
+<document>
+<!-- CML document - riboflavin - karne - 7/8/00 -->
+<!-- file converted from: MDL .mol -->
+<cml title="riboflavin" id="cml_riboflavin_karne" xmlns="x-schema:cml_schema_ie_02.xml">
+	<molecule title="riboflavin" id="mol_riboflavin_karne">
+		<atomArray>
+			<atom id="riboflavin_karne_a_1">
+				<float builtin="x3" units="A">-4.7200</float>
+				<float builtin="y3" units="A">-3.7880</float>
+				<float builtin="z3" units="A">-0.2120</float>
+				<string builtin="elementType">C</string>
+			</atom>
+			<atom id="riboflavin_karne_a_2">
+				<float builtin="x3" units="A">-4.4360</float>
+				<float builtin="y3" units="A">-0.8480</float>
+				<float builtin="z3" units="A">0.2560</float>
+				<string builtin="elementType">C</string>
+			</atom>
+			<atom id="riboflavin_karne_a_3">
+				<float builtin="x3" units="A">4.9120</float>
+				<float builtin="y3" units="A">-2.6120</float>
+				<float builtin="z3" units="A">1.4440</float>
+				<string builtin="elementType">O</string>
+			</atom>
+			<atom id="riboflavin_karne_a_4">
+				<float builtin="x3" units="A">1.5200</float>
+				<float builtin="y3" units="A">4.6120</float>
+				<float builtin="z3" units="A">-0.4160</float>
+				<string builtin="elementType">C</string>
+			</atom>
+			<atom id="riboflavin_karne_a_5">
+				<float builtin="x3" units="A">1.8760</float>
+				<float builtin="y3" units="A">3.1200</float>
+				<float builtin="z3" units="A">-0.5360</float>
+				<string builtin="elementType">C</string>
+			</atom>
+			<atom id="riboflavin_karne_a_6">
+				<float builtin="x3" units="A">1.1720</float>
+				<float builtin="y3" units="A">2.2240</float>
+				<float builtin="z3" units="A">0.5160</float>
+				<string builtin="elementType">C</string>
+			</atom>
+			<atom id="riboflavin_karne_a_7">
+				<float builtin="x3" units="A">1.2280</float>
+				<float builtin="y3" units="A">0.7120</float>
+				<float builtin="z3" units="A">0.1880</float>
+				<string builtin="elementType">C</string>
+			</atom>
+			<atom id="riboflavin_karne_a_8">
+				<float builtin="x3" units="A">0.7320</float>
+				<float builtin="y3" units="A">-0.1640</float>
+				<float builtin="z3" units="A">1.3640</float>
+				<string builtin="elementType">C</string>
+			</atom>
+			<atom id="riboflavin_karne_a_9">
+				<float builtin="x3" units="A">2.6920</float>
+				<float builtin="y3" units="A">-2.1560</float>
+				<float builtin="z3" units="A">1.2040</float>
+				<string builtin="elementType">N</string>
+			</atom>
+			<atom id="riboflavin_karne_a_10">
+				<float builtin="x3" units="A">3.8160</float>
+				<float builtin="y3" units="A">-3.0440</float>
+				<float builtin="z3" units="A">1.1760</float>
+				<string builtin="elementType">C</string>
+			</atom>
+			<atom id="riboflavin_karne_a_11">
+				<float builtin="x3" units="A">3.5400</float>
+				<float builtin="y3" units="A">-4.3560</float>
+				<float builtin="z3" units="A">0.8280</float>
+				<string builtin="elementType">N</string>
+			</atom>
+			<atom id="riboflavin_karne_a_12">
+				<float builtin="x3" units="A">2.2360</float>
+				<float builtin="y3" units="A">-4.7640</float>
+				<float builtin="z3" units="A">0.5320</float>
+				<string builtin="elementType">C</string>
+			</atom>
+			<atom id="riboflavin_karne_a_13">
+				<float builtin="x3" units="A">0.0240</float>
+				<float builtin="y3" units="A">-4.2560</float>
+				<float builtin="z3" units="A">0.3160</float>
+				<string builtin="elementType">N</string>
+			</atom>
+			<atom id="riboflavin_karne_a_14">
+				<float builtin="x3" units="A">1.2080</float>
+				<float builtin="y3" units="A">-3.8600</float>
+				<float builtin="z3" units="A">0.5840</float>
+				<string builtin="elementType">C</string>
+			</atom>
+			<atom id="riboflavin_karne_a_15">
+				<float builtin="x3" units="A">1.5000</float>
+				<float builtin="y3" units="A">-2.5280</float>
+				<float builtin="z3" units="A">0.9280</float>
+				<string builtin="elementType">C</string>
+			</atom>
+			<atom id="riboflavin_karne_a_16">
+				<float builtin="x3" units="A">0.4520</float>
+				<float builtin="y3" units="A">-1.5520</float>
+				<float builtin="z3" units="A">0.9840</float>
+				<string builtin="elementType">N</string>
+			</atom>
+			<atom id="riboflavin_karne_a_17">
+				<float builtin="x3" units="A">-1.9680</float>
+				<float builtin="y3" units="A">-1.2560</float>
+				<float builtin="z3" units="A">0.5960</float>
+				<string builtin="elementType">C</string>
+			</atom>
+			<atom id="riboflavin_karne_a_18">
+				<float builtin="x3" units="A">-0.8280</float>
+				<float builtin="y3" units="A">-2.0800</float>
+				<float builtin="z3" units="A">0.6440</float>
+				<string builtin="elementType">C</string>
+			</atom>
+			<atom id="riboflavin_karne_a_19">
+				<float builtin="x3" units="A">-0.9600</float>
+				<float builtin="y3" units="A">-3.4480</float>
+				<float builtin="z3" units="A">0.3400</float>
+				<string builtin="elementType">C</string>
+			</atom>
+			<atom id="riboflavin_karne_a_20">
+				<float builtin="x3" units="A">-2.2320</float>
+				<float builtin="y3" units="A">-3.9680</float>
+				<float builtin="z3" units="A">0.0560</float>
+				<string builtin="elementType">C</string>
+			</atom>
+			<atom id="riboflavin_karne_a_21">
+				<float builtin="x3" units="A">-3.3800</float>
+				<float builtin="y3" units="A">-3.1600</float>
+				<float builtin="z3" units="A">0.0560</float>
+				<string builtin="elementType">C</string>
+			</atom>
+			<atom id="riboflavin_karne_a_22">
+				<float builtin="x3" units="A">-3.2440</float>
+				<float builtin="y3" units="A">-1.7760</float>
+				<float builtin="z3" units="A">0.3000</float>
+				<string builtin="elementType">C</string>
+			</atom>
+			<atom id="riboflavin_karne_a_23">
+				<float builtin="x3" units="A">-4.6560</float>
+				<float builtin="y3" units="A">-4.8960</float>
+				<float builtin="z3" units="A">-0.2680</float>
+				<string builtin="elementType">H</string>
+			</atom>
+			<atom id="riboflavin_karne_a_24">
+				<float builtin="x3" units="A">-5.1400</float>
+				<float builtin="y3" units="A">-3.4320</float>
+				<float builtin="z3" units="A">-1.1800</float>
+				<string builtin="elementType">H</string>
+			</atom>
+			<atom id="riboflavin_karne_a_25">
+				<float builtin="x3" units="A">-5.4480</float>
+				<float builtin="y3" units="A">-3.5400</float>
+				<float builtin="z3" units="A">0.5920</float>
+				<string builtin="elementType">H</string>
+			</atom>
+			<atom id="riboflavin_karne_a_26">
+				<float builtin="x3" units="A">-5.0400</float>
+				<float builtin="y3" units="A">-1.0080</float>
+				<float builtin="z3" units="A">-0.6600</float>
+				<string builtin="elementType">H</string>
+			</atom>
+			<atom id="riboflavin_karne_a_27">
+				<float builtin="x3" units="A">-4.1360</float>
+				<float builtin="y3" units="A">0.2200</float>
+				<float builtin="z3" units="A">0.2520</float>
+				<string builtin="elementType">H</string>
+			</atom>
+			<atom id="riboflavin_karne_a_28">
+				<float builtin="x3" units="A">-5.1080</float>
+				<float builtin="y3" units="A">-0.9960</float>
+				<float builtin="z3" units="A">1.1320</float>
+				<string builtin="elementType">H</string>
+			</atom>
+			<atom id="riboflavin_karne_a_29">
+				<float builtin="x3" units="A">2.2040</float>
+				<float builtin="y3" units="A">5.2200</float>
+				<float builtin="z3" units="A">-1.0480</float>
+				<string builtin="elementType">H</string>
+			</atom>
+			<atom id="riboflavin_karne_a_30">
+				<float builtin="x3" units="A">1.6320</float>
+				<float builtin="y3" units="A">4.9840</float>
+				<float builtin="z3" units="A">0.6280</float>
+				<string builtin="elementType">H</string>
+			</atom>
+			<atom id="riboflavin_karne_a_31">
+				<float builtin="x3" units="A">0.1960</float>
+				<float builtin="y3" units="A">4.8160</float>
+				<float builtin="z3" units="A">-0.8800</float>
+				<string builtin="elementType">O</string>
+			</atom>
+			<atom id="riboflavin_karne_a_32">
+				<float builtin="x3" units="A">1.4800</float>
+				<float builtin="y3" units="A">-0.1320</float>
+				<float builtin="z3" units="A">2.1880</float>
+				<string builtin="elementType">H</string>
+			</atom>
+			<atom id="riboflavin_karne_a_33">
+				<float builtin="x3" units="A">-0.1680</float>
+				<float builtin="y3" units="A">0.3040</float>
+				<float builtin="z3" units="A">1.8080</float>
+				<string builtin="elementType">H</string>
+			</atom>
+			<atom id="riboflavin_karne_a_34">
+				<float builtin="x3" units="A">-1.8840</float>
+				<float builtin="y3" units="A">-0.1800</float>
+				<float builtin="z3" units="A">0.7920</float>
+				<string builtin="elementType">H</string>
+			</atom>
+			<atom id="riboflavin_karne_a_35">
+				<float builtin="x3" units="A">-2.3360</float>
+				<float builtin="y3" units="A">-5.0440</float>
+				<float builtin="z3" units="A">-0.1680</float>
+				<string builtin="elementType">H</string>
+			</atom>
+			<atom id="riboflavin_karne_a_36">
+				<float builtin="x3" units="A">0.5760</float>
+				<float builtin="y3" units="A">0.5280</float>
+				<float builtin="z3" units="A">-0.6960</float>
+				<string builtin="elementType">H</string>
+			</atom>
+			<atom id="riboflavin_karne_a_37">
+				<float builtin="x3" units="A">2.5600</float>
+				<float builtin="y3" units="A">0.3560</float>
+				<float builtin="z3" units="A">-0.1480</float>
+				<string builtin="elementType">O</string>
+			</atom>
+			<atom id="riboflavin_karne_a_38">
+				<float builtin="x3" units="A">1.7560</float>
+				<float builtin="y3" units="A">2.4200</float>
+				<float builtin="z3" units="A">1.7960</float>
+				<string builtin="elementType">O</string>
+			</atom>
+			<atom id="riboflavin_karne_a_39">
+				<float builtin="x3" units="A">0.0960</float>
+				<float builtin="y3" units="A">2.5120</float>
+				<float builtin="z3" units="A">0.5640</float>
+				<string builtin="elementType">H</string>
+			</atom>
+			<atom id="riboflavin_karne_a_40">
+				<float builtin="x3" units="A">1.5800</float>
+				<float builtin="y3" units="A">2.7680</float>
+				<float builtin="z3" units="A">-1.5560</float>
+				<string builtin="elementType">H</string>
+			</atom>
+			<atom id="riboflavin_karne_a_41">
+				<float builtin="x3" units="A">3.2840</float>
+				<float builtin="y3" units="A">3.0280</float>
+				<float builtin="z3" units="A">-0.3880</float>
+				<string builtin="elementType">O</string>
+			</atom>
+			<atom id="riboflavin_karne_a_42">
+				<float builtin="x3" units="A">-0.4000</float>
+				<float builtin="y3" units="A">4.7760</float>
+				<float builtin="z3" units="A">-0.1440</float>
+				<string builtin="elementType">H</string>
+			</atom>
+			<atom id="riboflavin_karne_a_43">
+				<float builtin="x3" units="A">3.6520</float>
+				<float builtin="y3" units="A">2.7040</float>
+				<float builtin="z3" units="A">-1.1960</float>
+				<string builtin="elementType">H</string>
+			</atom>
+			<atom id="riboflavin_karne_a_44">
+				<float builtin="x3" units="A">1.4200</float>
+				<float builtin="y3" units="A">3.2200</float>
+				<float builtin="z3" units="A">2.1800</float>
+				<string builtin="elementType">H</string>
+			</atom>
+			<atom id="riboflavin_karne_a_45">
+				<float builtin="x3" units="A">3.1240</float>
+				<float builtin="y3" units="A">0.6000</float>
+				<float builtin="z3" units="A">0.5720</float>
+				<string builtin="elementType">H</string>
+			</atom>
+			<atom id="riboflavin_karne_a_46">
+				<float builtin="x3" units="A">2.0000</float>
+				<float builtin="y3" units="A">-5.9160</float>
+				<float builtin="z3" units="A">0.2280</float>
+				<string builtin="elementType">O</string>
+			</atom>
+			<atom id="riboflavin_karne_a_47">
+				<float builtin="x3" units="A">4.3120</float>
+				<float builtin="y3" units="A">-5.0400</float>
+				<float builtin="z3" units="A">0.7880</float>
+				<string builtin="elementType">H</string>
+			</atom>
+		</atomArray>
+		<bondArray>
+			<bond id="riboflavin_karne_b_1">
+				<string builtin="atomRef">riboflavin_karne_a_41</string>
+				<string builtin="atomRef">riboflavin_karne_a_43</string>
+				<string builtin="order" convention="MDL">1</string>
+			</bond>
+			<bond id="riboflavin_karne_b_2">
+				<string builtin="atomRef">riboflavin_karne_a_38</string>
+				<string builtin="atomRef">riboflavin_karne_a_44</string>
+				<string builtin="order" convention="MDL">1</string>
+			</bond>
+			<bond id="riboflavin_karne_b_3">
+				<string builtin="atomRef">riboflavin_karne_a_37</string>
+				<string builtin="atomRef">riboflavin_karne_a_45</string>
+				<string builtin="order" convention="MDL">1</string>
+			</bond>
+			<bond id="riboflavin_karne_b_4">
+				<string builtin="atomRef">riboflavin_karne_a_31</string>
+				<string builtin="atomRef">riboflavin_karne_a_42</string>
+				<string builtin="order" convention="MDL">1</string>
+			</bond>
+			<bond id="riboflavin_karne_b_5">
+				<string builtin="atomRef">riboflavin_karne_a_21</string>
+				<string builtin="atomRef">riboflavin_karne_a_22</string>
+				<string builtin="order" convention="MDL">1</string>
+			</bond>
+			<bond id="riboflavin_karne_b_6">
+				<string builtin="atomRef">riboflavin_karne_a_20</string>
+				<string builtin="atomRef">riboflavin_karne_a_35</string>
+				<string builtin="order" convention="MDL">1</string>
+			</bond>
+			<bond id="riboflavin_karne_b_7">
+				<string builtin="atomRef">riboflavin_karne_a_20</string>
+				<string builtin="atomRef">riboflavin_karne_a_21</string>
+				<string builtin="order" convention="MDL">2</string>
+			</bond>
+			<bond id="riboflavin_karne_b_8">
+				<string builtin="atomRef">riboflavin_karne_a_19</string>
+				<string builtin="atomRef">riboflavin_karne_a_20</string>
+				<string builtin="order" convention="MDL">1</string>
+			</bond>
+			<bond id="riboflavin_karne_b_9">
+				<string builtin="atomRef">riboflavin_karne_a_18</string>
+				<string builtin="atomRef">riboflavin_karne_a_19</string>
+				<string builtin="order" convention="MDL">2</string>
+			</bond>
+			<bond id="riboflavin_karne_b_10">
+				<string builtin="atomRef">riboflavin_karne_a_17</string>
+				<string builtin="atomRef">riboflavin_karne_a_34</string>
+				<string builtin="order" convention="MDL">1</string>
+			</bond>
+			<bond id="riboflavin_karne_b_11">
+				<string builtin="atomRef">riboflavin_karne_a_17</string>
+				<string builtin="atomRef">riboflavin_karne_a_22</string>
+				<string builtin="order" convention="MDL">2</string>
+			</bond>
+			<bond id="riboflavin_karne_b_12">
+				<string builtin="atomRef">riboflavin_karne_a_17</string>
+				<string builtin="atomRef">riboflavin_karne_a_18</string>
+				<string builtin="order" convention="MDL">1</string>
+			</bond>
+			<bond id="riboflavin_karne_b_13">
+				<string builtin="atomRef">riboflavin_karne_a_16</string>
+				<string builtin="atomRef">riboflavin_karne_a_18</string>
+				<string builtin="order" convention="MDL">1</string>
+			</bond>
+			<bond id="riboflavin_karne_b_14">
+				<string builtin="atomRef">riboflavin_karne_a_15</string>
+				<string builtin="atomRef">riboflavin_karne_a_16</string>
+				<string builtin="order" convention="MDL">1</string>
+			</bond>
+			<bond id="riboflavin_karne_b_15">
+				<string builtin="atomRef">riboflavin_karne_a_14</string>
+				<string builtin="atomRef">riboflavin_karne_a_15</string>
+				<string builtin="order" convention="MDL">1</string>
+			</bond>
+			<bond id="riboflavin_karne_b_16">
+				<string builtin="atomRef">riboflavin_karne_a_13</string>
+				<string builtin="atomRef">riboflavin_karne_a_19</string>
+				<string builtin="order" convention="MDL">1</string>
+			</bond>
+			<bond id="riboflavin_karne_b_17">
+				<string builtin="atomRef">riboflavin_karne_a_13</string>
+				<string builtin="atomRef">riboflavin_karne_a_14</string>
+				<string builtin="order" convention="MDL">2</string>
+			</bond>
+			<bond id="riboflavin_karne_b_18">
+				<string builtin="atomRef">riboflavin_karne_a_12</string>
+				<string builtin="atomRef">riboflavin_karne_a_46</string>
+				<string builtin="order" convention="MDL">2</string>
+			</bond>
+			<bond id="riboflavin_karne_b_19">
+				<string builtin="atomRef">riboflavin_karne_a_12</string>
+				<string builtin="atomRef">riboflavin_karne_a_14</string>
+				<string builtin="order" convention="MDL">1</string>
+			</bond>
+			<bond id="riboflavin_karne_b_20">
+				<string builtin="atomRef">riboflavin_karne_a_11</string>
+				<string builtin="atomRef">riboflavin_karne_a_47</string>
+				<string builtin="order" convention="MDL">1</string>
+			</bond>
+			<bond id="riboflavin_karne_b_21">
+				<string builtin="atomRef">riboflavin_karne_a_11</string>
+				<string builtin="atomRef">riboflavin_karne_a_12</string>
+				<string builtin="order" convention="MDL">1</string>
+			</bond>
+			<bond id="riboflavin_karne_b_22">
+				<string builtin="atomRef">riboflavin_karne_a_10</string>
+				<string builtin="atomRef">riboflavin_karne_a_11</string>
+				<string builtin="order" convention="MDL">1</string>
+			</bond>
+			<bond id="riboflavin_karne_b_23">
+				<string builtin="atomRef">riboflavin_karne_a_9</string>
+				<string builtin="atomRef">riboflavin_karne_a_15</string>
+				<string builtin="order" convention="MDL">2</string>
+			</bond>
+			<bond id="riboflavin_karne_b_24">
+				<string builtin="atomRef">riboflavin_karne_a_9</string>
+				<string builtin="atomRef">riboflavin_karne_a_10</string>
+				<string builtin="order" convention="MDL">1</string>
+			</bond>
+			<bond id="riboflavin_karne_b_25">
+				<string builtin="atomRef">riboflavin_karne_a_8</string>
+				<string builtin="atomRef">riboflavin_karne_a_33</string>
+				<string builtin="order" convention="MDL">1</string>
+			</bond>
+			<bond id="riboflavin_karne_b_26">
+				<string builtin="atomRef">riboflavin_karne_a_8</string>
+				<string builtin="atomRef">riboflavin_karne_a_32</string>
+				<string builtin="order" convention="MDL">1</string>
+			</bond>
+			<bond id="riboflavin_karne_b_27">
+				<string builtin="atomRef">riboflavin_karne_a_8</string>
+				<string builtin="atomRef">riboflavin_karne_a_16</string>
+				<string builtin="order" convention="MDL">1</string>
+			</bond>
+			<bond id="riboflavin_karne_b_28">
+				<string builtin="atomRef">riboflavin_karne_a_7</string>
+				<string builtin="atomRef">riboflavin_karne_a_37</string>
+				<string builtin="order" convention="MDL">1</string>
+			</bond>
+			<bond id="riboflavin_karne_b_29">
+				<string builtin="atomRef">riboflavin_karne_a_7</string>
+				<string builtin="atomRef">riboflavin_karne_a_36</string>
+				<string builtin="order" convention="MDL">1</string>
+			</bond>
+			<bond id="riboflavin_karne_b_30">
+				<string builtin="atomRef">riboflavin_karne_a_7</string>
+				<string builtin="atomRef">riboflavin_karne_a_8</string>
+				<string builtin="order" convention="MDL">1</string>
+			</bond>
+			<bond id="riboflavin_karne_b_31">
+				<string builtin="atomRef">riboflavin_karne_a_6</string>
+				<string builtin="atomRef">riboflavin_karne_a_39</string>
+				<string builtin="order" convention="MDL">1</string>
+			</bond>
+			<bond id="riboflavin_karne_b_32">
+				<string builtin="atomRef">riboflavin_karne_a_6</string>
+				<string builtin="atomRef">riboflavin_karne_a_38</string>
+				<string builtin="order" convention="MDL">1</string>
+			</bond>
+			<bond id="riboflavin_karne_b_33">
+				<string builtin="atomRef">riboflavin_karne_a_6</string>
+				<string builtin="atomRef">riboflavin_karne_a_7</string>
+				<string builtin="order" convention="MDL">1</string>
+			</bond>
+			<bond id="riboflavin_karne_b_34">
+				<string builtin="atomRef">riboflavin_karne_a_5</string>
+				<string builtin="atomRef">riboflavin_karne_a_41</string>
+				<string builtin="order" convention="MDL">1</string>
+			</bond>
+			<bond id="riboflavin_karne_b_35">
+				<string builtin="atomRef">riboflavin_karne_a_5</string>
+				<string builtin="atomRef">riboflavin_karne_a_40</string>
+				<string builtin="order" convention="MDL">1</string>
+			</bond>
+			<bond id="riboflavin_karne_b_36">
+				<string builtin="atomRef">riboflavin_karne_a_5</string>
+				<string builtin="atomRef">riboflavin_karne_a_6</string>
+				<string builtin="order" convention="MDL">1</string>
+			</bond>
+			<bond id="riboflavin_karne_b_37">
+				<string builtin="atomRef">riboflavin_karne_a_4</string>
+				<string builtin="atomRef">riboflavin_karne_a_31</string>
+				<string builtin="order" convention="MDL">1</string>
+			</bond>
+			<bond id="riboflavin_karne_b_38">
+				<string builtin="atomRef">riboflavin_karne_a_4</string>
+				<string builtin="atomRef">riboflavin_karne_a_30</string>
+				<string builtin="order" convention="MDL">1</string>
+			</bond>
+			<bond id="riboflavin_karne_b_39">
+				<string builtin="atomRef">riboflavin_karne_a_4</string>
+				<string builtin="atomRef">riboflavin_karne_a_29</string>
+				<string builtin="order" convention="MDL">1</string>
+			</bond>
+			<bond id="riboflavin_karne_b_40">
+				<string builtin="atomRef">riboflavin_karne_a_4</string>
+				<string builtin="atomRef">riboflavin_karne_a_5</string>
+				<string builtin="order" convention="MDL">1</string>
+			</bond>
+			<bond id="riboflavin_karne_b_41">
+				<string builtin="atomRef">riboflavin_karne_a_3</string>
+				<string builtin="atomRef">riboflavin_karne_a_10</string>
+				<string builtin="order" convention="MDL">2</string>
+			</bond>
+			<bond id="riboflavin_karne_b_42">
+				<string builtin="atomRef">riboflavin_karne_a_2</string>
+				<string builtin="atomRef">riboflavin_karne_a_28</string>
+				<string builtin="order" convention="MDL">1</string>
+			</bond>
+			<bond id="riboflavin_karne_b_43">
+				<string builtin="atomRef">riboflavin_karne_a_2</string>
+				<string builtin="atomRef">riboflavin_karne_a_27</string>
+				<string builtin="order" convention="MDL">1</string>
+			</bond>
+			<bond id="riboflavin_karne_b_44">
+				<string builtin="atomRef">riboflavin_karne_a_2</string>
+				<string builtin="atomRef">riboflavin_karne_a_26</string>
+				<string builtin="order" convention="MDL">1</string>
+			</bond>
+			<bond id="riboflavin_karne_b_45">
+				<string builtin="atomRef">riboflavin_karne_a_2</string>
+				<string builtin="atomRef">riboflavin_karne_a_22</string>
+				<string builtin="order" convention="MDL">1</string>
+			</bond>
+			<bond id="riboflavin_karne_b_46">
+				<string builtin="atomRef">riboflavin_karne_a_1</string>
+				<string builtin="atomRef">riboflavin_karne_a_25</string>
+				<string builtin="order" convention="MDL">1</string>
+			</bond>
+			<bond id="riboflavin_karne_b_47">
+				<string builtin="atomRef">riboflavin_karne_a_1</string>
+				<string builtin="atomRef">riboflavin_karne_a_24</string>
+				<string builtin="order" convention="MDL">1</string>
+			</bond>
+			<bond id="riboflavin_karne_b_48">
+				<string builtin="atomRef">riboflavin_karne_a_1</string>
+				<string builtin="atomRef">riboflavin_karne_a_23</string>
+				<string builtin="order" convention="MDL">1</string>
+			</bond>
+			<bond id="riboflavin_karne_b_49">
+				<string builtin="atomRef">riboflavin_karne_a_1</string>
+				<string builtin="atomRef">riboflavin_karne_a_21</string>
+				<string builtin="order" convention="MDL">1</string>
+			</bond>
+		</bondArray>
+	</molecule>
+</cml>
+</document>

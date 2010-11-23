@@ -1,0 +1,298 @@
+<?xml version="1.0"?>
+<!--<?xml-stylesheet type="text/xsl" href="generic.xsl" ?>-->
+
+<document>
+<!-- CML document - histamine - karne - 7/8/00 -->
+<!-- file converted from: MDL .mol -->
+<cml title="histamine" id="cml_histamine_karne" xmlns="x-schema:cml_schema_ie_02.xml">
+	<molecule title="histamine" id="mol_histamine_karne">
+		<formula>C5 H9 N3</formula>
+		<string title="CAS">51-45-6</string>
+		<float title="molecular weight">111.15</float>
+      		<string title="ACX">I1009215</string>
+     		<string title="RTECS">MS1050000</string>
+		<float title="melting point" units="degC">88</float>
+		<list title="alternate names">
+	  		<string title="name">Histamine Dihydrochloride</string>
+			<string title="name">1H-Imidazole-4-ethanamine</string>
+			<string title="name">b-Imidazolyl-4-ethylamine</string>
+			<string title="name">Eramin</string>
+			<string title="name">Ergamine</string>
+			<string title="name">Ergotidine</string>
+			<string title="name">Imidazole-4-ethylamine</string>
+			<string title="name">2-(4-Imidazolyl)ethylamine</string>
+			<string title="name">5-Imidazoleethylamine</string>
+			<string title="name">Ethylamine</string>
+			<string title="name">2-imidazol-4-yl-</string>
+			<string title="name">Free histamine</string>
+			<string title="name">Imidazole</string>
+			<string title="name">4-(2-aminoethyl)-</string>
+			<string title="name">Theramine</string>
+			<string title="name">4-Imidazoleethylamine</string>
+			<string title="name">4-(2-Aminoethyl)-1H-imidazole</string>
+			<string title="name">b-Aminoethylglyoxaline</string>
+			<string title="name">b-Aminoethylimidazole</string>
+		</list>
+		<atomArray>
+			<atom id="histamine_karne_a_1">
+				<float builtin="x3" units="A">-1.7560</float>
+				<float builtin="y3" units="A">0.0000</float>
+				<float builtin="z3" units="A">0.3080</float>
+				<string builtin="elementType">C</string>
+			</atom>
+			<atom id="histamine_karne_a_2">
+				<float builtin="x3" units="A">-0.3600</float>
+				<float builtin="y3" units="A">0.0760</float>
+				<float builtin="z3" units="A">0.2880</float>
+				<string builtin="elementType">C</string>
+			</atom>
+			<atom id="histamine_karne_a_3">
+				<float builtin="x3" units="A">0.1400</float>
+				<float builtin="y3" units="A">-1.1520</float>
+				<float builtin="z3" units="A">0.5080</float>
+				<string builtin="elementType">N</string>
+			</atom>
+			<atom id="histamine_karne_a_4">
+				<float builtin="x3" units="A">-0.9160</float>
+				<float builtin="y3" units="A">-1.9680</float>
+				<float builtin="z3" units="A">0.6520</float>
+				<string builtin="elementType">C</string>
+			</atom>
+			<atom id="histamine_karne_a_5">
+				<float builtin="x3" units="A">-2.0640</float>
+				<float builtin="y3" units="A">-1.2800</float>
+				<float builtin="z3" units="A">0.5320</float>
+				<string builtin="elementType">N</string>
+			</atom>
+			<atom id="histamine_karne_a_6">
+				<float builtin="x3" units="A">0.4520</float>
+				<float builtin="y3" units="A">1.3600</float>
+				<float builtin="z3" units="A">0.0640</float>
+				<string builtin="elementType">C</string>
+			</atom>
+			<atom id="histamine_karne_a_7">
+				<float builtin="x3" units="A">1.9560</float>
+				<float builtin="y3" units="A">1.0720</float>
+				<float builtin="z3" units="A">0.1080</float>
+				<string builtin="elementType">C</string>
+			</atom>
+			<atom id="histamine_karne_a_8">
+				<float builtin="x3" units="A">2.7360</float>
+				<float builtin="y3" units="A">2.3040</float>
+				<float builtin="z3" units="A">-0.1040</float>
+				<string builtin="elementType">N</string>
+			</atom>
+			<atom id="histamine_karne_a_9">
+				<float builtin="x3" units="A">-2.4520</float>
+				<float builtin="y3" units="A">0.8120</float>
+				<float builtin="z3" units="A">0.1640</float>
+				<string builtin="elementType">H</string>
+			</atom>
+			<atom id="histamine_karne_a_10">
+				<float builtin="x3" units="A">-0.8520</float>
+				<float builtin="y3" units="A">-3.0320</float>
+				<float builtin="z3" units="A">0.8400</float>
+				<string builtin="elementType">H</string>
+			</atom>
+			<atom id="histamine_karne_a_11">
+				<float builtin="x3" units="A">0.1880</float>
+				<float builtin="y3" units="A">2.0880</float>
+				<float builtin="z3" units="A">0.8320</float>
+				<string builtin="elementType">H</string>
+			</atom>
+			<atom id="histamine_karne_a_12">
+				<float builtin="x3" units="A">0.1840</float>
+				<float builtin="y3" units="A">1.7800</float>
+				<float builtin="z3" units="A">-0.9040</float>
+				<string builtin="elementType">H</string>
+			</atom>
+			<atom id="histamine_karne_a_13">
+				<float builtin="x3" units="A">2.2240</float>
+				<float builtin="y3" units="A">0.3480</float>
+				<float builtin="z3" units="A">-0.6600</float>
+				<string builtin="elementType">H</string>
+			</atom>
+			<atom id="histamine_karne_a_14">
+				<float builtin="x3" units="A">2.2240</float>
+				<float builtin="y3" units="A">0.6560</float>
+				<float builtin="z3" units="A">1.0840</float>
+				<string builtin="elementType">H</string>
+			</atom>
+			<atom id="histamine_karne_a_15">
+				<float builtin="x3" units="A">2.4960</float>
+				<float builtin="y3" units="A">3.0320</float>
+				<float builtin="z3" units="A">0.6680</float>
+				<string builtin="elementType">H</string>
+			</atom>
+			<atom id="histamine_karne_a_16">
+				<float builtin="x3" units="A">2.4920</float>
+				<float builtin="y3" units="A">2.7240</float>
+				<float builtin="z3" units="A">-1.0840</float>
+				<string builtin="elementType">H</string>
+			</atom>
+			<atom id="histamine_karne_a_17">
+				<float builtin="x3" units="A">-3.0120</float>
+				<float builtin="y3" units="A">-1.7840</float>
+				<float builtin="z3" units="A">0.6240</float>
+				<string builtin="elementType">H</string>
+			</atom>
+		</atomArray>
+		<bondArray>
+			<bond id="histamine_karne_b_1">
+				<string builtin="atomRef">histamine_karne_a_17</string>
+				<string builtin="atomRef">histamine_karne_a_5</string>
+				<string builtin="order" convention="MDL">1</string>
+			</bond>
+			<bond id="histamine_karne_b_2">
+				<string builtin="atomRef">histamine_karne_a_16</string>
+				<string builtin="atomRef">histamine_karne_a_8</string>
+				<string builtin="order" convention="MDL">1</string>
+			</bond>
+			<bond id="histamine_karne_b_3">
+				<string builtin="atomRef">histamine_karne_a_15</string>
+				<string builtin="atomRef">histamine_karne_a_8</string>
+				<string builtin="order" convention="MDL">1</string>
+			</bond>
+			<bond id="histamine_karne_b_4">
+				<string builtin="atomRef">histamine_karne_a_14</string>
+				<string builtin="atomRef">histamine_karne_a_7</string>
+				<string builtin="order" convention="MDL">1</string>
+			</bond>
+			<bond id="histamine_karne_b_5">
+				<string builtin="atomRef">histamine_karne_a_13</string>
+				<string builtin="atomRef">histamine_karne_a_7</string>
+				<string builtin="order" convention="MDL">1</string>
+			</bond>
+			<bond id="histamine_karne_b_6">
+				<string builtin="atomRef">histamine_karne_a_12</string>
+				<string builtin="atomRef">histamine_karne_a_6</string>
+				<string builtin="order" convention="MDL">1</string>
+			</bond>
+			<bond id="histamine_karne_b_7">
+				<string builtin="atomRef">histamine_karne_a_11</string>
+				<string builtin="atomRef">histamine_karne_a_6</string>
+				<string builtin="order" convention="MDL">1</string>
+			</bond>
+			<bond id="histamine_karne_b_8">
+				<string builtin="atomRef">histamine_karne_a_10</string>
+				<string builtin="atomRef">histamine_karne_a_4</string>
+				<string builtin="order" convention="MDL">1</string>
+			</bond>
+			<bond id="histamine_karne_b_9">
+				<string builtin="atomRef">histamine_karne_a_9</string>
+				<string builtin="atomRef">histamine_karne_a_1</string>
+				<string builtin="order" convention="MDL">1</string>
+			</bond>
+			<bond id="histamine_karne_b_10">
+				<string builtin="atomRef">histamine_karne_a_8</string>
+				<string builtin="atomRef">histamine_karne_a_7</string>
+				<string builtin="order" convention="MDL">1</string>
+			</bond>
+			<bond id="histamine_karne_b_11">
+				<string builtin="atomRef">histamine_karne_a_7</string>
+				<string builtin="atomRef">histamine_karne_a_6</string>
+				<string builtin="order" convention="MDL">1</string>
+			</bond>
+			<bond id="histamine_karne_b_12">
+				<string builtin="atomRef">histamine_karne_a_6</string>
+				<string builtin="atomRef">histamine_karne_a_2</string>
+				<string builtin="order" convention="MDL">1</string>
+			</bond>
+			<bond id="histamine_karne_b_13">
+				<string builtin="atomRef">histamine_karne_a_5</string>
+				<string builtin="atomRef">histamine_karne_a_4</string>
+				<string builtin="order" convention="MDL">1</string>
+			</bond>
+			<bond id="histamine_karne_b_14">
+				<string builtin="atomRef">histamine_karne_a_5</string>
+				<string builtin="atomRef">histamine_karne_a_1</string>
+				<string builtin="order" convention="MDL">1</string>
+			</bond>
+			<bond id="histamine_karne_b_15">
+				<string builtin="atomRef">histamine_karne_a_4</string>
+				<string builtin="atomRef">histamine_karne_a_3</string>
+				<string builtin="order" convention="MDL">1</string>
+			</bond>
+			<bond id="histamine_karne_b_16">
+				<string builtin="atomRef">histamine_karne_a_3</string>
+				<string builtin="atomRef">histamine_karne_a_2</string>
+				<string builtin="order" convention="MDL">1</string>
+			</bond>
+			<bond id="histamine_karne_b_17">
+				<string builtin="atomRef">histamine_karne_a_2</string>
+				<string builtin="atomRef">histamine_karne_a_1</string>
+				<string builtin="order" convention="MDL">1</string>
+			</bond>
+		</bondArray>
+	</molecule>
+	<chimeral:spectrum title="Histamine Dihydrochloride" id="spect_histamine_ms_1" convention="JCAMP-DX= " xmlns:chimeral="http://www.ch.ic.ac.uk/chimeral/">
+		<string title="datatype">MASS SPECTRUM</string>
+		<string title="EPA">1577</string>
+		<string title="owner">NIST Mass Spectrometry Data Center</string>
+		<string title="xunits">M/Z</string>
+		<string title="yunits">RELATIVE ABUNDANCE</string>
+		<float title="firstx" convention="M/Z">15</float>
+		<float title="lastx" convention="M/Z">112</float>
+		<float title="xfactor">1</float>
+		<float title="firsty" convention="RELATIVE ABUNDANCE">130</float>
+		<float title="miny" convention="RELATIVE ABUNDANCE">10</float>
+		<float title="maxy" convention="RELATIVE ABUNDANCE">9999</float>
+		<float title="yfactor">1</float>
+		<float title="npoints">52</float>
+		<list title="peak table" convention="(XY..XY)">
+			<coordinate2 id="histamine_ms_c_1">15, 130</coordinate2>
+			<coordinate2 id="histamine_ms_c_2">16, 130</coordinate2>
+			<coordinate2 id="histamine_ms_c_3">26, 220</coordinate2>
+			<coordinate2 id="histamine_ms_c_4">27, 340</coordinate2>
+			<coordinate2 id="histamine_ms_c_5">28, 1511</coordinate2>
+			<coordinate2 id="histamine_ms_c_6">29, 230</coordinate2>
+			<coordinate2 id="histamine_ms_c_7">30, 4654</coordinate2>
+			<coordinate2 id="histamine_ms_c_8">31, 80</coordinate2>
+			<coordinate2 id="histamine_ms_c_9">37, 50</coordinate2>
+			<coordinate2 id="histamine_ms_c_10">38, 110</coordinate2>
+			<coordinate2 id="histamine_ms_c_11">39, 320</coordinate2>
+			<coordinate2 id="histamine_ms_c_12">40, 290</coordinate2>
+			<coordinate2 id="histamine_ms_c_13">41, 330</coordinate2>
+			<coordinate2 id="histamine_ms_c_14">42, 310</coordinate2>
+			<coordinate2 id="histamine_ms_c_15">43, 100</coordinate2>
+			<coordinate2 id="histamine_ms_c_16">50, 20</coordinate2>
+			<coordinate2 id="histamine_ms_c_17">51, 70</coordinate2>
+			<coordinate2 id="histamine_ms_c_18">52, 320</coordinate2>
+			<coordinate2 id="histamine_ms_c_19">53, 100</coordinate2>
+			<coordinate2 id="histamine_ms_c_20">54, 1401</coordinate2>
+			<coordinate2 id="histamine_ms_c_21">55, 1141</coordinate2>
+			<coordinate2 id="histamine_ms_c_22">56, 230</coordinate2>
+			<coordinate2 id="histamine_ms_c_23">57, 30</coordinate2>
+			<coordinate2 id="histamine_ms_c_24">58, 10</coordinate2>
+			<coordinate2 id="histamine_ms_c_25">60, 20</coordinate2>
+			<coordinate2 id="histamine_ms_c_26">63, 10</coordinate2>
+			<coordinate2 id="histamine_ms_c_27">64, 10</coordinate2>
+			<coordinate2 id="histamine_ms_c_28">65, 30</coordinate2>
+			<coordinate2 id="histamine_ms_c_29">66, 70</coordinate2>
+			<coordinate2 id="histamine_ms_c_30">67, 70</coordinate2>
+			<coordinate2 id="histamine_ms_c_31">68, 80</coordinate2>
+			<coordinate2 id="histamine_ms_c_32">69, 80</coordinate2>
+			<coordinate2 id="histamine_ms_c_33">70, 10</coordinate2>
+			<coordinate2 id="histamine_ms_c_34">71, 20</coordinate2>
+			<coordinate2 id="histamine_ms_c_35">77, 20</coordinate2>
+			<coordinate2 id="histamine_ms_c_36">78, 10</coordinate2>
+			<coordinate2 id="histamine_ms_c_37">79, 20</coordinate2>
+			<coordinate2 id="histamine_ms_c_38">80, 10</coordinate2>
+			<coordinate2 id="histamine_ms_c_39">81, 3403</coordinate2>
+			<coordinate2 id="histamine_ms_c_40">82, 9999</coordinate2>
+			<coordinate2 id="histamine_ms_c_41">83, 641</coordinate2>
+			<coordinate2 id="histamine_ms_c_42">84, 30</coordinate2>
+			<coordinate2 id="histamine_ms_c_43">85, 10</coordinate2>
+			<coordinate2 id="histamine_ms_c_44">91, 20</coordinate2>
+			<coordinate2 id="histamine_ms_c_45">92, 10</coordinate2>
+			<coordinate2 id="histamine_ms_c_46">93, 120</coordinate2>
+			<coordinate2 id="histamine_ms_c_47">94, 90</coordinate2>
+			<coordinate2 id="histamine_ms_c_48">95, 40</coordinate2>
+			<coordinate2 id="histamine_ms_c_49">109, 50</coordinate2>
+			<coordinate2 id="histamine_ms_c_50">110, 90</coordinate2>
+			<coordinate2 id="histamine_ms_c_51">111, 300</coordinate2>
+			<coordinate2 id="histamine_ms_c_52">112, 30</coordinate2>
+		</list>
+	</chimeral:spectrum>
+</cml>
+</document>

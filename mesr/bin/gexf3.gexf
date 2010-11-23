@@ -1,0 +1,723 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<gexf xmlns="http://www.gephi.org/gexf" xmlns:viz="http://www.gephi.org/gexf/viz"> 
+<meta lastmodifieddate="07-Jan-2010"><description>/132-152</description></meta><graph type="static"> 
+<attributes class="node" type="static"> 
+<attribute id="0" title="id_label" type="string"/> 
+<attribute id="1" title="date" type="float"/> 
+<attribute id="2" title="label" type="string"/> 
+<attribute id="3" title="url" type="string"/> 
+<attribute id="4" title="genericity" type="float"/> 
+<attribute id="5" title="specificity" type="float"/> 
+<attribute id="6" title="Inclusion" type="float"/> 
+<attribute id="7" title="Diff. Inclusion" type="float"/> 
+<attribute id="8" title="Density" type="float"/> 
+<attribute id="9" title="Diff. Density" type="float"/> 
+<attribute id="10" title="Size" type="float"/> 
+<attribute id="11" title="Diff. Size" type="float"/> 
+<attribute id="12" title="Diff. Size" type="float"/> 
+</attributes> 
+<nodes> 
+<node id="1" label="malades">  
+<viz:color b="0" g="0"  r="255"/> 
+<viz:position x="98.591" y="22.9793" z="0"/>   
+<viz:size value="1.6969"/>  
+<attvalues><attvalue id="0" value="18"/><attvalue id="1" value="152"/> <attvalue id="2" value="malades"/> <attvalue id="3" value="http://maps.sciencemapping.com/MESR/meta.php?id_label=812&amp;type=gs&amp;periode=132-152"/> <attvalue id="4" value="148"/><attvalue id="5" value="148"/><attvalue id="6" value="8"/><attvalue id="7" value="25"/><attvalue id="8" value="1"/><attvalue id="9" value="14"/><attvalue id="10" value="0"/><attvalue id="11" value="16"/><attvalue id="12" value="12"/></attvalues>  
+</node> 
+<node id="2" label="h1n1">  
+<viz:color b="0" g="0"  r="255"/> 
+<viz:position x="9.2977" y="64.5692" z="0"/>   
+<viz:size value="1.6955"/>  
+<attvalues><attvalue id="0" value="19"/><attvalue id="1" value="152"/> <attvalue id="2" value="h1n1"/> <attvalue id="3" value="http://maps.sciencemapping.com/MESR/meta.php?id_label=588&amp;type=gs&amp;periode=132-152"/> <attvalue id="4" value="109"/><attvalue id="5" value="109"/><attvalue id="6" value="6"/><attvalue id="7" value="10"/><attvalue id="8" value="0"/><attvalue id="9" value="28"/><attvalue id="10" value="0"/><attvalue id="11" value="16"/><attvalue id="12" value="12"/></attvalues>  
+</node> 
+<node id="3" label="prison">  
+<viz:color b="0" g="0"  r="255"/> 
+<viz:position x="31.9129" y="40.4798" z="0"/>   
+<viz:size value="1.7064"/>  
+<attvalues><attvalue id="0" value="20"/><attvalue id="1" value="152"/> <attvalue id="2" value="prison"/> <attvalue id="3" value="http://maps.sciencemapping.com/MESR/meta.php?id_label=309&amp;type=gs&amp;periode=132-152"/> <attvalue id="4" value="38"/><attvalue id="5" value="38"/><attvalue id="6" value="6"/><attvalue id="7" value="10"/><attvalue id="8" value="0"/><attvalue id="9" value="17"/><attvalue id="10" value="0"/><attvalue id="11" value="10"/><attvalue id="12" value="14"/></attvalues>  
+</node> 
+<node id="4" label="alternative">  
+<viz:color b="0" g="255"  r="255"/> 
+<viz:position x="92.3831" y="80.2243" z="0"/>   
+<viz:size value="1.7037"/>  
+<attvalues><attvalue id="0" value="21"/><attvalue id="1" value="152"/> <attvalue id="2" value="alternative"/> <attvalue id="3" value="http://maps.sciencemapping.com/MESR/meta.php?id_label=640&amp;type=gs&amp;periode=132-152"/> <attvalue id="4" value="96"/><attvalue id="5" value="96"/><attvalue id="6" value="6"/><attvalue id="7" value="10"/><attvalue id="8" value="0"/><attvalue id="9" value="14524"/><attvalue id="10" value="0"/><attvalue id="11" value="8"/><attvalue id="12" value="12"/></attvalues>  
+</node> 
+<node id="5" label="etablissements de sante">  
+<viz:color b="0" g="0"  r="255"/> 
+<viz:position x="67.2147" y="98.3952" z="0"/>   
+<viz:size value="1.7357"/>  
+<attvalues><attvalue id="0" value="22"/><attvalue id="1" value="152"/> <attvalue id="2" value="etablissements de sante"/> <attvalue id="3" value="http://maps.sciencemapping.com/MESR/meta.php?id_label=1496&amp;type=gs&amp;periode=132-152"/> <attvalue id="4" value="63"/><attvalue id="5" value="63"/><attvalue id="6" value="9"/><attvalue id="7" value="116"/><attvalue id="8" value="1"/><attvalue id="9" value="21"/><attvalue id="10" value="0"/><attvalue id="11" value="8"/><attvalue id="12" value="7"/></attvalues>  
+</node> 
+<node id="6" label="diagnostic">  
+<viz:color b="0" g="0"  r="255"/> 
+<viz:position x="27.3422" y="81.035" z="0"/>   
+<viz:size value="1.7184"/>  
+<attvalues><attvalue id="0" value="23"/><attvalue id="1" value="152"/> <attvalue id="2" value="diagnostic"/> <attvalue id="3" value="http://maps.sciencemapping.com/MESR/meta.php?id_label=460&amp;type=gs&amp;periode=132-152"/> <attvalue id="4" value="38"/><attvalue id="5" value="38"/><attvalue id="6" value="4"/><attvalue id="7" value="10"/><attvalue id="8" value="0"/><attvalue id="9" value="168"/><attvalue id="10" value="0"/><attvalue id="11" value="10"/><attvalue id="12" value="66"/></attvalues>  
+</node> 
+<node id="7" label="fumer">  
+<viz:color b="0" g="0"  r="255"/> 
+<viz:position x="78.7247" y="44.1011" z="0"/>   
+<viz:size value="1.7044"/>  
+<attvalues><attvalue id="0" value="24"/><attvalue id="1" value="152"/> <attvalue id="2" value="fumer"/> <attvalue id="3" value="http://maps.sciencemapping.com/MESR/meta.php?id_label=312&amp;type=gs&amp;periode=132-152"/> <attvalue id="4" value="24"/><attvalue id="5" value="24"/><attvalue id="6" value="5"/><attvalue id="7" value="10"/><attvalue id="8" value="0"/><attvalue id="9" value="4912"/><attvalue id="10" value="0"/><attvalue id="11" value="10"/><attvalue id="12" value="11"/></attvalues>  
+</node> 
+<node id="8" label="sport">  
+<viz:color b="0" g="0"  r="255"/> 
+<viz:position x="57.8024" y="62.9184" z="0"/>   
+<viz:size value="1.7068"/>  
+<attvalues><attvalue id="0" value="25"/><attvalue id="1" value="152"/> <attvalue id="2" value="sport"/> <attvalue id="3" value="http://maps.sciencemapping.com/MESR/meta.php?id_label=63&amp;type=gs&amp;periode=132-152"/> <attvalue id="4" value="85"/><attvalue id="5" value="85"/><attvalue id="6" value="5"/><attvalue id="7" value="10"/><attvalue id="8" value="0"/><attvalue id="9" value="10"/><attvalue id="10" value="0"/><attvalue id="11" value="10"/><attvalue id="12" value="10"/></attvalues>  
+</node> 
+<node id="9" label="energies renouvelables">  
+<viz:color b="0" g="20"  r="255"/> 
+<viz:position x="15.627" y="63.2105" z="0"/>   
+<viz:size value="1.691"/>  
+<attvalues><attvalue id="0" value="26"/><attvalue id="1" value="152"/> <attvalue id="2" value="energies renouvelables"/> <attvalue id="3" value="http://maps.sciencemapping.com/MESR/meta.php?id_label=1029&amp;type=gs&amp;periode=132-152"/> <attvalue id="4" value="249"/><attvalue id="5" value="249"/><attvalue id="6" value="4"/><attvalue id="7" value="59"/><attvalue id="8" value="0"/><attvalue id="9" value="225"/><attvalue id="10" value="0"/><attvalue id="11" value="19"/><attvalue id="12" value="15"/></attvalues>  
+</node> 
+<node id="10" label="energies renouvelables">  
+<viz:color b="0" g="0"  r="255"/> 
+<viz:position x="31.5026" y="69.3" z="0"/>   
+<viz:size value="1.701"/>  
+<attvalues><attvalue id="0" value="27"/><attvalue id="1" value="152"/> <attvalue id="2" value="energies renouvelables"/> <attvalue id="3" value="http://maps.sciencemapping.com/MESR/meta.php?id_label=1029&amp;type=gs&amp;periode=132-152"/> <attvalue id="4" value="108"/><attvalue id="5" value="108"/><attvalue id="6" value="8"/><attvalue id="7" value="10"/><attvalue id="8" value="1"/><attvalue id="9" value="9390"/><attvalue id="10" value="0"/><attvalue id="11" value="7"/><attvalue id="12" value="4"/></attvalues>  
+</node> 
+<node id="11" label="vaccination">  
+<viz:color b="0" g="0"  r="255"/> 
+<viz:position x="70.8563" y="77.9573" z="0"/>   
+<viz:size value="1.6868"/>  
+<attvalues><attvalue id="0" value="28"/><attvalue id="1" value="152"/> <attvalue id="2" value="vaccination"/> <attvalue id="3" value="http://maps.sciencemapping.com/MESR/meta.php?id_label=1665&amp;type=gs&amp;periode=132-152"/> <attvalue id="4" value="91"/><attvalue id="5" value="91"/><attvalue id="6" value="4"/><attvalue id="7" value="10"/><attvalue id="8" value="0"/><attvalue id="9" value="10"/><attvalue id="10" value="0"/><attvalue id="11" value="14"/><attvalue id="12" value="10"/></attvalues>  
+</node> 
+<node id="12" label="laboratoire">  
+<viz:color b="0" g="255"  r="255"/> 
+<viz:position x="21.6483" y="38.0191" z="0"/>   
+<viz:size value="1.7145"/>  
+<attvalues><attvalue id="0" value="29"/><attvalue id="1" value="152"/> <attvalue id="2" value="laboratoire"/> <attvalue id="3" value="http://maps.sciencemapping.com/MESR/meta.php?id_label=874&amp;type=gs&amp;periode=132-152"/> <attvalue id="4" value="301"/><attvalue id="5" value="301"/><attvalue id="6" value="5"/><attvalue id="7" value="10"/><attvalue id="8" value="0"/><attvalue id="9" value="1419"/><attvalue id="10" value="0"/><attvalue id="11" value="11"/><attvalue id="12" value="11"/></attvalues>  
+</node> 
+<node id="13" label="polluantes">  
+<viz:color b="0" g="0"  r="255"/> 
+<viz:position x="89.7183" y="27.2514" z="0"/>   
+<viz:size value="1.6861"/>  
+<attvalues><attvalue id="0" value="30"/><attvalue id="1" value="152"/> <attvalue id="2" value="polluantes"/> <attvalue id="3" value="http://maps.sciencemapping.com/MESR/meta.php?id_label=279&amp;type=gs&amp;periode=132-152"/> <attvalue id="4" value="122"/><attvalue id="5" value="122"/><attvalue id="6" value="4"/><attvalue id="7" value="10"/><attvalue id="8" value="0"/><attvalue id="9" value="8"/><attvalue id="10" value="0"/><attvalue id="11" value="9"/><attvalue id="12" value="13"/></attvalues>  
+</node> 
+<node id="14" label="logement">  
+<viz:color b="0" g="255"  r="255"/> 
+<viz:position x="92.5299" y="3.7944" z="0"/>   
+<viz:size value="1.7315"/>  
+<attvalues><attvalue id="0" value="31"/><attvalue id="1" value="152"/> <attvalue id="2" value="logement"/> <attvalue id="3" value="http://maps.sciencemapping.com/MESR/meta.php?id_label=1746&amp;type=gs&amp;periode=132-152"/> <attvalue id="4" value="218"/><attvalue id="5" value="218"/><attvalue id="6" value="3"/><attvalue id="7" value="10"/><attvalue id="8" value="0"/><attvalue id="9" value="28"/><attvalue id="10" value="0"/><attvalue id="11" value="11"/><attvalue id="12" value="7"/></attvalues>  
+</node> 
+<node id="15" label="action publique">  
+<viz:color b="0" g="255"  r="255"/> 
+<viz:position x="1.0351" y="37.3726" z="0"/>   
+<viz:size value="1.7258"/>  
+<attvalues><attvalue id="0" value="32"/><attvalue id="1" value="152"/> <attvalue id="2" value="action publique"/> <attvalue id="3" value="http://maps.sciencemapping.com/MESR/meta.php?id_label=1760&amp;type=gs&amp;periode=132-152"/> <attvalue id="4" value="189"/><attvalue id="5" value="189"/><attvalue id="6" value="4"/><attvalue id="7" value="10"/><attvalue id="8" value="0"/><attvalue id="9" value="670"/><attvalue id="10" value="0"/><attvalue id="11" value="4"/><attvalue id="12" value="6"/></attvalues>  
+</node> 
+<node id="16" label="innovation">  
+<viz:color b="0" g="255"  r="255"/> 
+<viz:position x="61.1972" y="92.6661" z="0"/>   
+<viz:size value="1.7322"/>  
+<attvalues><attvalue id="0" value="33"/><attvalue id="1" value="152"/> <attvalue id="2" value="innovation"/> <attvalue id="3" value="http://maps.sciencemapping.com/MESR/meta.php?id_label=1089&amp;type=gs&amp;periode=132-152"/> <attvalue id="4" value="213"/><attvalue id="5" value="213"/><attvalue id="6" value="6"/><attvalue id="7" value="10"/><attvalue id="8" value="0"/><attvalue id="9" value="195960"/><attvalue id="10" value="0"/><attvalue id="11" value="10"/><attvalue id="12" value="13"/></attvalues>  
+</node> 
+<node id="17" label="humanite">  
+<viz:color b="0" g="0"  r="255"/> 
+<viz:position x="44.0659" y="52.8986" z="0"/>   
+<viz:size value="1.7289"/>  
+<attvalues><attvalue id="0" value="34"/><attvalue id="1" value="152"/> <attvalue id="2" value="humanite"/> <attvalue id="3" value="http://maps.sciencemapping.com/MESR/meta.php?id_label=1312&amp;type=gs&amp;periode=132-152"/> <attvalue id="4" value="220"/><attvalue id="5" value="220"/><attvalue id="6" value="4"/><attvalue id="7" value="10"/><attvalue id="8" value="0"/><attvalue id="9" value="9"/><attvalue id="10" value="0"/><attvalue id="11" value="10"/><attvalue id="12" value="8"/></attvalues>  
+</node> 
+<node id="18" label="cap21">  
+<viz:color b="0" g="255"  r="255"/> 
+<viz:position x="39.5991" y="28.2533" z="0"/>   
+<viz:size value="1.7252"/>  
+<attvalues><attvalue id="0" value="35"/><attvalue id="1" value="152"/> <attvalue id="2" value="cap21"/> <attvalue id="3" value="http://maps.sciencemapping.com/MESR/meta.php?id_label=482&amp;type=gs&amp;periode=132-152"/> <attvalue id="4" value="190"/><attvalue id="5" value="190"/><attvalue id="6" value="4"/><attvalue id="7" value="10"/><attvalue id="8" value="0"/><attvalue id="9" value="167"/><attvalue id="10" value="0"/><attvalue id="11" value="4"/><attvalue id="12" value="5"/></attvalues>  
+</node> 
+<node id="19" label="poil">  
+<viz:color b="0" g="0"  r="255"/> 
+<viz:position x="78.471" y="2.1667" z="0"/>   
+<viz:size value="1.7282"/>  
+<attvalues><attvalue id="0" value="36"/><attvalue id="1" value="152"/> <attvalue id="2" value="poil"/> <attvalue id="3" value="http://maps.sciencemapping.com/MESR/meta.php?id_label=41&amp;type=gs&amp;periode=132-152"/> <attvalue id="4" value="191"/><attvalue id="5" value="191"/><attvalue id="6" value="6"/><attvalue id="7" value="10"/><attvalue id="8" value="0"/><attvalue id="9" value="144"/><attvalue id="10" value="0"/><attvalue id="11" value="11"/><attvalue id="12" value="7"/></attvalues>  
+</node> 
+<node id="20" label="pathologies">  
+<viz:color b="0" g="0"  r="255"/> 
+<viz:position x="7.0958" y="37.5602" z="0"/>   
+<viz:size value="1.72"/>  
+<attvalues><attvalue id="0" value="37"/><attvalue id="1" value="152"/> <attvalue id="2" value="pathologies"/> <attvalue id="3" value="http://maps.sciencemapping.com/MESR/meta.php?id_label=1230&amp;type=gs&amp;periode=132-152"/> <attvalue id="4" value="186"/><attvalue id="5" value="186"/><attvalue id="6" value="5"/><attvalue id="7" value="10"/><attvalue id="8" value="0"/><attvalue id="9" value="110"/><attvalue id="10" value="0"/><attvalue id="11" value="11"/><attvalue id="12" value="6"/></attvalues>  
+</node> 
+<node id="21" label="politiques publiques">  
+<viz:color b="0" g="255"  r="255"/> 
+<viz:position x="89.3198" y="62.9489" z="0"/>   
+<viz:size value="1.7344"/>  
+<attvalues><attvalue id="0" value="38"/><attvalue id="1" value="152"/> <attvalue id="2" value="politiques publiques"/> <attvalue id="3" value="http://maps.sciencemapping.com/MESR/meta.php?id_label=884&amp;type=gs&amp;periode=132-152"/> <attvalue id="4" value="228"/><attvalue id="5" value="228"/><attvalue id="6" value="5"/><attvalue id="7" value="10"/><attvalue id="8" value="0"/><attvalue id="9" value="NaN"/><attvalue id="10" value="0"/><attvalue id="11" value="7"/><attvalue id="12" value="8"/></attvalues>  
+</node> 
+<node id="22" label="inegalites">  
+<viz:color b="0" g="0"  r="255"/> 
+<viz:position x="83.5146" y="43.1302" z="0"/>   
+<viz:size value="1.7253"/>  
+<attvalues><attvalue id="0" value="39"/><attvalue id="1" value="152"/> <attvalue id="2" value="inegalites"/> <attvalue id="3" value="http://maps.sciencemapping.com/MESR/meta.php?id_label=770&amp;type=gs&amp;periode=132-152"/> <attvalue id="4" value="241"/><attvalue id="5" value="241"/><attvalue id="6" value="6"/><attvalue id="7" value="64"/><attvalue id="8" value="1"/><attvalue id="9" value="57"/><attvalue id="10" value="0"/><attvalue id="11" value="11"/><attvalue id="12" value="13"/></attvalues>  
+</node> 
+<node id="23" label="traitement antiretroviral">  
+<viz:color b="0" g="0"  r="255"/> 
+<viz:position x="63.7225" y="32.3877" z="0"/>   
+<viz:size value="1.7302"/>  
+<attvalues><attvalue id="0" value="40"/><attvalue id="1" value="152"/> <attvalue id="2" value="traitement antiretroviral"/> <attvalue id="3" value="http://maps.sciencemapping.com/MESR/meta.php?id_label=1655&amp;type=gs&amp;periode=132-152"/> <attvalue id="4" value="417"/><attvalue id="5" value="417"/><attvalue id="6" value="5"/><attvalue id="7" value="10"/><attvalue id="8" value="0"/><attvalue id="9" value="2691"/><attvalue id="10" value="0"/><attvalue id="11" value="13"/><attvalue id="12" value="11"/></attvalues>  
+</node> 
+<node id="24" label="epidemie">  
+<viz:color b="0" g="0"  r="255"/> 
+<viz:position x="40.7216" y="53.0424" z="0"/>   
+<viz:size value="1.7299"/>  
+<attvalues><attvalue id="0" value="41"/><attvalue id="1" value="152"/> <attvalue id="2" value="epidemie"/> <attvalue id="3" value="http://maps.sciencemapping.com/MESR/meta.php?id_label=923&amp;type=gs&amp;periode=132-152"/> <attvalue id="4" value="642"/><attvalue id="5" value="642"/><attvalue id="6" value="4"/><attvalue id="7" value="421"/><attvalue id="8" value="0"/><attvalue id="9" value="204"/><attvalue id="10" value="0"/><attvalue id="11" value="9"/><attvalue id="12" value="9"/></attvalues>  
+</node> 
+<node id="25" label="co2">  
+<viz:color b="0" g="0"  r="255"/> 
+<viz:position x="47.1695" y="69.5843" z="0"/>   
+<viz:size value="1.7102"/>  
+<attvalues><attvalue id="0" value="42"/><attvalue id="1" value="152"/> <attvalue id="2" value="co2"/> <attvalue id="3" value="http://maps.sciencemapping.com/MESR/meta.php?id_label=243&amp;type=gs&amp;periode=132-152"/> <attvalue id="4" value="276"/><attvalue id="5" value="276"/><attvalue id="6" value="3"/><attvalue id="7" value="59"/><attvalue id="8" value="0"/><attvalue id="9" value="233"/><attvalue id="10" value="0"/><attvalue id="11" value="13"/><attvalue id="12" value="9"/></attvalues>  
+</node> 
+<node id="26" label="hopital">  
+<viz:color b="0" g="0"  r="255"/> 
+<viz:position x="83.9238" y="85.5672" z="0"/>   
+<viz:size value="1.7052"/>  
+<attvalues><attvalue id="0" value="43"/><attvalue id="1" value="152"/> <attvalue id="2" value="hopital"/> <attvalue id="3" value="http://maps.sciencemapping.com/MESR/meta.php?id_label=1165&amp;type=gs&amp;periode=132-152"/> <attvalue id="4" value="73"/><attvalue id="5" value="73"/><attvalue id="6" value="4"/><attvalue id="7" value="10"/><attvalue id="8" value="0"/><attvalue id="9" value="33"/><attvalue id="10" value="0"/><attvalue id="11" value="13"/><attvalue id="12" value="12"/></attvalues>  
+</node> 
+<node id="27" label="co2">  
+<viz:color b="0" g="0"  r="255"/> 
+<viz:position x="18.0461" y="88.9221" z="0"/>   
+<viz:size value="1.7208"/>  
+<attvalues><attvalue id="0" value="44"/><attvalue id="1" value="152"/> <attvalue id="2" value="co2"/> <attvalue id="3" value="http://maps.sciencemapping.com/MESR/meta.php?id_label=243&amp;type=gs&amp;periode=132-152"/> <attvalue id="4" value="159"/><attvalue id="5" value="159"/><attvalue id="6" value="4"/><attvalue id="7" value="10"/><attvalue id="8" value="0"/><attvalue id="9" value="194"/><attvalue id="10" value="0"/><attvalue id="11" value="11"/><attvalue id="12" value="6"/></attvalues>  
+</node> 
+<node id="28" label="collectivites">  
+<viz:color b="0" g="255"  r="255"/> 
+<viz:position x="69.0841" y="27.6799" z="0"/>   
+<viz:size value="1.7259"/>  
+<attvalues><attvalue id="0" value="45"/><attvalue id="1" value="152"/> <attvalue id="2" value="collectivites"/> <attvalue id="3" value="http://maps.sciencemapping.com/MESR/meta.php?id_label=1122&amp;type=gs&amp;periode=132-152"/> <attvalue id="4" value="185"/><attvalue id="5" value="185"/><attvalue id="6" value="5"/><attvalue id="7" value="10"/><attvalue id="8" value="0"/><attvalue id="9" value="48"/><attvalue id="10" value="0"/><attvalue id="11" value="7"/><attvalue id="12" value="6"/></attvalues>  
+</node> 
+<node id="29" label="famine">  
+<viz:color b="0" g="0"  r="255"/> 
+<viz:position x="41.4089" y="51.5763" z="0"/>   
+<viz:size value="1.6999"/>  
+<attvalues><attvalue id="0" value="46"/><attvalue id="1" value="152"/> <attvalue id="2" value="famine"/> <attvalue id="3" value="http://maps.sciencemapping.com/MESR/meta.php?id_label=1391&amp;type=gs&amp;periode=132-152"/> <attvalue id="4" value="105"/><attvalue id="5" value="105"/><attvalue id="6" value="4"/><attvalue id="7" value="10"/><attvalue id="8" value="0"/><attvalue id="9" value="NaN"/><attvalue id="10" value="0"/><attvalue id="11" value="12"/><attvalue id="12" value="25"/></attvalues>  
+</node> 
+<node id="30" label="sport">  
+<viz:color b="0" g="0"  r="255"/> 
+<viz:position x="71.0385" y="12.8168" z="0"/>   
+<viz:size value="1.7184"/>  
+<attvalues><attvalue id="0" value="47"/><attvalue id="1" value="152"/> <attvalue id="2" value="sport"/> <attvalue id="3" value="http://maps.sciencemapping.com/MESR/meta.php?id_label=63&amp;type=gs&amp;periode=132-152"/> <attvalue id="4" value="492"/><attvalue id="5" value="492"/><attvalue id="6" value="2"/><attvalue id="7" value="10"/><attvalue id="8" value="0"/><attvalue id="9" value="1230"/><attvalue id="10" value="0"/><attvalue id="11" value="11"/><attvalue id="12" value="19"/></attvalues>  
+</node> 
+<node id="31" label="ecologie">  
+<viz:color b="0" g="0"  r="255"/> 
+<viz:position x="64.6255" y="27.3833" z="0"/>   
+<viz:size value="1.7188"/>  
+<attvalues><attvalue id="0" value="48"/><attvalue id="1" value="152"/> <attvalue id="2" value="ecologie"/> <attvalue id="3" value="http://maps.sciencemapping.com/MESR/meta.php?id_label=189&amp;type=gs&amp;periode=132-152"/> <attvalue id="4" value="212"/><attvalue id="5" value="212"/><attvalue id="6" value="6"/><attvalue id="7" value="10"/><attvalue id="8" value="1"/><attvalue id="9" value="NaN"/><attvalue id="10" value="0"/><attvalue id="11" value="7"/><attvalue id="12" value="11"/></attvalues>  
+</node> 
+<node id="32" label="four">  
+<viz:color b="0" g="0"  r="255"/> 
+<viz:position x="45.4107" y="89.2407" z="0"/>   
+<viz:size value="1.6986"/>  
+<attvalues><attvalue id="0" value="49"/><attvalue id="1" value="152"/> <attvalue id="2" value="four"/> <attvalue id="3" value="http://maps.sciencemapping.com/MESR/meta.php?id_label=1011&amp;type=gs&amp;periode=132-152"/> <attvalue id="4" value="129"/><attvalue id="5" value="129"/><attvalue id="6" value="5"/><attvalue id="7" value="10"/><attvalue id="8" value="0"/><attvalue id="9" value="NaN"/><attvalue id="10" value="0"/><attvalue id="11" value="8"/><attvalue id="12" value="6"/></attvalues>  
+</node> 
+<node id="33" label="ESB">  
+<viz:color b="0" g="234"  r="255"/> 
+<viz:position x="24.0142" y="97.2426" z="0"/>   
+<viz:size value="1.7567"/>  
+<attvalues><attvalue id="0" value="50"/><attvalue id="1" value="152"/> <attvalue id="2" value="ESB"/> <attvalue id="3" value="http://maps.sciencemapping.com/MESR/meta.php?id_label=497&amp;type=gs&amp;periode=132-152"/> <attvalue id="4" value="83"/><attvalue id="5" value="83"/><attvalue id="6" value="6"/><attvalue id="7" value="10"/><attvalue id="8" value="1"/><attvalue id="9" value="NaN"/><attvalue id="10" value="0"/><attvalue id="11" value="18"/><attvalue id="12" value="17"/></attvalues>  
+</node> 
+<node id="34" label="HIV">  
+<viz:color b="0" g="220"  r="255"/> 
+<viz:position x="7.2326" y="75.9133" z="0"/>   
+<viz:size value="1.7449"/>  
+<attvalues><attvalue id="0" value="51"/><attvalue id="1" value="152"/> <attvalue id="2" value="HIV"/> <attvalue id="3" value="http://maps.sciencemapping.com/MESR/meta.php?id_label=1115&amp;type=gs&amp;periode=132-152"/> <attvalue id="4" value="185"/><attvalue id="5" value="185"/><attvalue id="6" value="5"/><attvalue id="7" value="10"/><attvalue id="8" value="1"/><attvalue id="9" value="248756"/><attvalue id="10" value="0"/><attvalue id="11" value="10"/><attvalue id="12" value="25"/></attvalues>  
+</node> 
+<node id="35" label="Europe ecologie">  
+<viz:color b="0" g="255"  r="255"/> 
+<viz:position x="61.6527" y="24.7066" z="0"/>   
+<viz:size value="1.7172"/>  
+<attvalues><attvalue id="0" value="52"/><attvalue id="1" value="152"/> <attvalue id="2" value="Europe ecologie"/> <attvalue id="3" value="http://maps.sciencemapping.com/MESR/meta.php?id_label=36&amp;type=gs&amp;periode=132-152"/> <attvalue id="4" value="156"/><attvalue id="5" value="156"/><attvalue id="6" value="4"/><attvalue id="7" value="10"/><attvalue id="8" value="0"/><attvalue id="9" value="NaN"/><attvalue id="10" value="0"/><attvalue id="11" value="14"/><attvalue id="12" value="8"/></attvalues>  
+</node> 
+<node id="36" label="oms">  
+<viz:color b="0" g="0"  r="255"/> 
+<viz:position x="79.9386" y="43.9317" z="0"/>   
+<viz:size value="1.7283"/>  
+<attvalues><attvalue id="0" value="53"/><attvalue id="1" value="152"/> <attvalue id="2" value="oms"/> <attvalue id="3" value="http://maps.sciencemapping.com/MESR/meta.php?id_label=253&amp;type=gs&amp;periode=132-152"/> <attvalue id="4" value="566"/><attvalue id="5" value="566"/><attvalue id="6" value="5"/><attvalue id="7" value="10"/><attvalue id="8" value="0"/><attvalue id="9" value="483"/><attvalue id="10" value="0"/><attvalue id="11" value="6"/><attvalue id="12" value="10"/></attvalues>  
+</node> 
+<node id="37" label="viral">  
+<viz:color b="0" g="0"  r="255"/> 
+<viz:position x="41.585" y="3.3236" z="0"/>   
+<viz:size value="1.7277"/>  
+<attvalues><attvalue id="0" value="54"/><attvalue id="1" value="152"/> <attvalue id="2" value="viral"/> <attvalue id="3" value="http://maps.sciencemapping.com/MESR/meta.php?id_label=199&amp;type=gs&amp;periode=132-152"/> <attvalue id="4" value="456"/><attvalue id="5" value="456"/><attvalue id="6" value="6"/><attvalue id="7" value="32"/><attvalue id="8" value="0"/><attvalue id="9" value="87"/><attvalue id="10" value="0"/><attvalue id="11" value="10"/><attvalue id="12" value="12"/></attvalues>  
+</node> 
+<node id="38" label="viral">  
+<viz:color b="0" g="192"  r="255"/> 
+<viz:position x="70.5183" y="46.8287" z="0"/>   
+<viz:size value="1.7348"/>  
+<attvalues><attvalue id="0" value="55"/><attvalue id="1" value="152"/> <attvalue id="2" value="viral"/> <attvalue id="3" value="http://maps.sciencemapping.com/MESR/meta.php?id_label=199&amp;type=gs&amp;periode=132-152"/> <attvalue id="4" value="435"/><attvalue id="5" value="435"/><attvalue id="6" value="7"/><attvalue id="7" value="10"/><attvalue id="8" value="1"/><attvalue id="9" value="NaN"/><attvalue id="10" value="0"/><attvalue id="11" value="10"/><attvalue id="12" value="13"/></attvalues>  
+</node> 
+<node id="39" label="ecologie">  
+<viz:color b="0" g="0"  r="255"/> 
+<viz:position x="27.8889" y="80.2938" z="0"/>   
+<viz:size value="1.7303"/>  
+<attvalues><attvalue id="0" value="56"/><attvalue id="1" value="152"/> <attvalue id="2" value="ecologie"/> <attvalue id="3" value="http://maps.sciencemapping.com/MESR/meta.php?id_label=189&amp;type=gs&amp;periode=132-152"/> <attvalue id="4" value="265"/><attvalue id="5" value="265"/><attvalue id="6" value="7"/><attvalue id="7" value="10"/><attvalue id="8" value="0"/><attvalue id="9" value="7045"/><attvalue id="10" value="0"/><attvalue id="11" value="5"/><attvalue id="12" value="7"/></attvalues>  
+</node> 
+<node id="40" label="infectes">  
+<viz:color b="0" g="255"  r="244"/> 
+<viz:position x="13.259" y="98.752" z="0"/>   
+<viz:size value="1.7125"/>  
+<attvalues><attvalue id="0" value="57"/><attvalue id="1" value="152"/> <attvalue id="2" value="infectes"/> <attvalue id="3" value="http://maps.sciencemapping.com/MESR/meta.php?id_label=675&amp;type=gs&amp;periode=132-152"/> <attvalue id="4" value="343"/><attvalue id="5" value="343"/><attvalue id="6" value="7"/><attvalue id="7" value="10"/><attvalue id="8" value="1"/><attvalue id="9" value="43"/><attvalue id="10" value="0"/><attvalue id="11" value="21"/><attvalue id="12" value="26"/></attvalues>  
+</node> 
+<node id="41" label="infectes">  
+<viz:color b="0" g="3"  r="255"/> 
+<viz:position x="23.6842" y="93.769" z="0"/>   
+<viz:size value="1.7256"/>  
+<attvalues><attvalue id="0" value="58"/><attvalue id="1" value="152"/> <attvalue id="2" value="infectes"/> <attvalue id="3" value="http://maps.sciencemapping.com/MESR/meta.php?id_label=675&amp;type=gs&amp;periode=132-152"/> <attvalue id="4" value="430"/><attvalue id="5" value="430"/><attvalue id="6" value="7"/><attvalue id="7" value="10"/><attvalue id="8" value="1"/><attvalue id="9" value="1657"/><attvalue id="10" value="0"/><attvalue id="11" value="23"/><attvalue id="12" value="17"/></attvalues>  
+</node> 
+<node id="42" label="nanotechnologies">  
+<viz:color b="0" g="0"  r="255"/> 
+<viz:position x="27.3957" y="70.62" z="0"/>   
+<viz:size value="1.7048"/>  
+<attvalues><attvalue id="0" value="59"/><attvalue id="1" value="152"/> <attvalue id="2" value="nanotechnologies"/> <attvalue id="3" value="http://maps.sciencemapping.com/MESR/meta.php?id_label=1281&amp;type=gs&amp;periode=132-152"/> <attvalue id="4" value="0"/><attvalue id="5" value="0"/><attvalue id="6" value="7"/><attvalue id="7" value="10"/><attvalue id="8" value="0"/><attvalue id="9" value="451"/><attvalue id="10" value="0"/><attvalue id="11" value="8"/><attvalue id="12" value="25"/></attvalues>  
+</node> 
+<node id="43" label="ESB">  
+<viz:color b="0" g="236"  r="255"/> 
+<viz:position x="37.1403" y="19.0642" z="0"/>   
+<viz:size value="1.7502"/>  
+<attvalues><attvalue id="0" value="60"/><attvalue id="1" value="152"/> <attvalue id="2" value="ESB"/> <attvalue id="3" value="http://maps.sciencemapping.com/MESR/meta.php?id_label=497&amp;type=gs&amp;periode=132-152"/> <attvalue id="4" value="70"/><attvalue id="5" value="70"/><attvalue id="6" value="2"/><attvalue id="7" value="58"/><attvalue id="8" value="0"/><attvalue id="9" value="420"/><attvalue id="10" value="0"/><attvalue id="11" value="17"/><attvalue id="12" value="17"/></attvalues>  
+</node> 
+<node id="44" label="consommer">  
+<viz:color b="0" g="0"  r="255"/> 
+<viz:position x="95.3685" y="69.6521" z="0"/>   
+<viz:size value="1.7088"/>  
+<attvalues><attvalue id="0" value="61"/><attvalue id="1" value="152"/> <attvalue id="2" value="consommer"/> <attvalue id="3" value="http://maps.sciencemapping.com/MESR/meta.php?id_label=581&amp;type=gs&amp;periode=132-152"/> <attvalue id="4" value="25"/><attvalue id="5" value="25"/><attvalue id="6" value="4"/><attvalue id="7" value="53"/><attvalue id="8" value="0"/><attvalue id="9" value="472"/><attvalue id="10" value="0"/><attvalue id="11" value="12"/><attvalue id="12" value="29"/></attvalues>  
+</node> 
+<node id="45" label="vacciner">  
+<viz:color b="0" g="255"  r="255"/> 
+<viz:position x="65.1684" y="17.0673" z="0"/>   
+<viz:size value="1.7127"/>  
+<attvalues><attvalue id="0" value="62"/><attvalue id="1" value="152"/> <attvalue id="2" value="vacciner"/> <attvalue id="3" value="http://maps.sciencemapping.com/MESR/meta.php?id_label=663&amp;type=gs&amp;periode=132-152"/> <attvalue id="4" value="185"/><attvalue id="5" value="185"/><attvalue id="6" value="5"/><attvalue id="7" value="10"/><attvalue id="8" value="0"/><attvalue id="9" value="NaN"/><attvalue id="10" value="0"/><attvalue id="11" value="15"/><attvalue id="12" value="12"/></attvalues>  
+</node> 
+<node id="46" label="HIV">  
+<viz:color b="0" g="225"  r="255"/> 
+<viz:position x="47.7692" y="49.8994" z="0"/>   
+<viz:size value="1.7408"/>  
+<attvalues><attvalue id="0" value="63"/><attvalue id="1" value="152"/> <attvalue id="2" value="HIV"/> <attvalue id="3" value="http://maps.sciencemapping.com/MESR/meta.php?id_label=1115&amp;type=gs&amp;periode=132-152"/> <attvalue id="4" value="202"/><attvalue id="5" value="202"/><attvalue id="6" value="0"/><attvalue id="7" value="10"/><attvalue id="8" value="0"/><attvalue id="9" value="55"/><attvalue id="10" value="0"/><attvalue id="11" value="10"/><attvalue id="12" value="24"/></attvalues>  
+</node> 
+<node id="47" label="viral">  
+<viz:color b="0" g="233"  r="255"/> 
+<viz:position x="76.888" y="90.4338" z="0"/>   
+<viz:size value="1.7153"/>  
+<attvalues><attvalue id="0" value="64"/><attvalue id="1" value="152"/> <attvalue id="2" value="viral"/> <attvalue id="3" value="http://maps.sciencemapping.com/MESR/meta.php?id_label=199&amp;type=gs&amp;periode=132-152"/> <attvalue id="4" value="246"/><attvalue id="5" value="246"/><attvalue id="6" value="0"/><attvalue id="7" value="10"/><attvalue id="8" value="0"/><attvalue id="9" value="656"/><attvalue id="10" value="0"/><attvalue id="11" value="8"/><attvalue id="12" value="14"/></attvalues>  
+</node> 
+<node id="48" label="vaccination">  
+<viz:color b="0" g="6"  r="255"/> 
+<viz:position x="80.1203" y="12.1683" z="0"/>   
+<viz:size value="1.7226"/>  
+<attvalues><attvalue id="0" value="65"/><attvalue id="1" value="152"/> <attvalue id="2" value="vaccination"/> <attvalue id="3" value="http://maps.sciencemapping.com/MESR/meta.php?id_label=1665&amp;type=gs&amp;periode=132-152"/> <attvalue id="4" value="577"/><attvalue id="5" value="577"/><attvalue id="6" value="4"/><attvalue id="7" value="10"/><attvalue id="8" value="0"/><attvalue id="9" value="321"/><attvalue id="10" value="0"/><attvalue id="11" value="15"/><attvalue id="12" value="10"/></attvalues>  
+</node> 
+<node id="49" label="ressources naturelles">  
+<viz:color b="0" g="0"  r="255"/> 
+<viz:position x="32.2626" y="72.5323" z="0"/>   
+<viz:size value="1.7328"/>  
+<attvalues><attvalue id="0" value="66"/><attvalue id="1" value="152"/> <attvalue id="2" value="ressources naturelles"/> <attvalue id="3" value="http://maps.sciencemapping.com/MESR/meta.php?id_label=1132&amp;type=gs&amp;periode=132-152"/> <attvalue id="4" value="120"/><attvalue id="5" value="120"/><attvalue id="6" value="0"/><attvalue id="7" value="10"/><attvalue id="8" value="0"/><attvalue id="9" value="95"/><attvalue id="10" value="0"/><attvalue id="11" value="12"/><attvalue id="12" value="20"/></attvalues>  
+</node> 
+<node id="50" label="hopital">  
+<viz:color b="0" g="0"  r="255"/> 
+<viz:position x="58.408" y="66.0797" z="0"/>   
+<viz:size value="1.7298"/>  
+<attvalues><attvalue id="0" value="67"/><attvalue id="1" value="152"/> <attvalue id="2" value="hopital"/> <attvalue id="3" value="http://maps.sciencemapping.com/MESR/meta.php?id_label=1165&amp;type=gs&amp;periode=132-152"/> <attvalue id="4" value="70"/><attvalue id="5" value="70"/><attvalue id="6" value="10"/><attvalue id="7" value="10"/><attvalue id="8" value="3"/><attvalue id="9" value="12"/><attvalue id="10" value="0"/><attvalue id="11" value="11"/><attvalue id="12" value="20"/></attvalues>  
+</node> 
+<node id="51" label="souffre">  
+<viz:color b="0" g="0"  r="255"/> 
+<viz:position x="77.7638" y="44.1414" z="0"/>   
+<viz:size value="1.7314"/>  
+<attvalues><attvalue id="0" value="68"/><attvalue id="1" value="152"/> <attvalue id="2" value="souffre"/> <attvalue id="3" value="http://maps.sciencemapping.com/MESR/meta.php?id_label=1578&amp;type=gs&amp;periode=132-152"/> <attvalue id="4" value="112"/><attvalue id="5" value="112"/><attvalue id="6" value="8"/><attvalue id="7" value="25"/><attvalue id="8" value="2"/><attvalue id="9" value="13"/><attvalue id="10" value="0"/><attvalue id="11" value="9"/><attvalue id="12" value="28"/></attvalues>  
+</node> 
+<node id="52" label="recommandations">  
+<viz:color b="0" g="0"  r="255"/> 
+<viz:position x="52.6974" y="51.8622" z="0"/>   
+<viz:size value="1.7243"/>  
+<attvalues><attvalue id="0" value="69"/><attvalue id="1" value="152"/> <attvalue id="2" value="recommandations"/> <attvalue id="3" value="http://maps.sciencemapping.com/MESR/meta.php?id_label=1415&amp;type=gs&amp;periode=132-152"/> <attvalue id="4" value="526"/><attvalue id="5" value="526"/><attvalue id="6" value="4"/><attvalue id="7" value="10"/><attvalue id="8" value="0"/><attvalue id="9" value="NaN"/><attvalue id="10" value="0"/><attvalue id="11" value="8"/><attvalue id="12" value="24"/></attvalues>  
+</node> 
+<node id="53" label="hopital">  
+<viz:color b="0" g="0"  r="255"/> 
+<viz:position x="69.749" y="30.0631" z="0"/>   
+<viz:size value="1.7077"/>  
+<attvalues><attvalue id="0" value="70"/><attvalue id="1" value="152"/> <attvalue id="2" value="hopital"/> <attvalue id="3" value="http://maps.sciencemapping.com/MESR/meta.php?id_label=1165&amp;type=gs&amp;periode=132-152"/> <attvalue id="4" value="43"/><attvalue id="5" value="43"/><attvalue id="6" value="7"/><attvalue id="7" value="10"/><attvalue id="8" value="1"/><attvalue id="9" value="2038"/><attvalue id="10" value="0"/><attvalue id="11" value="11"/><attvalue id="12" value="6"/></attvalues>  
+</node> 
+<node id="54" label="h1n1">  
+<viz:color b="0" g="0"  r="255"/> 
+<viz:position x="11.5263" y="75.9957" z="0"/>   
+<viz:size value="1.6925"/>  
+<attvalues><attvalue id="0" value="71"/><attvalue id="1" value="152"/> <attvalue id="2" value="h1n1"/> <attvalue id="3" value="http://maps.sciencemapping.com/MESR/meta.php?id_label=588&amp;type=gs&amp;periode=132-152"/> <attvalue id="4" value="202"/><attvalue id="5" value="202"/><attvalue id="6" value="7"/><attvalue id="7" value="10"/><attvalue id="8" value="0"/><attvalue id="9" value="39"/><attvalue id="10" value="0"/><attvalue id="11" value="15"/><attvalue id="12" value="10"/></attvalues>  
+</node> 
+<node id="55" label="sante publique">  
+<viz:color b="0" g="0"  r="255"/> 
+<viz:position x="62.7518" y="21.6463" z="0"/>   
+<viz:size value="1.704"/>  
+<attvalues><attvalue id="0" value="72"/><attvalue id="1" value="152"/> <attvalue id="2" value="sante publique"/> <attvalue id="3" value="http://maps.sciencemapping.com/MESR/meta.php?id_label=1370&amp;type=gs&amp;periode=132-152"/> <attvalue id="4" value="105"/><attvalue id="5" value="105"/><attvalue id="6" value="5"/><attvalue id="7" value="39"/><attvalue id="8" value="1"/><attvalue id="9" value="16"/><attvalue id="10" value="0"/><attvalue id="11" value="9"/><attvalue id="12" value="12"/></attvalues>  
+</node> 
+<node id="56" label="synthetique">  
+<viz:color b="0" g="252"  r="255"/> 
+<viz:position x="59.7241" y="24.7833" z="0"/>   
+<viz:size value="1.716"/>  
+<attvalues><attvalue id="0" value="73"/><attvalue id="1" value="152"/> <attvalue id="2" value="synthetique"/> <attvalue id="3" value="http://maps.sciencemapping.com/MESR/meta.php?id_label=1482&amp;type=gs&amp;periode=132-152"/> <attvalue id="4" value="96"/><attvalue id="5" value="96"/><attvalue id="6" value="6"/><attvalue id="7" value="10"/><attvalue id="8" value="1"/><attvalue id="9" value="547"/><attvalue id="10" value="0"/><attvalue id="11" value="5"/><attvalue id="12" value="5"/></attvalues>  
+</node> 
+<node id="57" label="hepatites">  
+<viz:color b="0" g="36"  r="255"/> 
+<viz:position x="62.9668" y="59.4868" z="0"/>   
+<viz:size value="1.7294"/>  
+<attvalues><attvalue id="0" value="74"/><attvalue id="1" value="152"/> <attvalue id="2" value="hepatites"/> <attvalue id="3" value="http://maps.sciencemapping.com/MESR/meta.php?id_label=185&amp;type=gs&amp;periode=132-152"/> <attvalue id="4" value="608"/><attvalue id="5" value="608"/><attvalue id="6" value="4"/><attvalue id="7" value="11"/><attvalue id="8" value="0"/><attvalue id="9" value="8"/><attvalue id="10" value="0"/><attvalue id="11" value="15"/><attvalue id="12" value="18"/></attvalues>  
+</node> 
+<node id="58" label="four">  
+<viz:color b="0" g="0"  r="255"/> 
+<viz:position x="68.3307" y="3.3681" z="0"/>   
+<viz:size value="1.6965"/>  
+<attvalues><attvalue id="0" value="75"/><attvalue id="1" value="152"/> <attvalue id="2" value="four"/> <attvalue id="3" value="http://maps.sciencemapping.com/MESR/meta.php?id_label=1011&amp;type=gs&amp;periode=132-152"/> <attvalue id="4" value="109"/><attvalue id="5" value="109"/><attvalue id="6" value="6"/><attvalue id="7" value="10"/><attvalue id="8" value="0"/><attvalue id="9" value="35"/><attvalue id="10" value="0"/><attvalue id="11" value="8"/><attvalue id="12" value="5"/></attvalues>  
+</node> 
+<node id="59" label="insectes">  
+<viz:color b="0" g="255"  r="255"/> 
+<viz:position x="85.8847" y="95.5821" z="0"/>   
+<viz:size value="1.7038"/>  
+<attvalues><attvalue id="0" value="76"/><attvalue id="1" value="152"/> <attvalue id="2" value="insectes"/> <attvalue id="3" value="http://maps.sciencemapping.com/MESR/meta.php?id_label=692&amp;type=gs&amp;periode=132-152"/> <attvalue id="4" value="56"/><attvalue id="5" value="56"/><attvalue id="6" value="3"/><attvalue id="7" value="10"/><attvalue id="8" value="0"/><attvalue id="9" value="135"/><attvalue id="10" value="0"/><attvalue id="11" value="12"/><attvalue id="12" value="12"/></attvalues>  
+</node> 
+<node id="60" label="recommandations">  
+<viz:color b="0" g="0"  r="255"/> 
+<viz:position x="73.2194" y="42.3681" z="0"/>   
+<viz:size value="1.7165"/>  
+<attvalues><attvalue id="0" value="77"/><attvalue id="1" value="152"/> <attvalue id="2" value="recommandations"/> <attvalue id="3" value="http://maps.sciencemapping.com/MESR/meta.php?id_label=1415&amp;type=gs&amp;periode=132-152"/> <attvalue id="4" value="512"/><attvalue id="5" value="512"/><attvalue id="6" value="5"/><attvalue id="7" value="10"/><attvalue id="8" value="2"/><attvalue id="9" value="11"/><attvalue id="10" value="0"/><attvalue id="11" value="7"/><attvalue id="12" value="19"/></attvalues>  
+</node> 
+<node id="61" label="infectes">  
+<viz:color b="0" g="204"  r="255"/> 
+<viz:position x="10.3563" y="72.4472" z="0"/>   
+<viz:size value="1.7261"/>  
+<attvalues><attvalue id="0" value="78"/><attvalue id="1" value="152"/> <attvalue id="2" value="infectes"/> <attvalue id="3" value="http://maps.sciencemapping.com/MESR/meta.php?id_label=675&amp;type=gs&amp;periode=132-152"/> <attvalue id="4" value="332"/><attvalue id="5" value="332"/><attvalue id="6" value="3"/><attvalue id="7" value="10"/><attvalue id="8" value="0"/><attvalue id="9" value="2140"/><attvalue id="10" value="0"/><attvalue id="11" value="20"/><attvalue id="12" value="28"/></attvalues>  
+</node> 
+<node id="62" label="agriculture biologique">  
+<viz:color b="0" g="0"  r="255"/> 
+<viz:position x="83.5445" y="65.3493" z="0"/>   
+<viz:size value="1.7389"/>  
+<attvalues><attvalue id="0" value="79"/><attvalue id="1" value="152"/> <attvalue id="2" value="agriculture biologique"/> <attvalue id="3" value="http://maps.sciencemapping.com/MESR/meta.php?id_label=214&amp;type=gs&amp;periode=132-152"/> <attvalue id="4" value="197"/><attvalue id="5" value="197"/><attvalue id="6" value="4"/><attvalue id="7" value="10"/><attvalue id="8" value="0"/><attvalue id="9" value="NaN"/><attvalue id="10" value="0"/><attvalue id="11" value="5"/><attvalue id="12" value="4"/></attvalues>  
+</node> 
+<node id="63" label="aluminium">  
+<viz:color b="0" g="255"  r="255"/> 
+<viz:position x="24.3212" y="1.4609" z="0"/>   
+<viz:size value="1.7525"/>  
+<attvalues><attvalue id="0" value="80"/><attvalue id="1" value="152"/> <attvalue id="2" value="aluminium"/> <attvalue id="3" value="http://maps.sciencemapping.com/MESR/meta.php?id_label=316&amp;type=gs&amp;periode=132-152"/> <attvalue id="4" value="147"/><attvalue id="5" value="147"/><attvalue id="6" value="5"/><attvalue id="7" value="13"/><attvalue id="8" value="1"/><attvalue id="9" value="13"/><attvalue id="10" value="0"/><attvalue id="11" value="9"/><attvalue id="12" value="11"/></attvalues>  
+</node> 
+<node id="64" label="synthetique">  
+<viz:color b="0" g="0"  r="255"/> 
+<viz:position x="35.0682" y="24.2469" z="0"/>   
+<viz:size value="1.7037"/>  
+<attvalues><attvalue id="0" value="81"/><attvalue id="1" value="152"/> <attvalue id="2" value="synthetique"/> <attvalue id="3" value="http://maps.sciencemapping.com/MESR/meta.php?id_label=1482&amp;type=gs&amp;periode=132-152"/> <attvalue id="4" value="99"/><attvalue id="5" value="99"/><attvalue id="6" value="2"/><attvalue id="7" value="16"/><attvalue id="8" value="0"/><attvalue id="9" value="12"/><attvalue id="10" value="0"/><attvalue id="11" value="11"/><attvalue id="12" value="7"/></attvalues>  
+</node> 
+<node id="65" label="patients infectes">  
+<viz:color b="0" g="0"  r="255"/> 
+<viz:position x="37.0392" y="21.9863" z="0"/>   
+<viz:size value="1.731"/>  
+<attvalues><attvalue id="0" value="82"/><attvalue id="1" value="152"/> <attvalue id="2" value="patients infectes"/> <attvalue id="3" value="http://maps.sciencemapping.com/MESR/meta.php?id_label=1274&amp;type=gs&amp;periode=132-152"/> <attvalue id="4" value="600"/><attvalue id="5" value="600"/><attvalue id="6" value="0"/><attvalue id="7" value="7"/><attvalue id="8" value="0"/><attvalue id="9" value="34"/><attvalue id="10" value="0"/><attvalue id="11" value="18"/><attvalue id="12" value="21"/></attvalues>  
+</node> 
+<node id="66" label="huiles essentielles">  
+<viz:color b="0" g="0"  r="255"/> 
+<viz:position x="82.1975" y="39.9097" z="0"/>   
+<viz:size value="1.7326"/>  
+<attvalues><attvalue id="0" value="83"/><attvalue id="1" value="152"/> <attvalue id="2" value="huiles essentielles"/> <attvalue id="3" value="http://maps.sciencemapping.com/MESR/meta.php?id_label=936&amp;type=gs&amp;periode=132-152"/> <attvalue id="4" value="165"/><attvalue id="5" value="165"/><attvalue id="6" value="5"/><attvalue id="7" value="10"/><attvalue id="8" value="1"/><attvalue id="9" value="668"/><attvalue id="10" value="0"/><attvalue id="11" value="6"/><attvalue id="12" value="5"/></attvalues>  
+</node> 
+<node id="67" label="Europe ecologie">  
+<viz:color b="0" g="255"  r="255"/> 
+<viz:position x="90.8038" y="50.1975" z="0"/>   
+<viz:size value="1.6994"/>  
+<attvalues><attvalue id="0" value="84"/><attvalue id="1" value="152"/> <attvalue id="2" value="Europe ecologie"/> <attvalue id="3" value="http://maps.sciencemapping.com/MESR/meta.php?id_label=36&amp;type=gs&amp;periode=132-152"/> <attvalue id="4" value="79"/><attvalue id="5" value="79"/><attvalue id="6" value="6"/><attvalue id="7" value="60"/><attvalue id="8" value="1"/><attvalue id="9" value="71"/><attvalue id="10" value="0"/><attvalue id="11" value="9"/><attvalue id="12" value="8"/></attvalues>  
+</node> 
+<node id="68" label="gaz a  effet de serre">  
+<viz:color b="0" g="0"  r="255"/> 
+<viz:position x="72.7534" y="45.9746" z="0"/>   
+<viz:size value="1.6921"/>  
+<attvalues><attvalue id="0" value="85"/><attvalue id="1" value="152"/> <attvalue id="2" value="gaz a  effet de serre"/> <attvalue id="3" value="http://maps.sciencemapping.com/MESR/meta.php?id_label=702&amp;type=gs&amp;periode=132-152"/> <attvalue id="4" value="69"/><attvalue id="5" value="69"/><attvalue id="6" value="5"/><attvalue id="7" value="10"/><attvalue id="8" value="1"/><attvalue id="9" value="466"/><attvalue id="10" value="0"/><attvalue id="11" value="12"/><attvalue id="12" value="15"/></attvalues>  
+</node> 
+<node id="69" label="substance">  
+<viz:color b="0" g="255"  r="255"/> 
+<viz:position x="81.4206" y="37.7068" z="0"/>   
+<viz:size value="1.7377"/>  
+<attvalues><attvalue id="0" value="86"/><attvalue id="1" value="152"/> <attvalue id="2" value="substance"/> <attvalue id="3" value="http://maps.sciencemapping.com/MESR/meta.php?id_label=681&amp;type=gs&amp;periode=132-152"/> <attvalue id="4" value="103"/><attvalue id="5" value="103"/><attvalue id="6" value="6"/><attvalue id="7" value="10"/><attvalue id="8" value="0"/><attvalue id="9" value="1948"/><attvalue id="10" value="0"/><attvalue id="11" value="8"/><attvalue id="12" value="9"/></attvalues>  
+</node> 
+<node id="70" label="gaz a  effet de serre">  
+<viz:color b="0" g="84"  r="255"/> 
+<viz:position x="22.6672" y="30.574" z="0"/>   
+<viz:size value="1.6866"/>  
+<attvalues><attvalue id="0" value="87"/><attvalue id="1" value="152"/> <attvalue id="2" value="gaz a  effet de serre"/> <attvalue id="3" value="http://maps.sciencemapping.com/MESR/meta.php?id_label=702&amp;type=gs&amp;periode=132-152"/> <attvalue id="4" value="44"/><attvalue id="5" value="44"/><attvalue id="6" value="3"/><attvalue id="7" value="52"/><attvalue id="8" value="0"/><attvalue id="9" value="73"/><attvalue id="10" value="0"/><attvalue id="11" value="17"/><attvalue id="12" value="20"/></attvalues>  
+</node> 
+<node id="71" label="huiles essentielles">  
+<viz:color b="0" g="0"  r="255"/> 
+<viz:position x="60.4618" y="19.3782" z="0"/>   
+<viz:size value="1.7235"/>  
+<attvalues><attvalue id="0" value="88"/><attvalue id="1" value="152"/> <attvalue id="2" value="huiles essentielles"/> <attvalue id="3" value="http://maps.sciencemapping.com/MESR/meta.php?id_label=936&amp;type=gs&amp;periode=132-152"/> <attvalue id="4" value="134"/><attvalue id="5" value="134"/><attvalue id="6" value="2"/><attvalue id="7" value="10"/><attvalue id="8" value="0"/><attvalue id="9" value="61"/><attvalue id="10" value="0"/><attvalue id="11" value="7"/><attvalue id="12" value="6"/></attvalues>  
+</node> 
+<node id="72" label="prison">  
+<viz:color b="0" g="0"  r="255"/> 
+<viz:position x="71.6181" y="71.7666" z="0"/>   
+<viz:size value="1.7063"/>  
+<attvalues><attvalue id="0" value="89"/><attvalue id="1" value="152"/> <attvalue id="2" value="prison"/> <attvalue id="3" value="http://maps.sciencemapping.com/MESR/meta.php?id_label=309&amp;type=gs&amp;periode=132-152"/> <attvalue id="4" value="46"/><attvalue id="5" value="46"/><attvalue id="6" value="1"/><attvalue id="7" value="30"/><attvalue id="8" value="0"/><attvalue id="9" value="48"/><attvalue id="10" value="0"/><attvalue id="11" value="10"/><attvalue id="12" value="15"/></attvalues>  
+</node> 
+<node id="73" label="patients infectes">  
+<viz:color b="0" g="13"  r="255"/> 
+<viz:position x="98.566" y="84.2393" z="0"/>   
+<viz:size value="1.7165"/>  
+<attvalues><attvalue id="0" value="90"/><attvalue id="1" value="152"/> <attvalue id="2" value="patients infectes"/> <attvalue id="3" value="http://maps.sciencemapping.com/MESR/meta.php?id_label=1274&amp;type=gs&amp;periode=132-152"/> <attvalue id="4" value="429"/><attvalue id="5" value="429"/><attvalue id="6" value="3"/><attvalue id="7" value="46"/><attvalue id="8" value="0"/><attvalue id="9" value="10"/><attvalue id="10" value="0"/><attvalue id="11" value="10"/><attvalue id="12" value="21"/></attvalues>  
+</node> 
+</nodes><edges> 
+<edge id="3" source="2" target="54"/>  
+<edge id="8" source="6" target="24"/>  
+<edge id="9" source="6" target="30"/>  
+<edge id="10" source="6" target="36"/>  
+<edge id="13" source="8" target="30"/>  
+<edge id="14" source="8" target="48"/>  
+<edge id="16" source="9" target="22"/>  
+<edge id="17" source="9" target="25"/>  
+<edge id="18" source="9" target="31"/>  
+<edge id="19" source="9" target="39"/>  
+<edge id="20" source="10" target="9"/>  
+<edge id="23" source="11" target="24"/>  
+<edge id="24" source="11" target="45"/>  
+<edge id="25" source="11" target="48"/>  
+<edge id="26" source="11" target="54"/>  
+<edge id="28" source="12" target="23"/>  
+<edge id="29" source="12" target="37"/>  
+<edge id="30" source="12" target="41"/>  
+<edge id="31" source="12" target="45"/>  
+<edge id="32" source="12" target="57"/>  
+<edge id="35" source="14" target="16"/>  
+<edge id="36" source="14" target="21"/>  
+<edge id="37" source="14" target="28"/>  
+<edge id="39" source="15" target="18"/>  
+<edge id="40" source="15" target="35"/>  
+<edge id="41" source="16" target="14"/>  
+<edge id="43" source="16" target="21"/>  
+<edge id="44" source="16" target="28"/>  
+<edge id="46" source="17" target="39"/>  
+<edge id="47" source="18" target="15"/>  
+<edge id="49" source="18" target="35"/>  
+<edge id="51" source="19" target="27"/>  
+<edge id="53" source="21" target="14"/>  
+<edge id="54" source="21" target="16"/>  
+<edge id="56" source="21" target="28"/>  
+<edge id="57" source="22" target="9"/>  
+<edge id="59" source="22" target="31"/>  
+<edge id="60" source="22" target="39"/>  
+<edge id="62" source="23" target="37"/>  
+<edge id="63" source="23" target="41"/>  
+<edge id="65" source="24" target="30"/>  
+<edge id="66" source="24" target="36"/>  
+<edge id="67" source="24" target="48"/>  
+<edge id="68" source="24" target="52"/>  
+<edge id="69" source="24" target="57"/>  
+<edge id="70" source="24" target="60"/>  
+<edge id="71" source="24" target="65"/>  
+<edge id="74" source="26" target="53"/>  
+<edge id="75" source="27" target="19"/>  
+<edge id="76" source="27" target="25"/>  
+<edge id="78" source="28" target="14"/>  
+<edge id="79" source="28" target="16"/>  
+<edge id="80" source="28" target="21"/>  
+<edge id="83" source="30" target="8"/>  
+<edge id="84" source="30" target="24"/>  
+<edge id="86" source="30" target="36"/>  
+<edge id="87" source="30" target="48"/>  
+<edge id="88" source="30" target="52"/>  
+<edge id="89" source="30" target="57"/>  
+<edge id="90" source="30" target="60"/>  
+<edge id="91" source="30" target="65"/>  
+<edge id="92" source="31" target="9"/>  
+<edge id="93" source="31" target="17"/>  
+<edge id="94" source="31" target="22"/>  
+<edge id="96" source="31" target="39"/>  
+<edge id="98" source="32" target="58"/>  
+<edge id="100" source="33" target="43"/>  
+<edge id="101" source="34" target="23"/>  
+<edge id="103" source="34" target="37"/>  
+<edge id="104" source="34" target="38"/>  
+<edge id="105" source="34" target="41"/>  
+<edge id="106" source="34" target="46"/>  
+<edge id="107" source="34" target="47"/>  
+<edge id="108" source="35" target="15"/>  
+<edge id="109" source="35" target="18"/>  
+<edge id="111" source="35" target="67"/>  
+<edge id="112" source="36" target="24"/>  
+<edge id="113" source="36" target="30"/>  
+<edge id="115" source="36" target="48"/>  
+<edge id="116" source="36" target="52"/>  
+<edge id="117" source="36" target="57"/>  
+<edge id="118" source="36" target="60"/>  
+<edge id="119" source="36" target="65"/>  
+<edge id="120" source="36" target="73"/>  
+<edge id="121" source="37" target="12"/>  
+<edge id="122" source="37" target="23"/>  
+<edge id="124" source="37" target="38"/>  
+<edge id="125" source="37" target="40"/>  
+<edge id="126" source="37" target="41"/>  
+<edge id="127" source="37" target="46"/>  
+<edge id="128" source="37" target="47"/>  
+<edge id="129" source="37" target="57"/>  
+<edge id="130" source="37" target="61"/>  
+<edge id="131" source="37" target="65"/>  
+<edge id="132" source="37" target="73"/>  
+<edge id="133" source="38" target="23"/>  
+<edge id="134" source="38" target="24"/>  
+<edge id="135" source="38" target="30"/>  
+<edge id="136" source="38" target="36"/>  
+<edge id="137" source="38" target="37"/>  
+<edge id="139" source="38" target="40"/>  
+<edge id="140" source="38" target="41"/>  
+<edge id="141" source="38" target="46"/>  
+<edge id="142" source="38" target="47"/>  
+<edge id="143" source="38" target="48"/>  
+<edge id="144" source="38" target="52"/>  
+<edge id="145" source="38" target="57"/>  
+<edge id="146" source="38" target="60"/>  
+<edge id="147" source="38" target="61"/>  
+<edge id="148" source="38" target="65"/>  
+<edge id="149" source="38" target="73"/>  
+<edge id="150" source="39" target="9"/>  
+<edge id="151" source="39" target="17"/>  
+<edge id="152" source="39" target="19"/>  
+<edge id="153" source="39" target="22"/>  
+<edge id="154" source="39" target="31"/>  
+<edge id="156" source="40" target="24"/>  
+<edge id="157" source="40" target="30"/>  
+<edge id="158" source="40" target="36"/>  
+<edge id="159" source="40" target="37"/>  
+<edge id="160" source="40" target="38"/>  
+<edge id="162" source="40" target="41"/>  
+<edge id="163" source="40" target="47"/>  
+<edge id="164" source="40" target="48"/>  
+<edge id="165" source="40" target="52"/>  
+<edge id="166" source="40" target="57"/>  
+<edge id="167" source="40" target="60"/>  
+<edge id="168" source="40" target="61"/>  
+<edge id="169" source="40" target="65"/>  
+<edge id="170" source="40" target="73"/>  
+<edge id="171" source="41" target="12"/>  
+<edge id="172" source="41" target="23"/>  
+<edge id="173" source="41" target="24"/>  
+<edge id="174" source="41" target="36"/>  
+<edge id="175" source="41" target="37"/>  
+<edge id="176" source="41" target="38"/>  
+<edge id="177" source="41" target="40"/>  
+<edge id="179" source="41" target="48"/>  
+<edge id="180" source="41" target="52"/>  
+<edge id="181" source="41" target="57"/>  
+<edge id="182" source="41" target="60"/>  
+<edge id="183" source="41" target="61"/>  
+<edge id="184" source="41" target="65"/>  
+<edge id="185" source="41" target="73"/>  
+<edge id="187" source="43" target="33"/>  
+<edge id="190" source="45" target="12"/>  
+<edge id="191" source="45" target="23"/>  
+<edge id="193" source="46" target="23"/>  
+<edge id="194" source="46" target="34"/>  
+<edge id="195" source="46" target="37"/>  
+<edge id="196" source="46" target="38"/>  
+<edge id="197" source="46" target="41"/>  
+<edge id="199" source="46" target="47"/>  
+<edge id="200" source="47" target="23"/>  
+<edge id="201" source="47" target="34"/>  
+<edge id="202" source="47" target="37"/>  
+<edge id="203" source="47" target="41"/>  
+<edge id="204" source="47" target="46"/>  
+<edge id="206" source="48" target="24"/>  
+<edge id="207" source="48" target="30"/>  
+<edge id="208" source="48" target="36"/>  
+<edge id="209" source="48" target="38"/>  
+<edge id="211" source="48" target="52"/>  
+<edge id="212" source="48" target="57"/>  
+<edge id="213" source="48" target="60"/>  
+<edge id="214" source="48" target="65"/>  
+<edge id="215" source="48" target="73"/>  
+<edge id="217" source="49" target="51"/>  
+<edge id="218" source="49" target="72"/>  
+<edge id="220" source="51" target="49"/>  
+<edge id="222" source="51" target="72"/>  
+<edge id="223" source="52" target="24"/>  
+<edge id="224" source="52" target="30"/>  
+<edge id="225" source="52" target="36"/>  
+<edge id="226" source="52" target="48"/>  
+<edge id="228" source="52" target="57"/>  
+<edge id="229" source="52" target="60"/>  
+<edge id="230" source="52" target="65"/>  
+<edge id="231" source="52" target="73"/>  
+<edge id="232" source="53" target="26"/>  
+<edge id="237" source="56" target="62"/>  
+<edge id="238" source="56" target="66"/>  
+<edge id="239" source="57" target="24"/>  
+<edge id="240" source="57" target="30"/>  
+<edge id="241" source="57" target="36"/>  
+<edge id="242" source="57" target="38"/>  
+<edge id="243" source="57" target="40"/>  
+<edge id="244" source="57" target="48"/>  
+<edge id="245" source="57" target="52"/>  
+<edge id="247" source="57" target="60"/>  
+<edge id="248" source="57" target="65"/>  
+<edge id="249" source="57" target="73"/>  
+<edge id="250" source="58" target="32"/>  
+<edge id="253" source="60" target="24"/>  
+<edge id="254" source="60" target="30"/>  
+<edge id="255" source="60" target="36"/>  
+<edge id="256" source="60" target="48"/>  
+<edge id="257" source="60" target="52"/>  
+<edge id="258" source="60" target="57"/>  
+<edge id="260" source="60" target="65"/>  
+<edge id="261" source="61" target="23"/>  
+<edge id="262" source="61" target="24"/>  
+<edge id="263" source="61" target="36"/>  
+<edge id="264" source="61" target="37"/>  
+<edge id="265" source="61" target="38"/>  
+<edge id="266" source="61" target="40"/>  
+<edge id="267" source="61" target="41"/>  
+<edge id="268" source="61" target="47"/>  
+<edge id="269" source="61" target="48"/>  
+<edge id="270" source="61" target="52"/>  
+<edge id="271" source="61" target="57"/>  
+<edge id="272" source="61" target="60"/>  
+<edge id="274" source="61" target="65"/>  
+<edge id="275" source="61" target="73"/>  
+<edge id="276" source="62" target="56"/>  
+<edge id="278" source="62" target="66"/>  
+<edge id="279" source="62" target="71"/>  
+<edge id="281" source="63" target="69"/>  
+<edge id="282" source="64" target="32"/>  
+<edge id="283" source="64" target="56"/>  
+<edge id="284" source="64" target="62"/>  
+<edge id="286" source="64" target="66"/>  
+<edge id="287" source="64" target="71"/>  
+<edge id="288" source="65" target="24"/>  
+<edge id="289" source="65" target="30"/>  
+<edge id="290" source="65" target="36"/>  
+<edge id="291" source="65" target="37"/>  
+<edge id="292" source="65" target="38"/>  
+<edge id="293" source="65" target="40"/>  
+<edge id="294" source="65" target="41"/>  
+<edge id="295" source="65" target="48"/>  
+<edge id="296" source="65" target="52"/>  
+<edge id="297" source="65" target="57"/>  
+<edge id="298" source="65" target="60"/>  
+<edge id="299" source="65" target="61"/>  
+<edge id="301" source="65" target="73"/>  
+<edge id="302" source="66" target="56"/>  
+<edge id="303" source="66" target="62"/>  
+<edge id="305" source="66" target="71"/>  
+<edge id="306" source="67" target="15"/>  
+<edge id="307" source="67" target="18"/>  
+<edge id="308" source="67" target="35"/>  
+<edge id="310" source="68" target="25"/>  
+<edge id="312" source="69" target="63"/>  
+<edge id="314" source="70" target="29"/>  
+<edge id="315" source="71" target="62"/>  
+<edge id="316" source="71" target="66"/>  
+<edge id="318" source="72" target="49"/>  
+<edge id="319" source="72" target="51"/>  
+<edge id="321" source="73" target="24"/>  
+<edge id="322" source="73" target="30"/>  
+<edge id="323" source="73" target="36"/>  
+<edge id="324" source="73" target="37"/>  
+<edge id="325" source="73" target="38"/>  
+<edge id="326" source="73" target="40"/>  
+<edge id="327" source="73" target="41"/>  
+<edge id="328" source="73" target="48"/>  
+<edge id="329" source="73" target="52"/>  
+<edge id="330" source="73" target="57"/>  
+<edge id="331" source="73" target="60"/>  
+<edge id="332" source="73" target="61"/>  
+<edge id="333" source="73" target="65"/>  
+</edges> 
+</graph> 
+</gexf> 

@@ -1,0 +1,1 @@
+[{"keyword":"sécheresse","count":21,"links":{"sécheresse":1,"accès à l’eau potable":1,"accès à l’eau":1,"durabilité":1}},{"keyword":"accès à l’eau potable","count":7,"links":{"accès à l’eau potable":7,"accès à l’eau":7,"durabilité":2}},{"keyword":"accès à l’eau","count":12,"links":{"accès à l’eau":7,"durabilité":2}},{"keyword":"durabilité","count":22,"links":{"durabilité":2}}]

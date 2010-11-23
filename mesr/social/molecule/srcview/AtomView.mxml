@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Canvas xmlns:mx="http://www.adobe.com/2006/mxml" xmlns="*" xmlns:local="*" creationComplete="creationComplete()"
+	scaleX="{MoleculeViewer.getInstance().scaleFactor}" scaleY="{MoleculeViewer.getInstance().scaleFactor}">
+	
+	<!--
+	////////////////////////////////////////////////////////////////////////////////
+	//
+	//  Copyright (C) 2006 Adobe Macromedia Software LLC and its licensors.
+	//  All Rights Reserved. The following is Source Code and is subject to all
+	//  restrictions on such code as contained in the End User License Agreement
+	//  accompanying this product.
+	//
+	////////////////////////////////////////////////////////////////////////////////
+	-->
+	
+	<!-- This component is the itemRenderer for a single atom.
+		 An atomview is just a circle with a label on top.
+		 The color and size are set when we are given a particular atom to represent. -->
+	<local:Circle id="circle"/>
+	<mx:Label id="lab" fontSize="28" textAlign="center" fontFamily="verdana"/>
+	
+	<mx:Script>
+		<![CDATA[
+			import com.adobe.flex.extras.controls.springgraph.Item;
+			import mx.controls.List;
+			import MoleculeViewer;
+			
+			/**	the graph item that this AtomView represents. The items's "data" property
+			* is the xml node that defines the atom, for example
+			* <atom id="a2">
+      		*	<string builtin="elementType">C</string>
+    		* </atom>
+    		*/
+			private var _data: Item;
+			
+			/** is this component fully created? */
+			private var created: Boolean = false;
+			
+			/** A list of what color each atom should be.
+			 * These colors were taken from the list at http://life.nthu.edu.tw/~fmhsu/rasframe/CPKCLRS.HTM
+			 */
+			private var atomColors: Object = {
+				C: 0xC8C8C8,
+				N: 0x8F8FFF,
+				O: 0xF00000,
+				Cl: 0x00FF00,
+				P: 0xFFA500,
+				H: 0xFFFFFF
+			};
+			
+			/** sets the data of this view. We expect the object to be an Item. */
+			override public function set data(d: Object): void {
+				super.data = d;
+				_data = d as Item;
+
+				// Update the the view to reflect the new data. 
+				// However, if this component is not yet fully created, then it's not
+				// safe to reference our child component properties, so don't it yet.
+				if(created)
+					applyData();
+			}
+			
+			/** called when this component and its child components are fully created. */
+			private function creationComplete(): void {
+				created = true;
+				if(_data != null)
+					applyData();
+			}
+			
+			/** updates our view to represent the current Item, which is some kind of atom. */
+			private function applyData(): void {
+				var name: String = getAtomName(_data.data as XML);
+				
+				// determine the color
+				var color: int;
+				if(atomColors.hasOwnProperty(name))
+					// this is a known atom type
+					color = atomColors[name];
+				else
+					// this atom type is not in the 'atomColors' table. use a default.
+					color = 0x666666;
+
+				// determine the size. To a first approximation, all atoms are roughly the
+				// same size. See http://www.historyoftheuniverse.com/atomsize.html. 
+				var labelY: int = 4; // TODO: figure out how to do vertical centering automatically
+				var size: int = 50;
+
+				// apply the settings to our UI components
+				circle.color = color;
+				circle.width = size;
+				circle.height = size;
+				lab.width = size;
+				lab.y = labelY;
+				lab.text = name;
+			}
+			
+			/** given an <atom> tag from a CML document, determine the name of the atom */
+			private function getAtomName(atomXML: XML): String {
+				// the <atom> tag might use namespaces, or it might not.
+
+				// First, try to find the name without using a namespace
+				var name: String = atomXML.string.(@builtin == "elementType");
+				
+				if((name == null) || (name.length == 0)) {
+					// We didn't' find a name. Try again using a namespace.
+					var ns: Namespace = MoleculeViewer.cmlns;
+					name = atomXML.ns::string; // .(@builtin == "elementType");
+					// TODO: the above XML expression works, but isn't the right expression. fix it.
+				}
+				return name;
+			}
+		]]>
+	</mx:Script>	
+</mx:Canvas>

@@ -1,0 +1,225 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Application xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:flex="http://www.adobe.com/2006/fc" xmlns="*" xmlns:molecules="molecules.*" 
+	layout="absolute" creationComplete="startup()" viewSourceURL="srcview/index.html">
+	
+	<!--
+	////////////////////////////////////////////////////////////////////////////////
+	//
+	//  Copyright (C) 2006 Adobe Macromedia Software LLC and its licensors.
+	//  All Rights Reserved. The following is Source Code and is subject to all
+	//  restrictions on such code as contained in the End User License Agreement
+	//  accompanying this product.
+	//
+	////////////////////////////////////////////////////////////////////////////////
+	-->
+	
+	<!-- This application display schematic layouts of various molecules. 
+		The molecule definitions are fetched from XML files that use the 
+		CML markup language to define molecules as atoms and bonds. 
+		For more info on CML, see http://www.xml-cml.org/.
+		
+		This app was written in Flex 2, using FlexBuilder. Most of the work
+		is done by the SpringGraph component.
+		
+		Written by Mark Shepherd, Nov 2006
+	-->
+
+	<!-- The UI -->
+	
+	<!-- the springgraph covers the entire area -->
+	<flex:SpringGraph id="springgraph" bottom="0" top="0" right="0" left="0" backgroundColor="#666666" 
+		repulsionFactor="{repulsion.value}" dataProvider="{graph}" itemRenderer="AtomView"/>
+		
+	<!-- various controls appear superimposed over the springgraph -->
+	<mx:Label x="10" y="69" fontSize="16" fontFamily="Verdana" color="#dddddd" id="moleculeTitle"/>
+	<mx:HSlider x="10" y="13" width="114" id="repulsion" value="0.60" minimum="0.0" maximum="1.5" liveDragging="true"/>
+	<mx:HSlider x="10" y="39" width="114" id="scaleSlider" value="0.43" minimum="0.1" maximum="2.0" liveDragging="true"
+		change="this.scaleFactor = scaleSlider.value"/>
+	<mx:List id="moleculeList" width="114" backgroundAlpha="0.2" color="0xffffff"
+		dataProvider="{moleculeNames}" selectedIndex="0"
+		change="loadCMLFile((event.currentTarget as List).selectedItem as String)"
+		rollOverColor="0xcccccc" selectionColor="0xdddddd" bottom="57" left="10" top="101"/>
+	<mx:Label text="about" fontSize="14" click="doAbout()" bottom="27" height="23" left="44"
+		color="#dddddd" 
+		rollOver="event.currentTarget.setStyle('color', 0xffffff)" 
+		rollOut="event.currentTarget.setStyle('color', 0xdddddd)"/>
+	<mx:Text fontSize="9" color="#dddddd" textAlign="center" width="114"
+		htmlText="&lt;a href=&quot;http://mark-shepherd.com&quot;&gt;mark-shepherd.com&lt;/a&gt;" bottom="10" left="10"/>
+
+	<!-- The Scripts -->
+
+	<mx:Script>
+		<![CDATA[
+			import mx.managers.PopUpManager;
+			import mx.core.IFlexDisplayObject;
+			import com.adobe.flex.extras.controls.springgraph.Item;
+			import com.adobe.flex.extras.controls.springgraph.Graph;
+			
+			/** this function runs when all the components have been fully created. We load in 
+			    our first data file, using whatever is the default selection in moleculeList. */
+			private function startup(): void {
+				loadCMLFile(moleculeList.selectedItem as String);
+			}
+
+			/** Initiates the fetch of a CML file. When the file has finished loading,
+				it will be processed in the gotData function. */
+			private function loadCMLFile(file: String): void {
+				cmlService.url = 'cmlfiles/' + file + '.xml';
+				cmlService.send();
+			}
+				
+			[Bindable]
+			/** the current scale factor applied to all AtomView's. There is a slider
+			    in the UI that controls this. (Note: I chose a smallish default value 0.43 because
+			    the performance seems to be better. I think this performance difference
+			    is not because the drawing is faster, but rather because the SpringGraph
+			    is able to find a stable layout in fewer iterations). */
+			public var scaleFactor: Number = 0.43;
+				
+			[Bindable]
+			/** the graph that provides the item/link (a.k.a atom/bond) data
+			    to the SpringGraph. */
+			public var graph: Graph = new Graph();
+
+			public static function getInstance(): MoleculeViewer {
+				return Application.application as MoleculeViewer;
+			}
+			
+			/** called when the fetch of a CML file has successfully completed. */
+			private function gotData(event: Event): void {
+				// throw away the molecule we are currently viewing.
+				// BTW, if you don't do this, it works fine, you get several molecules on 
+				// the display at same time. The only problem is that the SpringGraph
+				// starts to get slow.
+				graph.empty();
+				
+				// load the CML data into the graph
+				loadCML(event.currentTarget.lastResult, graph);			
+				
+				// set the title that appears in the UI
+				moleculeTitle.text = event.currentTarget.lastResult.@title;
+			}
+			
+			// This namespace is used in some, but not all, CML files
+			public static var cmlns:Namespace = new Namespace("x-schema:cml_schema_ie_02.xml");
+			
+			/** loads a CML document into a Graph. We only use the <atom> and <bond> tags,
+			and ignore all the other information and tags in the CML. */
+			private static function loadCML(cml: XML, g: Graph): void {
+				var gid: String = cml.@id;
+				var item: Item;
+				
+				// look for <atom> elements that have no namespace
+				for each (var node: XML in cml..atom) {
+					item = new Item(gid + node.@id);
+					item.data = node;
+					g.add(item);
+				}
+				
+				// look for <atom> elements in the standard CML namespace
+				for each (node in cml..cmlns::atom) {
+					item = new Item(gid + node.@id);
+					item.data = node;
+					g.add(item);
+				}
+				
+				// look for <bond> elements that have no namespace
+				for each (var bond: XML in cml..bond) {
+					loadBond(bond, g, gid);
+				}
+				
+				// look for <bond> elements in the standard CML namespace
+				for each (bond in cml..cmlns::bond) {
+					loadBond(bond, g, gid);
+				}
+			}
+			
+			/** load a bond into a graph. A bond looks like this
+			 *   <bond id="b6">
+     	 	 *		<string builtin="atomRef">a6</string>
+   			 *		<string builtin="atomRef">a7</string>
+  			 *		<string builtin="order">1</string>
+ 			 *   </bond>
+			 */
+			private static function loadBond(bond: XML, g: Graph, gid: String): void {
+				var fromID: String;
+				var toID: String;
+				var orderString: String;
+				
+				try {
+					// try finding the info without using a namespace
+					fromID = bond.string[0].toString();
+					toID = bond.string[1].toString();
+					orderString = bond.string.(@builtin == "order");
+				} catch (e: Error) {
+					// that failed. try again using a namespace.
+					fromID = bond.cmlns::string[0].toString();
+					toID = bond.cmlns::string[1].toString();
+					orderString = bond.cmlns::string[2].toString(); //.(@builtin == "order");
+				}
+				
+				// find the 2 atoms, based on their id's
+				var fromItem: Item = g.find(gid + fromID);
+				var toItem: Item = g.find(gid + toID);
+				
+				if((fromItem != null) && (toItem != null)) {
+					// get the 'order' of the bond. Make sure it's a sensible number.
+					var order: int = int(orderString.toString());
+					if(order < 0) order = 0;
+					if(order > 10) order = 10;
+					
+					// create the data object that is associated with this edge.
+					// this object must specify various visual parameters for the line
+					// that represents the bond. (note: its ok to omit this, in
+					// which case the edge will be drawn using default settings).
+					var data: Object = {settings: {alpha: 0.5, color: 0, thickness: (order * 3) - 2}};
+					
+					// add the bond (a.k.a. link) to the graph
+					g.link(fromItem, toItem, data);
+				}
+				// todo: the bind information sometimes has a 'stereo' value with values like H and W. do something with this.
+			}
+
+			/** pops up the about box */
+			private function doAbout(): void {
+				var aboutWindow: IFlexDisplayObject = new AboutWindow();
+				PopUpManager.addPopUp(aboutWindow, this, true);		
+				PopUpManager.centerPopUp(aboutWindow);		
+			}
+		]]>
+	</mx:Script>
+
+	<!-- The data -->
+	
+	<!-- a component that we use to send http requests to get the cml data files. -->
+	<mx:HTTPService id="cmlService" showBusyCursor="true" resultFormat="e4x" result="gotData(event)"/>
+	
+	<!-- A list of the CML data files we use. These data files are stored along with the MoleculeViewer application,
+	     (in the cmlfiles folder), so that they can be fetched without violating the Flash sandbox rules. 
+	     The files originally come from http://www.xml-cml.org/, to whom I am very grateful. There are lots
+	     more files there if you want to play with them, but beware - the big ones are slow -->
+	<mx:Array id="moleculeNames">
+		<mx:String>accholine</mx:String>
+		<mx:String>adenosine</mx:String>
+		<mx:String>adrenalin</mx:String>
+		<mx:String>aminopval</mx:String>
+		<mx:String>baclofen</mx:String>
+		<mx:String>bicuculli</mx:String>
+		<mx:String>bufotenin</mx:String>
+		<mx:String>carotine</mx:String>
+		<mx:String>choline</mx:String>
+		<mx:String>clozapine</mx:String>
+		<mx:String>diazepam</mx:String>
+		<mx:String>dopamine</mx:String>
+		<mx:String>glutamate</mx:String>
+		<mx:String>histamine</mx:String>
+		<mx:String>indoleace</mx:String>
+		<mx:String>kainate</mx:String>
+		<mx:String>naloxone</mx:String>
+		<mx:String>nicotine</mx:String>
+		<mx:String>riboflavin</mx:String>
+		<mx:String>serotonin</mx:String>
+		<mx:String>tyrosine</mx:String>
+	</mx:Array>
+	
+</mx:Application>

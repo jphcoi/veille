@@ -1,0 +1,1894 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<gexf xmlns:viz="http:///www.gexf.net/1.1draft/viz" version="1.1" xmlns="http://www.gexf.net/1.1draft">
+<meta lastmodifieddate="2010-11-15+02:47">
+<creator>Gephi 0.7</creator>
+</meta>
+<graph defaultedgetype="directed" idtype="string" type="static">
+<attributes class="node" mode="static">
+<attribute id="0" title="niveau" type="string"/>
+<attribute id="1" title="temps" type="string"/>
+<attribute id="2" title="fathersbis" type="string"/>
+<attribute id="3" title="url" type="string"/>
+<attribute id="4" title="sonsbis" type="string"/>
+<attribute id="PhyloPartition" title="Phylo Partition" type="integer"/>
+</attributes>
+<attributes class="edge" mode="static">
+<attribute id="1" title="temps" type="string"/>
+</attributes>
+<nodes count="104">\n<node id="661" label="nanotechnologies - plasma">
+<attvalues>
+<attvalue id="0" value="2"/>
+<attvalue id="1" value="6"/>
+<attvalue id="2" value="cluster.php?id_cluster=0&amp;periode=238-251"/>
+<attvalue id="3" value="1"/>
+<attvalue id="4" value="0"/>
+<attvalue id="PhyloPartition" value="11"/>
+</attvalues>
+<viz:size value="7.894737"/>
+<viz:color b="182" g="59" r="135"/>
+<viz:position x="-69.57139" y="-136.10667" z="1900.0"/>
+</node>
+<node id="662" label="mammifres marins - plancton">
+<attvalues>
+<attvalue id="0" value="2"/>
+<attvalue id="1" value="6"/>
+<attvalue id="2" value="cluster.php?id_cluster=1&amp;periode=238-251"/>
+<attvalue id="3" value="1"/>
+<attvalue id="4" value="0"/>
+<attvalue id="PhyloPartition" value="39"/>
+</attvalues>
+<viz:size value="6.631579"/>
+<viz:color b="100" g="59" r="182"/>
+<viz:position x="-261.683" y="28.662357" z="1900.0"/>
+</node>
+<node id="663" label="maladies auto-immunes - toxine">
+<attvalues>
+<attvalue id="0" value="2"/>
+<attvalue id="1" value="6"/>
+<attvalue id="2" value="cluster.php?id_cluster=2&amp;periode=238-251"/>
+<attvalue id="3" value="1"/>
+<attvalue id="4" value="0"/>
+<attvalue id="PhyloPartition" value="39"/>
+</attvalues>
+<viz:size value="7.263158"/>
+<viz:color b="100" g="59" r="182"/>
+<viz:position x="-279.98727" y="31.487507" z="1900.0"/>
+</node>
+<node id="664" label="dŽveloppement urbain - forts russes">
+<attvalues>
+<attvalue id="0" value="2"/>
+<attvalue id="1" value="6"/>
+<attvalue id="2" value="cluster.php?id_cluster=3&amp;periode=238-251"/>
+<attvalue id="3" value="1"/>
+<attvalue id="4" value="0"/>
+<attvalue id="PhyloPartition" value="66"/>
+</attvalues>
+<viz:size value="6.315789"/>
+<viz:color b="59" g="182" r="131"/>
+<viz:position x="150.78625" y="-174.8561" z="1900.0"/>
+</node>
+<node id="665" label="katrina - nouvelle-orlŽans">
+<attvalues>
+<attvalue id="0" value="2"/>
+<attvalue id="1" value="6"/>
+<attvalue id="2" value="cluster.php?id_cluster=4&amp;periode=238-251"/>
+<attvalue id="3" value="0"/>
+<attvalue id="4" value="0"/>
+<attvalue id="PhyloPartition" value="0"/>
+</attvalues>
+<viz:size value="8.210526"/>
+<viz:color b="59" g="121" r="182"/>
+<viz:position x="-130.16731" y="-908.73773" z="1900.0"/>
+</node>
+<node id="666" label="cellule familiale - sanctions pŽnales">
+<attvalues>
+<attvalue id="0" value="2"/>
+<attvalue id="1" value="6"/>
+<attvalue id="2" value="cluster.php?id_cluster=5&amp;periode=238-251"/>
+<attvalue id="3" value="0"/>
+<attvalue id="4" value="0"/>
+<attvalue id="PhyloPartition" value="0"/>
+</attvalues>
+<viz:size value="6.0"/>
+<viz:color b="59" g="121" r="182"/>
+<viz:position x="-36.938477" y="678.29846" z="1900.0"/>
+</node>
+<node id="667" label="filire nuclŽaire - chantier de l' epr">
+<attvalues>
+<attvalue id="0" value="2"/>
+<attvalue id="1" value="6"/>
+<attvalue id="2" value="cluster.php?id_cluster=6&amp;periode=238-251"/>
+<attvalue id="3" value="1"/>
+<attvalue id="4" value="1"/>
+<attvalue id="PhyloPartition" value="31"/>
+</attvalues>
+<viz:size value="7.894737"/>
+<viz:color b="158" g="59" r="182"/>
+<viz:position x="-146.02348" y="465.24414" z="1900.0"/>
+</node>
+<node id="668" label="dŽveloppement soutenable - culture expŽrimentale">
+<attvalues>
+<attvalue id="0" value="2"/>
+<attvalue id="1" value="6"/>
+<attvalue id="2" value="cluster.php?id_cluster=7&amp;periode=238-251"/>
+<attvalue id="3" value="0"/>
+<attvalue id="4" value="0"/>
+<attvalue id="PhyloPartition" value="0"/>
+</attvalues>
+<viz:size value="6.315789"/>
+<viz:color b="59" g="121" r="182"/>
+<viz:position x="-69.9223" y="640.99695" z="1900.0"/>
+</node>
+<node id="669" label="restauration rapide - hamburger">
+<attvalues>
+<attvalue id="0" value="2"/>
+<attvalue id="1" value="6"/>
+<attvalue id="2" value="cluster.php?id_cluster=8&amp;periode=238-251"/>
+<attvalue id="3" value="0"/>
+<attvalue id="4" value="1"/>
+<attvalue id="PhyloPartition" value="32"/>
+</attvalues>
+<viz:size value="6.0"/>
+<viz:color b="82" g="182" r="59"/>
+<viz:position x="249.5229" y="37.10244" z="1900.0"/>
+</node>
+<node id="670" label="puits macondo - services pŽtroliers">
+<attvalues>
+<attvalue id="0" value="2"/>
+<attvalue id="1" value="6"/>
+<attvalue id="2" value="cluster.php?id_cluster=9&amp;periode=238-251"/>
+<attvalue id="3" value="1"/>
+<attvalue id="4" value="1"/>
+<attvalue id="PhyloPartition" value="5"/>
+</attvalues>
+<viz:size value="9.157895"/>
+<viz:color b="182" g="59" r="160"/>
+<viz:position x="-71.29917" y="32.076427" z="1900.0"/>
+</node>
+<node id="671" label="effets toxiques - fortes chaleurs">
+<attvalues>
+<attvalue id="0" value="2"/>
+<attvalue id="1" value="6"/>
+<attvalue id="2" value="cluster.php?id_cluster=10&amp;periode=238-251"/>
+<attvalue id="3" value="1"/>
+<attvalue id="4" value="0"/>
+<attvalue id="PhyloPartition" value="65"/>
+</attvalues>
+<viz:size value="8.210526"/>
+<viz:color b="182" g="59" r="73"/>
+<viz:position x="-159.30865" y="232.01202" z="1900.0"/>
+</node>
+<node id="672" label="bateau de pche - haute mer">
+<attvalues>
+<attvalue id="0" value="2"/>
+<attvalue id="1" value="6"/>
+<attvalue id="2" value="cluster.php?id_cluster=11&amp;periode=238-251"/>
+<attvalue id="3" value="0"/>
+<attvalue id="4" value="0"/>
+<attvalue id="PhyloPartition" value="0"/>
+</attvalues>
+<viz:size value="6.315789"/>
+<viz:color b="59" g="121" r="182"/>
+<viz:position x="486.41174" y="787.89703" z="1900.0"/>
+</node>
+<node id="673" label="Etats europŽens - dŽsastre social">
+<attvalues>
+<attvalue id="0" value="2"/>
+<attvalue id="1" value="6"/>
+<attvalue id="2" value="cluster.php?id_cluster=12&amp;periode=238-251"/>
+<attvalue id="3" value="0"/>
+<attvalue id="4" value="1"/>
+<attvalue id="PhyloPartition" value="22"/>
+</attvalues>
+<viz:size value="8.842106"/>
+<viz:color b="167" g="59" r="182"/>
+<viz:position x="384.082" y="-162.06248" z="1900.0"/>
+</node>
+<node id="674" label="tempte tropicale - nhc">
+<attvalues>
+<attvalue id="0" value="2"/>
+<attvalue id="1" value="6"/>
+<attvalue id="2" value="cluster.php?id_cluster=13&amp;periode=238-251"/>
+<attvalue id="3" value="1"/>
+<attvalue id="4" value="0"/>
+<attvalue id="PhyloPartition" value="64"/>
+</attvalues>
+<viz:size value="6.631579"/>
+<viz:color b="182" g="59" r="60"/>
+<viz:position x="-70.47445" y="-196.39006" z="1900.0"/>
+</node>
+<node id="675" label="wwf-france - quantitŽs de dŽchets">
+<attvalues>
+<attvalue id="0" value="2"/>
+<attvalue id="1" value="6"/>
+<attvalue id="2" value="cluster.php?id_cluster=14&amp;periode=238-251"/>
+<attvalue id="3" value="0"/>
+<attvalue id="4" value="0"/>
+<attvalue id="PhyloPartition" value="0"/>
+</attvalues>
+<viz:size value="6.0"/>
+<viz:color b="59" g="121" r="182"/>
+<viz:position x="-505.37152" y="461.31982" z="1900.0"/>
+</node>
+<node id="676" label="communautŽ homosexuelle - dŽpistage anonyme">
+<attvalues>
+<attvalue id="0" value="2"/>
+<attvalue id="1" value="6"/>
+<attvalue id="2" value="cluster.php?id_cluster=15&amp;periode=238-251"/>
+<attvalue id="3" value="0"/>
+<attvalue id="4" value="1"/>
+<attvalue id="PhyloPartition" value="15"/>
+</attvalues>
+<viz:size value="7.5789475"/>
+<viz:color b="125" g="59" r="182"/>
+<viz:position x="93.437645" y="102.97294" z="1900.0"/>
+</node>
+<node id="677" label="coton bio - nocifs pour la santŽ">
+<attvalues>
+<attvalue id="0" value="2"/>
+<attvalue id="1" value="6"/>
+<attvalue id="2" value="cluster.php?id_cluster=16&amp;periode=238-251"/>
+<attvalue id="3" value="1"/>
+<attvalue id="4" value="0"/>
+<attvalue id="PhyloPartition" value="63"/>
+</attvalues>
+<viz:size value="7.5789475"/>
+<viz:color b="149" g="182" r="59"/>
+<viz:position x="175.54895" y="-254.01303" z="1900.0"/>
+</node>
+<node id="678" label="catastrophe sanitaire - ampleur des dŽg‰ts">
+<attvalues>
+<attvalue id="0" value="2"/>
+<attvalue id="1" value="6"/>
+<attvalue id="2" value="cluster.php?id_cluster=17&amp;periode=238-251"/>
+<attvalue id="3" value="0"/>
+<attvalue id="4" value="1"/>
+<attvalue id="PhyloPartition" value="29"/>
+</attvalues>
+<viz:size value="6.0"/>
+<viz:color b="145" g="182" r="59"/>
+<viz:position x="190.49867" y="266.83273" z="1900.0"/>
+</node>
+<node id="679" label="crustacŽs - Žcosystme local">
+<attvalues>
+<attvalue id="0" value="2"/>
+<attvalue id="1" value="6"/>
+<attvalue id="2" value="cluster.php?id_cluster=18&amp;periode=238-251"/>
+<attvalue id="3" value="0"/>
+<attvalue id="4" value="1"/>
+<attvalue id="PhyloPartition" value="27"/>
+</attvalues>
+<viz:size value="6.315789"/>
+<viz:color b="182" g="87" r="59"/>
+<viz:position x="-109.58923" y="-193.04733" z="1900.0"/>
+</node>
+<node id="680" label="caractŽristiques morphologiques - Micro-organisme unicellulaire">
+<attvalues>
+<attvalue id="0" value="2"/>
+<attvalue id="1" value="6"/>
+<attvalue id="2" value="cluster.php?id_cluster=19&amp;periode=238-251"/>
+<attvalue id="3" value="1"/>
+<attvalue id="4" value="1"/>
+<attvalue id="PhyloPartition" value="6"/>
+</attvalues>
+<viz:size value="7.263158"/>
+<viz:color b="182" g="157" r="59"/>
+<viz:position x="169.26508" y="124.89581" z="1900.0"/>
+</node>
+<node id="681" label="rapport parlementaire - dŽsastre social">
+<attvalues>
+<attvalue id="0" value="2"/>
+<attvalue id="1" value="6"/>
+<attvalue id="2" value="cluster.php?id_cluster=20&amp;periode=238-251"/>
+<attvalue id="3" value="0"/>
+<attvalue id="4" value="1"/>
+<attvalue id="PhyloPartition" value="22"/>
+</attvalues>
+<viz:size value="8.526316"/>
+<viz:color b="167" g="59" r="182"/>
+<viz:position x="399.4729" y="-197.3816" z="1900.0"/>
+</node>
+<node id="682" label="peine de mort - droits humains">
+<attvalues>
+<attvalue id="0" value="2"/>
+<attvalue id="1" value="6"/>
+<attvalue id="2" value="cluster.php?id_cluster=21&amp;periode=238-251"/>
+<attvalue id="3" value="0"/>
+<attvalue id="4" value="1"/>
+<attvalue id="PhyloPartition" value="1"/>
+</attvalues>
+<viz:size value="8.842106"/>
+<viz:color b="59" g="182" r="164"/>
+<viz:position x="92.695755" y="499.60388" z="1900.0"/>
+</node>
+<node id="683" label="Direction gŽnŽrale de la santŽ - Žchange de seringues">
+<attvalues>
+<attvalue id="0" value="2"/>
+<attvalue id="1" value="6"/>
+<attvalue id="2" value="cluster.php?id_cluster=22&amp;periode=238-251"/>
+<attvalue id="3" value="0"/>
+<attvalue id="4" value="1"/>
+<attvalue id="PhyloPartition" value="37"/>
+</attvalues>
+<viz:size value="6.315789"/>
+<viz:color b="59" g="92" r="182"/>
+<viz:position x="-350.34082" y="-180.34766" z="1900.0"/>
+</node>
+<node id="684" label="impact Žcologique - centrales thermiques">
+<attvalues>
+<attvalue id="0" value="2"/>
+<attvalue id="1" value="6"/>
+<attvalue id="2" value="cluster.php?id_cluster=23&amp;periode=238-251"/>
+<attvalue id="3" value="0"/>
+<attvalue id="4" value="1"/>
+<attvalue id="PhyloPartition" value="25"/>
+</attvalues>
+<viz:size value="6.0"/>
+<viz:color b="124" g="182" r="59"/>
+<viz:position x="224.50406" y="33.332687" z="1900.0"/>
+</node>
+<node id="685" label="arctique - prospection pŽtrolire">
+<attvalues>
+<attvalue id="0" value="2"/>
+<attvalue id="1" value="6"/>
+<attvalue id="2" value="cluster.php?id_cluster=24&amp;periode=238-251"/>
+<attvalue id="3" value="1"/>
+<attvalue id="4" value="0"/>
+<attvalue id="PhyloPartition" value="56"/>
+</attvalues>
+<viz:size value="8.210526"/>
+<viz:color b="140" g="182" r="59"/>
+<viz:position x="-22.13502" y="-310.40878" z="1900.0"/>
+</node>
+<node id="686" label="production photovolta•que - filire photovolta•que">
+<attvalues>
+<attvalue id="0" value="2"/>
+<attvalue id="1" value="6"/>
+<attvalue id="2" value="cluster.php?id_cluster=25&amp;periode=238-251"/>
+<attvalue id="3" value="1"/>
+<attvalue id="4" value="0"/>
+<attvalue id="PhyloPartition" value="62"/>
+</attvalues>
+<viz:size value="6.631579"/>
+<viz:color b="121" g="59" r="182"/>
+<viz:position x="15.22441" y="91.53498" z="1900.0"/>
+</node>
+<node id="687" label="Office national de la chasse - capacitŽ d' adaptation">
+<attvalues>
+<attvalue id="0" value="2"/>
+<attvalue id="1" value="6"/>
+<attvalue id="2" value="cluster.php?id_cluster=26&amp;periode=238-251"/>
+<attvalue id="3" value="0"/>
+<attvalue id="4" value="0"/>
+<attvalue id="PhyloPartition" value="0"/>
+</attvalues>
+<viz:size value="6.0"/>
+<viz:color b="59" g="121" r="182"/>
+<viz:position x="-632.46497" y="313.23267" z="1900.0"/>
+</node>
+<node id="688" label="complications graves - donnŽes ŽpidŽmiologiques">
+<attvalues>
+<attvalue id="0" value="2"/>
+<attvalue id="1" value="6"/>
+<attvalue id="2" value="cluster.php?id_cluster=27&amp;periode=238-251"/>
+<attvalue id="3" value="1"/>
+<attvalue id="4" value="0"/>
+<attvalue id="PhyloPartition" value="61"/>
+</attvalues>
+<viz:size value="6.0"/>
+<viz:color b="78" g="182" r="59"/>
+<viz:position x="-64.38881" y="164.80412" z="1900.0"/>
+</node>
+<node id="689" label="division cellulaire - patrimoine gŽnŽtique">
+<attvalues>
+<attvalue id="0" value="2"/>
+<attvalue id="1" value="6"/>
+<attvalue id="2" value="cluster.php?id_cluster=28&amp;periode=238-251"/>
+<attvalue id="3" value="0"/>
+<attvalue id="4" value="0"/>
+<attvalue id="PhyloPartition" value="0"/>
+</attvalues>
+<viz:size value="7.894737"/>
+<viz:color b="59" g="121" r="182"/>
+<viz:position x="616.6341" y="-594.8829" z="1900.0"/>
+</node>
+<node id="690" label="dŽpart ˆ la retraite - carrires longues">
+<attvalues>
+<attvalue id="0" value="2"/>
+<attvalue id="1" value="6"/>
+<attvalue id="2" value="cluster.php?id_cluster=29&amp;periode=238-251"/>
+<attvalue id="3" value="0"/>
+<attvalue id="4" value="1"/>
+<attvalue id="PhyloPartition" value="2"/>
+</attvalues>
+<viz:size value="9.473684"/>
+<viz:color b="182" g="136" r="59"/>
+<viz:position x="-77.067566" y="-221.82062" z="1900.0"/>
+</node>
+<node id="691" label="dommages environnementaux - dispositions rŽglementaires">
+<attvalues>
+<attvalue id="0" value="2"/>
+<attvalue id="1" value="6"/>
+<attvalue id="2" value="cluster.php?id_cluster=30&amp;periode=238-251"/>
+<attvalue id="3" value="1"/>
+<attvalue id="4" value="0"/>
+<attvalue id="PhyloPartition" value="60"/>
+</attvalues>
+<viz:size value="7.5789475"/>
+<viz:color b="59" g="109" r="182"/>
+<viz:position x="82.6802" y="589.0155" z="1900.0"/>
+</node>
+<node id="692" label="national oceanic and atmospheric administration - thon rouge">
+<attvalues>
+<attvalue id="0" value="2"/>
+<attvalue id="1" value="6"/>
+<attvalue id="2" value="cluster.php?id_cluster=31&amp;periode=238-251"/>
+<attvalue id="3" value="0"/>
+<attvalue id="4" value="1"/>
+<attvalue id="PhyloPartition" value="17"/>
+</attvalues>
+<viz:size value="7.263158"/>
+<viz:color b="182" g="59" r="139"/>
+<viz:position x="223.10681" y="70.28759" z="1900.0"/>
+</node>
+<node id="693" label="dŽchets mŽnagers - ordures mŽnagres">
+<attvalues>
+<attvalue id="0" value="2"/>
+<attvalue id="1" value="6"/>
+<attvalue id="2" value="cluster.php?id_cluster=32&amp;periode=238-251"/>
+<attvalue id="3" value="1"/>
+<attvalue id="4" value="0"/>
+<attvalue id="PhyloPartition" value="59"/>
+</attvalues>
+<viz:size value="6.315789"/>
+<viz:color b="59" g="179" r="182"/>
+<viz:position x="-55.952698" y="140.76071" z="1900.0"/>
+</node>
+<node id="694" label="rŽvolution - plante">
+<attvalues>
+<attvalue id="0" value="2"/>
+<attvalue id="1" value="6"/>
+<attvalue id="2" value="cluster.php?id_cluster=33&amp;periode=238-251"/>
+<attvalue id="3" value="1"/>
+<attvalue id="4" value="1"/>
+<attvalue id="PhyloPartition" value="13"/>
+</attvalues>
+<viz:size value="8.842106"/>
+<viz:color b="59" g="117" r="182"/>
+<viz:position x="286.07407" y="-110.016815" z="1900.0"/>
+</node>
+<node id="695" label="air irrespirable - Etienne apaire">
+<attvalues>
+<attvalue id="0" value="2"/>
+<attvalue id="1" value="6"/>
+<attvalue id="2" value="cluster.php?id_cluster=34&amp;periode=238-251"/>
+<attvalue id="3" value="1"/>
+<attvalue id="4" value="0"/>
+<attvalue id="PhyloPartition" value="58"/>
+</attvalues>
+<viz:size value="6.631579"/>
+<viz:color b="169" g="182" r="59"/>
+<viz:position x="-8.866717" y="175.18217" z="1900.0"/>
+</node>
+<node id="696" label="garde-c™tes amŽricains - plateforme pŽtrolire">
+<attvalues>
+<attvalue id="0" value="2"/>
+<attvalue id="1" value="6"/>
+<attvalue id="2" value="cluster.php?id_cluster=35&amp;periode=238-251"/>
+<attvalue id="3" value="0"/>
+<attvalue id="4" value="1"/>
+<attvalue id="PhyloPartition" value="3"/>
+</attvalues>
+<viz:size value="9.157895"/>
+<viz:color b="59" g="182" r="180"/>
+<viz:position x="156.60799" y="-236.30334" z="1900.0"/>
+</node>
+<node id="697" label="mŽthode amaigrissante - inondation de la vallŽe">
+<attvalues>
+<attvalue id="0" value="2"/>
+<attvalue id="1" value="6"/>
+<attvalue id="2" value="cluster.php?id_cluster=36&amp;periode=238-251"/>
+<attvalue id="3" value="1"/>
+<attvalue id="4" value="0"/>
+<attvalue id="PhyloPartition" value="57"/>
+</attvalues>
+<viz:size value="7.263158"/>
+<viz:color b="120" g="182" r="59"/>
+<viz:position x="87.82351" y="82.177765" z="1900.0"/>
+</node>
+<node id="698" label="travailleurs agricoles - gaz toxiques">
+<attvalues>
+<attvalue id="0" value="2"/>
+<attvalue id="1" value="6"/>
+<attvalue id="2" value="cluster.php?id_cluster=37&amp;periode=238-251"/>
+<attvalue id="3" value="0"/>
+<attvalue id="4" value="1"/>
+<attvalue id="PhyloPartition" value="12"/>
+</attvalues>
+<viz:size value="6.631579"/>
+<viz:color b="182" g="153" r="59"/>
+<viz:position x="-2.06691" y="42.12912" z="1900.0"/>
+</node>
+<node id="699" label="coulŽes de boue - passage de la tempte">
+<attvalues>
+<attvalue id="0" value="2"/>
+<attvalue id="1" value="6"/>
+<attvalue id="2" value="cluster.php?id_cluster=38&amp;periode=238-251"/>
+<attvalue id="3" value="0"/>
+<attvalue id="4" value="0"/>
+<attvalue id="PhyloPartition" value="0"/>
+</attvalues>
+<viz:size value="6.315789"/>
+<viz:color b="59" g="121" r="182"/>
+<viz:position x="-53.62374" y="-990.4573" z="1900.0"/>
+</node>
+<node id="700" label="HŽpatite virale - vaccination contre la fivre jaune">
+<attvalues>
+<attvalue id="0" value="2"/>
+<attvalue id="1" value="6"/>
+<attvalue id="2" value="cluster.php?id_cluster=39&amp;periode=238-251"/>
+<attvalue id="3" value="1"/>
+<attvalue id="4" value="1"/>
+<attvalue id="PhyloPartition" value="4"/>
+</attvalues>
+<viz:size value="7.894737"/>
+<viz:color b="70" g="182" r="59"/>
+<viz:position x="64.76929" y="-94.5045" z="1900.0"/>
+</node>
+<node id="701" label="ours polaires - phoques">
+<attvalues>
+<attvalue id="0" value="2"/>
+<attvalue id="1" value="6"/>
+<attvalue id="2" value="cluster.php?id_cluster=40&amp;periode=238-251"/>
+<attvalue id="3" value="1"/>
+<attvalue id="4" value="0"/>
+<attvalue id="PhyloPartition" value="56"/>
+</attvalues>
+<viz:size value="6.9473686"/>
+<viz:color b="140" g="182" r="59"/>
+<viz:position x="-22.155502" y="-274.7241" z="1900.0"/>
+</node>
+<node id="702" label="voie orale - recherche sur le cancer">
+<attvalues>
+<attvalue id="0" value="2"/>
+<attvalue id="1" value="6"/>
+<attvalue id="2" value="cluster.php?id_cluster=41&amp;periode=238-251"/>
+<attvalue id="3" value="0"/>
+<attvalue id="4" value="0"/>
+<attvalue id="PhyloPartition" value="0"/>
+</attvalues>
+<viz:size value="6.631579"/>
+<viz:color b="59" g="121" r="182"/>
+<viz:position x="707.768" y="-324.46747" z="1900.0"/>
+</node>
+<node id="703" label="ticket modŽrateur - circulation sanguine">
+<attvalues>
+<attvalue id="0" value="2"/>
+<attvalue id="1" value="6"/>
+<attvalue id="2" value="cluster.php?id_cluster=42&amp;periode=238-251"/>
+<attvalue id="3" value="1"/>
+<attvalue id="4" value="0"/>
+<attvalue id="PhyloPartition" value="55"/>
+</attvalues>
+<viz:size value="6.0"/>
+<viz:color b="59" g="154" r="182"/>
+<viz:position x="-146.74176" y="-540.3355" z="1900.0"/>
+</node>
+<node id="704" label="semences locales - groupe agroalimentaire">
+<attvalues>
+<attvalue id="0" value="2"/>
+<attvalue id="1" value="6"/>
+<attvalue id="2" value="cluster.php?id_cluster=43&amp;periode=238-251"/>
+<attvalue id="3" value="0"/>
+<attvalue id="4" value="1"/>
+<attvalue id="PhyloPartition" value="16"/>
+</attvalues>
+<viz:size value="6.631579"/>
+<viz:color b="95" g="182" r="59"/>
+<viz:position x="43.13682" y="-289.5989" z="1900.0"/>
+</node>
+<node id="705" label="autorisation de culture - basf">
+<attvalues>
+<attvalue id="0" value="2"/>
+<attvalue id="1" value="6"/>
+<attvalue id="2" value="cluster.php?id_cluster=44&amp;periode=238-251"/>
+<attvalue id="3" value="0"/>
+<attvalue id="4" value="1"/>
+<attvalue id="PhyloPartition" value="24"/>
+</attvalues>
+<viz:size value="8.210526"/>
+<viz:color b="182" g="62" r="59"/>
+<viz:position x="249.97395" y="464.60403" z="1900.0"/>
+</node>
+<node id="706" label="qualitŽ de l' air - pollution de l' air">
+<attvalues>
+<attvalue id="0" value="2"/>
+<attvalue id="1" value="6"/>
+<attvalue id="2" value="cluster.php?id_cluster=45&amp;periode=238-251"/>
+<attvalue id="3" value="0"/>
+<attvalue id="4" value="0"/>
+<attvalue id="PhyloPartition" value="0"/>
+</attvalues>
+<viz:size value="6.9473686"/>
+<viz:color b="59" g="121" r="182"/>
+<viz:position x="390.9185" y="636.4445" z="1900.0"/>
+</node>
+<node id="707" label="impact Žconomique - Žquipements militaires">
+<attvalues>
+<attvalue id="0" value="2"/>
+<attvalue id="1" value="6"/>
+<attvalue id="2" value="cluster.php?id_cluster=46&amp;periode=238-251"/>
+<attvalue id="3" value="0"/>
+<attvalue id="4" value="0"/>
+<attvalue id="PhyloPartition" value="0"/>
+</attvalues>
+<viz:size value="7.263158"/>
+<viz:color b="59" g="121" r="182"/>
+<viz:position x="-539.01263" y="665.5887" z="1900.0"/>
+</node>
+<node id="708" label="agriculture conventionnelle - fruits et lŽgumes bio">
+<attvalues>
+<attvalue id="0" value="2"/>
+<attvalue id="1" value="6"/>
+<attvalue id="2" value="cluster.php?id_cluster=47&amp;periode=238-251"/>
+<attvalue id="3" value="1"/>
+<attvalue id="4" value="0"/>
+<attvalue id="PhyloPartition" value="54"/>
+</attvalues>
+<viz:size value="6.9473686"/>
+<viz:color b="182" g="169" r="59"/>
+<viz:position x="114.104515" y="257.64883" z="1900.0"/>
+</node>
+<node id="709" label="communautŽs hospitalires - zones blanches">
+<attvalues>
+<attvalue id="0" value="2"/>
+<attvalue id="1" value="6"/>
+<attvalue id="2" value="cluster.php?id_cluster=48&amp;periode=238-251"/>
+<attvalue id="3" value="1"/>
+<attvalue id="4" value="1"/>
+<attvalue id="PhyloPartition" value="20"/>
+</attvalues>
+<viz:size value="6.631579"/>
+<viz:color b="182" g="128" r="59"/>
+<viz:position x="175.51128" y="104.79832" z="1900.0"/>
+</node>
+<node id="710" label="Žquipements mŽnagers - nombreuses victimes">
+<attvalues>
+<attvalue id="0" value="2"/>
+<attvalue id="1" value="6"/>
+<attvalue id="2" value="cluster.php?id_cluster=49&amp;periode=238-251"/>
+<attvalue id="3" value="1"/>
+<attvalue id="4" value="0"/>
+<attvalue id="PhyloPartition" value="53"/>
+</attvalues>
+<viz:size value="7.894737"/>
+<viz:color b="59" g="182" r="102"/>
+<viz:position x="337.28397" y="240.17268" z="1900.0"/>
+</node>
+<node id="711" label="vaccination contre la grippe - afssaps">
+<attvalues>
+<attvalue id="0" value="2"/>
+<attvalue id="1" value="6"/>
+<attvalue id="2" value="cluster.php?id_cluster=50&amp;periode=238-251"/>
+<attvalue id="3" value="1"/>
+<attvalue id="4" value="1"/>
+<attvalue id="PhyloPartition" value="6"/>
+</attvalues>
+<viz:size value="9.157895"/>
+<viz:color b="182" g="157" r="59"/>
+<viz:position x="158.28673" y="172.76883" z="1900.0"/>
+</node>
+<node id="712" label="expertise collective - milieu marin">
+<attvalues>
+<attvalue id="0" value="2"/>
+<attvalue id="1" value="6"/>
+<attvalue id="2" value="cluster.php?id_cluster=51&amp;periode=238-251"/>
+<attvalue id="3" value="1"/>
+<attvalue id="4" value="0"/>
+<attvalue id="PhyloPartition" value="52"/>
+</attvalues>
+<viz:size value="6.631579"/>
+<viz:color b="105" g="59" r="182"/>
+<viz:position x="-59.64987" y="303.13388" z="1900.0"/>
+</node>
+<node id="713" label="couches superficielles - effort de recherche">
+<attvalues>
+<attvalue id="0" value="2"/>
+<attvalue id="1" value="6"/>
+<attvalue id="2" value="cluster.php?id_cluster=52&amp;periode=238-251"/>
+<attvalue id="3" value="1"/>
+<attvalue id="4" value="0"/>
+<attvalue id="PhyloPartition" value="51"/>
+</attvalues>
+<viz:size value="7.5789475"/>
+<viz:color b="59" g="167" r="182"/>
+<viz:position x="9.958847" y="537.08" z="1900.0"/>
+</node>
+<node id="714" label="cellules nerveuses - industrie alimentaire">
+<attvalues>
+<attvalue id="0" value="2"/>
+<attvalue id="1" value="6"/>
+<attvalue id="2" value="cluster.php?id_cluster=53&amp;periode=238-251"/>
+<attvalue id="3" value="0"/>
+<attvalue id="4" value="0"/>
+<attvalue id="PhyloPartition" value="0"/>
+</attvalues>
+<viz:size value="7.894737"/>
+<viz:color b="59" g="121" r="182"/>
+<viz:position x="696.1937" y="659.3366" z="1900.0"/>
+</node>
+<node id="715" label="hcb - Colmar">
+<attvalues>
+<attvalue id="0" value="2"/>
+<attvalue id="1" value="6"/>
+<attvalue id="2" value="cluster.php?id_cluster=54&amp;periode=238-251"/>
+<attvalue id="3" value="1"/>
+<attvalue id="4" value="1"/>
+<attvalue id="PhyloPartition" value="19"/>
+</attvalues>
+<viz:size value="8.526316"/>
+<viz:color b="80" g="59" r="182"/>
+<viz:position x="113.40165" y="224.22964" z="1900.0"/>
+</node>
+<node id="716" label="sanofi - groupe pharmaceutique">
+<attvalues>
+<attvalue id="0" value="2"/>
+<attvalue id="1" value="6"/>
+<attvalue id="2" value="cluster.php?id_cluster=55&amp;periode=238-251"/>
+<attvalue id="3" value="1"/>
+<attvalue id="4" value="0"/>
+<attvalue id="PhyloPartition" value="8"/>
+</attvalues>
+<viz:size value="8.210526"/>
+<viz:color b="182" g="59" r="89"/>
+<viz:position x="-231.51534" y="20.278143" z="1900.0"/>
+</node>
+<node id="717" label="Parlement - conflit">
+<attvalues>
+<attvalue id="0" value="2"/>
+<attvalue id="1" value="6"/>
+<attvalue id="2" value="cluster.php?id_cluster=56&amp;periode=238-251"/>
+<attvalue id="3" value="0"/>
+<attvalue id="4" value="0"/>
+<attvalue id="PhyloPartition" value="0"/>
+</attvalues>
+<viz:size value="10.421053"/>
+<viz:color b="59" g="121" r="182"/>
+<viz:position x="632.35144" y="97.24131" z="1900.0"/>
+</node>
+<node id="718" label="politique ŽnergŽtique - sables bitumineux">
+<attvalues>
+<attvalue id="0" value="2"/>
+<attvalue id="1" value="6"/>
+<attvalue id="2" value="cluster.php?id_cluster=57&amp;periode=238-251"/>
+<attvalue id="3" value="1"/>
+<attvalue id="4" value="0"/>
+<attvalue id="PhyloPartition" value="50"/>
+</attvalues>
+<viz:size value="6.315789"/>
+<viz:color b="59" g="142" r="182"/>
+<viz:position x="-341.21393" y="235.01389" z="1900.0"/>
+</node>
+<node id="719" label="nuclŽaire iranien - groupes terroristes">
+<attvalues>
+<attvalue id="0" value="2"/>
+<attvalue id="1" value="6"/>
+<attvalue id="2" value="cluster.php?id_cluster=58&amp;periode=238-251"/>
+<attvalue id="3" value="1"/>
+<attvalue id="4" value="0"/>
+<attvalue id="PhyloPartition" value="49"/>
+</attvalues>
+<viz:size value="8.842106"/>
+<viz:color b="182" g="59" r="106"/>
+<viz:position x="-168.30647" y="166.97398" z="1900.0"/>
+</node>
+<node id="720" label="loi tepa - transformation Žcologique">
+<attvalues>
+<attvalue id="0" value="2"/>
+<attvalue id="1" value="6"/>
+<attvalue id="2" value="cluster.php?id_cluster=59&amp;periode=238-251"/>
+<attvalue id="3" value="1"/>
+<attvalue id="4" value="0"/>
+<attvalue id="PhyloPartition" value="48"/>
+</attvalues>
+<viz:size value="9.157895"/>
+<viz:color b="182" g="59" r="110"/>
+<viz:position x="218.06523" y="387.4926" z="1900.0"/>
+</node>
+<node id="721" label="marŽe noire - bp">
+<attvalues>
+<attvalue id="0" value="2"/>
+<attvalue id="1" value="6"/>
+<attvalue id="2" value="cluster.php?id_cluster=60&amp;periode=238-251"/>
+<attvalue id="3" value="1"/>
+<attvalue id="4" value="1"/>
+<attvalue id="PhyloPartition" value="3"/>
+</attvalues>
+<viz:size value="9.473684"/>
+<viz:color b="59" g="182" r="180"/>
+<viz:position x="175.84181" y="-231.72052" z="1900.0"/>
+</node>
+<node id="722" label="rwe - centrale nuclŽaire">
+<attvalues>
+<attvalue id="0" value="2"/>
+<attvalue id="1" value="6"/>
+<attvalue id="2" value="cluster.php?id_cluster=61&amp;periode=238-251"/>
+<attvalue id="3" value="0"/>
+<attvalue id="4" value="1"/>
+<attvalue id="PhyloPartition" value="18"/>
+</attvalues>
+<viz:size value="8.842106"/>
+<viz:color b="150" g="59" r="182"/>
+<viz:position x="-216.23866" y="520.0357" z="1900.0"/>
+</node>
+<node id="723" label="aedes - dŽcharges sauvages">
+<attvalues>
+<attvalue id="0" value="2"/>
+<attvalue id="1" value="6"/>
+<attvalue id="2" value="cluster.php?id_cluster=62&amp;periode=238-251"/>
+<attvalue id="3" value="1"/>
+<attvalue id="4" value="1"/>
+<attvalue id="PhyloPartition" value="21"/>
+</attvalues>
+<viz:size value="6.631579"/>
+<viz:color b="182" g="70" r="59"/>
+<viz:position x="52.187916" y="33.937714" z="1900.0"/>
+</node>
+<node id="724" label="maladie - patients">
+<attvalues>
+<attvalue id="0" value="2"/>
+<attvalue id="1" value="6"/>
+<attvalue id="2" value="cluster.php?id_cluster=63&amp;periode=238-251"/>
+<attvalue id="3" value="0"/>
+<attvalue id="4" value="0"/>
+<attvalue id="PhyloPartition" value="0"/>
+</attvalues>
+<viz:size value="8.842106"/>
+<viz:color b="59" g="121" r="182"/>
+<viz:position x="-459.92227" y="16.388008" z="1900.0"/>
+</node>
+<node id="725" label="lignes Žlectriques - irsn">
+<attvalues>
+<attvalue id="0" value="2"/>
+<attvalue id="1" value="6"/>
+<attvalue id="2" value="cluster.php?id_cluster=64&amp;periode=238-251"/>
+<attvalue id="3" value="1"/>
+<attvalue id="4" value="0"/>
+<attvalue id="PhyloPartition" value="47"/>
+</attvalues>
+<viz:size value="7.5789475"/>
+<viz:color b="138" g="59" r="182"/>
+<viz:position x="231.4755" y="163.92053" z="1900.0"/>
+</node>
+<node id="726" label="rŽcifs coralliens - atteintes ˆ l' environnement">
+<attvalues>
+<attvalue id="0" value="2"/>
+<attvalue id="1" value="6"/>
+<attvalue id="2" value="cluster.php?id_cluster=65&amp;periode=238-251"/>
+<attvalue id="3" value="0"/>
+<attvalue id="4" value="1"/>
+<attvalue id="PhyloPartition" value="14"/>
+</attvalues>
+<viz:size value="7.5789475"/>
+<viz:color b="182" g="59" r="85"/>
+<viz:position x="-79.01759" y="186.23347" z="1900.0"/>
+</node>
+<node id="727" label="santŽ maternelle - conditions sanitaires">
+<attvalues>
+<attvalue id="0" value="2"/>
+<attvalue id="1" value="6"/>
+<attvalue id="2" value="cluster.php?id_cluster=66&amp;periode=238-251"/>
+<attvalue id="3" value="1"/>
+<attvalue id="4" value="1"/>
+<attvalue id="PhyloPartition" value="33"/>
+</attvalues>
+<viz:size value="6.631579"/>
+<viz:color b="59" g="182" r="147"/>
+<viz:position x="194.65237" y="46.293068" z="1900.0"/>
+</node>
+<node id="728" label="modle social - marchŽs financiers">
+<attvalues>
+<attvalue id="0" value="2"/>
+<attvalue id="1" value="6"/>
+<attvalue id="2" value="cluster.php?id_cluster=67&amp;periode=238-251"/>
+<attvalue id="3" value="0"/>
+<attvalue id="4" value="0"/>
+<attvalue id="PhyloPartition" value="0"/>
+</attvalues>
+<viz:size value="10.421053"/>
+<viz:color b="59" g="121" r="182"/>
+<viz:position x="683.22174" y="-161.78604" z="1900.0"/>
+</node>
+<node id="729" label="pompes ˆ chaleur - prix de l' ŽlectricitŽ">
+<attvalues>
+<attvalue id="0" value="2"/>
+<attvalue id="1" value="6"/>
+<attvalue id="2" value="cluster.php?id_cluster=68&amp;periode=238-251"/>
+<attvalue id="3" value="0"/>
+<attvalue id="4" value="0"/>
+<attvalue id="PhyloPartition" value="0"/>
+</attvalues>
+<viz:size value="8.526316"/>
+<viz:color b="59" g="121" r="182"/>
+<viz:position x="-103.634705" y="792.6466" z="1900.0"/>
+</node>
+<node id="730" label="installations sanitaires - maladies liŽes ˆ l' eau">
+<attvalues>
+<attvalue id="0" value="2"/>
+<attvalue id="1" value="6"/>
+<attvalue id="2" value="cluster.php?id_cluster=69&amp;periode=238-251"/>
+<attvalue id="3" value="0"/>
+<attvalue id="4" value="0"/>
+<attvalue id="PhyloPartition" value="0"/>
+</attvalues>
+<viz:size value="7.263158"/>
+<viz:color b="59" g="121" r="182"/>
+<viz:position x="585.8826" y="376.20407" z="1900.0"/>
+</node>
+<node id="731" label="neurones - dose">
+<attvalues>
+<attvalue id="0" value="2"/>
+<attvalue id="1" value="6"/>
+<attvalue id="2" value="cluster.php?id_cluster=70&amp;periode=238-251"/>
+<attvalue id="3" value="1"/>
+<attvalue id="4" value="0"/>
+<attvalue id="PhyloPartition" value="46"/>
+</attvalues>
+<viz:size value="10.736842"/>
+<viz:color b="182" g="59" r="77"/>
+<viz:position x="-437.8976" y="-161.88818" z="1900.0"/>
+</node>
+<node id="732" label="tourbe - produire de l' ŽlectricitŽ">
+<attvalues>
+<attvalue id="0" value="2"/>
+<attvalue id="1" value="6"/>
+<attvalue id="2" value="cluster.php?id_cluster=71&amp;periode=238-251"/>
+<attvalue id="3" value="0"/>
+<attvalue id="4" value="1"/>
+<attvalue id="PhyloPartition" value="28"/>
+</attvalues>
+<viz:size value="6.631579"/>
+<viz:color b="182" g="111" r="59"/>
+<viz:position x="392.63397" y="75.80716" z="1900.0"/>
+</node>
+<node id="733" label="ma•s - monsanto">
+<attvalues>
+<attvalue id="0" value="2"/>
+<attvalue id="1" value="6"/>
+<attvalue id="2" value="cluster.php?id_cluster=72&amp;periode=238-251"/>
+<attvalue id="3" value="1"/>
+<attvalue id="4" value="0"/>
+<attvalue id="PhyloPartition" value="19"/>
+</attvalues>
+<viz:size value="9.157895"/>
+<viz:color b="80" g="59" r="182"/>
+<viz:position x="75.55434" y="233.90749" z="1900.0"/>
+</node>
+<node id="734" label="incendies de fort - menace nuclŽaire">
+<attvalues>
+<attvalue id="0" value="2"/>
+<attvalue id="1" value="6"/>
+<attvalue id="2" value="cluster.php?id_cluster=73&amp;periode=238-251"/>
+<attvalue id="3" value="0"/>
+<attvalue id="4" value="0"/>
+<attvalue id="PhyloPartition" value="0"/>
+</attvalues>
+<viz:size value="6.631579"/>
+<viz:color b="59" g="121" r="182"/>
+<viz:position x="853.8126" y="457.2052" z="1900.0"/>
+</node>
+<node id="735" label="producteurs de porcs - fdsea">
+<attvalues>
+<attvalue id="0" value="2"/>
+<attvalue id="1" value="6"/>
+<attvalue id="2" value="cluster.php?id_cluster=74&amp;periode=238-251"/>
+<attvalue id="3" value="0"/>
+<attvalue id="4" value="1"/>
+<attvalue id="PhyloPartition" value="7"/>
+</attvalues>
+<viz:size value="6.631579"/>
+<viz:color b="182" g="91" r="59"/>
+<viz:position x="-137.76868" y="285.194" z="1900.0"/>
+</node>
+<node id="736" label="cohŽsion sociale - capacitŽ de stockage">
+<attvalues>
+<attvalue id="0" value="2"/>
+<attvalue id="1" value="6"/>
+<attvalue id="2" value="cluster.php?id_cluster=75&amp;periode=238-251"/>
+<attvalue id="3" value="0"/>
+<attvalue id="4" value="0"/>
+<attvalue id="PhyloPartition" value="0"/>
+</attvalues>
+<viz:size value="9.157895"/>
+<viz:color b="59" g="121" r="182"/>
+<viz:position x="431.01108" y="-322.2038" z="1900.0"/>
+</node>
+<node id="737" label="Office parlementaire d' Žvaluation - choix scientifiques et technologiques">
+<attvalues>
+<attvalue id="0" value="2"/>
+<attvalue id="1" value="6"/>
+<attvalue id="2" value="cluster.php?id_cluster=76&amp;periode=238-251"/>
+<attvalue id="3" value="1"/>
+<attvalue id="4" value="0"/>
+<attvalue id="PhyloPartition" value="45"/>
+</attvalues>
+<viz:size value="6.0"/>
+<viz:color b="178" g="182" r="59"/>
+<viz:position x="346.60324" y="-136.15578" z="1900.0"/>
+</node>
+<node id="738" label="explosions nuclŽaires - pollution lumineuse">
+<attvalues>
+<attvalue id="0" value="2"/>
+<attvalue id="1" value="6"/>
+<attvalue id="2" value="cluster.php?id_cluster=77&amp;periode=238-251"/>
+<attvalue id="3" value="1"/>
+<attvalue id="4" value="0"/>
+<attvalue id="PhyloPartition" value="44"/>
+</attvalues>
+<viz:size value="7.263158"/>
+<viz:color b="116" g="182" r="59"/>
+<viz:position x="395.15256" y="363.4023" z="1900.0"/>
+</node>
+<node id="739" label="enrichissement d' uranium - mesure de prŽcaution">
+<attvalues>
+<attvalue id="0" value="2"/>
+<attvalue id="1" value="6"/>
+<attvalue id="2" value="cluster.php?id_cluster=78&amp;periode=238-251"/>
+<attvalue id="3" value="0"/>
+<attvalue id="4" value="0"/>
+<attvalue id="PhyloPartition" value="0"/>
+</attvalues>
+<viz:size value="9.157895"/>
+<viz:color b="59" g="121" r="182"/>
+<viz:position x="-365.09122" y="646.2375" z="1900.0"/>
+</node>
+<node id="740" label="espces locales - Žtudes environnementales">
+<attvalues>
+<attvalue id="0" value="2"/>
+<attvalue id="1" value="6"/>
+<attvalue id="2" value="cluster.php?id_cluster=79&amp;periode=238-251"/>
+<attvalue id="3" value="0"/>
+<attvalue id="4" value="0"/>
+<attvalue id="PhyloPartition" value="0"/>
+</attvalues>
+<viz:size value="6.9473686"/>
+<viz:color b="59" g="121" r="182"/>
+<viz:position x="-486.69373" y="294.14618" z="1900.0"/>
+</node>
+<node id="741" label="vie sauvage - eaux territoriales">
+<attvalues>
+<attvalue id="0" value="2"/>
+<attvalue id="1" value="6"/>
+<attvalue id="2" value="cluster.php?id_cluster=80&amp;periode=238-251"/>
+<attvalue id="3" value="1"/>
+<attvalue id="4" value="0"/>
+<attvalue id="PhyloPartition" value="43"/>
+</attvalues>
+<viz:size value="7.263158"/>
+<viz:color b="182" g="59" r="69"/>
+<viz:position x="-45.643993" y="-175.66286" z="1900.0"/>
+</node>
+<node id="742" label="dengue - service civique">
+<attvalues>
+<attvalue id="0" value="2"/>
+<attvalue id="1" value="6"/>
+<attvalue id="2" value="cluster.php?id_cluster=81&amp;periode=238-251"/>
+<attvalue id="3" value="1"/>
+<attvalue id="4" value="1"/>
+<attvalue id="PhyloPartition" value="21"/>
+</attvalues>
+<viz:size value="7.894737"/>
+<viz:color b="182" g="70" r="59"/>
+<viz:position x="86.067825" y="26.635221" z="1900.0"/>
+</node>
+<node id="743" label="organismes eucaryotes - pelotes microscopiques">
+<attvalues>
+<attvalue id="0" value="2"/>
+<attvalue id="1" value="6"/>
+<attvalue id="2" value="cluster.php?id_cluster=82&amp;periode=238-251"/>
+<attvalue id="3" value="0"/>
+<attvalue id="4" value="1"/>
+<attvalue id="PhyloPartition" value="23"/>
+</attvalues>
+<viz:size value="7.5789475"/>
+<viz:color b="182" g="59" r="123"/>
+<viz:position x="-210.44542" y="-124.78722" z="1900.0"/>
+</node>
+<node id="744" label="risque pandŽmique - origine porcine">
+<attvalues>
+<attvalue id="0" value="2"/>
+<attvalue id="1" value="6"/>
+<attvalue id="2" value="cluster.php?id_cluster=83&amp;periode=238-251"/>
+<attvalue id="3" value="0"/>
+<attvalue id="4" value="1"/>
+<attvalue id="PhyloPartition" value="35"/>
+</attvalues>
+<viz:size value="6.0"/>
+<viz:color b="59" g="84" r="182"/>
+<viz:position x="319.70596" y="160.85657" z="1900.0"/>
+</node>
+<node id="745" label="lutte contre la marŽe noire - Žcoulement de pŽtrole">
+<attvalues>
+<attvalue id="0" value="2"/>
+<attvalue id="1" value="6"/>
+<attvalue id="2" value="cluster.php?id_cluster=84&amp;periode=238-251"/>
+<attvalue id="3" value="0"/>
+<attvalue id="4" value="1"/>
+<attvalue id="PhyloPartition" value="9"/>
+</attvalues>
+<viz:size value="8.526316"/>
+<viz:color b="59" g="182" r="168"/>
+<viz:position x="-342.8736" y="-347.40558" z="1900.0"/>
+</node>
+<node id="746" label="responsables de bp - images du puits">
+<attvalues>
+<attvalue id="0" value="2"/>
+<attvalue id="1" value="6"/>
+<attvalue id="2" value="cluster.php?id_cluster=85&amp;periode=238-251"/>
+<attvalue id="3" value="1"/>
+<attvalue id="4" value="1"/>
+<attvalue id="PhyloPartition" value="3"/>
+</attvalues>
+<viz:size value="9.789474"/>
+<viz:color b="59" g="182" r="180"/>
+<viz:position x="212.91066" y="-200.63446" z="1900.0"/>
+</node>
+<node id="747" label="fonds structurels europŽens - projet de loi de rŽforme">
+<attvalues>
+<attvalue id="0" value="2"/>
+<attvalue id="1" value="6"/>
+<attvalue id="2" value="cluster.php?id_cluster=86&amp;periode=238-251"/>
+<attvalue id="3" value="1"/>
+<attvalue id="4" value="1"/>
+<attvalue id="PhyloPartition" value="10"/>
+</attvalues>
+<viz:size value="7.894737"/>
+<viz:color b="59" g="146" r="182"/>
+<viz:position x="-178.71713" y="-312.01685" z="1900.0"/>
+</node>
+<node id="748" label="potager - faire du vŽlo">
+<attvalues>
+<attvalue id="0" value="2"/>
+<attvalue id="1" value="6"/>
+<attvalue id="2" value="cluster.php?id_cluster=87&amp;periode=238-251"/>
+<attvalue id="3" value="0"/>
+<attvalue id="4" value="1"/>
+<attvalue id="PhyloPartition" value="30"/>
+</attvalues>
+<viz:size value="6.315789"/>
+<viz:color b="175" g="59" r="182"/>
+<viz:position x="9.684276" y="-108.84683" z="1900.0"/>
+</node>
+<node id="749" label="solidaritŽ - ch™mage">
+<attvalues>
+<attvalue id="0" value="2"/>
+<attvalue id="1" value="6"/>
+<attvalue id="2" value="cluster.php?id_cluster=88&amp;periode=238-251"/>
+<attvalue id="3" value="0"/>
+<attvalue id="4" value="0"/>
+<attvalue id="PhyloPartition" value="0"/>
+</attvalues>
+<viz:size value="10.421053"/>
+<viz:color b="59" g="121" r="182"/>
+<viz:position x="681.77124" y="-2.9071622" z="1900.0"/>
+</node>
+<node id="750" label="personnes vaccinŽes - pandemrix">
+<attvalues>
+<attvalue id="0" value="2"/>
+<attvalue id="1" value="6"/>
+<attvalue id="2" value="cluster.php?id_cluster=89&amp;periode=238-251"/>
+<attvalue id="3" value="1"/>
+<attvalue id="4" value="1"/>
+<attvalue id="PhyloPartition" value="6"/>
+</attvalues>
+<viz:size value="7.894737"/>
+<viz:color b="182" g="157" r="59"/>
+<viz:position x="179.97037" y="154.68837" z="1900.0"/>
+</node>
+<node id="751" label="globules blancs - lymphocytes">
+<attvalues>
+<attvalue id="0" value="2"/>
+<attvalue id="1" value="6"/>
+<attvalue id="2" value="cluster.php?id_cluster=90&amp;periode=238-251"/>
+<attvalue id="3" value="0"/>
+<attvalue id="4" value="0"/>
+<attvalue id="PhyloPartition" value="0"/>
+</attvalues>
+<viz:size value="8.526316"/>
+<viz:color b="59" g="121" r="182"/>
+<viz:position x="361.01895" y="-492.58072" z="1900.0"/>
+</node>
+<node id="752" label="marchŽ pharmaceutique - secteur pharmaceutique">
+<attvalues>
+<attvalue id="0" value="2"/>
+<attvalue id="1" value="6"/>
+<attvalue id="2" value="cluster.php?id_cluster=91&amp;periode=238-251"/>
+<attvalue id="3" value="1"/>
+<attvalue id="4" value="1"/>
+<attvalue id="PhyloPartition" value="8"/>
+</attvalues>
+<viz:size value="7.894737"/>
+<viz:color b="182" g="59" r="89"/>
+<viz:position x="-195.32529" y="13.780852" z="1900.0"/>
+</node>
+<node id="753" label="poison violent - gouvernement chinois">
+<attvalues>
+<attvalue id="0" value="2"/>
+<attvalue id="1" value="6"/>
+<attvalue id="2" value="cluster.php?id_cluster=92&amp;periode=238-251"/>
+<attvalue id="3" value="0"/>
+<attvalue id="4" value="1"/>
+<attvalue id="PhyloPartition" value="26"/>
+</attvalues>
+<viz:size value="7.894737"/>
+<viz:color b="59" g="158" r="182"/>
+<viz:position x="-250.07413" y="384.07443" z="1900.0"/>
+</node>
+<node id="754" label="dŽpistage - sida">
+<attvalues>
+<attvalue id="0" value="2"/>
+<attvalue id="1" value="6"/>
+<attvalue id="2" value="cluster.php?id_cluster=93&amp;periode=238-251"/>
+<attvalue id="3" value="0"/>
+<attvalue id="4" value="0"/>
+<attvalue id="PhyloPartition" value="0"/>
+</attvalues>
+<viz:size value="8.842106"/>
+<viz:color b="59" g="121" r="182"/>
+<viz:position x="-406.0337" y="-255.09583" z="1900.0"/>
+</node>
+<node id="755" label="fibre optique - problmes de santŽ">
+<attvalues>
+<attvalue id="0" value="2"/>
+<attvalue id="1" value="6"/>
+<attvalue id="2" value="cluster.php?id_cluster=94&amp;periode=238-251"/>
+<attvalue id="3" value="1"/>
+<attvalue id="4" value="0"/>
+<attvalue id="PhyloPartition" value="42"/>
+</attvalues>
+<viz:size value="9.473684"/>
+<viz:color b="182" g="59" r="65"/>
+<viz:position x="-350.88672" y="-496.56647" z="1900.0"/>
+</node>
+<node id="756" label="abeilles - fruits et lŽgumes">
+<attvalues>
+<attvalue id="0" value="2"/>
+<attvalue id="1" value="6"/>
+<attvalue id="2" value="cluster.php?id_cluster=95&amp;periode=238-251"/>
+<attvalue id="3" value="1"/>
+<attvalue id="4" value="0"/>
+<attvalue id="PhyloPartition" value="41"/>
+</attvalues>
+<viz:size value="8.842106"/>
+<viz:color b="88" g="59" r="182"/>
+<viz:position x="-336.748" y="-371.52588" z="1900.0"/>
+</node>
+<node id="757" label="alternative sociale et Žcologique - politique de la peur">
+<attvalues>
+<attvalue id="0" value="2"/>
+<attvalue id="1" value="6"/>
+<attvalue id="2" value="cluster.php?id_cluster=96&amp;periode=238-251"/>
+<attvalue id="3" value="1"/>
+<attvalue id="4" value="1"/>
+<attvalue id="PhyloPartition" value="34"/>
+</attvalues>
+<viz:size value="7.263158"/>
+<viz:color b="182" g="59" r="131"/>
+<viz:position x="-80.62695" y="-177.49084" z="1900.0"/>
+</node>
+<node id="758" label="explosion de la plate-forme - deepwater">
+<attvalues>
+<attvalue id="0" value="2"/>
+<attvalue id="1" value="6"/>
+<attvalue id="2" value="cluster.php?id_cluster=97&amp;periode=238-251"/>
+<attvalue id="3" value="1"/>
+<attvalue id="4" value="0"/>
+<attvalue id="PhyloPartition" value="3"/>
+</attvalues>
+<viz:size value="10.105263"/>
+<viz:color b="59" g="182" r="180"/>
+<viz:position x="209.02167" y="-222.95781" z="1900.0"/>
+</node>
+<node id="759" label="cožt de la marŽe noire - gisement pŽtrolier">
+<attvalues>
+<attvalue id="0" value="2"/>
+<attvalue id="1" value="6"/>
+<attvalue id="2" value="cluster.php?id_cluster=98&amp;periode=238-251"/>
+<attvalue id="3" value="0"/>
+<attvalue id="4" value="0"/>
+<attvalue id="PhyloPartition" value="0"/>
+</attvalues>
+<viz:size value="9.789474"/>
+<viz:color b="59" g="121" r="182"/>
+<viz:position x="143.75551" y="-590.0522" z="1900.0"/>
+</node>
+<node id="760" label="produits Žcologiques - toilettes sches">
+<attvalues>
+<attvalue id="0" value="2"/>
+<attvalue id="1" value="6"/>
+<attvalue id="2" value="cluster.php?id_cluster=99&amp;periode=238-251"/>
+<attvalue id="3" value="1"/>
+<attvalue id="4" value="1"/>
+<attvalue id="PhyloPartition" value="36"/>
+</attvalues>
+<viz:size value="7.5789475"/>
+<viz:color b="59" g="182" r="69"/>
+<viz:position x="-143.47357" y="122.41441" z="1900.0"/>
+</node>
+<node id="761" label="essais cliniques - cellules cancŽreuses">
+<attvalues>
+<attvalue id="0" value="2"/>
+<attvalue id="1" value="6"/>
+<attvalue id="2" value="cluster.php?id_cluster=100&amp;periode=238-251"/>
+<attvalue id="3" value="1"/>
+<attvalue id="4" value="1"/>
+<attvalue id="PhyloPartition" value="11"/>
+</attvalues>
+<viz:size value="9.789474"/>
+<viz:color b="182" g="59" r="135"/>
+<viz:position x="-28.869978" y="-144.17636" z="1900.0"/>
+</node>
+<node id="762" label="gŽant pharmaceutique - urgence climatique">
+<attvalues>
+<attvalue id="0" value="2"/>
+<attvalue id="1" value="6"/>
+<attvalue id="2" value="cluster.php?id_cluster=101&amp;periode=238-251"/>
+<attvalue id="3" value="1"/>
+<attvalue id="4" value="0"/>
+<attvalue id="PhyloPartition" value="40"/>
+</attvalues>
+<viz:size value="6.0"/>
+<viz:color b="182" g="116" r="59"/>
+<viz:position x="219.20457" y="154.78241" z="1900.0"/>
+</node>
+<node id="763" label="bpa - rapport rŽcent">
+<attvalues>
+<attvalue id="0" value="2"/>
+<attvalue id="1" value="6"/>
+<attvalue id="2" value="cluster.php?id_cluster=102&amp;periode=238-251"/>
+<attvalue id="3" value="1"/>
+<attvalue id="4" value="0"/>
+<attvalue id="PhyloPartition" value="39"/>
+</attvalues>
+<viz:size value="6.315789"/>
+<viz:color b="100" g="59" r="182"/>
+<viz:position x="-270.08994" y="19.88026" z="1900.0"/>
+</node>
+<node id="764" label="blessures - plastique">
+<attvalues>
+<attvalue id="0" value="2"/>
+<attvalue id="1" value="6"/>
+<attvalue id="2" value="cluster.php?id_cluster=103&amp;periode=238-251"/>
+<attvalue id="3" value="1"/>
+<attvalue id="4" value="0"/>
+<attvalue id="PhyloPartition" value="38"/>
+</attvalues>
+<viz:size value="8.526316"/>
+<viz:color b="71" g="59" r="182"/>
+<viz:position x="-176.99744" y="-149.73581" z="1900.0"/>
+</node>
+</nodes>
+<edges count="4656">
+<edge source="661" target="662" weight="0.6451776"/>
+<edge source="661" target="663" weight="0.6575126"/>
+<edge source="661" target="755" weight="0.55382955"/>
+<edge source="661" target="761" weight="0.62956536"/>
+<edge source="661" target="763" weight="0.64185315"/>
+<edge source="662" target="661" weight="0.7516194"/>
+<edge source="662" target="663" weight="0.81378126"/>
+<edge source="662" target="761" weight="0.6451866"/>
+<edge source="662" target="762" weight="0.69860715"/>
+<edge source="662" target="763" weight="0.80443996"/>
+<edge source="663" target="661" weight="0.7553902"/>
+<edge source="663" target="662" weight="0.8023425"/>
+<edge source="663" target="761" weight="0.65001935"/>
+<edge source="663" target="762" weight="0.70210576"/>
+<edge source="663" target="763" weight="0.80610025"/>
+<edge source="664" target="726" weight="0.047600463"/>
+<edge source="664" target="732" weight="0.029375276"/>
+<edge source="664" target="736" weight="0.04475409"/>
+<edge source="664" target="740" weight="0.019927049"/>
+<edge source="664" target="760" weight="0.047803864"/>
+<edge source="665" target="696" weight="0.0939013"/>
+<edge source="665" target="699" weight="0.061530843"/>
+<edge source="665" target="721" weight="0.07593237"/>
+<edge source="665" target="746" weight="0.08735775"/>
+<edge source="665" target="758" weight="0.09016149"/>
+<edge source="666" target="669" weight="0.0068434966"/>
+<edge source="666" target="681" weight="0.0093241"/>
+<edge source="666" target="718" weight="0.0036590765"/>
+<edge source="666" target="720" weight="0.00868564"/>
+<edge source="666" target="757" weight="0.0064219763"/>
+<edge source="667" target="719" weight="0.03253785"/>
+<edge source="667" target="722" weight="0.07811257"/>
+<edge source="667" target="725" weight="0.11433315"/>
+<edge source="667" target="739" weight="0.11811391"/>
+<edge source="667" target="760" weight="0.031247184"/>
+<edge source="668" target="687" weight="0.009937145"/>
+<edge source="668" target="710" weight="0.008371257"/>
+<edge source="668" target="713" weight="0.008556667"/>
+<edge source="668" target="715" weight="0.045986954"/>
+<edge source="668" target="747" weight="0.007559755"/>
+<edge source="669" target="714" weight="0.015886545"/>
+<edge source="669" target="718" weight="0.0034342029"/>
+<edge source="669" target="735" weight="0.0033785077"/>
+<edge source="669" target="742" weight="0.006693684"/>
+<edge source="669" target="757" weight="0.003623514"/>
+<edge source="670" target="696" weight="0.14737812"/>
+<edge source="670" target="721" weight="0.17891738"/>
+<edge source="670" target="746" weight="0.14832994"/>
+<edge source="670" target="758" weight="0.3233721"/>
+<edge source="670" target="759" weight="0.13027775"/>
+<edge source="671" target="665" weight="0.08395104"/>
+<edge source="671" target="733" weight="0.07795877"/>
+<edge source="671" target="746" weight="0.09030839"/>
+<edge source="671" target="753" weight="0.08016638"/>
+<edge source="671" target="758" weight="0.07852726"/>
+<edge source="672" target="665" weight="0.03766441"/>
+<edge source="672" target="679" weight="0.0140082"/>
+<edge source="672" target="697" weight="0.029812075"/>
+<edge source="672" target="738" weight="0.021475088"/>
+<edge source="672" target="750" weight="0.022050964"/>
+<edge source="673" target="681" weight="0.5327785"/>
+<edge source="673" target="717" weight="0.09297802"/>
+<edge source="673" target="728" weight="0.22848028"/>
+<edge source="673" target="736" weight="0.086846136"/>
+<edge source="673" target="749" weight="0.078839876"/>
+<edge source="674" target="665" weight="0.06767623"/>
+<edge source="674" target="696" weight="0.07244889"/>
+<edge source="674" target="699" weight="0.041852865"/>
+<edge source="674" target="746" weight="0.045232054"/>
+<edge source="674" target="758" weight="0.04219794"/>
+<edge source="675" target="680" weight="0.011078815"/>
+<edge source="675" target="690" weight="0.010661858"/>
+<edge source="675" target="712" weight="0.013838642"/>
+<edge source="675" target="726" weight="0.01123201"/>
+<edge source="675" target="740" weight="0.04696784"/>
+<edge source="676" target="666" weight="0.037700526"/>
+<edge source="676" target="688" weight="0.044781905"/>
+<edge source="676" target="700" weight="0.07533146"/>
+<edge source="676" target="738" weight="0.055007506"/>
+<edge source="676" target="754" weight="0.09664966"/>
+<edge source="677" target="705" weight="0.038496193"/>
+<edge source="677" target="706" weight="0.06866756"/>
+<edge source="677" target="708" weight="0.059800055"/>
+<edge source="677" target="743" weight="0.04423588"/>
+<edge source="677" target="760" weight="0.04381901"/>
+<edge source="678" target="670" weight="0.015074549"/>
+<edge source="678" target="679" weight="0.031810094"/>
+<edge source="678" target="682" weight="0.054886077"/>
+<edge source="678" target="719" weight="0.019601218"/>
+<edge source="678" target="745" weight="0.024028813"/>
+<edge source="679" target="678" weight="0.025023792"/>
+<edge source="679" target="687" weight="0.030217685"/>
+<edge source="679" target="697" weight="0.029867303"/>
+<edge source="679" target="701" weight="0.053636003"/>
+<edge source="679" target="726" weight="0.025908303"/>
+<edge source="680" target="689" weight="0.051958103"/>
+<edge source="680" target="706" weight="0.03843226"/>
+<edge source="680" target="714" weight="0.05280725"/>
+<edge source="680" target="743" weight="0.06881043"/>
+<edge source="680" target="751" weight="0.31961033"/>
+<edge source="681" target="673" weight="0.553517"/>
+<edge source="681" target="728" weight="0.21972679"/>
+<edge source="681" target="732" weight="0.0599365"/>
+<edge source="681" target="736" weight="0.0791667"/>
+<edge source="681" target="749" weight="0.059985068"/>
+<edge source="682" target="694" weight="0.069473796"/>
+<edge source="682" target="717" weight="0.07444375"/>
+<edge source="682" target="719" weight="0.2350121"/>
+<edge source="682" target="739" weight="0.21879958"/>
+<edge source="682" target="749" weight="0.07476173"/>
+<edge source="683" target="695" weight="0.027439889"/>
+<edge source="683" target="704" weight="0.037874714"/>
+<edge source="683" target="710" weight="0.06885941"/>
+<edge source="683" target="713" weight="0.029596616"/>
+<edge source="683" target="730" weight="0.026582306"/>
+<edge source="684" target="706" weight="0.041569814"/>
+<edge source="684" target="714" weight="0.04099139"/>
+<edge source="684" target="722" weight="0.041873902"/>
+<edge source="684" target="736" weight="0.054714397"/>
+<edge source="684" target="748" weight="0.041417994"/>
+<edge source="685" target="696" weight="0.20495777"/>
+<edge source="685" target="701" weight="0.31051996"/>
+<edge source="685" target="721" weight="0.14933765"/>
+<edge source="685" target="758" weight="0.11301137"/>
+<edge source="685" target="759" weight="0.084030725"/>
+<edge source="686" target="685" weight="0.016042532"/>
+<edge source="686" target="718" weight="0.026504459"/>
+<edge source="686" target="729" weight="0.15393959"/>
+<edge source="686" target="735" weight="0.028328177"/>
+<edge source="686" target="747" weight="0.028111443"/>
+<edge source="687" target="665" weight="0.011333371"/>
+<edge source="687" target="668" weight="0.02060619"/>
+<edge source="687" target="679" weight="0.041638464"/>
+<edge source="687" target="682" weight="0.031593453"/>
+<edge source="687" target="757" weight="0.008512488"/>
+<edge source="688" target="676" weight="0.022962369"/>
+<edge source="688" target="678" weight="0.013696737"/>
+<edge source="688" target="711" weight="0.021991696"/>
+<edge source="688" target="737" weight="0.020032533"/>
+<edge source="688" target="750" weight="0.014427634"/>
+<edge source="689" target="680" weight="0.05139615"/>
+<edge source="689" target="692" weight="0.065253645"/>
+<edge source="689" target="743" weight="0.056771323"/>
+<edge source="689" target="751" weight="0.107000306"/>
+<edge source="689" target="761" weight="0.039224327"/>
+<edge source="690" target="717" weight="0.17000788"/>
+<edge source="690" target="720" weight="0.086804874"/>
+<edge source="690" target="728" weight="0.2239766"/>
+<edge source="690" target="736" weight="0.059770882"/>
+<edge source="690" target="749" weight="0.15060082"/>
+<edge source="691" target="694" weight="0.08501372"/>
+<edge source="691" target="717" weight="0.083297595"/>
+<edge source="691" target="720" weight="0.0802534"/>
+<edge source="691" target="728" weight="0.095639355"/>
+<edge source="691" target="732" weight="0.10731854"/>
+<edge source="692" target="662" weight="0.064435154"/>
+<edge source="692" target="689" weight="0.09143591"/>
+<edge source="692" target="691" weight="0.027565775"/>
+<edge source="692" target="696" weight="0.028293842"/>
+<edge source="692" target="723" weight="0.039574217"/>
+<edge source="693" target="667" weight="0.02696492"/>
+<edge source="693" target="680" weight="0.0242208"/>
+<edge source="693" target="706" weight="0.022301577"/>
+<edge source="693" target="747" weight="0.03345816"/>
+<edge source="693" target="751" weight="0.04648444"/>
+<edge source="694" target="682" weight="0.36381608"/>
+<edge source="694" target="717" weight="0.50302386"/>
+<edge source="694" target="728" weight="0.37395743"/>
+<edge source="694" target="749" weight="0.49425095"/>
+<edge source="694" target="764" weight="0.38345927"/>
+<edge source="695" target="661" weight="0.03133925"/>
+<edge source="695" target="706" weight="0.11755363"/>
+<edge source="695" target="755" weight="0.030308913"/>
+<edge source="695" target="756" weight="0.030955967"/>
+<edge source="695" target="764" weight="0.029327663"/>
+<edge source="696" target="670" weight="0.19691291"/>
+<edge source="696" target="685" weight="0.22223707"/>
+<edge source="696" target="721" weight="0.36501008"/>
+<edge source="696" target="758" weight="0.33082747"/>
+<edge source="696" target="759" weight="0.28787437"/>
+<edge source="697" target="672" weight="0.02371206"/>
+<edge source="697" target="679" weight="0.026304753"/>
+<edge source="697" target="711" weight="0.082002334"/>
+<edge source="697" target="715" weight="0.012678715"/>
+<edge source="697" target="750" weight="0.30078128"/>
+<edge source="698" target="677" weight="0.021611867"/>
+<edge source="698" target="691" weight="0.02287"/>
+<edge source="698" target="707" weight="0.041438803"/>
+<edge source="698" target="733" weight="0.072870255"/>
+<edge source="698" target="734" weight="0.024598293"/>
+<edge source="699" target="665" weight="0.02376913"/>
+<edge source="699" target="671" weight="0.008478607"/>
+<edge source="699" target="674" weight="0.028774058"/>
+<edge source="699" target="696" weight="0.0139884055"/>
+<edge source="699" target="738" weight="0.028082877"/>
+<edge source="700" target="676" weight="0.07746223"/>
+<edge source="700" target="711" weight="0.040830407"/>
+<edge source="700" target="724" weight="0.066697784"/>
+<edge source="700" target="751" weight="0.044018634"/>
+<edge source="700" target="754" weight="0.33828178"/>
+<edge source="701" target="679" weight="0.0605518"/>
+<edge source="701" target="685" weight="0.26262712"/>
+<edge source="701" target="696" weight="0.023312343"/>
+<edge source="701" target="727" weight="0.01510039"/>
+<edge source="701" target="733" weight="0.011692773"/>
+<edge source="702" target="667" weight="0.008994258"/>
+<edge source="702" target="710" weight="0.004761986"/>
+<edge source="702" target="725" weight="0.116310924"/>
+<edge source="702" target="752" weight="0.007351361"/>
+<edge source="702" target="761" weight="0.027594253"/>
+<edge source="703" target="671" weight="0.012720829"/>
+<edge source="703" target="690" weight="0.0152903525"/>
+<edge source="703" target="700" weight="0.021182373"/>
+<edge source="703" target="734" weight="0.012956655"/>
+<edge source="703" target="738" weight="0.008238674"/>
+<edge source="704" target="689" weight="0.034037255"/>
+<edge source="704" target="710" weight="0.066153005"/>
+<edge source="704" target="727" weight="0.034733165"/>
+<edge source="704" target="733" weight="0.049743004"/>
+<edge source="704" target="753" weight="0.04578941"/>
+<edge source="705" target="677" weight="0.07265736"/>
+<edge source="705" target="714" weight="0.060842074"/>
+<edge source="705" target="715" weight="0.06260151"/>
+<edge source="705" target="733" weight="0.28038862"/>
+<edge source="705" target="735" weight="0.079220675"/>
+<edge source="706" target="677" weight="0.053446747"/>
+<edge source="706" target="695" weight="0.14805034"/>
+<edge source="706" target="718" weight="0.02572737"/>
+<edge source="706" target="737" weight="0.05053608"/>
+<edge source="706" target="760" weight="0.025569934"/>
+<edge source="707" target="682" weight="0.053247023"/>
+<edge source="707" target="698" weight="0.044852246"/>
+<edge source="707" target="719" weight="0.16133137"/>
+<edge source="707" target="728" weight="0.040033672"/>
+<edge source="707" target="739" weight="0.17131917"/>
+<edge source="708" target="677" weight="0.08206157"/>
+<edge source="708" target="705" weight="0.043200437"/>
+<edge source="708" target="733" weight="0.05923342"/>
+<edge source="708" target="753" weight="0.03865834"/>
+<edge source="708" target="756" weight="0.07165947"/>
+<edge source="709" target="704" weight="0.03614092"/>
+<edge source="709" target="732" weight="0.035449937"/>
+<edge source="709" target="742" weight="0.027340805"/>
+<edge source="709" target="747" weight="0.18336892"/>
+<edge source="709" target="748" weight="0.024954097"/>
+<edge source="710" target="683" weight="0.045827217"/>
+<edge source="710" target="704" weight="0.06394458"/>
+<edge source="710" target="730" weight="0.2893689"/>
+<edge source="710" target="747" weight="0.04434946"/>
+<edge source="710" target="748" weight="0.07085247"/>
+<edge source="711" target="697" weight="0.20132057"/>
+<edge source="711" target="716" weight="0.07989093"/>
+<edge source="711" target="724" weight="0.104992434"/>
+<edge source="711" target="731" weight="0.109969586"/>
+<edge source="711" target="750" weight="0.44121486"/>
+<edge source="712" target="664" weight="0.0030612366"/>
+<edge source="712" target="670" weight="0.0055784998"/>
+<edge source="712" target="685" weight="0.004411547"/>
+<edge source="712" target="723" weight="0.0046445415"/>
+<edge source="712" target="726" weight="0.043403614"/>
+<edge source="713" target="683" weight="0.043247677"/>
+<edge source="713" target="715" weight="0.17590585"/>
+<edge source="713" target="726" weight="0.11017454"/>
+<edge source="713" target="733" weight="0.074723236"/>
+<edge source="713" target="757" weight="0.035019234"/>
+<edge source="714" target="669" weight="0.036019173"/>
+<edge source="714" target="733" weight="0.052232176"/>
+<edge source="714" target="734" weight="0.065353274"/>
+<edge source="714" target="738" weight="0.07666917"/>
+<edge source="714" target="741" weight="0.042661607"/>
+<edge source="715" target="668" weight="0.12707019"/>
+<edge source="715" target="705" weight="0.081551716"/>
+<edge source="715" target="713" weight="0.24206874"/>
+<edge source="715" target="733" weight="0.16410454"/>
+<edge source="715" target="757" weight="0.07800869"/>
+<edge source="716" target="711" weight="0.12684672"/>
+<edge source="716" target="724" weight="0.1296282"/>
+<edge source="716" target="731" weight="0.14017627"/>
+<edge source="716" target="752" weight="0.29004917"/>
+<edge source="716" target="761" weight="0.13136208"/>
+<edge source="717" target="690" weight="0.3571918"/>
+<edge source="717" target="694" weight="0.287815"/>
+<edge source="717" target="720" weight="0.33311778"/>
+<edge source="717" target="728" weight="0.32966906"/>
+<edge source="717" target="749" weight="0.4975993"/>
+<edge source="718" target="686" weight="0.023228142"/>
+<edge source="718" target="706" weight="0.016516266"/>
+<edge source="718" target="707" weight="0.016449409"/>
+<edge source="718" target="722" weight="0.028631756"/>
+<edge source="718" target="729" weight="0.049240965"/>
+<edge source="719" target="682" weight="0.24034363"/>
+<edge source="719" target="707" weight="0.17088076"/>
+<edge source="719" target="722" weight="0.06337572"/>
+<edge source="719" target="734" weight="0.08052597"/>
+<edge source="719" target="739" weight="0.5298221"/>
+<edge source="720" target="673" weight="0.12042734"/>
+<edge source="720" target="690" weight="0.12356089"/>
+<edge source="720" target="717" weight="0.25498137"/>
+<edge source="720" target="728" weight="0.18836246"/>
+<edge source="720" target="749" weight="0.2231411"/>
+<edge source="721" target="670" weight="0.42478698"/>
+<edge source="721" target="696" weight="0.63092154"/>
+<edge source="721" target="746" weight="0.39789146"/>
+<edge source="721" target="758" weight="0.67102194"/>
+<edge source="721" target="759" weight="0.61024743"/>
+<edge source="722" target="667" weight="0.13454223"/>
+<edge source="722" target="719" weight="0.12004851"/>
+<edge source="722" target="725" weight="0.088914946"/>
+<edge source="722" target="729" weight="0.08053831"/>
+<edge source="722" target="739" weight="0.18191776"/>
+<edge source="723" target="692" weight="0.055539455"/>
+<edge source="723" target="712" weight="0.018725349"/>
+<edge source="723" target="737" weight="0.014236234"/>
+<edge source="723" target="741" weight="0.015917215"/>
+<edge source="723" target="742" weight="0.15752207"/>
+<edge source="724" target="700" weight="0.39090726"/>
+<edge source="724" target="711" weight="0.4312624"/>
+<edge source="724" target="731" weight="0.4059712"/>
+<edge source="724" target="750" weight="0.42888182"/>
+<edge source="724" target="754" weight="0.47615921"/>
+<edge source="725" target="667" weight="0.11678627"/>
+<edge source="725" target="674" weight="0.03058652"/>
+<edge source="725" target="696" weight="0.03883504"/>
+<edge source="725" target="702" weight="0.09909047"/>
+<edge source="725" target="758" weight="0.024031142"/>
+<edge source="726" target="664" weight="0.031952795"/>
+<edge source="726" target="679" weight="0.055056028"/>
+<edge source="726" target="712" weight="0.08527079"/>
+<edge source="726" target="713" weight="0.113027826"/>
+<edge source="726" target="740" weight="0.21960756"/>
+<edge source="727" target="701" weight="0.015911078"/>
+<edge source="727" target="704" weight="0.020259768"/>
+<edge source="727" target="707" weight="0.015003123"/>
+<edge source="727" target="710" weight="0.058519743"/>
+<edge source="727" target="730" weight="0.14687203"/>
+<edge source="728" target="673" weight="0.33873418"/>
+<edge source="728" target="681" weight="0.3185962"/>
+<edge source="728" target="690" weight="0.23999047"/>
+<edge source="728" target="717" weight="0.23889357"/>
+<edge source="728" target="749" weight="0.20529895"/>
+<edge source="729" target="686" weight="0.2571163"/>
+<edge source="729" target="718" weight="0.110022746"/>
+<edge source="729" target="722" weight="0.10023944"/>
+<edge source="729" target="735" weight="0.12422917"/>
+<edge source="729" target="760" weight="0.10013668"/>
+<edge source="730" target="682" weight="0.03845969"/>
+<edge source="730" target="683" weight="0.018819371"/>
+<edge source="730" target="704" weight="0.01568592"/>
+<edge source="730" target="710" weight="0.26660025"/>
+<edge source="730" target="727" weight="0.13623635"/>
+<edge source="731" target="661" weight="0.5814765"/>
+<edge source="731" target="663" weight="0.5156593"/>
+<edge source="731" target="755" weight="0.54433334"/>
+<edge source="731" target="756" weight="0.52900666"/>
+<edge source="731" target="761" weight="0.56846154"/>
+<edge source="732" target="664" weight="0.02438328"/>
+<edge source="732" target="681" weight="0.04387904"/>
+<edge source="732" target="691" weight="0.053041056"/>
+<edge source="732" target="709" weight="0.018410163"/>
+<edge source="732" target="757" weight="0.01315243"/>
+<edge source="733" target="671" weight="0.3386841"/>
+<edge source="733" target="698" weight="0.2682041"/>
+<edge source="733" target="705" weight="0.39597258"/>
+<edge source="733" target="714" weight="0.18633339"/>
+<edge source="733" target="715" weight="0.22379111"/>
+<edge source="734" target="698" weight="0.01814317"/>
+<edge source="734" target="703" weight="0.017661775"/>
+<edge source="734" target="714" weight="0.04056714"/>
+<edge source="734" target="719" weight="0.040276207"/>
+<edge source="734" target="739" weight="0.03659867"/>
+<edge source="735" target="669" weight="0.02903036"/>
+<edge source="735" target="686" weight="0.028451608"/>
+<edge source="735" target="705" weight="0.040244788"/>
+<edge source="735" target="710" weight="0.02436193"/>
+<edge source="735" target="729" weight="0.043546118"/>
+<edge source="736" target="673" weight="0.2639621"/>
+<edge source="736" target="681" weight="0.24893112"/>
+<edge source="736" target="690" weight="0.18129528"/>
+<edge source="736" target="728" weight="0.17569013"/>
+<edge source="736" target="760" weight="0.508347"/>
+<edge source="737" target="681" weight="0.011264681"/>
+<edge source="737" target="705" weight="0.016151119"/>
+<edge source="737" target="706" weight="0.038359113"/>
+<edge source="737" target="723" weight="0.026838625"/>
+<edge source="737" target="750" weight="0.01710101"/>
+<edge source="738" target="672" weight="0.081489496"/>
+<edge source="738" target="676" weight="0.05041864"/>
+<edge source="738" target="714" weight="0.060131606"/>
+<edge source="738" target="733" weight="0.036884166"/>
+<edge source="738" target="753" weight="0.036670122"/>
+<edge source="739" target="667" weight="0.2169499"/>
+<edge source="739" target="682" weight="0.15716413"/>
+<edge source="739" target="707" weight="0.17314978"/>
+<edge source="739" target="719" weight="0.41194835"/>
+<edge source="739" target="722" weight="0.09216675"/>
+<edge source="740" target="675" weight="0.035466976"/>
+<edge source="740" target="712" weight="0.029385813"/>
+<edge source="740" target="726" weight="0.23509932"/>
+<edge source="740" target="738" weight="0.027217798"/>
+<edge source="740" target="743" weight="0.030634632"/>
+<edge source="741" target="664" weight="0.12667619"/>
+<edge source="741" target="692" weight="0.14944363"/>
+<edge source="741" target="712" weight="0.1433998"/>
+<edge source="741" target="726" weight="0.056326475"/>
+<edge source="741" target="740" weight="0.14938985"/>
+<edge source="742" target="676" weight="0.06993203"/>
+<edge source="742" target="711" weight="0.06533035"/>
+<edge source="742" target="723" weight="0.2692018"/>
+<edge source="742" target="724" weight="0.078229286"/>
+<edge source="742" target="754" weight="0.072252"/>
+<edge source="743" target="677" weight="0.04275696"/>
+<edge source="743" target="680" weight="0.092624046"/>
+<edge source="743" target="689" weight="0.08138539"/>
+<edge source="743" target="740" weight="0.04472306"/>
+<edge source="743" target="751" weight="0.18711364"/>
+<edge source="744" target="706" weight="0.019940356"/>
+<edge source="744" target="708" weight="0.013678698"/>
+<edge source="744" target="711" weight="0.029896433"/>
+<edge source="744" target="723" weight="0.02945708"/>
+<edge source="744" target="742" weight="0.021505512"/>
+<edge source="745" target="670" weight="0.06500765"/>
+<edge source="745" target="721" weight="0.10233381"/>
+<edge source="745" target="746" weight="0.17855862"/>
+<edge source="745" target="758" weight="0.27883068"/>
+<edge source="745" target="759" weight="0.22188759"/>
+<edge source="746" target="670" weight="0.12146574"/>
+<edge source="746" target="721" weight="0.120091386"/>
+<edge source="746" target="745" weight="0.21464726"/>
+<edge source="746" target="758" weight="0.37508643"/>
+<edge source="746" target="759" weight="0.116520524"/>
+<edge source="747" target="690" weight="0.13333696"/>
+<edge source="747" target="693" weight="0.17094633"/>
+<edge source="747" target="709" weight="0.31004816"/>
+<edge source="747" target="736" weight="0.13622056"/>
+<edge source="747" target="755" weight="0.126165"/>
+<edge source="748" target="673" weight="0.016820284"/>
+<edge source="748" target="684" weight="0.02440519"/>
+<edge source="748" target="693" weight="0.011313318"/>
+<edge source="748" target="710" weight="0.04415917"/>
+<edge source="748" target="720" weight="0.0134662995"/>
+<edge source="749" target="690" weight="0.34249318"/>
+<edge source="749" target="694" weight="0.29852843"/>
+<edge source="749" target="717" weight="0.52525264"/>
+<edge source="749" target="720" weight="0.3159871"/>
+<edge source="749" target="728" weight="0.30909464"/>
+<edge source="750" target="697" weight="0.38650057"/>
+<edge source="750" target="711" weight="0.36396503"/>
+<edge source="750" target="716" weight="0.04593627"/>
+<edge source="750" target="724" weight="0.056088746"/>
+<edge source="750" target="731" weight="0.080033086"/>
+<edge source="751" target="663" weight="0.07451974"/>
+<edge source="751" target="680" weight="0.3444243"/>
+<edge source="751" target="689" weight="0.13521451"/>
+<edge source="751" target="743" weight="0.17256078"/>
+<edge source="751" target="761" weight="0.09700109"/>
+<edge source="752" target="661" weight="0.09571926"/>
+<edge source="752" target="716" weight="0.26973248"/>
+<edge source="752" target="731" weight="0.103512414"/>
+<edge source="752" target="761" weight="0.10208799"/>
+<edge source="752" target="764" weight="0.09415172"/>
+<edge source="753" target="671" weight="0.2490656"/>
+<edge source="753" target="682" weight="0.1365957"/>
+<edge source="753" target="689" weight="0.10943176"/>
+<edge source="753" target="714" weight="0.10991605"/>
+<edge source="753" target="738" weight="0.11963339"/>
+<edge source="754" target="676" weight="0.36518925"/>
+<edge source="754" target="700" weight="0.5521334"/>
+<edge source="754" target="731" weight="0.3355277"/>
+<edge source="754" target="755" weight="0.31969398"/>
+<edge source="754" target="761" weight="0.32855415"/>
+<edge source="755" target="661" weight="0.53612417"/>
+<edge source="755" target="663" weight="0.45103282"/>
+<edge source="755" target="731" weight="0.5007245"/>
+<edge source="755" target="756" weight="0.48965675"/>
+<edge source="755" target="761" weight="0.5066214"/>
+<edge source="756" target="661" weight="0.566876"/>
+<edge source="756" target="731" weight="0.5168395"/>
+<edge source="756" target="755" weight="0.5212866"/>
+<edge source="756" target="761" weight="0.5369274"/>
+<edge source="756" target="764" weight="0.49246797"/>
+<edge source="757" target="682" weight="0.05203966"/>
+<edge source="757" target="717" weight="0.073568225"/>
+<edge source="757" target="720" weight="0.064102136"/>
+<edge source="757" target="728" weight="0.04788959"/>
+<edge source="757" target="749" weight="0.0724002"/>
+<edge source="758" target="670" weight="0.39558885"/>
+<edge source="758" target="721" weight="0.4397593"/>
+<edge source="758" target="745" weight="0.40864563"/>
+<edge source="758" target="746" weight="0.5092668"/>
+<edge source="758" target="759" weight="0.43521652"/>
+<edge source="759" target="696" weight="0.21825959"/>
+<edge source="759" target="721" weight="0.18052438"/>
+<edge source="759" target="745" weight="0.18873484"/>
+<edge source="759" target="746" weight="0.08914985"/>
+<edge source="759" target="758" weight="0.22771074"/>
+<edge source="760" target="677" weight="0.06420409"/>
+<edge source="760" target="684" weight="0.04262677"/>
+<edge source="760" target="720" weight="0.052549988"/>
+<edge source="760" target="729" weight="0.065192595"/>
+<edge source="760" target="736" weight="0.49909273"/>
+<edge source="761" target="661" weight="0.6545229"/>
+<edge source="761" target="662" weight="0.5729754"/>
+<edge source="761" target="663" weight="0.5856786"/>
+<edge source="761" target="731" weight="0.55758834"/>
+<edge source="761" target="763" weight="0.56877786"/>
+<edge source="762" target="661" weight="0.7580327"/>
+<edge source="762" target="662" weight="0.83152664"/>
+<edge source="762" target="663" weight="0.84732985"/>
+<edge source="762" target="761" weight="0.6569624"/>
+<edge source="762" target="763" weight="0.86450505"/>
+<edge source="763" target="661" weight="0.75564575"/>
+<edge source="763" target="662" weight="0.8134666"/>
+<edge source="763" target="663" weight="0.8268452"/>
+<edge source="763" target="761" weight="0.6471408"/>
+<edge source="763" target="762" weight="0.7375432"/>
+<edge source="764" target="661" weight="0.5597587"/>
+<edge source="764" target="731" weight="0.5056244"/>
+<edge source="764" target="755" weight="0.50623727"/>
+<edge source="764" target="756" weight="0.5218659"/>
+<edge source="764" target="761" weight="0.5287849"/>
+</edges>
+</graph>
+</gexf>

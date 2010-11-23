@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:TitleWindow xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute" width="400" height="300"
+	title="" close="PopUpManager.removePopUp(this)" showCloseButton="true"
+	backgroundColor="#dddddd" addedEffect="Fade" removedEffect="Fade">
+	
+	<!--
+	////////////////////////////////////////////////////////////////////////////////
+	//
+	//  Copyright (C) 2006 Adobe Macromedia Software LLC and its licensors.
+	//  All Rights Reserved. The following is Source Code and is subject to all
+	//  restrictions on such code as contained in the End User License Agreement
+	//  accompanying this product.
+	//
+	////////////////////////////////////////////////////////////////////////////////
+	-->
+	
+	<!-- this component is the modal dialog that appears when you click the "about" link -->
+	
+	<mx:Text right="10" left="10" top="10" bottom="10" selectable="false">
+		<mx:htmlText>
+			<![CDATA[<b>Molecule Viewer</b><br/>by <a href="mailto:mshepher@adobe.com"><b>Mark Shepherd</b><br/><i>mshepher@adobe.com</i></a> <br>Last updated Nov 11, 2006.<br><br>The molecular data is dynamically loaded from XML files. The layouts are schematic only, they are <b>not</b> based on the actual chemistry.<br><br>Drag atoms around if you like. Drag the background to scroll. Use the sliders to change atom size and bond strength.<br><br>The Molecule Viewer is written in Adobe Flex 2. Right-click to view the source code. Visit <a href="http://www.adobe.com/cfusion/exchange/index.cfm?view=sn102&returnurl=sn101#view=sn201&viewName=Extension%20Details&loc=en_us&authorid=71967431&page=0&scrollPos=0&subcatid=0&snid=sn201&itemnumber=0&extid=1048510&catid=0&returnurl=sn101"><b>Adobe Exchange</b></a> to download a zip containing additional source, binaries, and documentation.<br/><br/>The molecular data comes from www.cml.org.]]>
+		</mx:htmlText>
+	</mx:Text>
+	
+	<mx:Script>
+		<![CDATA[
+			import mx.managers.PopUpManager;
+		]]>
+	</mx:Script>
+</mx:TitleWindow>

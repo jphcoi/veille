@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<index>
+	<title>Source of SitePoint_DataViz_Tutorial_Part3-cooc</title>
+	<nodes>
+		<node label="html-template">
+			<node label="history">
+				<node label="history.css" icon="cssIcon" url="source/html-template/history/history.css.html"/>
+				<node label="history.js" url="source/html-template/history/history.js.txt"/>
+				<node label="historyFrame.html" icon="htmlIcon" url="source/html-template/history/historyFrame.html"/>
+			</node>
+			<node label="AC_OETags.js" url="source/html-template/AC_OETags.js.txt"/>
+			<node label="index.template.html" icon="htmlIcon" url="source/html-template/index.template.html"/>
+			<node label="playerProductInstall.swf" icon="swfIcon" url="source/html-template/playerProductInstall.swf"/>
+		</node>
+		<node label="libs">
+			<node label="SpringGraph.swc" url="source/libs/SpringGraph.swc"/>
+		</node>
+		<node label="src" icon="classpathIcon" expanded="true">
+			<node label="com" icon="packageIcon" expanded="true">
+				<node label="json_data2.txt" url="source/com/json_data2.txt"/>
+			</node>
+			<node label="com.adobe.serialization.json" icon="packageIcon" expanded="true">
+				<node label="JSON.as" icon="actionScriptIcon" url="source/com/adobe/serialization/json/JSON.as.html"/>
+				<node label="JSONDecoder.as" icon="actionScriptIcon" url="source/com/adobe/serialization/json/JSONDecoder.as.html"/>
+				<node label="JSONEncoder.as" icon="actionScriptIcon" url="source/com/adobe/serialization/json/JSONEncoder.as.html"/>
+				<node label="JSONParseError.as" icon="actionScriptIcon" url="source/com/adobe/serialization/json/JSONParseError.as.html"/>
+				<node label="JSONToken.as" icon="actionScriptIcon" url="source/com/adobe/serialization/json/JSONToken.as.html"/>
+				<node label="JSONTokenizer.as" icon="actionScriptIcon" url="source/com/adobe/serialization/json/JSONTokenizer.as.html"/>
+				<node label="JSONTokenType.as" icon="actionScriptIcon" url="source/com/adobe/serialization/json/JSONTokenType.as.html"/>
+			</node>
+			<node label="com.sitepoint.itemrenderers" icon="packageIcon" expanded="true">
+				<node label="KeywordRenderer.mxml" icon="mxmlIcon" url="source/com/sitepoint/itemrenderers/KeywordRenderer.mxml.html"/>
+			</node>
+			<node label="com.sitepoint.tooltips" icon="packageIcon" expanded="true">
+				<node label="KeywordToolTip.mxml" icon="mxmlIcon" url="source/com/sitepoint/tooltips/KeywordToolTip.mxml.html"/>
+			</node>
+			<node label="json_data.txt" url="source/json_data.txt"/>
+			<node label="json_data2.txt" url="source/json_data2.txt"/>
+			<node selected="true" label="SitePoint_DataViz_Tutorial_Part3_cooc.mxml" icon="mxmlAppIcon" url="source/SitePoint_DataViz_Tutorial_Part3_cooc.mxml.html"/>
+		</node>
+		<node label="src.zip" url="source/src.zip"/>
+	</nodes>
+</index>
