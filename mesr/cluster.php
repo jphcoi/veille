@@ -48,7 +48,7 @@ function list_clusters($periodes,$clusters,$okperiode)
 				$nbsons=$ligne['nb_sons'];
 				$nbfathers=$ligne['nb_fathers'];
 			}
-			$list[]=array("termes"=>$localcluster,"label1"=>$label1,"label2"=>$label2,"plus"=>$localplus,"minus"=>$localminus,"id"=>$clusters[$i],"periode"=>$periodes[$i],"fils"=>$nbsons,"pere"=>$nbfathers,"lettre"=>$lettre);
+			$list[]=array("termes"=>$localcluster,"label1"=>$label1,"label2"=>$label2,"plus"=>$localplus,"minus"=>$localminus,"id"=>$clusters[$i],"periode"=>$periodes[$i],"pere"=>$nbsons,"fils"=>$nbfathers,"lettre"=>$lettre);
 		}
 	}
 	return $list;
