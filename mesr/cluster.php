@@ -93,17 +93,16 @@ function selective_column($arraykey,$list,$plus,$minus,$main=0){
 			if ($main==1) if (!$there) $gothru=0;
 			
 			if ($gothru==1)
-				if ($there OR $removed) {
+				if ($there OR $removed ) {
 					if ($there) {
 						echo "<a href=chart.php?id_concept=".$terme."&periode=".arrange_periode($my_period);
 						if ($main==0) echo " class=dead";
 						echo ">";
 						}
-					if ($added) echo "<b>";
-					if ($removed) echo '<s style="color:#AAAAAA;">';
+					if ($removed) echo "<b>";
+					if ($added) echo '<s style="color:#AAAAAA;">';
 					echo remove_popo($dico_termes[$terme]);
-					if ($removed) echo "</s>";
-					if ($added) echo "</b>";
+					if ($added) echo "</s>";
 					if ($there) echo "</a>";
 				}
 				
@@ -143,7 +142,13 @@ while ($ligne=mysql_fetch_array($resultat)) $liste_termes[$ligne['id']] = $ligne
 $sql="SELECT id_cluster_2,periode_2 FROM phylo WHERE id_cluster_1=\"".$id_cluster."\" AND periode_1=\"".derange_periode($my_period)."\"";
 //echo $sql;
 $resultat=mysql_query($sql) or die ("Requête non executée.");
-while ($ligne=mysql_fetch_array($resultat)) {$periode_avant_temp = $ligne['periode_2']; if (intval($periode_avant_temp)> intval($my_period)){$successeur[] = $ligne['id_cluster_2']; $periode_apres =$periode_avant_temp;  } }
+while ($ligne=mysql_fetch_array($resultat)) {
+	$periode_avant_temp = $ligne['periode_2']; 
+	if (intval($periode_avant_temp)>intval($my_period)) {
+		$successeur[] = $ligne['id_cluster_2']; 
+		$periode_apres =$periode_avant_temp; 
+		}
+	}
 
 $sql="SELECT id_cluster_1,periode_1 FROM phylo WHERE id_cluster_2=\"".$id_cluster."\" AND periode_2=\"".derange_periode($periode)."\"";
 $resultat=mysql_query($sql) or die ("Requête non executée.");
@@ -237,7 +242,7 @@ echo '</table>';
 //// CREATION PHYLOGENIE (UNIQUEMENT POUR "PHYLO" OU "SOC")
 
 if ($nav=="phylo" or $nav=="soc" or $nav == "cooc" or $nav=="source"){
- 	$pred=list_clusters($periode_avant,$predecesseur);
+ 	$pred=($periode_avant,$predecesseur);
  	$succ=list_clusters($periode_apres,$successeur);
 	$arraytmp=array();
 	foreach ($pred as $p) foreach ($p['termes'] as $c) $arraytmp[]=$c;
