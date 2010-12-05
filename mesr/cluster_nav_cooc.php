@@ -156,8 +156,7 @@ include("include/network-def.php");
 // DEFINITION DU SCRIPT JAVASCRIPT POUR AFFICHER LE RESEAU
 	
 include("include/network-vis.php");
-	
-//$tmpfile=ecrire_json_cooc($liste_auteur_unique,$legende,$aut_occ,$liens_from,$liens_to,$pertinence);
+
 }
 	
 ///////FIN DES CALCULS FICHIERS JSON DU RESEAU SOCIAL ECRIT
@@ -165,7 +164,7 @@ include("include/network-vis.php");
 
 
 
-	// PORTION CONCERNANT L'AFFICHAGE EN FLEX DU RESEAU SOCIAL
+	// PORTION CONCERNANT L'AFFICHAGE DU RESEAU SOCIAL
 	
 	echo '<p>';
 	if ($affichage>0)
@@ -176,9 +175,9 @@ include("include/network-vis.php");
 
 	echo "\n";
 	echo '<table class=tableitems width=100% cellspacing=0 cellpadding=1 style="font-variant:small-caps;"><tr>';
-	echo "<td align=center width=10%><i>PÉRIODE PRÉCÉDENTE</i>&nbsp;&nbsp;</td>";
+	echo "<td align=center width=10%><i>PÉRIODE ANTÉRIEURE</i>&nbsp;&nbsp;</td>";
 	echo "<td align=center width=80%><i><b>RÉSEAU DE COOCCURRENCE</b><br>PÉRIODE ACTUELLE</i></td>";
-	echo "<td align=center width=10%><i>PÉRIODE SUIVANTE</i></td>";
+	echo "<td align=center width=10%><i>PÉRIODE ULTÉRIEURE</i></td>";
 	echo "</tr>";
 
 

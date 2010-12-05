@@ -431,7 +431,7 @@ else
 	</script>
 	<param name="movie" value="bin/GexfExplorer1.0.swf?path=
 	<? echo $mapgexf?>
-	'&curvedEdges=true&labelSize=40&scaledTextSize=true&clickableNodes&nodeBorderColor=0x000000&clickableNodes=true&labelsColor=0x000000&font=Arial&initialNodesRatio=6&edgesThickness=5&clickableAttribute=fathersbis&fps=false&edgesColor=0xB3D0EC" />
+	'&curvedEdges=true&labelSize=18&scaledTextSize=true&clickableNodes&nodeBorderColor=0x000000&clickableNodes=true&labelsColor=0x000000&font=Arial&initialNodesRatio=6&edgesThickness=5&clickableAttribute=fathersbis&fps=false&edgesColor=0xB3D0EC" />
 	<param name="allowFullScreen" value="true" />
 	<param name="allowScriptAccess" value="always" />
 	<param name="bgcolor" value="#FFFFFF" />

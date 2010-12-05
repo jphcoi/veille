@@ -59,6 +59,7 @@ if ($conf==2)
 $server="localhost";
 $user="root";
 $password="";
+$database="veille";
 }
 
 if ($conf==3)

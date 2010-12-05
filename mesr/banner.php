@@ -1,4 +1,4 @@
-﻿<?
+<?
 echo '<div class=banner>';
 echo '<table width="100%" style="font-size:x-large; font-weight:bold; color:DarkSlateGray; font-variant:small-caps;"><tr><td align=left>';
 echo 'étude MESR';
