@@ -475,7 +475,7 @@ function get_concept_string($liste){
 
 function arrange_periode($s) {return str_replace(" ","-",$s);}
 function derange_periode($s) {return str_replace("-"," ",$s);}
-
+function compute_periode($s) {$a=explode(" ",$s); return(intval($a[0])*1000000+intval($a[1]));}
 
 
 
