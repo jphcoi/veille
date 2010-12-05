@@ -54,7 +54,7 @@
 		
 		/* Sizing parameters and scales. */
 		var sw = .88*document.body.clientWidth,
-			sh = 300,
+			sh = 270,
 			sx = pv.Scale.linear('.$dated.', '.$datef.').range(0, sw),
 			sy = pv.Scale.linear(0, 10).range(0, sh),
 			color = pv.Scale.ordinal(1, 2).range("#33f", "#f33"),
@@ -70,7 +70,7 @@
 		   snewDate.setTime((1279152000+86400*(speriods[time]-'.$dated.'))*1000);
 		   sdateString = snewDate.toUTCString();
 		   sdt=sdateString.split(" ")
-		   sDateArray.push(sdt[1]+sdt[2]);
+		   sDateArray.push(sdt[1]+" "+sdt[2]);
 		}
 		
 		/* The root panel. */
@@ -94,10 +94,8 @@
 			.data(function() sy.ticks(10))
 			.bottom(sy)
 			.strokeStyle(function(d) d==0 ? "black" : "#cccccc")
-		//    .strokeStyle(function(y) y ? "#ccc" : "#000")
 			.anchor("left").add(pv.Label)
 			.text(function(d) sy.tickFormat(d)+(d>0?"":""));
-		//    .text(function(d) sy.tickFormat(d) + "%");
 		
 		
 		  /* Y-axis gridlines (shown with "expand" baseline). */
@@ -135,9 +133,7 @@
 			.event("mouseover", function(d) this.alpha(1).title(d.job))
 			.event("mouseout", function(d) this.alpha(null))
 			.event("click", function(d) search("^" + d.job + "$"));
-		
-	
-		
+				
 		/* Stack labels. */
 		svis.add(pv.Panel)
 			.extend(area.parent)
@@ -156,12 +152,13 @@
 		
 		/* X-axis ticks and labels. */
 		svis.add(pv.Rule)
-			.data(pv.range('.$dated.', '.$datef.', 5))
+			.data(sx.ticks())
 			.left(sx)
 			.bottom(-6)
 			.height(5)
 		  .anchor("bottom").add(pv.Label)
 			 .text(function(d) sDateArray[this.index]);
+			 
 		/* Update the query regular expression when text is entered. */
 		function search(text) {
 		  if (text != re) {
