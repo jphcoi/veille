@@ -15,16 +15,6 @@ else $pertinence = 0.3;
 
 if (isset($_POST['reduced'])) $reduced = $_POST['reduced']; else $reduced = '0';
 
-
-
-function image_cluster($periode,$id_cluster,$dbid,$exportid)//construit la liste des liens vers les représentations des clusters
-{
-	$image_cluster = "cluster_".str_replace('-','_',$periode).'_'.$id_cluster.'.jpg';
-	$adresse_root= $_SERVER['SERVER_NAME'];
-	$imagestructure='http://'.$adresse_root.'/'.$dbid."/".$exportid."/".$image_cluster;
-	return $imagestructure;
-}
-
 function href_cluster($periode,$id_cluster)//construit la liste des liens vers les représentations des clusters
 {
 	$href = "cluster.php?id_cluster=".$id_cluster.'&periode='.$periode;
@@ -40,24 +30,26 @@ function display_term_table($l,$b){
 	echo "</table>";
 }	
 
-function list_clusters($periode,$clusters)
+function list_clusters($periodes,$clusters,$okperiode)
 {
 	global $list_of_concepts;
 	$list=array();
 	for($i=0;$i<count($clusters);$i++){
-		$localcluster=array();
-		$resultat=mysql_query("SELECT label_1,label_2,concept,nb_sons,nb_fathers,lettre FROM cluster WHERE id_cluster=".$clusters[$i]." AND periode=\"".derange_periode($periode)."\" ORDER by periode,concept") or die ("Requête non executée.");
-		while ($ligne=mysql_fetch_array($resultat)) {
-			$localcluster[]=$ligne['concept'];
-			$label1=$ligne['label_1'];
-			$label2=$ligne['label_2'];
-			$localplus=array_diff($localcluster,$list_of_concepts);
-			$localminus=array_diff($list_of_concepts,$localcluster);
-			$lettre=$ligne['lettre'];
-			$nbsons=$ligne['nb_sons'];
-			$nbfathers=$ligne['nb_fathers'];
+		if ($periodes[$i]==$okperiode) {
+			$localcluster=array();
+			$resultat=mysql_query("SELECT label_1,label_2,concept,nb_sons,nb_fathers,lettre FROM cluster WHERE id_cluster=".$clusters[$i]." AND periode=\"".derange_periode($periodes[$i])."\" ORDER by periode,concept") or die ("Requête non executée.");
+			while ($ligne=mysql_fetch_array($resultat)) {
+				$localcluster[]=$ligne['concept'];
+				$label1=$ligne['label_1'];
+				$label2=$ligne['label_2'];
+				$localplus=array_diff($localcluster,$list_of_concepts);
+				$localminus=array_diff($list_of_concepts,$localcluster);
+				$lettre=$ligne['lettre'];
+				$nbsons=$ligne['nb_sons'];
+				$nbfathers=$ligne['nb_fathers'];
+			}
+			$list[]=array("termes"=>$localcluster,"label1"=>$label1,"label2"=>$label2,"plus"=>$localplus,"minus"=>$localminus,"id"=>$clusters[$i],"periode"=>$periodes[$i],"fils"=>$nbsons,"pere"=>$nbfathers,"lettre"=>$lettre);
 		}
-		$list[]=array("termes"=>$localcluster,"label1"=>$label1,"label2"=>$label2,"plus"=>$localplus,"minus"=>$localminus,"id"=>$clusters[$i],"periode"=>$periode,"fils"=>$nbsons,"pere"=>$nbfathers,"lettre"=>$lettre);
 	}
 	return $list;
 }
@@ -93,16 +85,17 @@ function selective_column($arraykey,$list,$plus,$minus,$main=0){
 			if ($main==1) if (!$there) $gothru=0;
 			
 			if ($gothru==1)
-				if ($there OR $removed ) {
+				if ($there OR $removed) {
 					if ($there) {
 						echo "<a href=chart.php?id_concept=".$terme."&periode=".arrange_periode($my_period);
 						if ($main==0) echo " class=dead";
 						echo ">";
 						}
-					if ($removed) echo "<b>";
-					if ($added) echo '<s style="color:#AAAAAA;">';
+					if ($added) echo "<b>";
+					if ($removed) echo '<s style="color:#AAAAAA;">';
 					echo remove_popo($dico_termes[$terme]);
-					if ($added) echo "</s>";
+					if ($removed) echo "</s>";
+					if ($added) echo "</b>";
 					if ($there) echo "</a>";
 				}
 				
@@ -144,15 +137,40 @@ $sql="SELECT id_cluster_2,periode_2 FROM phylo WHERE id_cluster_1=\"".$id_cluste
 $resultat=mysql_query($sql) or die ("Requête non executée.");
 while ($ligne=mysql_fetch_array($resultat)) {
 	$periode_avant_temp = $ligne['periode_2']; 
-	if (intval($periode_avant_temp)>intval($my_period)) {
-		$successeur[] = $ligne['id_cluster_2']; 
-		$periode_apres =$periode_avant_temp; 
-		}
+	if (intval($periode_avant_temp)> intval($my_period)){
+		$successeur[] = $ligne['id_cluster_2'];
+		$periode_apres[] =$periode_avant_temp; }
 	}
 
 $sql="SELECT id_cluster_1,periode_1 FROM phylo WHERE id_cluster_2=\"".$id_cluster."\" AND periode_2=\"".derange_periode($periode)."\"";
 $resultat=mysql_query($sql) or die ("Requête non executée.");
-while ($ligne=mysql_fetch_array($resultat)) {$periode_apres_temp = $ligne['periode_1'];if (intval($periode_apres_temp)< intval($periode)) {$predecesseur[] = $ligne['id_cluster_1']; $periode_avant = $ligne['periode_1']; }}
+while ($ligne=mysql_fetch_array($resultat)) {
+	$periode_apres_temp = $ligne['periode_1'];
+	if (intval($periode_apres_temp)< intval($periode)) {
+		$predecesseur[] = $ligne['id_cluster_1']; 
+		$periode_avant[] = $ligne['periode_1']; }
+	}
+
+
+// max_periode_avant va contenir la période maximale parmi les clusters précédents, donc pas forcément la période immédiatement avant la période courante s'il y a des sauts dans la phylogénie et qu'il y a des prédécesseurs, mais pas à la période immédiatement précédente (distance temporelle >1)
+// min_periode_apres va contenir la période minimale parmi les clusters suivants, idem.
+
+$max_periode_avant=-1;
+$min_periode_apres=100000000000;
+for($i=0;$i<count($periode_avant);$i++) {
+	$periode_value=$periode_avant[$i];
+	if (compute_periode($periode_value)>compute_periode($max_periode_avant)) $max_periode_avant=$periode_value;
+	$periode_avant_rv[$periode_value][]=$predecesseur[$i];
+	}
+for($i=0;$i<count($periode_apres);$i++) {
+	$periode_value=$periode_apres[$i];
+	if (compute_periode($periode_value)<compute_periode($min_periode_apres)) $min_periode_apres=$periode_value;
+	$periode_apres_rv[$periode_value][]=$successeur[$i];
+	}
+if (compute_periode($periode)-compute_periode($max_periode_avant)>7500000) $ecart_pred=1; else $ecart_pred=0;//echo ("y'a de l'écart<br>");
+if (compute_periode($min_periode_apres)-compute_periode($periode)>7500000) $ecart_succ=1; else $ecart_succ=0;//echo ("y'a de l'écart<br>");
+//print_r($periode_avant_rv);print_r($periode_apres_rv);
+//echo("<br>mx: ".$max_periode_avant." mn: ".$min_periode_apres."<br>");
 
 
 //bloc recuperation liste de termes
@@ -242,8 +260,8 @@ echo '</table>';
 //// CREATION PHYLOGENIE (UNIQUEMENT POUR "PHYLO" OU "SOC")
 
 if ($nav=="phylo" or $nav=="soc" or $nav == "cooc" or $nav=="source"){
- 	$pred=($periode_avant,$predecesseur);
- 	$succ=list_clusters($periode_apres,$successeur);
+ 	$pred=list_clusters($periode_avant,$predecesseur,$max_periode_avant);
+ 	$succ=list_clusters($periode_apres,$successeur,$min_periode_apres);
 	$arraytmp=array();
 	foreach ($pred as $p) foreach ($p['termes'] as $c) $arraytmp[]=$c;
 	foreach ($list_of_concepts as $c) $arraytmp[]=$c;
@@ -266,13 +284,14 @@ if ($nav=="phylo"){
 
 	echo '<p><table width=100% rules=all>';
 	echo '<tr valign=top>';
-
-	echo '<td width=30% align=center class=tableitems style="font-variant:small-caps; size:small; font-style:italic;">';
+	
+	if ($ecart_pred==1) $back_avant='background-color:white;';
+	echo '<td width='.(30-4*$ecart_pred).'% align=center class=tableitems style="font-variant:small-caps; size:small; font-style:italic;'.$back_avant.'">';
 		
 	if ($nopred) echo "<b>(pas de prédécesseur)</b>";
 	else {
-		echo '<b>période précédente</b>';
-		echo '<br><div class=commentitems style="font-weight:normal; font-variant:normal; font-size:xx-small;">('.get_string_periode(arrange_periode($periode_avant)).")</div><br>";
+		echo '<b>période antérieure</b>';
+		echo '<br><div class=commentitems style="font-weight:normal; font-variant:normal; font-size:xx-small;">('.get_string_periode(arrange_periode($max_periode_avant)).")</div><br>";
 		echo '<table class=commentitems align=center width=100% cellspacing=0 cellpadding=5 style="font-variant:small-caps; size:small; font-style:italic;">';
 		foreach ($pred as $p) {
 			$label1=$p['label1'];
@@ -299,6 +318,12 @@ if ($nav=="phylo"){
 		}
 	
 	echo '</td>';
+
+	if ($ecart_pred==1)	{
+		echo '<td width=2% align=center style="background-color:'.$backdark.'; vertical-align:middle;">'; 
+		if (!$nopred) echo (' (...) ');
+		echo '</td><td width=2%></td>';
+		}
 	
 	echo '<td width=40% align=center style="background-color:'.$backdark.'; font-size:medium; font-variant:small-caps; font-style:italic;">';
 	
@@ -310,19 +335,20 @@ if ($nav=="phylo"){
 	$nonlist=array();
 	selective_column($arraykey,$list_of_concepts,$nonlist,$nonlist,1);
 	
-//	echo '<br>';
-//	$imagestructure = image_cluster(arrange_periode($periode),$id_cluster,$dbid,$exportid);
-	//affiche le cluster courante.
-//	echo "<center><a href=".$imagestructure."><img height=150px src=".$imagestructure.' border="none"></a></center><br>';
-
 	echo '</td>';
 	
-
-	echo '<td width=30% align=center class=tableitems style="font-variant:small-caps; size:small; font-style:italic;">';	
+	if ($ecart_succ==1)	{
+		echo '<td width=2%></td><td width=2% style="background-color:'.$backdark.'; vertical-align:middle;">';
+		if (!$nosucc) echo ' (...) ';
+		echo '</td>';
+		$back_apres='background-color:white;';
+		}
+		
+	echo '<td width='.(30-4*$ecart_succ).'% align=center class=tableitems style="font-variant:small-caps; size:small; font-style:italic;'.$back_apres.'">';	
 	if ($nosucc) echo "<b>(pas de successeur)</b>"; 
 	else {
-		echo '<b>période suivante</b>';
-		echo '<br><div class=commentitems style="font-weight:normal; font-variant:normal; font-size:xx-small;">('.get_string_periode(arrange_periode($periode_apres)).")</div><br>";
+		echo '<b>période ultérieure</b>';
+		echo '<br><div class=commentitems style="font-weight:normal; font-variant:normal; font-size:xx-small;">('.get_string_periode(arrange_periode($min_periode_apres)).")</div><br>";
 	
 		echo '<table class=commentitems align=center width=100% cellspacing=0  cellpadding=5 style="font-variant:small-caps; size:small; font-style:italic;">';
 		foreach ($succ as $s) {
