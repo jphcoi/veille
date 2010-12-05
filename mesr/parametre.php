@@ -2,7 +2,7 @@
 $domain = $_SERVER['HTTP_HOST'];
 $hrefroot = 'http://'.$domain;
 //calcul des chemins
-$exportid='v.2';
+$exportid='v.1';
 $racine=$_SERVER['PHP_SELF'];
 $racine_v = explode('/',$racine);
 array_pop($racine_v);
@@ -18,14 +18,14 @@ $multi_auteurs=0;
 
 $dated=132;
 $datef=193;
-$database='veille2';
+$database='veillet2';
 
 // $database='veille4';
- $dated=196;
+// $dated=196;
+$dated=209;
+// $datef=258;
 
- $datef=258;
-
-// $datef=318;
+ $datef=320;
 
 
 $type_notice = 'blog';
