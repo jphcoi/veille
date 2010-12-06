@@ -92,6 +92,34 @@ function getXMLHTTP() { //fuction to return the xml http object
 
 <?
 echo '</head>';
+ echo "
+ 	<style>
+ 	#messageBox{
+ 	        border-right: 1px solid #000000;
+ 	        position: fixed;
+ 	        width: 700px;
+ 
+ 	        z-index: 1;
+ 	        background-color: #C0C0C0;
+ 	        border-style: solid;
+ 	        border-width: 2px;
+ 	        display:none;
+ 	}
+ 	#contents{
+ 	        width: 90%;
+ 	        height: auto;
+ 	        z-index: 2;
+ 	}
+ 	</style>
+ 	<script language='javascript'>
+ 	function show(obj,msg){
+ 	messageBox.style.top=obj.offsetTop+100
+ 	messageBox.style.right=obj.offsetLeft+10
+ 	contents.innerHTML=msg+'<p>'+obj
+ 	messageBox.style.display='block'
+ 	}
+ 	</script>
+ ";
 echo '<body>';
 
 ?>
