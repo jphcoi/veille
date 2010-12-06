@@ -1,3 +1,4 @@
 *.js
 *.gexf
 mesr/parametre.php
+mesr/data/*
