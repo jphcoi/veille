@@ -431,13 +431,13 @@ else
 	</script>
 	<param name="movie" value="bin/GexfExplorer1.0.swf?path=
 	<? echo $mapgexf?>
-	'&curvedEdges=true&labelSize=18&scaledTextSize=true&clickableNodes&nodeBorderColor=0x000000&clickableNodes=true&labelsColor=0x000000&font=Arial&initialNodesRatio=6&edgesThickness=5&clickableAttribute=fathersbis&fps=false&edgesColor=0xB3D0EC" />
+	'&curvedEdges=true&labelSize=1800&scaledTextSize=false&clickableNodes&nodeBorderColor=0x000000&clickableNodes=true&labelsColor=0x000000&font=Verdana&initialNodesRatio=6&edgesThickness=5&clickableAttribute=fathersbis&fps=false&edgesColor=0xB3D0EC" />
 	<param name="allowFullScreen" value="true" />
 	<param name="allowScriptAccess" value="always" />
 	<param name="bgcolor" value="#FFFFFF" />
 	<embed src="bin/GexfExplorer1.0.swf?path=
 		<? echo $mapgexf?>
-	&curvedEdges=true&scaledTextSize=true&labelSize=40&clickableNodes=true&nodeBorderColor=0x000000&labelsColor=0x000000&font=Arial&clickableAttribute=fathersbis&initialNodesRatio=6&edgesThickness=5&fps=false&edgesColor=0xB3D0EC" allowFullScreen="true" allowScriptAccess="always" width="100%" height="600" bgcolor="#FFFFFF">
+	&curvedEdges=true&scaledTextSize=false&labelSize=1800&clickableNodes=true&nodeBorderColor=0x000000&labelsColor=0x000000&font=Verdana&clickableAttribute=fathersbis&initialNodesRatio=6&edgesThickness=5&fps=false&edgesColor=0xB3D0EC" allowFullScreen="true" allowScriptAccess="always" width="100%" height="600" bgcolor="#FFFFFF">
 	</embed>
 </object>
 <?
