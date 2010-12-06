@@ -25,15 +25,15 @@ if ($user!="root") mysql_query("SET NAMES utf8;");
 	// 	if ($nb_parametres != 5){echo "nouveau parametre a importer: modifier la structure des tables...!!!"; }
 
 
-	 $q="DROP table if exists termneighborhood";
+	 $q="DROP table if exists term_neighborhood";
 
 	 $q1=mysql_query($q);
-	 if($q1){echo "deleted the table termneighborhood....<br>";}
+	 if($q1){echo "deleted the table term_neighborhood....<br>";}
 	 else{echo mysql_error();}
 
-	$sql = "CREATE TABLE termneighborhood (id MEDIUMINT NOT NULL AUTO_INCREMENT PRIMARY KEY, idx VARCHAR(10), js text)";
+	$sql = "CREATE TABLE term_neighborhood (id MEDIUMINT NOT NULL AUTO_INCREMENT PRIMARY KEY, idx VARCHAR(10), js text)";
 	$resultat=mysql_query($sql);	
-	echo "created the table termneighborhood....<br>";
+	echo "created the table term_neighborhood....<br>";
 
 	echo count($tabfich);
 	for( $i = 0 ; $i < count($tabfich) ; $i++ )
@@ -42,11 +42,11 @@ if ($user!="root") mysql_query("SET NAMES utf8;");
 	$ligne = $tabfich[$i];
 	$ligne_v = explode("\t",$ligne);
 	$index =  $ligne_v[0];
-	#echo '<br>'.$index.'<br>';
-	$texte =  $ligne_v[1];
+	echo '<br>'.$index.'<br>';
+	$texte =  mysql_real_escape_string($ligne_v[1]);
 
 	#echo $texte;
-	$sql="INSERT INTO termneighborhood (idx,js) VALUES ('$index','$texte')";
+	$sql="INSERT INTO term_neighborhood (idx,js) VALUES ('$index','$texte')";
 	//echo $sql;
 	$q1 = mysql_query($sql);
 	if($q1){echo "created field....<br>";}else{echo "<br>".mysql_error()."<br>";}
