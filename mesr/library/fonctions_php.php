@@ -931,32 +931,32 @@ function display_billets($info_sources,$list_of_concepts,$my_period,$type_notice
 
 // NB (CAM): LA LISTE DE COMMANDES QUI SUIT NE DOIT PAS APPARAITRE ICI -- SI ELLE EST ESSENTIELLE, LA DEPLACER AILLEURS
 // 
-// echo "
-// 	<style>
-// 	#messageBox{
-// 	        border-right: 1px solid #000000;
-// 	        position: fixed;
-// 	        width: 700px;
-// 
-// 	        z-index: 1;
-// 	        background-color: #C0C0C0;
-// 	        border-style: solid;
-// 	        border-width: 2px;
-// 	        display:none;
-// 	}
-// 	#contents{
-// 	        width: 90%;
-// 	        height: auto;
-// 	        z-index: 2;
-// 	}
-// 	</style>
-// 	<script language='javascript'>
-// 	function show(obj,msg){
-// 	messageBox.style.top=obj.offsetTop+100
-// 	messageBox.style.right=obj.offsetLeft+10
-// 	contents.innerHTML=msg+'<p>'+obj
-// 	messageBox.style.display='block'
-// 	}
-// 	</script>
-// ";
+ echo "
+ 	<style>
+ 	#messageBox{
+ 	        border-right: 1px solid #000000;
+ 	        position: fixed;
+ 	        width: 700px;
+ 
+ 	        z-index: 1;
+ 	        background-color: #C0C0C0;
+ 	        border-style: solid;
+ 	        border-width: 2px;
+ 	        display:none;
+ 	}
+ 	#contents{
+ 	        width: 90%;
+ 	        height: auto;
+ 	        z-index: 2;
+ 	}
+ 	</style>
+ 	<script language='javascript'>
+ 	function show(obj,msg){
+ 	messageBox.style.top=obj.offsetTop+100
+ 	messageBox.style.right=obj.offsetLeft+10
+ 	contents.innerHTML=msg+'<p>'+obj
+ 	messageBox.style.display='block'
+ 	}
+ 	</script>
+ ";
 ?>
