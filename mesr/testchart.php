@@ -248,6 +248,7 @@ echo '</td>';
 echo '<td width=2.5%></td>';
 echo '</tr></table>';
 
+ma modif est ici, à la fin
 
 include("footer.php");
 ?>

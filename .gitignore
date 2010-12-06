@@ -2,3 +2,4 @@
 *.gexf
 mesr/parametre.php
 mesr/data/*
+*Data.txt
