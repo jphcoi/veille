@@ -249,7 +249,7 @@ echo '</td>';
 echo '<td width=2.5%></td>';
 echo '</tr></table>';
 
-ma modif est ici, à la fin
+ohhé oheé ma modif est ici, à la on va bien 
 
 include("footer.php");
 ?>
