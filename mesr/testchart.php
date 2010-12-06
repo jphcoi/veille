@@ -1,6 +1,7 @@
 <?
 include("login_check.php");
 include("include/header.php");
+//modif pipeau de Cam
 //connexion a la base de donnees
 include("banner.php");
 
