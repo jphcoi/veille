@@ -1,6 +1,7 @@
 <?
 include("login_check.php");
 include("include/header.php");
+//modif pipeau de Cam
 //connexion a la base de donnees
 include("banner.php");
 
@@ -247,7 +248,6 @@ echo "<a href=".$imageevolutionvoisinage."><img width=100% src=".$imageevolution
 echo '</td>';
 echo '<td width=2.5%></td>';
 echo '</tr></table>';
-
 
 include("footer.php");
 ?>

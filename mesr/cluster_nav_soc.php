@@ -179,9 +179,9 @@ if ($affichage>0)
 
 	echo "\n";
 	echo '<table class=tableitems width=100% cellspacing=0 cellpadding=1 style="font-variant:small-caps;"><tr>';
-	echo "<td align=center width=10%><i>PÉRIODE PRECEDENTE</i>&nbsp;&nbsp;</td>";
+	echo "<td align=center width=10%><i>PÉRIODE ANTÉRIEURE</i>&nbsp;&nbsp;</td>";
 	echo "<td align=center width=80%><i><b>RÉSEAU SOCIAL (80 articles les plus pertinents au-delà du seuil)</b><br>PÉRIODE ACTUELLE</i></td>";
-	echo "<td align=center width=10%><i>PÉRIODE SUIVANTE</i></td>";
+	echo "<td align=center width=10%><i>PÉRIODE ULTÉRIEURE</i></td>";
 	echo "</tr>";
 
 
