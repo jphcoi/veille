@@ -331,7 +331,6 @@ if ($nav=="tempo")
 	echo "OCCURRENCES DU TERME ";
 	if ($norm==1) echo "NORMALISÉES PAR LE NOMBRE DE BILLETS, ";
 	echo "SUR TOUTE LA PÉRIODE D'OBSERVATION";
-	//echo 'http://'. $_SERVER['SERVER_NAME'] .'/'.$racine.'/chart-data.php?id_concept='.$id_concept;
 	echo '<p>';
 	
 	
@@ -357,17 +356,6 @@ if ($nav=="tempo")
 	include('include/chart-evol-helper.php');
 	echo $myscript;
 	
-	
-	// include_once 'open_flash_chart_object.php';
-// 	if ($norm==1)
-// 	{
-// 		open_flash_chart_object("100%", 250, $hrefroot.$racine.'/chart-data_normalise.php?id_concept='.$id_concept, false );
-// 	}
-// 	else
-// 	{	
-// 		open_flash_chart_object("100%", 250, $hrefroot.$racine.'/chart-data.php?id_concept='.$id_concept, false );
-// 	}
-
 	?>
 	
 	<form method="post" action="<?$_SERVER['PHP_SELF']?>" >	 
@@ -383,24 +371,9 @@ if ($nav=="tempo")
 	echo $myscript;
 	
 	echo '</td>';
-	
-	//	echo '<td width=2.5%></td>';
-	//	echo '<td width=32.5%>';
-	
-	
-	
-	//	echo 'ÉVOLUTION DU VOISINAGE SÉMANTIQUE';//echo 'évolution du voisinage sémantique';
-	//	echo '<p>';
-	//	$imageevolutionvoisinage='http://'. $_SERVER['SERVER_NAME']."/".$dbid."/neighborhoods/activity_".$id_concept.".jpg";
-	//	echo "<a href=".$imageevolutionvoisinage."><img src=".$imageevolutionvoisinage." width=100% border=none></a>";
-	//	echo '<div align=right class=small style="font-size:small; font-variant:small-caps;">(cliquer pour zoomer)</div>';
-	
-	//	echo '</td>';
-	echo '<td width=2.5%></td></tr>';
-	//	echo '<tr>';
-	//	echo '<td></td><td>';
 
-	//echo '</td><td></td>';
+	echo '<td width=2.5%></td></tr>';
+
 	echo '</tr>';
 	echo '</table>';
 
