@@ -15,5 +15,8 @@ Cliquer successivement sur les liens suivants pour regénérer la base
 
 
 <a href="gexf_cutter.php" target="_blank">découper le gexf 3d en périodes)</a>
+<br>
+
+<a href="import_stream.php" target="_blank">importe les voisinages dynamiques</a>
 
 
