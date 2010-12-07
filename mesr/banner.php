@@ -12,6 +12,6 @@ if (isset($_GET['periode'])) {
 	}
 else $periodstr="";
 
-echo '<table class=tableitems style="font-variant:small-caps;" width="100%"><tr><td><a href=global.php'.$periodstr.'>cartes</a>  -<a href=http://chavalarias.free.fr/tinaweb/index.html>phylogenie</a>  - <a href=entree_clusters.php'.$periodstr.'>champs thématiques</a> - <a href=entree_sources.php'.$periodstr.'>sources</a> - <a href=entree_termes.php'.$periodstr.'>termes</a> </td><td style="text-align: right"><a href=commentaires.php>commentaires</a>';
+echo '<table class=tableitems style="font-variant:small-caps;" width="100%"><tr><td><a href=global.php'.$periodstr.'>cartes</a> - <a href=http://chavalarias.free.fr/tinaweb/index.html>phylogénie</a>  - <a href=entree_clusters.php'.$periodstr.'>champs thématiques</a> - <a href=entree_sources.php'.$periodstr.'>sources</a> - <a href=entree_termes.php'.$periodstr.'>termes</a> </td><td style="text-align: right"><a href=commentaires.php>commentaires</a>';
 echo '</td></tr></table>';
 ?>
