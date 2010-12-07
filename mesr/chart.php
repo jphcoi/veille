@@ -63,7 +63,7 @@ echo '<td align=left>';
 $select_string='<b style="color:black;">';
 $thema="thématiques";
 $tempo="évolution";
-$sourcestring="sources";
+$sourcestring="billets";
 $composition="composition";
 
 $href_string='<a href=chart.php?id_concept='.$id_concept."&periode=".arrange_periode($my_period).'&nav=';
@@ -482,7 +482,8 @@ if ($nav=="source") {
 	echo "</td>";
 	echo "</tr>";
 	echo "</table>";
-
+	echo "<td width=2.5%></td></tr>";
+	echo "</table>";
 }
 
 
