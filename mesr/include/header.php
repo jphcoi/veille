@@ -9,14 +9,12 @@ echo '
 '.$jsheader;
 echo $jsheader2;
 echo '<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">';
-echo '<META HTTP-EQUIV="PRAGMA" CONTENT="NO-CACHE">';
-echo '<META HTTP-EQUIV="EXPIRES" CONTENT="0">';
-echo '<META HTTP-EQUIV="CACHE-CONTROL" CONTENT="NO-CACHE">';
 echo '<link rel="stylesheet" title="Default" type="text/css" href="style.css" media="screen"/>';
 echo '<link rel="stylesheet" title="Default" type="text/css" href="style.css" media="print"/>';
 echo '<meta name="author" content="CCR"/>';
 echo '</head>';
- echo "
+
+echo "
  	<style>
  	#messageBox{
  	        border-right: 1px solid #000000;

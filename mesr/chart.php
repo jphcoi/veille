@@ -353,6 +353,7 @@ if ($nav=="tempo")
 		$data=$data_propre;
 	}
 	
+	//print_r($data);
 	include('include/chart-evol-helper.php');
 	echo $myscript;
 	

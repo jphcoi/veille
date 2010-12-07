@@ -170,8 +170,6 @@ for($i=0;$i<count($periode_apres);$i++) {
 	}
 if (compute_periode($periode)-compute_periode($max_periode_avant)>7500000) $ecart_pred=1; else $ecart_pred=0;//echo ("y'a de l'écart<br>");
 if (compute_periode($min_periode_apres)-compute_periode($periode)>7500000) $ecart_succ=1; else $ecart_succ=0;//echo ("y'a de l'écart<br>");
-//print_r($periode_avant_rv);print_r($periode_apres_rv);
-//echo("<br>mx: ".$max_periode_avant." mn: ".$min_periode_apres."<br>");
 
 
 //bloc recuperation liste de termes
@@ -203,7 +201,7 @@ $titleheader='"'.$label1_current." - ".$label2_current.'" ';
 if ($lettre_current!="") $titleheader.='('.$lettre_current.') ';
 $titleheader.='('.get_short_string_periode($my_period).') [champ]';
 
-if ($nav=="cooc" or $nav=="soc") $jsprotovis="TRUE";
+if ($nav=="cooc" or $nav=="soc" or $nav=="socsem") $jsprotovis="TRUE";
 include("include/header_cluster.php");
 include("banner.php");
 
@@ -421,23 +419,39 @@ if ($nav=="socsem"){
 	//****************************************************************
 	echo '<p>';
 
-	include_once 'open_flash_chart_object.php';
-	$argument='';
-	$compteur = 0;
-	foreach ($list_of_concepts as $c)
-	{	
-		$compteur = $compteur +1;
-		if ($compteur>1)
-		{
-			$argument =$argument.'_'.$c; 
-		}
-		else
-		{
-			$argument =$argument.$c; 
-		}
+	//print_r($list_of_concepts);
+	
+	$data=array();
+	$datalabels=array();
+	$j=0;
+	$maxdata=0;
+	foreach($list_of_concepts as $idconcept)
+	{
+		//echo '<br>';
+	
+		$id_concept = intval( $idconcept);
+		//echo '<br>'.'concept '.$id_concept.' ["'.$dico_termes[$id_concept].']"<br>';
+		$sql = 'SELECT COUNT(*), Reponse.jours FROM(SELECT id_b,jours FROM socsem WHERE concept='.$id_concept.' and jours>= '.$dated.' GROUP by id_b) Reponse GROUP by jours';
+		$resultat=mysql_query($sql);
+		$data[$j]=array();
+		$datalabels[$j]=$dico_termes[$id_concept];
+		while ($ligne=mysql_fetch_array($resultat))	
+			{
+				$tmpval=intval($ligne[0]);
+				$data[$j][intval($ligne[1])]=$tmpval;//echo "jour:".$ligne[1].' nb de billets= '.$ligne[0].'<br>';
+				if ($tmpval>$maxdata) $maxdata=$tmpval;
+			}
+		
+		//print_r($data);
+		$j=$j+1;
 	}
+	//print_r($data);
+	//print_r($datalabels);
+	echo '<p>';
+	$maxdata*=1.05;
+	include('include/cluster-evol-helper.php');
+	echo $myscript;
 
-	open_flash_chart_object("100%", 350, $hrefroot.$racine.'/chart-data_multi.php?id_concept='.$argument.'&id_periode='.$my_period, false );	
 }
 
 
