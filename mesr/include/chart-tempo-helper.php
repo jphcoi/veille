@@ -1,7 +1,10 @@
 <?
+	// recuperer la variable de voisinage semantique temporel depuis la base SQL
+	
+	$resultat=mysql_query("select idx,js FROM term_neighborhood");
+	$temp_neighborhood=mysql_fetch_array($resultat);
 
-	$myabove='<script type="text/javascript" src="microdynamics/Steamgraphmicrodynamics_'.$id_concept.'.js"></script>
-		
+	$myabove='<script type="text/javascript">'.$temp_neighborhood['js'].'</script>'.'
 		<hr>
 		<table class=tableitems width="100%">
 		<tr valign=bottom>
@@ -28,9 +31,9 @@
 			re = "";
 		
 		/* Flatten the tree into an array to faciliate transformation. */
-		var jobs = pv.flatten(jobs)
+		var dynamics = pv.flatten(dynamics)
 			.key("job")
-			.key("gender", function(g) (g == "men") ? 1 : 2)
+			.key("gender", function(g) (g == "activity") ? 1 : 2)
 			.key("year", function(i) years[i])
 			.key("people")
 			.array();
@@ -39,17 +42,17 @@
 		 * Use per-year sums to normalize the data, so we can compute a
 		 * percentage. Use per-gender+job sums to determine a saturation encoding.
 		 */
-		var sumByYear = pv.nest(jobs)
+		var sumByYear = pv.nest(dynamics)
 			.key(function(d) d.year)
 			.rollup(function(v) pv.sum(v, function(d) d.people)),
-		  sumByJob = pv.nest(jobs)
+		  sumByJob = pv.nest(dynamics)
 			.key(function(d) d.gender + d.job)
 			.rollup(function(v) pv.sum(v, function(d) d.people));
 		
 		/* Cache the percentage of people employed per year. */
-		jobs.forEach(function(d) d.percent = 100 * d.people / sumByYear[d.year]);
+		dynamics.forEach(function(d) d.percent = 100 * d.people / sumByYear[d.year]);
 		/* Cache the coarse number of notices per year. */
-		jobs.forEach(function(d) d.coarse =  d.people);
+		dynamics.forEach(function(d) d.coarse =  d.people);
 		
 		
 		/* Sizing parameters and scales. */
@@ -113,13 +116,13 @@
 			var area = svis.add(pv.Layout.Stack)
 			.offset(function() offset)
 			//on définit le type de vis souhaitée
-			.layers(function() pv.nest(jobs.filter(test))
+			.layers(function() pv.nest(dynamics.filter(test))
 				.key(function(d) d.gender + d.job)
 				.sortKeys(function(a, b) pv.reverseOrder(a.substring(1), b.substring(1)))
 				.entries())
 			.values(function(d) d.values)
 			.x(function(d) sx(d.year))
-			// anciennement on faisait toujours la normalisation... .y(function(d) sy(d.percent))
+			// ancienneactivityt on faisait toujours la normalisation... .y(function(d) sy(d.percent))
 			.y(function(d) sy(d.coarse))
 		
 		
@@ -180,14 +183,14 @@
 		
 		/* Recompute the y-scale domain based on query filtering. */
 		function update() {
-		  sy.domain(0, Math.min(100, pv.max(pv.values(pv.nest(jobs.filter(test))
+		  sy.domain(0, Math.min(100, pv.max(pv.values(pv.nest(dynamics.filter(test))
 			  .key(function(d) d.year)
 			  .rollup(function(v) pv.sum(v, function(d) d.coarse))))));
 		  svis.render();
 		}
 		/*// Recompute the y-scale domain based on query filtering. 
 		function update() {
-		  sy.domain(0,  pv.max(pv.values(pv.nest(jobs.filter(test)
+		  sy.domain(0,  pv.max(pv.values(pv.nest(dynamics.filter(test)
 			  .key(function(d) d.year)
 			  .rollup(function(v) pv.sum(v, function(d) d.coarse))))));
 		  svis.render();
