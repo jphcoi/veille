@@ -243,7 +243,7 @@ echo "<table width=100%><tr valign=top><td width=2.5%></td><td width=95%>";
 	echo " - ";
 	if ($nav=="soc") echo $select_string."réseau social</b>"; else echo $href_string."soc>réseau social</a>";
 	echo " - ";
-	if ($nav=="source") echo $select_string."sources</b>"; else echo $href_string."source>sources</a>";
+	if ($nav=="source") echo $select_string."billets</b>"; else echo $href_string."source>billets</a>";
 
 	echo '</td><td align=right>';
 	echo '<div style="';
