@@ -80,6 +80,7 @@ function selective_column($arraykey,$list,$plus,$minus,$main=0){
 			if (in_array($terme,$plus)) $added=1;
 			if (in_array($terme,$list)) $there=1;
 			if (in_array($terme,$minus)) $removed=1;
+
 			
 			$gothru=1;//si on affiche la période sélectionnée, il faut simplement sauter les termes non-présents, sinon faire comme si ils venaient d'être ajoutés (added=1)
 			if ($main==1) if (!$there) $gothru=0;
@@ -91,11 +92,11 @@ function selective_column($arraykey,$list,$plus,$minus,$main=0){
 						if ($main==0) echo " class=dead";
 						echo ">";
 						}
-					if ($added) echo "<b>";
+					if (!$added) echo "<b>";
 					if ($removed) echo '<s style="color:#AAAAAA;">';
 					echo remove_popo($dico_termes[$terme]);
 					if ($removed) echo "</s>";
-					if ($added) echo "</b>";
+					if (!$added) echo "</b>";
 					if ($there) echo "</a>";
 				}
 				
