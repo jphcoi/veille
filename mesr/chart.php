@@ -455,7 +455,7 @@ if ($nav=="source") {
 		$nb_terme=$nb_termes_list[$id];
 		$idauteur=$row['auteur_id'];
 		$content=$row['content'];
-		$concepts=$row['concepts'];
+		$concepts=$row['concepts_id'];
 		if (!array_key_exists($site,$info_sources)) {
 		$info_sources[$site]=array('site'=>$site,'idauteur'=>$idauteur,'permaliens'=>array(),'titres'=>array(),'dates'=>array(),'nbtermes'=>array());
 		}

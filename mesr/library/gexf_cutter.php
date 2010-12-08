@@ -18,7 +18,7 @@ $map3d = $map3d.$fichier;
 echo $map3d;
 echo '<br>';
 
-$mapgexf= $hrefrootroot."data/cartes/v.1/";
+$mapgexf= $hrefrootroot."data/cartes/".$exportid."/";
 $mapgexf=str_replace('library','',$mapgexf);
 
 echo $mapgexf;
