@@ -208,9 +208,42 @@ function convert_forme_principale($concepts){
  	return $concept_arr;
 }
 
+//renvoie les formes principales associées à une id avec des lemmes
+function convert_forme_principale_id($concepts){
+
+	//echo '\n';
+	
+	$formes=array();
+	$concepts_v= explode('[',$concepts);
+	$concepts =$concepts_v[1];
+	
+	$concepts_v= explode(']',$concepts);
+	$concepts =$concepts_v[0];
+	$concepts_arr = explode(', ',$concepts);
+	for( $i = 0 ; $i < count($concepts_arr) ; $i++ )
+	{
+		$id_i = $concepts_arr[$i];
+		
+		$sql = "SELECT forme_principale from concepts WHERE id='".$id_i."'";
+		$resultat = mysql_query($sql);
+		while( $row  =  mysql_fetch_array ( $resultat)) 
+     	{
+			$formes[]=$row[0];
+		}
+		
+	}
+ 	if (count($concepts_v)==1) {	$formes[] = '...';}
+
+
+	//print_r($formes);
+
+ 	return $formes;
+}
+
+
 //exporte les liens associées à une array d'index de billets
 function extract_permalink($id_billets_liste){
-	$sql = "SELECT permalink,site,title,date,id,auteur_id,jours,content,concepts from billets WHERE ";
+	$sql = "SELECT permalink,site,title,date,id,auteur_id,jours,content,concepts_id from billets WHERE ";
 	for( $i = 0 ; $i < count($id_billets_liste) ; $i++ )
 	{
 			$id_i=$id_billets_liste[$i];
@@ -224,6 +257,8 @@ function extract_permalink($id_billets_liste){
 	$resultats = mysql_query($sql);
 	return $resultats;
 }
+
+
 
 function ecrire_json($liste_auteur_unique,$legende,$aut_occ,$liens_from,$liens_to,$cluster_name,$centre)
 {
@@ -762,7 +797,7 @@ function mise_en_forme_abstract($titre,$auteurs,$abstract,$concepts,$type_notice
 			$abstractv1 = explode('* * *',$abstract);
 			if (count($abstractv1)>1)
 			{$abstract = $abstractv1[1];}
-			//echo $abstract;
+			//echo $concepts;
 			$abstractv =  explode('. ',$abstract);
 			//print_r($abstractv);
 			$abs = '';
@@ -805,7 +840,6 @@ function mise_en_forme_abstract($titre,$auteurs,$abstract,$concepts,$type_notice
 			$notice=$notice.'<br>'.'<b>'.'Concepts:'.'</b>'.str_replace('popostrophe',"'",$concepts);
 			$notice = str_replace("'","’",$notice);
 			$notice = str_replace('"',"’",$notice);
-	
 		return $notice;
 		
 	}
@@ -857,6 +891,7 @@ function recup_names_auteurs($chaine)
 function prone($chaine,$n)
 {
 	$chaine_v = explode('.',$chaine);
+
 	$output = array_slice($chaine_v, 0, min($n,count($chaine_v)-1));
 	$abs_red = implode('.',$output);
 	$abs_red=$abs_red.'.';
@@ -906,8 +941,10 @@ function display_billets($info_sources,$list_of_concepts,$my_period,$type_notice
 								echo "</td><td width=85%>";
 								$chaine=$info_sources[$key]['content'][$i];
 								//coupe l'abstract aux 15 premières lignes
-								$chaine = prone($chaine,15);
-								$conc = implode("; ", convert_forme_principale($info_sources[$key]['concepts'][$i]));
+								$chaine = prone($chaine,8);
+								//print_r(convert_forme_principale_id($info_sources[$key]['concepts'][$i]));
+								$conc = implode("; ", convert_forme_principale_id($info_sources[$key]['concepts'][$i]));
+								//echo $conc;
 								echo display_box($info_sources[$key]['titres'][$i],$key,$chaine,$info_sources[$key]['permaliens'][$i],$conc,$type_notice);
 								if (count($list_of_concepts)>1)
 								{ echo "(".number_format(100*$info_sources[$key]['nbtermes'][$i]/count($list_of_concepts)/log10(10+$info_sources[$key]['nbsize'][$i]-$info_sources[$key]['nbtermes'][$i]), 0, ',', ' ')."%)";

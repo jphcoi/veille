@@ -462,6 +462,7 @@ if ($affichage>0)
 				$nb_size=$nb_size_list[$id];
 				$idauteur=$row['auteur_id']; 
 				$content=$row['content'];
+				$concepts=$row['concepts_id'];
 				if (!array_key_exists($site,$info_sources)) {
 				$info_sources[$site]=array('site'=>$site,'idauteur'=>$idauteur,'permaliens'=>array(),'titres'=>array(),'dates'=>array(),'nbtermes'=>array(),'nbsize'=>array());
 				}

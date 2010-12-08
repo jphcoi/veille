@@ -34,7 +34,7 @@ echo '<tr valign=top><td width=2.5%></td><td><h2 class=subtitle>exploration de l
 
 /////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////
-$sql = "SELECT id,title,date,permalink,jours,content,site,concepts from billets where  auteur_id LIKE "."'%, ".$id_source.",%' OR auteur_id LIKE "."'%[".$id_source.",%' OR auteur_id LIKE "."'%[".$id_source."]%' OR auteur_id LIKE "."'%, ".$id_source."]%' ORDER by jours";
+$sql = "SELECT id,title,date,permalink,jours,content,site,concepts_id from billets where  auteur_id LIKE "."'%, ".$id_source.",%' OR auteur_id LIKE "."'%[".$id_source.",%' OR auteur_id LIKE "."'%[".$id_source."]%' OR auteur_id LIKE "."'%, ".$id_source."]%' ORDER by jours";
 //echo $sql;
 $resultat_liste_b=mysql_query($sql);
 
@@ -63,7 +63,8 @@ while ($ligne=mysql_fetch_array($resultat_liste_b))
 	$billets[$id]['date']=$ligne['jours'];
 	$billets[$id]['permalien']=$ligne['permalink'];
 	$billets[$id]['content']=$ligne['content'];
-	$billets[$id]['concepts']=$ligne['concepts'];
+	$billets[$id]['concepts']=$ligne['concepts_id'];
+	//echo $ligne['concepts_id'];
 	}
 
 	
@@ -661,8 +662,10 @@ if ($nav=="post"){
 			$chaine=prone($b['content'],$size_abstract);
 			echo "<td>";
 
-			$concepts = implode("; ", convert_forme_principale($b['concepts']));
+			$concepts = implode("; ", convert_forme_principale_id($b['concepts']));
 			$permalien = $b['permalien'];
+			$chaine = prone($chaine,8);
+
 			echo display_box(clean_text(str_replace("popostrophe","'",$b['title'])),str_replace(' *** ','; ',$b['site']),str_replace('"',' ',$chaine),$permalien,$concepts,$type_notice);
 			echo "</a>";
 			echo "</td>";

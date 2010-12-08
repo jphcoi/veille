@@ -108,7 +108,8 @@
 				$nb_terme=$nb_termes_list[$id];
 				$nb_size=$nb_size_list[$id];
 				$idauteur=$row['auteur_id'];
-				$concepts=$row['concepts'];				
+				$concepts=$row['concepts_id'];				
+				//echo $concepts;
 				$content=str_replace('"','\'',$row['content']);
 				
 				if (!array_key_exists($site,$info_sources)) {																  $info_sources[$site]=array('site'=>$site,'idauteur'=>$idauteur,'permaliens'=>array(),'titres'=>array(),'dates'=>array(),'nbtermes'=>array(),'nbsize'=>array(),'content'=>array());
