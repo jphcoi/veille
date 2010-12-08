@@ -106,7 +106,8 @@
 		  	.visible(function (d) ((d.y>ymax/7) && (parseInt(d.x) % 7 == 0)))
 			.text(mylabels[i])
 		  .add(pv.Dot)
-		  	.strokeStyle("white")
+		    .size(6)
+		  	.strokeStyle("gray")
 		  	.fillStyle("black");
 	}
 		

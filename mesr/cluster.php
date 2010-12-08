@@ -236,13 +236,13 @@ echo "<table width=100%><tr valign=top><td width=2.5%></td><td width=95%>";
 	}
 	if ($nav=="phylo") echo $select_string."phylogénie</b>"; else echo $href_string."phylo>phylogénie</a>";
 	echo " - ";
-	if ($nav=="socsem") echo $select_string."profil d'évolution</b>"; else echo $href_string."socsem>profil d'évolution</a>";
-	echo " - ";
 	if ($nav=="cooc") echo $select_string."réseau de cooccurrence</b>"; else echo $href_string."cooc>réseau de cooccurrence</a>";
 	echo " - ";
 	if ($nav=="soc") echo $select_string."réseau social</b>"; else echo $href_string."soc>réseau social</a>";
 	echo " - ";
 	if ($nav=="source") echo $select_string."billets</b>"; else echo $href_string."source>billets</a>";
+	echo " - ";
+	if ($nav=="socsem") echo $select_string."profil d'évolution</b>"; else echo $href_string."socsem>profil d'évolution</a>";
 
 	echo '</td><td align=right>';
 	echo '<div style="';
