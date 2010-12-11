@@ -11,6 +11,14 @@ echo $jsheader2;
 echo '<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">';
 echo '<link rel="stylesheet" title="Default" type="text/css" href="style.css" media="screen"/>';
 echo '<link rel="stylesheet" title="Default" type="text/css" href="style.css" media="print"/>';
+echo  '<!-- JQUERY -->';
+echo     '<script type="text/javascript" src="../js/jquery/jquery-1.4.2.min.js" language="javascript"></script>';
+echo     '<!-- JQUERY UI -->';
+echo     '<script type="text/javascript" src="../js/jquery-ui/jquery-ui-1.8.min.js" language="javascript"></script>';
+echo     '<!-- JQUERY UI CSS -->';
+echo     '<link type="text/css" rel="stylesheet" href="../css/custom-theme/jquery-ui-1.7.3.custom.css"/>';
+echo     '<link type="text/css" rel="stylesheet" href="ex.css?3.2"/>';
+
 echo '<meta name="author" content="CCR"/>';
 echo '</head>';
 
@@ -20,7 +28,7 @@ echo "
  	        border-right: 1px solid #000000;
  	        position: fixed;
  	        width: 700px;
- 
+
  	        z-index: 1;
  	        background-color: #C0C0C0;
  	        border-style: solid;
