@@ -42,14 +42,27 @@ function rmdirr($dirname)
 }
 $title='<html>
 	<head>
-	<title> Veille Dynamique v0.1</title>
+	<title> Étude MESR - Veille Dynamique</title>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<link rel="stylesheet" title="Default" type="text/css" href="style.css" media="screen"/>
+	<!-- JQUERY UI CSS -->
+	<link type="text/css" rel="stylesheet" href="css/custom-theme/jquery-ui-1.7.3.custom.css"/>	
+	<link type="text/css" rel="stylesheet" href="ex.css?3.2"/>
+
 	<meta name="author" content="CCR"/>
 	</head>
 	<body>
-	<div class=banner>étude mesr / veille dynamique</div>
-	<p><div class=subbanner><table width=100% class=subbanner><tr><td>page de connexion</td></tr></table></div>
+	<div id="hd"  class="ui-widget">
+	<div id="hdb">
+	<div id="htoolbar" class="toolbardiv fg-toolbar ui-widget-header ui-corner-all ui-helper-clearfix">
+	<div id="title" class="noSelect">
+	<table width="100%" style="font-size:x-large; font-weight:bold; color:DarkSlateGray; font-variant:small-caps;"><tr><td align=left>
+	étude MESR</td></tr></table>
+	</div>
+	<div class=subbanner><table width=100% class=subbanner><tr><td>page de connexion</td></tr></table></div>
+	</div>
+	</div>
+	</div>
 	';
 function diehard() 
 	{
