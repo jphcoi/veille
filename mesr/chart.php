@@ -359,9 +359,8 @@ if ($nav=="tempo")
 	echo "OCCURRENCES DU TERME ";
 	if ($norm==1) echo "NORMALISÉES PAR LE NOMBRE DE BILLETS, ";
 	echo "SUR TOUTE LA PÉRIODE D'OBSERVATION";
+	
 	echo '<p>';
-	
-	
 	
 	$data = array();
 	$id_concept = intval($_GET['id_concept']);
@@ -381,7 +380,12 @@ if ($nav=="tempo")
 		$data=$data_propre;
 	}
 	
-	//print_r($data);
+	$data_val=array_keys($data);
+	print_r($data_val);
+	$dated=intval($data_val[0]);
+	$datef=intval($data_val[count($data_val)-1]);
+	echo '<br>'.$data_val[0].'<br>'.$data_val[count($data_val)-1].'<p>';
+	
 	include('include/chart-evol-helper.php');
 	echo $myscript;
 	
