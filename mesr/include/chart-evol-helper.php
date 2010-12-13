@@ -30,7 +30,7 @@
 	var time;
 	for(time in periods) {
 	  	var newDate = new Date( );
-		newDate.setTime((1279152000+86400*(periods[time]-'.$datef.'))*1000);
+		newDate.setTime((1279152000+86400*(periods[time]))*1000);
 		dateString = newDate.toUTCString();
 		dt=dateString.split(" ");
 		DateArray.push(dt[1]+" "+dt[2]);
@@ -39,7 +39,7 @@
 	var iDateArray = new Array();
 	for (time='.$dated.'; time<='.$datef.';time++) {
 		var xnewDate = new Date( );	
-		xnewDate.setTime((1279152000+86400*(time-'.$datef.'))*1000);
+		xnewDate.setTime((1279152000+86400*(time))*1000);
 		dateString = xnewDate.toUTCString();
 		dt=dateString.split(" ");
 		iDateArray.push(dt[1]+" "+dt[2]);
