@@ -1,8 +1,8 @@
 <?
 echo '<div id="hd"  class="ui-widget">';
 echo '<div id="hdb">';
-echo ' <div id="htoolbar" class="toolbardiv fg-toolbar ui-widget-header ui-corner-all ui-helper-clearfix">';
-echo '                    <div id="title" class="noSelect">';
+echo '<div id="htoolbar" class="toolbardiv fg-toolbar ui-widget-header ui-corner-all ui-helper-clearfix">';
+echo '<div id="title" class="noSelect" style="margin-left:5px; margin-right:5px;">';
 echo '<table width="100%" style="font-size:x-large; font-weight:bold; color:DarkSlateGray; font-variant:small-caps;"><tr><td align=left>';
 echo 'étude MESR';
 echo '</td><td align=right style="font-size:medium;">';
