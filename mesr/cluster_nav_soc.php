@@ -171,25 +171,32 @@ if ($affichage>0)
 	// PORTION CONCERNANT L'AFFICHAGE EN FLEX DU RESEAU SOCIAL
 	
 	echo '<p>';
-	if ($affichage>0)
-	{
-		 //echo '<script src="AC_OETags.js" language="javascript"></script>';
-	}
-	//affichage de l'appli flex
+
+	if ($ecart_pred==1 || $nopred) $back_avant='background-color:white;';
+	if ($ecart_succ==1 || $nosucc) $back_apres='background-color:white;';
 
 	echo "\n";
 	echo '<table class=tableitems width=100% cellspacing=0 cellpadding=1 style="font-variant:small-caps;"><tr>';
-	echo "<td align=center width=10%><i>PÉRIODE ANTÉRIEURE</i>&nbsp;&nbsp;</td>";
+	echo '<td align=center width=10% style="font-variant:small-caps; font-weight:bold; '.$back_avant.'">';
+	if (!$nopred)
+		echo '<i>période antérieure</i><div class=commentitems style="font-weight:normal; font-variant:normal; font-size:xx-small;"><i>('.get_string_periode(arrange_periode($max_periode_avant)).')</i></div>';
+	else echo '<b style="font-variant:small-caps; background-color:white;">(pas de prédécesseur)</b>';
+	echo '</td>';
+
 	echo "<td align=center width=80%><i><b>RÉSEAU SOCIAL (80 articles les plus pertinents au-delà du seuil)</b><br>PÉRIODE ACTUELLE</i></td>";
-	echo "<td align=center width=10%><i>PÉRIODE ULTÉRIEURE</i></td>";
+	echo '<td align=center width=10% style="font-variant:small-caps; font-weight:bold; '.$back_apres.'">';
+	if (!$nosucc) 
+		echo '<i>période ultérieure</i><div class=commentitems style="font-weight:normal; font-variant:normal; font-size:xx-small;"><i>('.get_string_periode(arrange_periode($min_periode_apres)).')</i></div>';
+	else	
+		echo '<b style="font-variant:small-caps;">(pas de successeur)</b>';
+	echo '</td>';
 	echo "</tr>";
 
 
 	echo "<tr>";
 	//on affiche les clusters précédents et un lien vers leur réseau social
-	echo "<td align=center width=10%><i>";
-	if ($nopred) echo '<b style="font-variant:small-caps;">(pas de prédécesseur)</b>';
-
+	echo '<td align=center width=10% style="'.$back_avant.'"><i>';
+	
 	echo '<table class=commentitems align=center width=100% cellspacing=0 cellpadding=5 rules=rows style="font-variant:small-caps; size:small; font-style:italic;">';
 	foreach ($pred as $p) {
 		$label1=$p['label1'];
@@ -217,92 +224,18 @@ if ($affichage>0)
 	echo "<td align=middle width=80%><i>";	
 
 	if ($affichage>0)
-	{
-		
-		echo $myscript;
-		
-// 		echo '<script language="JavaScript" type="text/javascript">';
-// 		echo '<!--
-// 			
-// 		var requiredMajorVersion = 9;
-// 		var requiredMinorVersion = 0;
-// 		var requiredRevision = 124;
-// 		// -->
-// 		</script>';
-// 	
-// 		echo '<script language="JavaScript" type="text/javascript">
-// 		<!--
-// 		// Version check for the Flash Player that has the ability to start Player 	Product Install (6.0r65)
-// 		var hasProductInstall = DetectFlashVer(6, 0, 65);
-// 	
-// 		// Version check based upon the values defined in globals
-// 		var hasRequestedVersion = DetectFlashVer(requiredMajorVersion, requiredMinorVersion, requiredRevision);
-// 	
-// 		if ( hasProductInstall && !hasRequestedVersion ) {
-// 			// DO NOT MODIFY THE FOLLOWING FOUR LINES
-// 			// Location visited after installation is complete if installation is required
-// 			var MMPlayerType = (isIE == true) ? "ActiveX" : "PlugIn";
-// 			var MMredirectURL = window.location;
-// 			document.title = document.title.slice(0, 47) + " - Flash Player Installation";
-// 			var MMdoctitle = document.title;
-// 	
-// 			AC_FL_RunContent(
-// 				"src", "playerProductInstall",
-// 				"FlashVars", "serverURL='.$tmpfile.'",
-// 				"width", "100%",
-// 				"height", "600px",
-// 				"align", "middle",
-// 				"id", "SitePoint_DataViz_Tutorial_Part3",
-// 				"quality", "high",
-// 				"bgcolor", "#869ca7",
-// 				"name", "SitePoint_DataViz_Tutorial_Part3",
-// 				"allowScriptAccess","sameDomain",
-// 				"type", "application/x-shockwave-flash",
-// 				"pluginspage", "http://www.adobe.com/go/getflashplayer"
-// 			);
-// 		} else if (hasRequestedVersion) {
-// 			// if we have detected an acceptable version
-// 			// embed the Flash Content SWF when all tests are passed
-// 			AC_FL_RunContent(
-// 					"src", "SitePoint_DataViz_Tutorial_Part3",
-// 					"FlashVars", "serverURL='.$tmpfile.'",
-// 					"width", "100%",
-// 					"height", "600px",
-// 					"align", "middle",
-// 					"id", "SitePoint_DataViz_Tutorial_Part3",
-// 					"quality", "high",
-// 					"bgcolor", "#869ca7",
-// 					"name", "SitePoint_DataViz_Tutorial_Part3",
-// 					"allowScriptAccess","sameDomain",
-// 					"type", "application/x-shockwave-flash",
-// 					"pluginspage", "http://www.adobe.com/go/getflashplayer"
-// 			);
-// 		  } else {  // flash is too old or we cannot detect the plugin
-// 			var alternateContent = //"Alternate HTML content should be placed here. "+
-// 			"This content requires the Adobe Flash Player. "
-// 			+ "<a href=http://www.adobe.com/go/getflash/>Get Flash</a>";
-// 			document.write(alternateContent);  // insert non-flash content
-// 		  }
-// 		// -->
-// 		</script>';
-	
-	}
+		echo $myscript;	
 	else
-	{
 		echo "pas de sources";
-	}
 	
-	
-
 	echo "</i></td>";
-	echo "<td align=right width=10%>";
-		
-	if ($nosucc) echo '<b style="font-variant:small-caps;">(pas de successeur)</b>';
+	echo '<td align=right width=10% style="'.$back_apres.'">';
 
 	echo '<table class=commentitems align=center width=100% cellspacing=0  cellpadding=5 rules=rows style="font-variant:small-caps; size:small; font-style:italic;">';
 	foreach ($succ as $s) {
 		$label1=$s['label1'];
 		$label2=$s['label2'];
+		$futur = intval($s['fils']);
 		echo '<tr><td>';
 		echo '<a href=cluster.php?id_cluster='.$s['id']."&periode=".arrange_periode($s['periode']).'&nav=soc'.'&pertinence='.strval(100*$pertinence).'>';
 		echo '"<b>'.$dico_termes[$label1].'</b> - '.$dico_termes[$label2].'"';

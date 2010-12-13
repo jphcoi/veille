@@ -151,11 +151,11 @@ $liste_auteur_unique=$list_of_concepts;
 
 // DEFINITION DU RESEAU POUR AFFICHAGE JAVASCRIPT
 	
-include("include/network-def.php");
+	include("include/network-def.php");
 			
 // DEFINITION DU SCRIPT JAVASCRIPT POUR AFFICHER LE RESEAU
 	
-include("include/network-vis.php");
+	include("include/network-vis.php");
 
 }
 	
@@ -221,47 +221,38 @@ include("include/network-vis.php");
 	echo "</td>";
 	
 	
-	
-	echo "<td align=middle width=80%><i>";	
+	echo '<td align=middle width=80%><i>';
+
 	if ($affichage>0)
-	{
-			echo $myscript;
-
-	}
+		echo $myscript;
 	else
-	{
-		echo "pas de sources";
-	}
-	
-	
-	
+		echo "pas de sources";	
 
-		echo "</i></td>";
-		echo '<td align=right width=10% style="'.$back_apres.'">';
+	echo "</i></td>";
+	echo '<td align=right width=10% style="'.$back_apres.'">';
+	
+	echo '<table class=commentitems align=center width=100% cellspacing=0  cellpadding=5 rules=rows style="font-variant:small-caps; size:small; font-style:italic;">';
+	foreach ($succ as $s) {
+		$label1=$s['label1'];
+		$label2=$s['label2'];
+		$futur = intval($s['fils']);
 		
-
-		echo '<table class=commentitems align=center width=100% cellspacing=0  cellpadding=5 rules=rows style="font-variant:small-caps; size:small; font-style:italic;">';
-		foreach ($succ as $s) {
-			$label1=$s['label1'];
-			$label2=$s['label2'];
-			$futur = intval($s['fils']);
-			
-			echo '<tr>';
-			echo '<td>';
-			echo '<a href=cluster.php?id_cluster='.$s['id']."&periode=".arrange_periode($s['periode']).'&nav=cooc>';
-			echo '"<b>'.$dico_termes[$label1].'</b> - '.$dico_termes[$label2].'"';
-				if ($futur>0)
-				{
-					echo '&darr';
-				}
-			echo '</a><br>';
-			echo '</td>';
-			echo '</tr>';
-
+		echo '<tr>';
+		echo '<td>';
+		echo '<a href=cluster.php?id_cluster='.$s['id']."&periode=".arrange_periode($s['periode']).'&nav=cooc>';
+		echo '"<b>'.$dico_termes[$label1].'</b> - '.$dico_termes[$label2].'"';
+			if ($futur>0)
+			{
+				echo '&darr';
 			}
-		echo '</table>';
-		
-		echo "</td>";
+		echo '</a><br>';
+		echo '</td>';
+		echo '</tr>';
+
+		}
+	echo '</table>';
+	
+	echo "</td>";
 	echo "</tr>";
 	echo "<tr>";
 	echo "<td>";
