@@ -180,15 +180,15 @@ $liste_auteur_unique=$list_of_concepts;
 	echo '<td align=center width=10% style="font-variant:small-caps; font-weight:bold; '.$back_avant.'">';
 	if (!$nopred)
 		echo '<i>période antérieure</i><div class=commentitems style="font-weight:normal; font-variant:normal; font-size:xx-small;"><i>('.get_string_periode(arrange_periode($max_periode_avant)).')</i></div>';
-	else echo '<b style="font-variant:small-caps; background-color:white;">(pas de prédécesseur)</b>';
+	else echo '<i style="font-variant:small-caps; background-color:white;">(pas de prédécesseur)</i>';
 	echo '</td>';
-	echo "<td align=center width=80%><i><b>RÉSEAU DE COOCCURRENCE</b><br>PÉRIODE ACTUELLE</i></td>";
+	echo '<td align=center width=80%><i><b>RÉSEAU DE COOCCURRENCE</b><br>PÉRIODE ACTUELLE</i> <i style="font-variant:normal; font-size:xx-small;">('.get_string_periode($my_period).')</i></td>';
 		
 	echo '<td align=center width=10% style="font-variant:small-caps; font-weight:bold; '.$back_apres.'">';
 	if (!$nosucc) 
 		echo '<i>période ultérieure</i><div class=commentitems style="font-weight:normal; font-variant:normal; font-size:xx-small;"><i>('.get_string_periode(arrange_periode($min_periode_apres)).')</i></div>';
 	else	
-		echo '<b style="font-variant:small-caps;">(pas de successeur)</b>';
+		echo '<i style="font-variant:small-caps;">(pas de successeur)</i>';
 	echo '</td>';
 	echo "</tr>";
 
