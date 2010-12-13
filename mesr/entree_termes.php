@@ -35,6 +35,11 @@ $titleheader="liste des termes (".get_short_string_periode($my_period).")";
 include("include/header.php");
 include("banner.php");
 
+if ($list_of_periods[count($list_of_periods)-1]==$my_period)
+	{$clause_fils_pere = '';}
+else 
+	{$clause_fils_pere = 'nb_sons+nb_fathers>='.$orphan_filter;}
+
 
 //*******************************************
 //bloc choix du terme
@@ -138,27 +143,27 @@ echo '<td width=2.5%></td>';
 echo "</tr></table>";
 
 
-if ($my_period==-1){
-	echo '<table class=commentitems width=100%><tr><td width=2.5%></td><td>';
-	echo '<i>(nb: les termes grisés ne sont associés à aucun champ thématique)</i>';
-	echo '</td><td width=2.5%></td></tr></table>';
-	}
+echo '
+		<table class=commentitems width=100%><tr><td width=2.5%></td><td>
+		<i>(nb: les termes grisés ne sont associés à aucun champ thématique)</i>
+		</td><td width=2.5%></td></tr></table>';
 
 
 echo '<p><table width=100% class=tableitems>';
 echo '<tr valign=top><td width=2.5%></td><td width='.$widthcolumn.'%>';
 
-
-if ($my_period==-1) 
-{$resultat=mysql_query("select concept FROM cluster") or die ("Requête non executée.");
+if ($my_period!=-1) 
+	$query_extension="WHERE periode ='".derange_periode($my_period)."' AND ".$clause_fils_pere;
+else 
+	$query_extension="WHERE ".$clause_fils_pere;
+	
+$resultat=mysql_query("select concept FROM cluster ".$query_extension) or die ("Requête non exécutée.");
 $liste_terme_cluster=array();
 while ($ligne=mysql_fetch_array($resultat)){
-	if (!in_array($dico_termes[$ligne['concept']],$liste_terme_cluster)){
-	$liste_terme_cluster[]=$dico_termes[$ligne['concept']];}}
-}
-//$liste_terme_cluster=array_unique($liste_terme_cluster);
-//print_r($liste_terme_cluster);
-
+	if (!in_array($dico_termes[$ligne['concept']],$liste_terme_cluster))
+		{$liste_terme_cluster[]=$dico_termes[$ligne['concept']];}
+	}
+		
 for($i=1;$i<=$ncolumns;$i++){
 	for($j=$columns[$i][0];$j<=$columns[$i][1];$j++){
 		$id=$id_termes[$j];
@@ -168,17 +173,7 @@ for($i=1;$i<=$ncolumns;$i++){
 		if ($id!=-1) 
 			{
 				$par=0;
-				if ($my_period==-1)
-				{
-					if (!in_array($liste_termes[$j],$liste_terme_cluster))
-					{
-						$par=1;
-					}
-					else
-					{
-						$par=0;
-					}
-				}
+				if (!in_array($liste_termes[$j],$liste_terme_cluster)) $par=1;
 				
 				echo '<a ';
 				if ($par!=0) echo('style="color:#333333;" ');
