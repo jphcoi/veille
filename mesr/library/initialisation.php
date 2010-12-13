@@ -9,6 +9,8 @@ Cliquer successivement sur les liens suivants pour regénérer la base
 <br>
 <a href="biparti_process.php?first=0" target="_blank">enfin, lance ce script n fois jusqu'à ce que toutes les lignes soient vides</a>
 <br>
+<a href="partitions_generator.php?first=0" target="_blank">Calcul les partitions</a>
+<br>
 
 <a href="../entree_clusters_generate_lettres.php?first=0" target="_blank">et enfin pour apprendre l'alphabet (sélectionner toutes les périodes!!!)</a>
 <br>
