@@ -155,7 +155,7 @@ echo '<tr valign=top><td width=2.5%></td><td width='.$widthcolumn.'%>';
 if ($my_period!=-1) 
 	$query_extension="WHERE periode ='".derange_periode($my_period)."' AND ".$clause_fils_pere;
 else 
-	$query_extension="WHERE ".$clause_fils_pere;
+	{if ($clause_fils_pere=="") $query_extension=""; else $query_extension="WHERE ".$clause_fils_pere;}
 	
 $resultat=mysql_query("select concept FROM cluster ".$query_extension) or die ("Requête non exécutée.");
 $liste_terme_cluster=array();
