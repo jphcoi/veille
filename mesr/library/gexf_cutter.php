@@ -1,8 +1,28 @@
 <?
 include("../parametre.php");
 include("fonctions_php.php");
+
 $my_period='jk';
 
+//connexion a la base de donnees
+mysql_connect($server,$user,$password);
+@mysql_select_db($database) or die( "Unable to select database");
+//à préciser lorsqu'on est sur sciencemapping.com
+if ($user!="root") mysql_query("SET NAMES utf8;");
+
+create_concept_string();
+
+//récupération des périodes
+$periode_concepts=array();
+$periode_brute=array();
+$resultat=mysql_query("select periode FROM cluster GROUP by periode") or die ("<b>Requête non exécutée (récupération des périodes pour les concepts)</b>.");
+while ($ligne=mysql_fetch_array($resultat)) {
+	$per=$ligne['periode'];
+	if ($per!=""){ // exception pour éviter un bug de la BDD avec concept 0 à période ""
+		if (!in_array($per,$periode_brute)) $periode_brute[]=$per;
+	}
+}
+$list_of_periods=sort_periods($periode_brute);
 
 
 
@@ -40,6 +60,7 @@ function recup_info($tag_avant,$tag_apres,$ligne)
 
 function ecrire_gexf_per($tabfich,$fichier_out,$per,$noeuds_per)
 {
+	echo 'on ecrit le reseau maintenant';
 	$clause=true;
 	
 	for( $i = 0 ; $i < count($tabfich) ; $i++ )
@@ -64,9 +85,8 @@ function ecrire_gexf_per($tabfich,$fichier_out,$per,$noeuds_per)
 		
 		if(stristr($ligne, ' source='))
 		{
-			$noeud_id_1 = recup_info(' source="','" target',$ligne);
+			$noeud_id_1 = recup_info('source="','" target',$ligne);
 			$noeud_id_2 = recup_info('target="','" weight',$ligne);
-			echo $noeud_id_1;
 			if (in_array($noeud_id_1,$noeuds_per) and in_array($noeud_id_2,$noeuds_per))
 			{
 				$clause=true;
@@ -86,9 +106,9 @@ function ecrire_gexf_per($tabfich,$fichier_out,$per,$noeuds_per)
 			$ligne = str_replace('id="" ','',$ligne);
 			$ligne = str_replace(' --- ',' - ',$ligne);
 			$ligne = str_replace('attvalue for=','attvalue id=',$ligne);
+			echo $ligne;
+			echo $fichier_out;
 			fputs($fichier_out,$ligne);	
-			echo $i;
-			//echo $ligne;
 		}
 	}
 	
@@ -108,21 +128,48 @@ for( $i = 0 ; $i < count($tabfich) ; $i++ )
 		{
 			$noeud_periode = recup_info('periode=','"/>',$ligne);
 			$noeuds['periode'][]=$noeud_periode;
+			$noeud_cluster_id = recup_info('id_cluster=','&amp',$ligne);
+			$noeuds['cluster_id'][]=$noeud_cluster_id;
 		}	
 } 		
 
-print_r($noeuds);
-//echo '<br>';
+//print_r($noeuds);
+echo '<br>';
 $noeuds_periode=$noeuds['periode'];
 
 $periodes = array_unique($noeuds_periode);
 print_r($periodes);
 echo '<br>';
 
+
+
+
+
+
+
+
+echo $orphan_filter;
+
 foreach ($periodes as $per )
 {
-	$carte_per =$mapgexf.$per."_gs.gexf";
+	$clusters_pertinents=array();
+	if ($list_of_periods[count($list_of_periods)-1]==$per)
+	{$clause_fils_pere = '';}
+	else
+	{$clause_fils_pere = ' AND nb_sons+nb_fathers>='.$orphan_filter;}
+	$quer="select id_cluster FROM cluster WHERE periode ='".derange_periode($per)."'".$clause_fils_pere." GROUP by id_cluster  ORDER by 	id_cluster";
+	echo "<br>";
+	echo $quer;
+	$resultat=mysql_query($quer) or die ("<b>Requête non exécutée</b>.");
+
+	while ($ligne=mysql_fetch_array($resultat)){
+	$clusters_pertinents[] = $ligne['id_cluster'];}
+	echo '<br> clusters pertinents:<br>';
+	print_r($clusters_pertinents);
 	echo '<br>';
+
+	$carte_per =$mapgexf.$per."_gs.gexf";
+//	echo '<br>';
 	echo '<br>';
 	echo  $carte_per;
 	echo '<br>';
@@ -130,16 +177,26 @@ foreach ($periodes as $per )
 	$noeuds_per=array();
 	for ($i=0;$i<count($noeuds['periode']);$i++)
 	{ 
-		print_r($node);
+		
 		if ($noeuds['periode'][$i]==$per)
-		{
-			$noeuds_per[]=$noeuds['id'][$i];
+		{	
+			
+			$noeuds_propose[] = $noeuds['id'][$i];
+			if (in_array($noeuds['cluster_id'][$i],$clusters_pertinents))
+			{
+				echo 'noeud accepte'.strval($noeuds['id'][$i]);	
+				$noeuds_per[]=$noeuds['id'][$i];
+			}
 		}
 	}
+	echo '<br>on a conserve les champs:<br>';
 	print_r($noeuds_per);
-
-	ecrire_gexf_per($tabfich,$fichier_out,$per,$noeuds_per);
+	echo '<br>';
+	echo '<br>sur les candidats:<br>';
+	print_r($noeuds_propose);
+	echo '<br>';
 	
+	ecrire_gexf_per($tabfich,$fichier_out,$per,$noeuds_per);
 }
 
 
