@@ -92,7 +92,7 @@ echo '</h2></td><td width=2.5%></td></tr></table>';
 if ($nav=="thema")
 {
 	//bloc recuperation infos cluster
-	$resultat=mysql_query("SELECT * from cluster WHERE concept='".$id_concept."' ORDER by periode,label_1,label_2,id_cluster") or die ("Requêtesd non exécutée.");
+	$resultat=mysql_query("SELECT * from cluster WHERE concept='".$id_concept."' ORDER by periode,label_1,label_2,id_cluster") or die ("Requête non exécutée.");
 	$check1 = mysql_num_rows($resultat);
 	
 	
@@ -103,41 +103,69 @@ if ($nav=="thema")
 	echo "<td width=95%>";
 	//echo "terme";
 	
+	while ($ligne=mysql_fetch_array($resultat)) $cluster[]=$ligne;
+
+	$agregat_by_period=array();
+	$list_of_periods=array();
+	for ($i=0;$i<count($cluster);$i++) {
+		$periodevar=arrange_periode($cluster[$i]["periode"]);
+		$idlabel1=$cluster[$i]["label_1"];
+		$idlabel2=$cluster[$i]["label_2"];
+		$label1=remove_popo($dico_termes[$idlabel1]);
+		$label2=remove_popo($dico_termes[$idlabel2]);
+		$lettre=$cluster[$i]["lettre"];
+		$nbsons=$cluster[$i]["nb_sons"];
+		$nbfathers=$cluster[$i]["nb_fathers"];
+		$id=$cluster[$i]["id_cluster"];
+		$agregat_by_period[$periodevar][]=array($id,$idlabel1,$idlabel2,$lettre,$nbsons,$nbfathers);
+		if (end($list_of_periods)!=derange_periode($periodevar)) $list_of_periods[]=derange_periode($periodevar);
+	}
+	$list_of_periods=sort_periods($list_of_periods);
+	if ($periode=="-1") $periode=end($list_of_periods);
+
+	if ($list_of_periods[count($list_of_periods)-1]==$periode) 
+		$clause_fils_pere = '';
+	else 
+		$clause_fils_pere = 'AND nb_sons+nb_fathers>='.$orphan_filter;
+	
+	
+	// on relance la requete SQL maintenant que l'on s'est débarrasser des champs sans successeur (if any)
+	$resultat=mysql_query("SELECT * from cluster WHERE concept='".$id_concept."' ".$clause_fils_pere.' ORDER by periode,label_1,label_2,id_cluster') or die ("Requête non exécutée.");
+	$check1 = mysql_num_rows($resultat);
+	
+	$cluster=array();
+	while ($ligne=mysql_fetch_array($resultat)) $cluster[]=$ligne;
+
+	$agregat_by_period=array();
+	$list_of_periods=array();
+	for ($i=0;$i<count($cluster);$i++) {
+		$periodevar=arrange_periode($cluster[$i]["periode"]);
+		$idlabel1=$cluster[$i]["label_1"];
+		$idlabel2=$cluster[$i]["label_2"];
+		$label1=remove_popo($dico_termes[$idlabel1]);
+		$label2=remove_popo($dico_termes[$idlabel2]);
+		$lettre=$cluster[$i]["lettre"];
+		$nbsons=$cluster[$i]["nb_sons"];
+		$nbfathers=$cluster[$i]["nb_fathers"];
+		$id=$cluster[$i]["id_cluster"];
+		$agregat_by_period[$periodevar][]=array($id,$idlabel1,$idlabel2,$lettre,$nbsons,$nbfathers);
+		if (end($list_of_periods)!=derange_periode($periodevar)) $list_of_periods[]=derange_periode($periodevar);
+	}
+	$list_of_periods=sort_periods($list_of_periods);
+	
+	
 	//EST-CE QUE CE TERME APPARAIT DANS DES CLUSTERS?
 
 	if ($check1 != 0) { 
 		//SI OUI, ON AFFICHE LA LISTE DES CLUSTERS ET TOUT LE TOUTIM, EN VERIFIANT QUE C'EST OK POUR CETTE PERIODE
 		
-		while ($ligne=mysql_fetch_array($resultat)) $cluster[]=$ligne;
-	
-		$agregat_by_period=array();
-		$list_of_periods=array();
-		for ($i=0;$i<count($cluster);$i++) {
-			$periodevar=arrange_periode($cluster[$i]["periode"]);
-			$idlabel1=$cluster[$i]["label_1"];
-			$idlabel2=$cluster[$i]["label_2"];
-			$label1=remove_popo($dico_termes[$idlabel1]);
-			$label2=remove_popo($dico_termes[$idlabel2]);
-			$lettre=$cluster[$i]["lettre"];
-			$nbsons=$cluster[$i]["nb_sons"];
-			$nbfathers=$cluster[$i]["nb_fathers"];
-			$id=$cluster[$i]["id_cluster"];
-			$agregat_by_period[$periodevar][]=array($id,$idlabel1,$idlabel2,$lettre,$nbsons,$nbfathers);
-			if (end($list_of_periods)!=derange_periode($periodevar)) $list_of_periods[]=derange_periode($periodevar);
-		}
-		$list_of_periods=sort_periods($list_of_periods);
-		if ($periode=="-1") $periode=end($list_of_periods);
-	
-		$resultat  = concept_to_clusters($id_concept,derange_periode($periode));
+		$resultat  = concept_to_clusters($id_concept,derange_periode($periode),$clause_fils_pere);
 		//on les affiche dans un tableau, à reprendre avec la fonction d'affichage 
 	
 		$check2 = mysql_num_rows($resultat);
 		if ($check2==0) {
 		
 			echo "<div class=subbanner><b>nb: ce terme n'apparaît dans aucun champ thématique pour la période ".get_string_periode(arrange_periode($periode))."</b></div>";
-			//$periode=$list_of_periods[0];
-			//$resultat  = concept_to_clusters($id_concept,derange_periode($periode));
-			//$check2 = mysql_num_rows($resultat);
 			}
 			
 			
