@@ -384,7 +384,7 @@ if ($nav=="tempo")
 	print_r($data_val);
 	$dated=intval($data_val[0]);
 	$datef=intval($data_val[count($data_val)-1]);
-	echo '<br>'.$data_val[0].'<br>'.$data_val[count($data_val)-1].'<p>';
+	echo '<br>'.$dated.'<br>'.$datef.'<p>';
 	
 	include('include/chart-evol-helper.php');
 	echo $myscript;
