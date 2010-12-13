@@ -25,9 +25,10 @@ while (count($id_cluster_univ)>0){
     // on prend le premier cluster et on lui assigne une partition
     $target=array_pop($id_cluster_univ);
     $nbPartition=$nbPartition+1;
+    $current_partition=array(target);// liste des champs dans la partition courante
     $sql="UPDATE cluster SET pseudo=$nbPartition WHERE id_cluster_univ=$target";
     $updated=mysql_query($sql);
-    echo 'Partition for'.$target.'set to'.$nbPartition.'('.$updated.')'."<br/>";
+    echo 'Partition for '.$target.' set to '.$nbPartition.' ('.$updated.')'."<br/>";
 
     $neighbors=array_merge( getFathers($target),getSons($target));
     $arrayTarget = array($target);
@@ -35,15 +36,19 @@ while (count($id_cluster_univ)>0){
     //on prend par propagation ses voisins et on leur assigne la même partition
     while (count($neighbors)>0){
         $targetNeighbor=array_pop($neighbors);
+        $arrayNeigh = array($targetNeighbor);
+        $current_partition=array_merge($current_partition,$arrayNeigh);
         $sql="UPDATE cluster SET pseudo=$nbPartition WHERE id_cluster_univ=$targetNeighbor";
         $updated=mysql_query($sql);
-        echo 'Partition for'.$targetNeighbor.'set to'.$nbPartition.'('.$updated.')'."<br/>";
+        echo 'Partition for '.$targetNeighbor.' set to '.$nbPartition.' ('.$updated.')'."<br/>";
 
-        $arrayNeigh = array($targetNeighbor);
+        
         // on retire le voisin des clusters à tagger
         $id_cluster_univ=array_diff($id_cluster_univ,$arrayNeigh);
         $newNeighbors=array_merge( getFathers($targetNeighbor),getSons($targetNeighbor));
-        $neighbors=array_diff($neighbors, $arrayNeigh);
+        $newNeighbors=array_diff($newNeighbors, $arrayNeigh);
+        $neighbors=array_merge($neighbors,$newNeighbors);
+        $neighbors=array_diff($neighbors,$current_partition);
     }
 
 }
@@ -60,7 +65,6 @@ function getSons($id_cluster_univ){
 function getFathers($id_cluster_univ){
    $fathers=array();
    $query="select id_cluster_1_univ FROM phylo WHERE id_cluster_2_univ=$id_cluster_univ";
-   echo  $query;
    $resultat=mysql_query($query) or die ("<b>Requête non exécutée (Récupération des pères)</b>.");
    while ($ligne=mysql_fetch_array($resultat)) {
         array_push($fathers,$ligne[id_cluster_1_univ]);
