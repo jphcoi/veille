@@ -23,13 +23,12 @@ if ($user!="root") mysql_query("SET NAMES utf8;");
 
 
 //renvoie la liste des clusters associés à un concept pour une période donnee
-function concept_to_clusters($concept, $periode) {
-
+function concept_to_clusters($concept, $periode,$clause) {
 	if ($periode =='-1')
-	{$sql = "SELECT * from cluster WHERE concept='$concept' ORDER by periode,label_1,label_2,id_cluster";}
+	{$sql = "SELECT * from cluster WHERE concept='$concept' ".$clause." ORDER by periode,label_1,label_2,id_cluster";}
 	else
-	{$sql = "SELECT * from cluster WHERE concept='$concept' AND periode='$periode' ORDER by periode,label_1,label_2,id_cluster";}
-	
+	{$sql = "SELECT * from cluster WHERE concept='$concept' AND periode='$periode' ".$clause." ORDER by periode,label_1,label_2,id_cluster";}
+
 	$res = mysql_query($sql);
 	$check2 = mysql_num_rows($res);
 	return $res;
