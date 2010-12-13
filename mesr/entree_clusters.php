@@ -34,9 +34,10 @@ include("banner.php");
 
 //clause qui signale qu'on est à la dernière période
 if ($list_of_periods[count($list_of_periods)-1]==$my_period)
-{$clause_fils_pere = '';}
+	{$clause_fils_pere = '';}
 else
-{$clause_fils_pere = ' AND nb_sons+nb_fathers>='.$orphan_filter;}
+	{$clause_fils_pere = ' AND nb_sons+nb_fathers>='.$orphan_filter;}
+	
 $quer="select id_cluster,label_1,label_2,periode, nb_sons,nb_fathers FROM cluster WHERE periode ='".derange_periode($my_period)."'".$clause_fils_pere." GROUP by id_cluster  ORDER by periode, label_1, label_2, id_cluster";
 $resultat=mysql_query($quer) or die ("<b>Requête non exécutée</b>.");
 while ($ligne=mysql_fetch_array($resultat)){

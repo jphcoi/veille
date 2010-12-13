@@ -155,7 +155,7 @@
 		
 		/* X-axis ticks and labels. */
 		svis.add(pv.Rule)
-			.data(sx.ticks())
+			.data(sx.ticks(20))
 			.left(sx)
 			.bottom(-6)
 			.height(5)

@@ -16,7 +16,7 @@
 	var data = '.$mydata.';
 	
 	/* Sizing and scales. */
-	var w = .87*document.body.clientWidth,
+	var w = .865*document.body.clientWidth,
 		h = 120,
 		ymax = '.$maxdata.',
 		x = pv.Scale.linear(data, function(d) d.x).range(0, w),
@@ -47,11 +47,10 @@
 	
 	/* The root panel. */
 	var vis = new pv.Panel()
-		.width(w)
+		.width(w+5)
 		.height(h)
 		.bottom(20)
 		.left(25)
-		.right(20)
 		.top(5);
 	
 	/* Y-axis and ticks. */
@@ -64,7 +63,7 @@
 	
 	/* X-axis and ticks. */
 	vis.add(pv.Rule)
-		.data(x.ticks())
+		.data(x.ticks(20))
 		.visible(function(d) d)
 		.left(x)
 		.bottom(-5)
