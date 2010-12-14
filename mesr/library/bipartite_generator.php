@@ -93,38 +93,6 @@ function recup_info($tag_avant,$tag_apres,$ligne)
 		return $noeudidv[0];
 }
 
-function importPartition($gexfPath){
-// Import des infos de partition //
-
-$fichier="PhyloPartiton.gexf"; // mettre PhyloPartiton.gexf dans mesr/data
-$map3d = $gexfPath.$fichier;
-echo 'opening'.$map3d ;
-
-$tabfich=file($map3d);
-$noeuds=array();
-
- for( $i = 0 ; $i < 4 ; $i++ ){ //count($tabfich)
- $ligne = $tabfich[$i];
- if(stristr($ligne, '<cluster.php'))
-  {
-   $noeud_id = recup_info('id_cluster=','&amp',$ligne);
-   $noeuds['id_cluster'][]=$noeud_id;
-   $noeud_per1 = recup_info('periode=','-',$ligne);
-   $noeuds['per1'][]=$noeud_per1;
-   $noeud_per2 = recup_info('-','"/>',$ligne);
-   $noeuds['per2'][]=$noeud_per2;
-  }
-  if(stristr($ligne, 'PhyloPartition'))
-  {
-   $noeud_partition = recup_info('value="','"/>',$ligne);
-   $noeuds['partition'][]=$noeud_partition;
-   }
-}
-return $noeuds;
-}
-
-// fin d'import des infos de partition //
-
 
 ////////////////////////////////
 
