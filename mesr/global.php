@@ -368,7 +368,7 @@ else
 //echo "<br>";
 //echo $mapgexf;
 ?>
-<object width="100%" height="400" id="GexfExplorer">
+<object width="100%" height="250" id="GexfExplorer">
 	<script type="text/javascript">
 		<!-- Start		
 		/* Copyright (c) 2006-2009 Paranoid Ferret Productions.  All rights reserved.
@@ -437,7 +437,7 @@ else
 	<param name="bgcolor" value="#FFFFFF" />
 	<embed src="bin/GexfExplorer1.0.swf?path=
 		<? echo $mapgexf?>
-	&curvedEdges=true&scaledTextSize=false&labelSize=1800&clickableNodes=true&nodeBorderColor=0x000000&labelsColor=0x000000&font=Verdana&clickableAttribute=fathersbis&initialNodesRatio=6&edgesThickness=5&fps=false&edgesColor=0xB3D0EC" allowFullScreen="true" allowScriptAccess="always" width="100%" height="600" bgcolor="#FFFFFF">
+	&curvedEdges=true&scaledTextSize=false&labelSize=1800&clickableNodes=true&nodeBorderColor=0x000000&labelsColor=0x000000&font=Verdana&clickableAttribute=fathersbis&initialNodesRatio=6&edgesThickness=5&fps=false&edgesColor=0xB3D0EC" allowFullScreen="true" allowScriptAccess="always" width="100%" height="250" bgcolor="#FFFFFF">
 	</embed>
 </object>
 <?
