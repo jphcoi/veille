@@ -246,7 +246,7 @@ echo "<table width=100%><tr valign=top><td width=2.5%></td><td width=95%>";
 
 	echo '</td><td align=right>';
 	echo '<div style="';
-	echo 'font-size:10pt;';
+	echo 'font-size:8pt;';
 	echo '">'.get_string_periode($my_period).'</div>';
 	echo '</td></tr>';
 	echo '</table>';

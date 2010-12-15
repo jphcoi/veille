@@ -39,7 +39,7 @@ else
 	{$clause_fils_pere = ' AND nb_sons+nb_fathers>='.$orphan_filter;}
 	
 $quer="select id_cluster,label_1,label_2,periode, nb_sons,nb_fathers FROM cluster WHERE periode ='".derange_periode($my_period)."'".$clause_fils_pere." GROUP by id_cluster  ORDER by periode, label_1, label_2, id_cluster";
-$resultat=mysql_query($quer) or die ("<b>Requête non exécutée</b>.");
+$resultat=mysql_query($quer) or die ("<b>Requête non exécutée (mysql query)</b>.");
 while ($ligne=mysql_fetch_array($resultat)){
 	$periode=arrange_periode($ligne['periode']);
 	$liste_termes_brute[] = "<b>".$dico_termes[$ligne['label_1']]."</b> - ".$dico_termes[$ligne['label_2']];
