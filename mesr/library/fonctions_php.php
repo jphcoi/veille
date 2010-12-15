@@ -847,18 +847,23 @@ function mise_en_forme_abstract($titre,$auteurs,$abstract,$concepts,$type_notice
 function display_box($titre,$auteurs,$abstract,$permalien,$concepts,$type_notice)
 	{
 		$notice = mise_en_forme_abstract($titre,$auteurs,$abstract,$concepts,$type_notice);
-		echo '<a onmouseover="show(this,\'';
-		echo $notice;
-		echo	'\')"';
-		echo ' onmouseout="messageBox.style.display=\'none\'"';
-		if (strpos($permalien,'http:')>-1)
+                echo '<a ';
+                if (strpos($permalien,'http:')>-1)
 			{echo 'href="'.$permalien.'"';}
 		else
 			{echo 'href="'.'http://scholar.google.com/scholar?hl=en&q='.str_replace(' ','+',$titre).'"';}
-		echo '>';
+                echo '>';
+                echo '<img alt="aller sur le site" src="images/externalLink.jpg"  border="0" align=left height=10> ';
+	        echo '	</a>';
+                echo '<a onmouseover="show(this,\'';
+		echo $notice;
+		echo	'\')"';
+		echo ' onmouseout="messageBox.style.display=\'none\'"';
+			echo '>';
 		echo $titre;
 		echo '	</a>';
-		echo '<div id="messageBox" onmouseout="messageBox.style.display=\'none\'" ><div id="contents"></div></div>';
+                echo '<div id="messageBox" onmouseout="messageBox.style.display=\'none\'" ><div id="contents"></div></div>';
+               
 		
 	}
 

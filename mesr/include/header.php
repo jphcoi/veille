@@ -17,6 +17,8 @@ echo '<link rel="stylesheet" title="Default" type="text/css" href="style.css" me
 echo '<link rel="stylesheet" type="text/css" href="css/custom-theme/jquery-ui-1.7.3.custom.css"/>';
 
 echo '<meta name="author" content="CCR"/>';
+
+
 echo '</head>';
 
 echo "

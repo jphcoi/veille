@@ -52,7 +52,7 @@ H1 {
 }
 
 .commentitems {
-  font-size:8pt;
+  font-size:small;
   color: DarkSlateGray;
 }
 
@@ -61,8 +61,8 @@ H1 {
    font: verdana, sans-serif;
    text-align: left;
    font-variant: small-caps;
-   font-weight: bold;
-   font-size:x-large;
+   font-weight: normal;
+   font-size:large;
    margin-top: 5px;
    margin-bottom: 5px;
    padding-top: 0px;
@@ -211,4 +211,4 @@ A {
 }
 
 form { 
-� �margin: 0px; }
+  margin: 0px; }

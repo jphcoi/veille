@@ -12,6 +12,7 @@ if ($user!="root") mysql_query("SET NAMES utf8;");
 
 
 
+
 //*************************************************
 //bloc vérification des arguments (pour projection)
 //*************************************************
@@ -316,44 +317,7 @@ echo "<tr valign=top>";
 echo "<td width=2.5%></td>";
 echo "<td width=95%>";
 
-echo "<p>";
-echo "<table width=100% class=tableitems><tr><td align=left>";
-echo "Terme: ";
-echo '<form action="global-helper.php" method="get" style="display:inline;">';
-echo '<select name="id_concept">';
-for ($i=0;$i<count($liste_termes_brute);$i++)
-{
-	
-if ($id_termes_brute[$i]==$id_concept){	echo '<option value='.$id_termes_brute[$i].' selected>'.$liste_termes_brute[$i].'</option>';}
-else
-{	echo '<option value='.$id_termes_brute[$i].'>'.str_replace('popostrophe ',"’",$liste_termes_brute[$i]).'</option>';}
-}
-//if ($id_termes_brute[$i]==$id_concept) {echo " selected";}
-//	echo '>'.$liste_termes_brute[$i].'</option>';
 
-echo '</select>';
-echo '<input type="hidden" value="'.$my_period.'" name="periode">';
-echo '<input type="submit" value="Explorer" name="op">';
-echo '<input type="submit" value="Projeter" name="op">';
-echo '</form>';
-echo "</td>";
-echo "<td align=right>";
-echo "Source: ";
-echo '<form action="global-helper.php" method="get" style="display:inline;">';
-echo '<select name="id_source">';
-$liste_source_reduit = array_keys($dico_auteurs_reduit);
-for ($i=0;$i<count($liste_source_reduit);$i++)
-if ($liste_source_reduit[$i]==$id_source)	{echo '<option value='.$liste_source_reduit[$i].' selected>'.$dico_auteurs[$liste_source_reduit[$i]].'</option>';}
-else
-{echo '<option value='.$liste_source_reduit[$i].'>'.$dico_auteurs[$liste_source_reduit[$i]].'</option>';}
-echo '</select>';
-echo '<input type="hidden" value="'.$my_period.'" name="periode">';
-echo '<input type="submit" value="Explorer" name="op">';
-echo '<input type="submit" value="Projeter" name="op">';
-echo '</form>';
-echo "</td></tr></table>";
-
-echo "</p>";
 if (strlen($projection)>0)
 {
 	//$mapgexf = "http://maps.sciencemapping.com/temporaire.gexf";
@@ -441,8 +405,45 @@ else
 	</embed>
 </object>
 <?
+echo "<p>";
+echo "<table width=100% class=tableitems><tr><td align=left>";
+echo "Terme: ";
+echo '<form action="global-helper.php" method="get" style="display:inline;">';
+echo '<select name="id_concept">';
+for ($i=0;$i<count($liste_termes_brute);$i++)
+{
+
+if ($id_termes_brute[$i]==$id_concept){	echo '<option value='.$id_termes_brute[$i].' selected>'.$liste_termes_brute[$i].'</option>';}
+else
+{	echo '<option value='.$id_termes_brute[$i].'>'.str_replace('popostrophe ',"’",$liste_termes_brute[$i]).'</option>';}
+}
+//if ($id_termes_brute[$i]==$id_concept) {echo " selected";}
+//	echo '>'.$liste_termes_brute[$i].'</option>';
+
+echo '</select>';
+echo '<input type="hidden" value="'.$my_period.'" name="periode">';
+echo '<input type="submit" value="Explorer" name="op">';
+echo '<input type="submit" value="Projeter" name="op">';
+echo '</form>';
+echo "</td></tr><tr>";
+echo "<td align=left>";
+echo "Source: ";
+echo '<form action="global-helper.php" method="get" style="display:inline;">';
+echo '<select name="id_source">';
+$liste_source_reduit = array_keys($dico_auteurs_reduit);
+for ($i=0;$i<count($liste_source_reduit);$i++)
+if ($liste_source_reduit[$i]==$id_source)	{echo '<option value='.$liste_source_reduit[$i].' selected>'.$dico_auteurs[$liste_source_reduit[$i]].'</option>';}
+else
+{echo '<option value='.$liste_source_reduit[$i].'>'.$dico_auteurs[$liste_source_reduit[$i]].'</option>';}
+echo '</select>';
+echo '<input type="hidden" value="'.$my_period.'" name="periode">';
+echo '<input type="submit" value="Explorer" name="op">';
+echo '<input type="submit" value="Projeter" name="op">';
+echo '</form>';
+echo "</td></tr></table>";
+
 //DEBUGGAGE DE LA CARTE QUI EST EFFECTIVEMENT ENVOYEE A GEXF:
-echo '<table class=commentitems width=100%><tr valign=top><td><table class=commentitems>';
+echo '<table class=commentitems width=100% ><tr valign=top><td><table class=commentitems>';
 echo '<tr><td><b>Raccourcis clavier (après avoir cliqué sur la carte):</b></td></tr>';
 echo '<tr><td>';
 echo '- <i>déplacement haut, bas, gauche droite:</i> flèches correspondantes</td></tr>';
