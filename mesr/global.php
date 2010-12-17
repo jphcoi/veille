@@ -450,7 +450,7 @@ echo '- <i>déplacement haut, bas, gauche droite:</i> flèches correspondantes</
 echo '<tr><td>';
 echo '- <i>agrandir/rétrécir: </i><b style="font-variant:small-caps;">ctrl</b> (ou <b style="font-variant:small-caps;">command</b>) + flèches haut/bas</td></tr>';
 echo '</table></td>';
-echo '<td align=right><b>Cliquez sur <img src="http://moma.csregistry.org/tiki-download_file.php?fileId=53" width="25" align="absmiddle" height="23"> pour une vue plein écran</b>';
+echo '<td align=right><b>Cliquez sur <img src="images/fullscreen.jpg" width="25" align="absmiddle" height="23"> pour une vue plein écran</b>';
 
 //on affiche ici le nom du gexf
 //echo '<div align=right style="font-size:5pt;">gexf:'.$mapgexf.'</div>';
