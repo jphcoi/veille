@@ -302,7 +302,7 @@ echo "
 
 <td align=right>
 <i>- Cliquer sur un noeud pour aller sur la page du cluster correspondant.<br/>
-<i><b>-Cliquez sur <img src='http://moma.csregistry.org/tiki-download_file.php?fileId=53' width='25' align='absmiddle' height='23'> pour une vue plein écran</b>
+<i><b>-Cliquez sur <img src='images/fullscreen.jpg' width='25' align='absmiddle' height='23'> pour une vue plein écran</b>
 </td></table>
 </div>
 
