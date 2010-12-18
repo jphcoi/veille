@@ -69,21 +69,64 @@ echo "
 ";
 
 ///////// Fonctions /////
-function branch_list_string($mysql_branch_list){
+function branch_list_string($mysql_branch_list,$min_similarity){
 //donne la liste des macro-branches qui couvrent au moins $phylo_min_nb_periods_covered
 
-$branch_list='<p><ul>'; // html avec la liste des branches
+$label_list=array(); // liste des branches
+$branch_last_period=array(); // liste des périodes associées
+$branch_last_period_cluster_id=array(); // liste de clusters des branches
 while ($ligne=mysql_fetch_array($mysql_branch_list)) {
        $last_period_for_branch=$ligne[last_period_string];
        // on récupère un cluster de la dernière période
        $clusterQuery="select id_cluster FROM cluster WHERE periode='$last_period_for_branch' AND pseudo=$ligne[id_partition]";
        $clusters_from_last_period=mysql_query($clusterQuery) or die ("<b>Requête non exécutée (récupération des clusters de la dernière période)</b>.");
        $cluster_ligne=mysql_fetch_array($clusters_from_last_period);
-       $last_period_cluster_id=$cluster_ligne[id_cluster];
-       $branch='<li><a href="cluster.php?id_cluster='.$last_period_cluster_id.'&periode='.str_replace(' ','-',$last_period_for_branch).'">';
-       $branch=$branch.ucfirst($ligne[label]).'</a><br/>';
-       $branch_list=$branch_list.$branch;
+       array_push($branch_last_period,str_replace(' ','-',$last_period_for_branch));
+       array_push($label_list,$branch.ucfirst($ligne[label]));
+       array_push($branch_last_period_cluster_id,$cluster_ligne[id_cluster]);       
 }
+
+// calcul des similarités entre labels de branches
+$label_list_temp=$label_list;
+$label_groups=array();
+$nb_labels_treated=0;
+$label_rows_remaining_to_process=array();// index des labels non encore catégorisés
+// initialisation de ce tableau
+for ($i=1;$i<=count($label_list),$i++){
+    array_push($label_rows_remaining_to_process,$i)
+};
+
+
+while (count($label_rows_remaining_to_process)>0){
+    $target_row=array_pop($label_rows_remaining_to_process);
+    $target_label_raw=array();// liste des rangs groupés avec target_row
+    $target_labels=array();   // liste des labels des rangs associés
+    array_push($target_labels,$label_list[$target_row]);
+    array_push($target_label_raw,$target_row);
+
+    $label_rows_remaining_to_process_second_pass=$label_rows_remaining_to_process;
+    while (count(label_rows_remaining_to_process_second_pass)>0){
+        $candidate_row=array_pop(label_rows_remaining_to_process_second_pass);
+        $candidate_label=$label_list[$candidate_row];
+        $max_similarity=0;
+        for ($j=1,$i<=count($target_labels),$j++){
+            similar_text ( $candidate_label,$target_labels[$j],$p );
+            if ($p>$max_similarity){$max_similarity=$p};
+        };
+        if ($p>$min_similarity){
+            array_push($target_labels,$label_list[$candidate_row]);
+        }
+        if ($label_list[])
+    }
+
+
+
+};
+
+$branch_list='<p><ul>'; // html avec la liste des branches
+$branch='<li><a href="cluster.php?id_cluster='.$last_period_cluster_id.'&periode='.str_replace(' ','-',$last_period_for_branch).'">';
+$branch=$branch.ucfirst($ligne[label]).'</a><br/>';
+$branch_list=$branch_list.$branch;
 $branch_list=$branch_list.'</ul></p>';
 return remove_popo($branch_list);
 }
