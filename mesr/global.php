@@ -454,7 +454,10 @@ else
 <?
 echo "<p>";
 echo "<table width=100% class=tableitems><tr><td align=left>";
-echo "Terme: ";
+echo '<input type="hidden" value="'.$my_period.'" name="periode">';
+echo '<input type="submit" value="Explorer" name="op">';
+echo '<input type="submit" value="Projeter" name="op">';
+echo "  Terme: ";
 echo '<form action="global-helper.php" method="get" style="display:inline;">';
 echo '<select name="id_concept">';
 for ($i=0;$i<count($liste_termes_brute);$i++)
@@ -468,13 +471,13 @@ else
 //	echo '>'.$liste_termes_brute[$i].'</option>';
 
 echo '</select>';
-echo '<input type="hidden" value="'.$my_period.'" name="periode">';
-echo '<input type="submit" value="Explorer" name="op">';
-echo '<input type="submit" value="Projeter" name="op">';
 echo '</form>';
 echo "</td></tr><tr>";
 echo "<td align=left>";
-echo "Source: ";
+echo '<input type="hidden" value="'.$my_period.'" name="periode">';
+echo '<input type="submit" value="Explorer" name="op">';
+echo '<input type="submit" value="Projeter" name="op">';
+echo "  Source: ";
 echo '<form action="global-helper.php" method="get" style="display:inline;">';
 echo '<select name="id_source">';
 $liste_source_reduit = array_keys($dico_auteurs_reduit);
@@ -483,9 +486,6 @@ if ($liste_source_reduit[$i]==$id_source)	{echo '<option value='.$liste_source_r
 else
 {echo '<option value='.$liste_source_reduit[$i].'>'.$dico_auteurs[$liste_source_reduit[$i]].'</option>';}
 echo '</select>';
-echo '<input type="hidden" value="'.$my_period.'" name="periode">';
-echo '<input type="submit" value="Explorer" name="op">';
-echo '<input type="submit" value="Projeter" name="op">';
 echo '</form>';
 echo "<td width=2.5%></td>";
 echo "</tr></table>";
