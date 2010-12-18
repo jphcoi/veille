@@ -179,6 +179,30 @@ include("banner.php");
 
 
 
+echo "
+	<script>
+	// increase the default animation speed to exaggerate the effect
+	$.fx.speeds._default = 1000;
+	$(function() {
+		$( '#dialog' ).dialog({
+			autoOpen: false,
+			show: 'blind',
+                        stack: true,
+                        position:['left','top'],
+                        width:800,
+                        closeOnEscape:true,
+                        dialogClass: 'alert',
+			hide: 'explode'
+		});
+
+		$( '#opener' ).click(function() {
+			$( '#dialog' ).dialog( 'open' );
+			return false;
+		});
+	});
+	</script>";
+
+
 //array();
 //for ($i=0;$i<count($periode_brute);$i++) {
 //	$periode=arrange_periode($periode_brute[$i]);
@@ -263,6 +287,26 @@ echo '<table class=subtitle width=100%><tr><td align=left>carte ';
 if ($projection=="") echo 'générale des champs thématiques';
 if ($projection=="concept") echo 'projetée sur le terme "<i>'.$dico_termes[$id_concept].'</i>"';
 if ($projection=="source") echo 'projetée sur la source "<i>'.$dico_auteurs[$id_source].'</i>"';
+
+echo "
+<span class='demo'>
+
+<div id='dialog' title='Raccourcis clavier (après avoir cliqué sur la carte):' >
+<table class=commentitems width=100% ><tr valign=top><td><table class=commentitems>
+<tr></tr>
+<tr><td>
+- <i>déplacement haut, bas, gauche droite:</i> flèches correspondantes</td></tr>
+<tr><td>
+- <i>agrandir/rétrécir: </i><b style='font-variant:small-caps;'>ctrl</b> (ou <b style='font-variant:small-caps;'>command</b>) + flèches haut/bas</td></tr>
+</table></td>
+<td align=right><b>Cliquez sur <img src='http://moma.csregistry.org/tiki-download_file.php?fileId=53' width='25' align='absmiddle' height='23'> pour une vue plein écran</b>
+</td></table>
+</div>
+
+<button id='opener'>?</button>
+
+</span><!-- End demo -->
+";
 
 
 $adresse_root= $_SERVER['DOCUMENT_ROOT'];
@@ -440,25 +484,6 @@ echo '<input type="hidden" value="'.$my_period.'" name="periode">';
 echo '<input type="submit" value="Explorer" name="op">';
 echo '<input type="submit" value="Projeter" name="op">';
 echo '</form>';
-echo "</td></tr></table>";
-
-//DEBUGGAGE DE LA CARTE QUI EST EFFECTIVEMENT ENVOYEE A GEXF:
-echo '<table class=commentitems width=100% ><tr valign=top><td><table class=commentitems>';
-echo '<tr><td><b>Raccourcis clavier (après avoir cliqué sur la carte):</b></td></tr>';
-echo '<tr><td>';
-echo '- <i>déplacement haut, bas, gauche droite:</i> flèches correspondantes</td></tr>';
-echo '<tr><td>';
-echo '- <i>agrandir/rétrécir: </i><b style="font-variant:small-caps;">ctrl</b> (ou <b style="font-variant:small-caps;">command</b>) + flèches haut/bas</td></tr>';
-echo '</table></td>';
-echo '<td align=right><b>Cliquez sur <img src="http://moma.csregistry.org/tiki-download_file.php?fileId=53" width="25" align="absmiddle" height="23"> pour une vue plein écran</b>';
-
-//on affiche ici le nom du gexf
-//echo '<div align=right style="font-size:5pt;">gexf:'.$mapgexf.'</div>';
-echo '</td></table>';
-
-
-echo '</td>';
-echo "</td>";
 echo "<td width=2.5%></td>";
 echo "</tr></table>";
 
