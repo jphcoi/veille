@@ -302,7 +302,7 @@ echo "
 
 <td align=right>
 <i>- Cliquer sur un noeud pour aller sur la page du cluster correspondant.<br/>
-<i><b>- Cliquez sur <img src='http://moma.csregistry.org/tiki-download_file.php?fileId=53' width='25' align='absmiddle' height='23'> pour une vue plein écran</b>
+<i><b>-Cliquez sur <img src='http://moma.csregistry.org/tiki-download_file.php?fileId=53' width='25' align='absmiddle' height='23'> pour une vue plein écran</b>
 </td></table>
 </div>
 
@@ -454,10 +454,7 @@ else
 <?
 echo "<p>";
 echo "<table width=100% class=tableitems><tr><td align=left>";
-echo '<input type="hidden" value="'.$my_period.'" name="periode">';
-echo '<input type="submit" value="Explorer" name="op">';
-echo '<input type="submit" value="Projeter" name="op">';
-echo "  Terme: ";
+echo "Terme: ";
 echo '<form action="global-helper.php" method="get" style="display:inline;">';
 echo '<select name="id_concept">';
 for ($i=0;$i<count($liste_termes_brute);$i++)
@@ -471,13 +468,13 @@ else
 //	echo '>'.$liste_termes_brute[$i].'</option>';
 
 echo '</select>';
-echo '</form>';
-echo "</td></tr><tr>";
-echo "<td align=left>";
 echo '<input type="hidden" value="'.$my_period.'" name="periode">';
 echo '<input type="submit" value="Explorer" name="op">';
 echo '<input type="submit" value="Projeter" name="op">';
-echo "  Source: ";
+echo '</form>';
+echo "</td></tr><tr>";
+echo "<td align=left>";
+echo "Source: ";
 echo '<form action="global-helper.php" method="get" style="display:inline;">';
 echo '<select name="id_source">';
 $liste_source_reduit = array_keys($dico_auteurs_reduit);
@@ -486,6 +483,9 @@ if ($liste_source_reduit[$i]==$id_source)	{echo '<option value='.$liste_source_r
 else
 {echo '<option value='.$liste_source_reduit[$i].'>'.$dico_auteurs[$liste_source_reduit[$i]].'</option>';}
 echo '</select>';
+echo '<input type="hidden" value="'.$my_period.'" name="periode">';
+echo '<input type="submit" value="Explorer" name="op">';
+echo '<input type="submit" value="Projeter" name="op">';
 echo '</form>';
 echo "<td width=2.5%></td>";
 echo "</tr></table>";
