@@ -302,7 +302,7 @@ echo "
 
 <td align=right>
 <i>- Cliquer sur un noeud pour aller sur la page du cluster correspondant.<br/>
-<i><b>-Cliquez sur <img src='http://moma.csregistry.org/tiki-download_file.php?fileId=53' width='25' align='absmiddle' height='23'> pour une vue plein écran</b>
+<i><b>-Cliquez sur <img src='images/fullscreen.jpg' width='25' align='absmiddle' height='23'> pour une vue plein écran</b>
 </td></table>
 </div>
 
@@ -472,8 +472,9 @@ echo '<input type="hidden" value="'.$my_period.'" name="periode">';
 echo '<input type="submit" value="Explorer" name="op">';
 echo '<input type="submit" value="Projeter" name="op">';
 echo '</form>';
-echo "</td></tr><tr>";
-echo "<td align=left>";
+echo "</td>";
+//echo "</tr><tr>";
+echo "<td align=right>";
 echo "Source: ";
 echo '<form action="global-helper.php" method="get" style="display:inline;">';
 echo '<select name="id_source">';
@@ -487,6 +488,8 @@ echo '<input type="hidden" value="'.$my_period.'" name="periode">';
 echo '<input type="submit" value="Explorer" name="op">';
 echo '<input type="submit" value="Projeter" name="op">';
 echo '</form>';
+echo "</td></tr></table>";
+
 echo "<td width=2.5%></td>";
 echo "</tr></table>";
 
