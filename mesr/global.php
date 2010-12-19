@@ -243,25 +243,19 @@ if ($projection=="source") echo 'projetée sur la source "<i>'.$dico_auteurs[$id
 
 echo "
 	<script>
-	// increase the default animation speed to exaggerate the effect
-	$.fx.speeds._default = 1000;
 	$(function() {
-		$('#dialog').dialog({
-			autoOpen: false,
-            //stack: true,
-            position:'center',
-            width:600,
-            closeOnEscape:true
-		});
+		$('#dialog')
+		  .dialog({ autoOpen: false, stack: true, resizable: false, modal:true, width:600, closeOnEscape:true})
+		  .click(function () { $('#dialog').dialog('close'); });
 
-		$( '#opener' ).click(function(e) {
-			x=$(this).pageX;
-			y=$(this).pageY;
-			$('#dialog').dialog('option','position', [x,y]);
-			$('#dialog').dialog('open');
+		$('#opener').click(function(e) {
+			if (!$('#dialog').dialog('isOpen')) 
+				$('#dialog').dialog('option','position', [$(this).position().left+25,20]).dialog('open');
+			else
+				$('#dialog').dialog('close');
 			return false;
+			});
 		});
-	});
 	</script>";
 	
 echo "
