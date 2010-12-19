@@ -29,7 +29,9 @@ include("banner.php");
 
 
 echo '<table width=100% class=tableitems>';
-echo '<tr valign=top><td width=2.5%></td><td><h2 class=subtitle>exploration de la source "<i>'.$source[0].'</i>"</h2></td><td width=2.5%></td></tr></table>';
+echo '<tr valign=top><td width=2.5%></td><td>';
+echo '<h2 class=subtitle>exploration de la source "<i>'.$source[0].'</i>"</h2>';
+echo '</td><td width=2.5%></td></tr></table>';
 
 
 /////////////////////////////////////////

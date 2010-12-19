@@ -241,26 +241,10 @@ if ($projection=="") echo 'générale des champs thématiques';
 if ($projection=="concept") echo 'projetée sur le terme "<i>'.$dico_termes[$id_concept].'</i>"';
 if ($projection=="source") echo 'projetée sur la source "<i>'.$dico_auteurs[$id_source].'</i>"';
 
-echo "
-	<script>
-	$(function() {
-		$('#dialog')
-		  .dialog({ autoOpen: false, stack: true, resizable: false, modal:true, width:600, closeOnEscape:true})
-		  .click(function () { $('#dialog').dialog('close'); });
 
-		$('#opener').click(function(e) {
-			if (!$('#dialog').dialog('isOpen')) 
-				$('#dialog').dialog('option','position', [$(this).position().left+25,25]).dialog('open');
-			else
-				$('#dialog').dialog('close');
-			return false;
-			});
-		});
-	</script>";
-	
-echo "
-	<div id='dialog' title='Raccourcis clavier (après avoir cliqué sur la carte):' >
-	<table class=commentitems width=100%><tr valign=top><td><table class=commentitems>
+$jscriptmp=display_helper(
+	'Raccourcis clavier (après avoir cliqué sur la carte):',
+	"<table class=commentitems width=100%><tr valign=top><td><table class=commentitems>
 	<tr><td>
 	- <i>déplacement haut, bas, gauche droite:</i> flèches correspondantes</td></tr>
 	<tr><td>
@@ -269,11 +253,11 @@ echo "
 	<td align=right>
 	<i>- Cliquer sur un noeud pour aller sur la page du cluster correspondant.<br/>
 	<i><b>- Cliquez sur <img src='images/fullscreen.jpg' width='25' align='absmiddle' height='23'> pour une vue plein écran</b>
-	</td></table>
-	</div>
-	<img src='images/question-mark.gif' id='opener'>
-";
-
+	</td></table>",
+	'');
+	
+echo '
+		<script> $(function() { '.$jscriptmp.' });</script>';
 
 $adresse_root= $_SERVER['DOCUMENT_ROOT'];
 //$mapgexf=$adresse_root.'/'.$dbid."/".$exportid."/cartes/".str_replace("_","-",$my_period)."_gs.gexf";
