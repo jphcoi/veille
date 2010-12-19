@@ -833,10 +833,10 @@ function mise_en_forme_abstract($titre,$auteurs,$abstract,$concepts,$type_notice
 				$abs=substr($abs, 1);
 			}
 		
-			$notice = '<b>'.'Titre: '.'</b>'.$titre.'<br>'.'<b>'.'Auteurs: '.'</b>'.$auteurs.'<br>'.'<b>'.'Résumé: '.'</b>'.str_replace('popostrophe',"'",$abs).'<br>';
-			if ($type_notice==article)
-			{$notice=$notice.'<b>'.'Key-words:'.'</b>'.str_replace('popostrophe',"'",$keywords);}
-			$notice=$notice.'<br>'.'<b>'.'Concepts:'.'</b>'.str_replace('popostrophe',"'",$concepts);
+			//$notice = '<b>'.'Titre: '.'</b>'.$titre.'<br>'.'<b>'.'Auteurs: '.'</b>'.$auteurs.'<br>'.'<b>'.'Résumé: '.'</b>'.str_replace('popostrophe',"'",$abs).'<br>';
+			$notice = '<b>Source: '.'</b>'.$auteurs.'<br><br><b>'.'Résumé: '.'</b>'.str_replace('popostrophe',"'",$abs).'<br>';
+			if ($type_notice==article) $notice.='<b>'.'Mots-clés: </b>'.str_replace('popostrophe',"'",$keywords);
+			$notice.='<br>'.'<b>'.'Concepts: </b>'.str_replace('popostrophe',"'",$concepts);
 			$notice = str_replace("'","’",$notice);
 			$notice = str_replace('"',"’",$notice);
 		return $notice;
@@ -844,27 +844,29 @@ function mise_en_forme_abstract($titre,$auteurs,$abstract,$concepts,$type_notice
 	}
 
 
-function display_box($titre,$auteurs,$abstract,$permalien,$concepts,$type_notice)
+function display_box($titre,$auteurs,$abstract,$permalien,$concepts,$type_notice,$index)
 	{
 		$notice = mise_en_forme_abstract($titre,$auteurs,$abstract,$concepts,$type_notice);
-                echo '<a ';
-                if (strpos($permalien,'http:')>-1)
-			{echo 'href="'.$permalien.'"';}
-		else
-			{echo 'href="'.'http://scholar.google.com/scholar?hl=en&q='.str_replace(' ','+',$titre).'"';}
-                echo '>';
-                echo '<img alt="aller sur le site" src="images/externalLink.jpg"  border="0" align=left height=10> ';
-	        echo '	</a>';
-                echo '<a onmouseover="show(this,\'';
-		echo $notice;
-		echo	'\')"';
-		echo ' onmouseout="messageBox.style.display=\'none\'"';
-			echo '>';
-		echo $titre;
-		echo '	</a>';
-                echo '<div id="messageBox" onmouseout="messageBox.style.display=\'none\'" ><div id="contents"></div></div>';
-               
-		
+		echo '<div id="dialog'.$index.'" title="'.$titre.'">'.$notice.'</div>';
+        echo '<a ';
+        if (strpos($permalien,'http:')>-1) {
+        	echo 'href="'.$permalien.'"';
+        	}
+		else {
+			echo 'href="'.'http://scholar.google.com/scholar?hl=en&q='.str_replace(' ','+',$titre).'"';
+			}
+		echo '>';
+		echo '<img alt="aller sur le site" src="images/externallink.png"  border="0" align=left height=16> ';
+		echo '</a>';
+		echo '</td><td>';
+		//echo '<a onmouseover="show(this,\'';
+		//echo $notice;
+		//echo	'\')"';
+		//echo ' onmouseout="messageBox.style.display=\'none\'"';
+		//echo '>';
+		echo '<div id="opener'.$index.'"><a href=#>'.$titre.'</a></div>';
+		//echo '</a>';
+        //echo '<div id="messageBox" onmouseout="messageBox.style.display=\'none\'" ><div id="contents"></div></div>';
 	}
 
 function recup_id_auteurs($chaine)
