@@ -243,17 +243,20 @@ if ($projection=="source") echo 'projetée sur la source "<i>'.$dico_auteurs[$id
 
 
 $jscriptmp=display_helper(
-	'Raccourcis clavier (après avoir cliqué sur la carte):',
-	"<table class=commentitems width=100%><tr valign=top><td><table class=commentitems>
-	<tr><td>
-	- <i>déplacement haut, bas, gauche droite:</i> flèches correspondantes</td></tr>
-	<tr><td>
-	- <i>agrandir/rétrécir: </i><b style='font-variant:small-caps;'>ctrl</b> (ou <b style='font-variant:small-caps;'>command</b>) + flèches haut/bas</td></tr>
-	</table></td>
-	<td align=right>
-	<i>- Cliquer sur un noeud pour aller sur la page du cluster correspondant.<br/>
-	<i><b>- Cliquez sur <img src='images/fullscreen.jpg' width='25' align='absmiddle' height='23'> pour une vue plein écran</b>
-	</td></table>",
+	'Raccourcis clavier (après avoir cliqué sur la carte)',
+	'<ul style="font-size:small;">
+		<li><i>déplacement haut, bas, gauche droite:</i><br>
+			flèches correspondantes
+		</li>
+		<li><i>agrandir/rétrécir: </i><br>
+		<b style="font-variant:small-caps;">ctrl</b> (ou <b style="font-variant:small-caps;">command</b>) + flèches haut/bas
+		</li>
+		<li><i>Cliquez sur un noeud pour aller sur la page du cluster correspondant.</i>
+		</li>
+		<li>
+		<i><b>Cliquez sur <img src="images/fullscreen.jpg" width="25" align="absmiddle" height="23"> pour une vue plein écran</b>
+		</li>
+	</ul>',
 	'');
 	
 echo '
