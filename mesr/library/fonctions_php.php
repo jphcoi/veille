@@ -238,7 +238,8 @@ function adjust_date_jours($s){
 
 
 
-//renvoie la liste pondérée de concepts associée à un ensemble d'ids de clusters 
+//renvoie la liste pondérée de concepts associée à un ensemble d'ids de clusters
+// David : Je ne vois pas le pondéré ...
 function export_concepts_pondere($ids_cluster,$periode){
 	$concept_list=array();
 	for( $i = 0 ; $i < count($ids_cluster) ; $i++ )
