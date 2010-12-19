@@ -250,7 +250,7 @@ echo "
 
 		$('#opener').click(function(e) {
 			if (!$('#dialog').dialog('isOpen')) 
-				$('#dialog').dialog('option','position', [$(this).position().left+25,20]).dialog('open');
+				$('#dialog').dialog('option','position', [$(this).position().left+25,2]).dialog('open');
 			else
 				$('#dialog').dialog('close');
 			return false;
