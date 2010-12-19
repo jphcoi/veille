@@ -630,13 +630,13 @@ if ($nav=="post"){
 //	echo "<div class=grayb><i>(les billets de la période en cours sont signalés par un fond grisé alternant; ceux qui ne sont associés à aucun terme de l'étude sont barrés)</i></div><br>";
 	
 	echo '<table class=tableitems width=100% rules=groups>';
-	echo '<tr style="font-variant:small-caps; size:small; margin-top:2px; margin-bottom:-2px;"><td>numéro</td><td width=1%></td><td align=left>date</td><td width=1%></td><td>titre</td></tr>';
+	echo '<tr style="font-variant:small-caps; size:small; margin-top:2px; margin-bottom:-2px;">';
+	echo '<td>numéro</td><td width=1%></td><td align=left>date</td><td width=16px></td><td width=1%></td><td>titre</td>';
+	echo '</tr>';
 
-	
-	
-	
-	
+		
 	$odd=0;
+	$jscriptmp="";
 	foreach ($billets as $b) {
 		if ($odd%2==0) $bckclr=$backdark; else $bckclr=$backdarker;
 		$addtr="";
@@ -648,7 +648,6 @@ if ($nav=="post"){
 		//if ((count($periode_a_faire)==0) AND ($my_period==-1)) echo '<tr valign=top>'; else 
 		
 		if (in_array($b['id'],$billets_id)) {
-			
 			$odd+=1;
 			echo '<tr valign=top'.$addtr.'>';
 			echo '<td><a name=\'b'.$b['index'].'\'></a><b>'.$b['index'].'</b></td>';
@@ -666,15 +665,28 @@ if ($nav=="post"){
 			$permalien = $b['permalien'];
 			$chaine = prone($chaine,8);
 
-			echo display_box(clean_text(str_replace("popostrophe","'",$b['title'])),str_replace(' *** ','; ',$b['site']),str_replace('"',' ',$chaine),$permalien,$concepts,$type_notice);
+			$index=$b['index'];
+			$jscriptmp.="
+				$('#dialog".$index."')
+					.dialog({ autoOpen: false, stack: true, modal:true, width:600, closeOnEscape:true})
+					.click(function () { $('#dialog".$index."').dialog('close'); });
+				$('#opener".$index."').click(function(e) {
+					if (!$('#dialog".$index."').dialog('isOpen')) 
+						$('#dialog".$index."').dialog('option','position', [$(this).position().left+50,'center']).dialog('open');
+					else
+						$('#dialog".$index."').dialog('close');
+					return false;
+					});";
+			echo display_box(clean_text(str_replace("popostrophe","'",$b['title'])),str_replace(' *** ','; ',$b['site']),str_replace('"',' ',$chaine),$permalien,$concepts,$type_notice,$b['index']);
 			echo "</a>";
 			echo "</td>";
 			echo "</tr>";
 		}
 	}
 	echo '</table>';
-	
-	
+	echo '
+		<script> $(function() { '.$jscriptmp.' });</script>';
+		
 	echo "</td><td width=2.5%></td>";
 	
 	echo "</tr>";
