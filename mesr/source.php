@@ -30,7 +30,28 @@ include("banner.php");
 
 echo '<table width=100% class=tableitems>';
 echo '<tr valign=top><td width=2.5%></td><td>';
-echo '<h2 class=subtitle>exploration de la source "<i>'.$source[0].'</i>"</h2>';
+echo '<h2 class=subtitle>exploration de la source "<i>'.$source[0].'</i>"';
+$jscriptmp=display_helper('Exploration des sources','Ce panel comprend trois onglets:
+	<ul style="font-size:small;"><li>
+		"<b style="font-variant:small-caps;">informations sémantiques</b>": qui permet de connaître 
+		la liste des champs auxquels une source prend part, pour une ou toutes les périodes, ainsi 
+		que les billets les plus pertinents pour ces champs. Les principaux termes employés par la
+		source sont par ailleurs affichés dans un cadre indépendant.
+		</li>
+		<li>
+		"<b style="font-variant:small-caps;">réseau social</b>":
+		qui fournit la structure des <i>citations</i> entre sources autour de la source sélectionnée
+		(elle-même représentée par un carré). La molette permet de zoomer/dézoomer.
+		</li>
+		<li>
+		<b style="font-variant:small-caps;">billets</b>:
+		qui donne la liste complète des billets publiés par la source. Pour chaque billet, le numéro
+		interne à gauche correspond exactement aux numéros des billets mentionnés dans le premier 
+		onglet "informations sémantiques".	
+		</li>
+	</ul>
+	',"helper");
+echo '</h2>';
 echo '</td><td width=2.5%></td></tr></table>';
 
 
@@ -638,7 +659,8 @@ if ($nav=="post"){
 
 		
 	$odd=0;
-	$jscriptmp="";
+	$jscriptmp.="
+	";
 	foreach ($billets as $b) {
 		if ($odd%2==0) $bckclr=$backdark; else $bckclr=$backdarker;
 		$addtr="";
@@ -685,10 +707,7 @@ if ($nav=="post"){
 			echo "</tr>";
 		}
 	}
-	echo '</table>';
-	echo '
-		<script> $(function() { '.$jscriptmp.' });</script>';
-		
+	echo '</table>';		
 	echo "</td><td width=2.5%></td>";
 	
 	echo "</tr>";
@@ -699,9 +718,13 @@ if ($nav=="post"){
 }	
 
 
+
 //on ferme l'acces à la base de donnees
 mysql_close();
 
+
+echo '
+	<script> $(function() { '.$jscriptmp.' });</script>';
 
 include("footer.php");
 ?>
