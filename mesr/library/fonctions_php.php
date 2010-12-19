@@ -882,82 +882,76 @@ function display_arrow_periodes($my_period,$total_list_periods)
 
 
 function mise_en_forme_abstract($titre,$auteurs,$abstract,$concepts,$type_notice)
+{
+	$abstractv1 = explode('* * *',$abstract);
+	if (count($abstractv1)>1)
+	{$abstract = $abstractv1[1];}
+	//echo $concepts;
+	$abstractv =  explode('. ',$abstract);
+	//print_r($abstractv);
+	$abs = '';
+	$keywords='';
+	if (count(explode(' ; ',$abstractv[2]))>1)
 	{
-			$abstractv1 = explode('* * *',$abstract);
-			if (count($abstractv1)>1)
-			{$abstract = $abstractv1[1];}
-			//echo $concepts;
-			$abstractv =  explode('. ',$abstract);
-			//print_r($abstractv);
-			$abs = '';
-			$keywords='';
-			if (count(explode(' ; ',$abstractv[2]))>1)
-			{
-				$jlim = 2;
-			}
-			else
-			{	
-				if (count(explode(' ; ',$abstractv[1]))>1)
-				{
-					$jlim = 1;
-				}
-				else
-				{$jlim=0;}
-			}
-		
-			for ($j=0;$j<count($abstractv);$j++)
-			{
-				
-				if ($j>=$jlim)
-				{$abs = $abs.'. '.$abstractv[$j];}
-				else
-				{if ($type_notice=='article')
-					{$keywords = $keywords.$abstractv[$j];}
-				else
-					{$keywords=$keywords.'';}
-				}
-			}
-		
-			while ($abs[0]==' ' or $abs[0]=='.') 
-			{
-				$abs=substr($abs, 1);
-			}
-		
-			//$notice = '<b>'.'Titre: '.'</b>'.$titre.'<br>'.'<b>'.'Auteurs: '.'</b>'.$auteurs.'<br>'.'<b>'.'Résumé: '.'</b>'.str_replace('popostrophe',"'",$abs).'<br>';
-			$notice = '<b>Source: '.'</b>'.$auteurs.'<br><br><b>'.'Résumé: '.'</b>'.str_replace('popostrophe',"'",$abs).'<br>';
-			if ($type_notice==article) $notice.='<b>'.'Mots-clés: </b>'.str_replace('popostrophe',"'",$keywords);
-			$notice.='<br>'.'<b>'.'Concepts: </b>'.str_replace('popostrophe',"'",$concepts);
-			$notice = str_replace("'","’",$notice);
-			$notice = str_replace('"',"’",$notice);
-		return $notice;
-		
+		$jlim = 2;
+	}
+	else
+	{	
+		if (count(explode(' ; ',$abstractv[1]))>1)
+		{
+			$jlim = 1;
+		}
+		else
+		{$jlim=0;}
 	}
 
-
-function display_box($titre,$auteurs,$abstract,$permalien,$concepts,$type_notice,$index)
+	for ($j=0;$j<count($abstractv);$j++)
 	{
-		$notice = mise_en_forme_abstract($titre,$auteurs,$abstract,$concepts,$type_notice);
-		echo '<div id="dialog'.$index.'" title="'.$titre.'">'.$notice.'</div>';
-        echo '<a ';
-        if (strpos($permalien,'http:')>-1) {
-        	echo 'href="'.$permalien.'"';
-        	}
-		else {
-			echo 'href="'.'http://scholar.google.com/scholar?hl=en&q='.str_replace(' ','+',$titre).'"';
-			}
-		echo '>';
-		echo '<img alt="aller sur le site" src="images/externallink.png"  border="0" align=left height=16> ';
-		echo '</a>';
-		echo '</td><td>';
-		//echo '<a onmouseover="show(this,\'';
-		//echo $notice;
-		//echo	'\')"';
-		//echo ' onmouseout="messageBox.style.display=\'none\'"';
-		//echo '>';
-		echo '<div id="opener'.$index.'"><a href=#>'.$titre.'</a></div>';
-		//echo '</a>';
-        //echo '<div id="messageBox" onmouseout="messageBox.style.display=\'none\'" ><div id="contents"></div></div>';
+		
+		if ($j>=$jlim)
+		{$abs = $abs.'. '.$abstractv[$j];}
+		else
+		{if ($type_notice=='article')
+			{$keywords = $keywords.$abstractv[$j];}
+		else
+			{$keywords=$keywords.'';}
+		}
 	}
+
+	while ($abs[0]==' ' or $abs[0]=='.') 
+	{
+		$abs=substr($abs, 1);
+	}
+
+	$notice = '<b>Source: '.'</b>'.$auteurs.'<br><br><b>'.'Résumé: '.'</b>'.str_replace('popostrophe',"'",$abs).'<br>';
+	if ($type_notice==article) $notice.='<b>'.'Mots-clés: </b>'.str_replace('popostrophe',"'",$keywords);
+	$notice.='<br>'.'<b>'.'Concepts: </b>'.str_replace('popostrophe',"'",$concepts);
+	$notice = str_replace("'","’",$notice);
+	$notice = str_replace('"',"’",$notice);
+	$notice = str_replace(" )",")",str_replace("( ","(",str_replace("’ ","'",str_replace(" ,",",",str_replace("' ","'",str_replace(' .','.',$notice))))));
+	return $notice;
+	
+}
+
+
+function display_box($titre,$auteurs,$abstract,$permalien,$concepts,$type_notice,$index,$insertedtext)
+{
+	$notice = mise_en_forme_abstract($titre,$auteurs,$abstract,$concepts,$type_notice);
+	echo '<div id="dialog'.$index.'" title="'.$titre.'" style="font-size:8pt;">'.$notice.'</div>';
+	echo '<a ';
+	if (strpos($permalien,'http:')>-1) {
+		echo 'href="'.$permalien.'"';
+		}
+	else {
+		echo 'href="'.'http://scholar.google.com/scholar?hl=en&q='.str_replace(' ','+',$titre).'"';
+		}
+	echo '>';
+	echo '<img alt="aller sur le site" src="images/externallink.png"  border="0" align=left height=16> ';
+	echo '</a>';
+	echo '</td><td>';
+	echo '<div id="opener'.$index.'"><a href=#>'.$titre.'</a>'.$insertedtext.'</div>
+	';
+}
 
 function recup_id_auteurs($chaine)
 {
@@ -1005,59 +999,78 @@ function display_billets($info_sources,$list_of_concepts,$my_period,$type_notice
 	$backdark="#DDDDDD";
 	$backdarker="#CCCCCC";
 	
-						echo "<table class=tableitems rules=all width=100% cellspacing=0 cellpadding=0>";
-						echo "</td>";
-						echo "<td align=left width=80%>";
-						echo "<table width=100% cellspacing=0 cellpadding=0>";
-						$odd=0;
-						foreach(array_keys($info_sources) as $key)
-						{	
-							//print_r($info_sources[$key]['dates']);
-							$odd+=1;
-							if ($odd%2==0) $bckclr=$backdark; else $bckclr=$backdarker;
-							echo ('<tr valign=top class=tableitems style="background-color:'.$bckclr.'; ">');
-							echo "<td  width=100%>";
-							echo '<table class=tableitems width=100%><tr><td width=100%>';
-							$ids_auteur=recup_id_auteurs($info_sources[$key]['idauteur']);
-							$keys = recup_names_auteurs($key);
-	
-							for ($j=0;$j<count($ids_auteur);$j++)
-							{
-								echo '<a href=source.php?id_source='.$ids_auteur[$j]."&periode=".$my_period.'><i>'.$keys[$j]."</i></a>";
-								if ($j<count($ids_auteur)-1)
-								{echo '; ';}
-							}
-							
-							echo '</td></tr></table>';
-							echo "<table class=commentitems width=100%>";
-							for ($i=0;$i<count($info_sources[$key]['titres']);$i++){
-								echo "<tr valign=top><td width=13% style=\"font-size:x-small;\">";
-								echo $info_sources[$key]['dates'][$i];
-								echo "</td><td width=2%>";
-								echo "</td><td width=85%>";
-								$chaine=$info_sources[$key]['content'][$i];
-								//coupe l'abstract aux 15 premières lignes
-								$chaine = prone($chaine,8);
-								//print_r(convert_forme_principale_id($info_sources[$key]['concepts'][$i]));
-								$conc = implode("; ", convert_forme_principale_id($info_sources[$key]['concepts'][$i]));
-								//echo $conc;
-								echo display_box($info_sources[$key]['titres'][$i],$key,$chaine,$info_sources[$key]['permaliens'][$i],$conc,$type_notice);
-								if (count($list_of_concepts)>1)
-								{ echo "(".number_format(100*$info_sources[$key]['nbtermes'][$i]/count($list_of_concepts)/log10(10+$info_sources[$key]['nbsize'][$i]-$info_sources[$key]['nbtermes'][$i]), 0, ',', ' ')."%)";
-							//	echo $info_sources[$key]['nbtermes'][$i];
-							//	echo '<br>';
-							//	echo count($list_of_concepts);
-							//									echo '<br>';
-							//	echo $info_sources[$key]['nbsize'][$i];
-								}
-								echo "</i></td></tr>";
-							}
-							echo "</table>";
+	echo "<table class=tableitems rules=all width=100% cellspacing=0 cellpadding=0>";
+	echo "</td>";
+	echo "<td align=left width=80%>";
+	echo "<table width=100% cellspacing=0 cellpadding=0>";
+	$odd=0;
+	$jscriptmp="";
+	foreach(array_keys($info_sources) as $key)
+	{
+		//print_r($info_sources[$key]['dates']);
+		$odd+=1;
+		if ($odd%2==0) $bckclr=$backdark; else $bckclr=$backdarker;
+		echo ('<tr valign=top class=tableitems style="background-color:'.$bckclr.'; ">');
+		echo "<td  width=100%>";
+		echo '<table class=tableitems width=100%><tr><td width=100%>';
+		$ids_auteur=recup_id_auteurs($info_sources[$key]['idauteur']);
+		$keys = recup_names_auteurs($key);
 
-							echo "</td>";
-							echo "</tr>";
-						}
-						echo "</table>";
+		for ($j=0;$j<count($ids_auteur);$j++)
+		{
+			echo '<a href=source.php?id_source='.$ids_auteur[$j]."&periode=".$my_period.'><i>'.$keys[$j]."</i></a>";
+			if ($j<count($ids_auteur)-1)
+			{echo '; ';}
+		}
+		
+		echo '</td></tr></table>';
+		echo "<table class=commentitems width=100%>";
+		for ($i=0;$i<count($info_sources[$key]['titres']);$i++){
+			echo "<tr valign=top><td width=13% style=\"font-size:x-small;\">";
+			echo $info_sources[$key]['dates'][$i];
+			echo "</td><td width=2%>";
+			echo "</td><td width=18px>";
+			$chaine=$info_sources[$key]['content'][$i];
+			//coupe l'abstract aux 15 premières lignes
+			$chaine = prone($chaine,8);
+			//print_r(convert_forme_principale_id($info_sources[$key]['concepts'][$i]));
+			$conc = implode("; ", convert_forme_principale_id($info_sources[$key]['concepts'][$i]));
+			//echo $conc;
+			//il faut normaliser le nom de l'index pour que javascript ne soit pas perdu
+			$index=str_replace(".","",str_replace("-","",$key."-".$i));
+			$jscriptmp.="
+				$('#dialog".$index."')
+					.dialog({ autoOpen: false, stack: true, modal:true, width:600, closeOnEscape:true})
+					.click(function () { $('#dialog".$index."').dialog('close'); });
+				$('#opener".$index."').click(function(e) {
+					if (!$('#dialog".$index."').dialog('isOpen')) 
+						$('#dialog".$index."').dialog('option','position', [$(this).position().left+50,'center']).dialog('open');
+					else
+						$('#dialog".$index."').dialog('close');
+					return false;
+					});";
+			$insertedtext="";
+			if (count($list_of_concepts)>1){ 
+				$insertedtext=" (".number_format(100*$info_sources[$key]['nbtermes'][$i]/count($list_of_concepts)/log10(10+$info_sources[$key]['nbsize'][$i]-$info_sources[$key]['nbtermes'][$i]), 0, ',', ' ')."%)";
+				//	echo $info_sources[$key]['nbtermes'][$i];
+				//	echo '<br>';
+				//	echo count($list_of_concepts);
+				//	echo '<br>';
+				//	echo $info_sources[$key]['nbsize'][$i];
+				}
+			echo display_box($info_sources[$key]['titres'][$i],$key,$chaine,$info_sources[$key]['permaliens'][$i],$conc,$type_notice,$index,$insertedtext);
+			echo "</i></td></tr>";
+		}
+		echo "</table>";
+
+		echo "</td>";
+		echo "</tr>";
+	}
+	echo "</table>";
+	echo '
+	<script> $(function() { '.$jscriptmp.' 
+		});</script>';
+
 }
 					
 

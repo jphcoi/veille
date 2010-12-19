@@ -250,7 +250,7 @@ echo "
 
 		$('#opener').click(function(e) {
 			if (!$('#dialog').dialog('isOpen')) 
-				$('#dialog').dialog('option','position', [$(this).position().left+25,2]).dialog('open');
+				$('#dialog').dialog('option','position', [$(this).position().left+25,25]).dialog('open');
 			else
 				$('#dialog').dialog('close');
 			return false;
@@ -260,7 +260,7 @@ echo "
 	
 echo "
 	<div id='dialog' title='Raccourcis clavier (après avoir cliqué sur la carte):' >
-	<table class=commentitems width=100% ><tr valign=top><td><table class=commentitems>
+	<table class=commentitems width=100%><tr valign=top><td><table class=commentitems>
 	<tr><td>
 	- <i>déplacement haut, bas, gauche droite:</i> flèches correspondantes</td></tr>
 	<tr><td>
