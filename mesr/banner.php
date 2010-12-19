@@ -18,7 +18,7 @@ if (isset($_GET['periode'])) {
 else $periodstr="";
 echo '<table class=tableitems style="font-variant:small-caps;" width="100%">
 	<tr>
-	<td><a href=phylo.php>Thématiques</a> -<a href=global.php'.$periodstr.'>cartes</a> - <a href=entree_clusters.php'.$periodstr.'>champs thématiques</a> - <a href=entree_sources.php'.$periodstr.'>sources</a> - <a href=entree_termes.php'.$periodstr.'>termes</a> </td><td style="text-align: right"><a href=commentaires.php>commentaires</a></td>
+	<td><a href=phylo.php>dynamiques thématiques</a> - <a href=global.php'.$periodstr.'>cartes</a> - <a href=entree_clusters.php'.$periodstr.'>champs thématiques</a> - <a href=entree_sources.php'.$periodstr.'>sources</a> - <a href=entree_termes.php'.$periodstr.'>termes</a> </td><td style="text-align: right"><a href=commentaires.php>commentaires</a></td>
 	</tr>
 	</table>';
 echo '</div>';
