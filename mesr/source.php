@@ -267,11 +267,11 @@ if ($nav=="sem"){
 	else {
 		echo '<table class=tableitems width=100% rules=groups>';
 		echo '<tr style="font-variant:small-caps; font-size:small; margin-top:2px; margin-bottom:-2px;">';
-		echo '<td>nom du champ</td>';
-		echo '<td width=3%></td>';
-		echo '<td>[id]</td>';
+		echo '<td>nom du champ auquel participe la source</td>';
+		echo '<td width=45pt></td>';
+		echo '<td>&uarr;/&darr;</td>';
 		echo '<td width=5%></td>';
-		echo '<td>numéros des billets (cf. onglet "billets")</td>';
+		echo '<td>numéros des billets<br>(voir aussi l\'onglet "billets")</td>';
 		echo '</tr>';
 
 	foreach ($periode_a_faire as $pp) {
