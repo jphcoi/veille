@@ -145,7 +145,7 @@ function macrobranch_label($macrobranch_terms,$depth){
             $query="select forme_principale FROM concepts WHERE id=$term_id";
             $resultat=mysql_query($query) or die ("<b>Requête non exécutée (Récupération de la forme principale)</b>.");
             while ($ligne=mysql_fetch_array($resultat)) {
-                $label=$label.$ligne[forme_principale].',';
+                $label=$label.$ligne[forme_principale].', ';
             }
         }else{
             $exit=1;

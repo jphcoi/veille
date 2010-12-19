@@ -8,6 +8,55 @@ $skipper="<td width=2.5%></td>";
 $date_depart = $univ_time_begin;
 setlocale (LC_TIME, 'fr_FR','fra');
 
+function error(){
+$query="select * FROM partifgdfgtions WHERE nb_period_covered >= $phylo_min_nb_periods_covered";
+$resultat=mysql_query($query) or die ("<b>Requête non exécutée (récupération des principales thématiques)</b>.");
+
+}
+
+function similarity($string1,$string2){
+// calcule le nombre de Ngram communs de strings formées de ngrammes séparés par des virgules
+$str1=array();
+$str2=array();
+$string1=str_replace("dpopostrophe","'",$string1);
+$string2=str_replace("dpopostrophe","'",$string2);
+
+
+$string1=explode(',',$string1);
+while (count($string1)>0){
+    $a=trim(array_pop($string1));
+    if (strlen($a)<5){
+        array_push($str1,$a);
+    }else{
+        $b=explode(',',str_replace(" ",",",$a));
+        while (count($b)>0){
+            $c=trim(array_pop($b));
+            if (strlen($c)>4){
+                array_push($str1,$c);
+            }
+        }
+    }
+}
+$string2=explode(',',$string2);
+while (count($string2)>0){
+    $a=trim(array_pop($string2));
+    if (strlen($a)<5){
+        array_push($str2,$a);
+    }else{
+        $b=explode(',',str_replace(" ",",",$a));
+        while (count($b)>0){
+            $c=trim(array_pop($b));
+            if (strlen($c)>4){
+                array_push($str2,$c);
+            }
+        }
+    }
+}
+
+return count(array_intersect($str1, $str2));
+}
+
+
 function remove_popo($st)
 {
 	return str_replace('popostrophe ',"’",$st);
@@ -32,6 +81,46 @@ function concept_to_clusters($concept, $periode,$clause) {
 	$res = mysql_query($sql);
 	$check2 = mysql_num_rows($res);
 	return $res;
+}
+
+function get_keys_with_highest_values($tableau,$depth){
+// fonction qui donne les clés avec les plus fortes valeurs jusqu'à une profondeur $depth
+// retourne un array avec les clés et les valeurs
+
+    $most_frequent=array();
+    uasort($tableau, 'compare');
+    $label='';
+    $unique_occurrences=array_unique($tableau);
+
+    // on cherche la $depth ième plus grande valeur d'occurences
+    $min_occ=100000000; // chiffre arbitraire
+    $exit=1;
+    while (($exit<=$depth)&&($line = current($unique_occurrences))){
+         $min_occ=min($min_occ,$line);
+         $exit++;
+         next($unique_occurrences);
+    }
+
+    // on récupère les labels correspondants
+    $exit=0;
+    while (($exit==0)&&($key_occ = current($tableau))){
+        if ($key_occ>=$min_occ){
+            $key=key($tableau);
+            $most_frequent[$key]=$key_occ;
+        }else{
+            $exit=1;
+        }
+        next($tableau);
+    };
+    return $most_frequent;
+}
+
+/// fonction de comparaison servant ci-dessus
+function compare($a, $b) {
+    if ($a == $b) {
+        return 0;
+    }
+    return ($a > $b) ? -1 : 1;
 }
 
 
