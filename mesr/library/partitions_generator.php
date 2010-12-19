@@ -174,7 +174,7 @@ function fill_partition_table($macrobranch){
 
   //$query="select * FROM cxbhjer WHERE id_cluster_univ=$target_id_univ";
   //$resultat=mysql_query($query) or die ("<b>Requête non exécutée (Récupération des infos du cluster cible pour la macrobranche)</b>.");
-
+ //error();
 
 }
 ?>
