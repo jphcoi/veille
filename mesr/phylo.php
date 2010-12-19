@@ -4,7 +4,7 @@ include("library/fonctions_php.php");
 
 
 $depth=2;// rang dans le nombre d'occurences des termes acceptés pour labellisation des branches
-$min_similarity=0.01;// seuil de similarité pour clusteriser
+$min_similarity=0.005;// seuil de similarité pour clusteriser
 
 
 //connexion a la base de donnees
@@ -263,13 +263,13 @@ $ngram_ids_array=array();
         $ngram=mysql_fetch_array ( $resultat) ;
         $ngram=$ngram[forme_principale];
 
-        $sql='select id_cluster_univ FROM cluster WHERE concept='.$ngram_id;
-        $resultat=mysql_query($sql) or die ("<b>Requête non exécutée (récupération des occurrences dans le corpus)</b>.");
+        $sql = 'SELECT occurrences_in_clusters from concepts WHERE id='.$ngram_id;
+	$resultat=mysql_query($sql) or die ("<b>Requête non exécutée (récupération des occurrences dans le corpus)</b>.");
         $nb_occ=0;
         while ($ligne=mysql_fetch_array($resultat)) {
-            $nb_occ++;
+            $nb_occ=$ligne[occurrences_in_clusters];
         }
-        $ngram_array[$ngram]=$nb_occ;
+        $ngram_array[$ngram]=$nb_occ;       
     }
     return get_keys_with_highest_values($ngram_array,$depth);
 }
