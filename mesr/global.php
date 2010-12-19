@@ -259,25 +259,19 @@ echo "
 	</script>";
 	
 echo "
-<span class='demo'>
-
-<div id='dialog' title='Raccourcis clavier (après avoir cliqué sur la carte):' >
-<table class=commentitems width=100% ><tr valign=top><td><table class=commentitems>
-<tr><td>
-- <i>déplacement haut, bas, gauche droite:</i> flèches correspondantes</td></tr>
-<tr><td>
-- <i>agrandir/rétrécir: </i><b style='font-variant:small-caps;'>ctrl</b> (ou <b style='font-variant:small-caps;'>command</b>) + flèches haut/bas</td></tr>
-</table></td>
-
-<td align=right>
-<i>- Cliquer sur un noeud pour aller sur la page du cluster correspondant.<br/>
-<i><b>- Cliquez sur <img src='images/fullscreen.jpg' width='25' align='absmiddle' height='23'> pour une vue plein écran</b>
-</td></table>
-</div>
-
-<img src='images/question-mark.gif' id='opener'>
-
-</span><!-- End demo -->
+	<div id='dialog' title='Raccourcis clavier (après avoir cliqué sur la carte):' >
+	<table class=commentitems width=100% ><tr valign=top><td><table class=commentitems>
+	<tr><td>
+	- <i>déplacement haut, bas, gauche droite:</i> flèches correspondantes</td></tr>
+	<tr><td>
+	- <i>agrandir/rétrécir: </i><b style='font-variant:small-caps;'>ctrl</b> (ou <b style='font-variant:small-caps;'>command</b>) + flèches haut/bas</td></tr>
+	</table></td>
+	<td align=right>
+	<i>- Cliquer sur un noeud pour aller sur la page du cluster correspondant.<br/>
+	<i><b>- Cliquez sur <img src='images/fullscreen.jpg' width='25' align='absmiddle' height='23'> pour une vue plein écran</b>
+	</td></table>
+	</div>
+	<img src='images/question-mark.gif' id='opener'>
 ";
 
 
