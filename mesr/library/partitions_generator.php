@@ -93,7 +93,9 @@ while (count($current_partition)>0){
    $macrobranch['nb_terms']=count($macrobranch_terms);
    $macrobranch['terms']=implode("_", array_keys($macrobranch_terms));
    $macrobranch['terms_occ']=implode("_", $macrobranch_terms);
-   $macrobranch['label']=macrobranch_label($macrobranch_terms,$depth);
+   $label_infos=macrobranch_label($macrobranch_terms,$depth);
+   $macrobranch['label']=$label_infos['label'];
+   $macrobranch['label_ids']=implode('_',$label_infos['label_ids']);
    $macrobranch['last_period_string']=($macrobranch['last_period']-$dT).' '.$macrobranch['last_period'];
   
 
@@ -126,6 +128,7 @@ function macrobranch_label($macrobranch_terms,$depth){
 
     uasort($macrobranch_terms, 'cmp');
     $label='';
+    $id_array=array();
     $unique_occurrences=array_unique($macrobranch_terms);
     
     // on cherche la $depth ième plus grande valeur d'occurences
@@ -142,6 +145,7 @@ function macrobranch_label($macrobranch_terms,$depth){
     while (($exit==0)&&($term_occ = current($macrobranch_terms))){
         if ($term_occ>=$min_occ){
             $term_id=key($macrobranch_terms);
+            array_push($id_array,$term_id);
             $query="select forme_principale FROM concepts WHERE id=$term_id";
             $resultat=mysql_query($query) or die ("<b>Requête non exécutée (Récupération de la forme principale)</b>.");
             while ($ligne=mysql_fetch_array($resultat)) {
@@ -154,7 +158,10 @@ function macrobranch_label($macrobranch_terms,$depth){
         $i++;
     };
     $label=substr($label, 0, -1);
-    return $label;
+    $output['label']=$label;
+    $output['label_ids']=$id_array;
+
+    return $output;
 }
 
 
@@ -166,7 +173,7 @@ function cmp($a, $b) {
 }
 
 function fill_partition_table($macrobranch){
-    $sql="INSERT INTO partitions (id_partition,label,first_period,last_period,last_period_string,nb_period_covered,nb_fields,terms,nb_terms,terms_occ) VALUES ($macrobranch[id_partition],'$macrobranch[label]',$macrobranch[first_period],$macrobranch[last_period],'$macrobranch[last_period_string]',$macrobranch[nb_period_covered],$macrobranch[nb_fields],'$macrobranch[terms]',$macrobranch[nb_terms],'$macrobranch[terms_occ]') ON DUPLICATE KEY UPDATE label='$macrobranch[label]',first_period=$macrobranch[first_period],last_period=$macrobranch[last_period], last_period_string='$macrobranch[last_period_string]',nb_period_covered=$macrobranch[nb_period_covered],nb_fields=$macrobranch[nb_fields],terms='$macrobranch[terms]',nb_terms=$macrobranch[nb_terms],terms_occ='$macrobranch[terms_occ]';";
+    $sql="INSERT INTO partitions (id_partition,label,label_ids,first_period,last_period,last_period_string,nb_period_covered,nb_fields,terms,nb_terms,terms_occ) VALUES ($macrobranch[id_partition],'$macrobranch[label]','$macrobranch[label_ids]',$macrobranch[first_period],$macrobranch[last_period],'$macrobranch[last_period_string]',$macrobranch[nb_period_covered],$macrobranch[nb_fields],'$macrobranch[terms]',$macrobranch[nb_terms],'$macrobranch[terms_occ]') ON DUPLICATE KEY UPDATE label='$macrobranch[label]',label_ids='$macrobranch[label_ids]',first_period=$macrobranch[first_period],last_period=$macrobranch[last_period], last_period_string='$macrobranch[last_period_string]',nb_period_covered=$macrobranch[nb_period_covered],nb_fields=$macrobranch[nb_fields],terms='$macrobranch[terms]',nb_terms=$macrobranch[nb_terms],terms_occ='$macrobranch[terms_occ]';";
   echo $macrobranch[last_period_string].'<br/>';
   echo $sql.'<br/>';
     mysql_query($sql) or die ("<b>Insert of partition data failed</b>.");;

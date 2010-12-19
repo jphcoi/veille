@@ -107,6 +107,7 @@ while ($ligne=mysql_fetch_array($mysql_branch_list)) {
             $lab=substr($lab,0,-1);
        }
        $infos['label']=$lab;
+       $infos['label_ids']=$ligne[label_ids];
        $infos['branch_last_period_cluster_id']=$cluster_ligne[id_cluster];
        //array_push($branch_last_period,str_replace(' ','-',$last_period_for_branch));
        //array_push($label_list,$branch.$ligne[label]);
@@ -140,7 +141,7 @@ for ($i=0;$i<count($grouped_indexes);$i++){
         $group_title=substr($group_title, 0, -1);
         $branch_string=$branch_string.'<b>'.$group_title.' :</b>'.'<br/><ul>';
         while ((count($index_grouped)>0)&&($index = current($index_grouped))){
-            $branch='<li><i><a href="cluster.php?id_cluster='.$branch_list[$index]['branch_last_period_cluster_id'].'&periode='.str_replace(' ','-',$branch_list[$index]['branch_last_period'][$index]).'">';
+            $branch='<li><i><a href="cluster.php?id_cluster='.$branch_list[$index]['branch_last_period_cluster_id'].'&periode='.str_replace(' ','-',$branch_list[$index]['branch_last_period']).'">';
             $branch=$branch.ucfirst($branch_list[$index]['label']).'</a></i><br/>';
             $branch_string=$branch_string.$branch;
 
@@ -169,8 +170,8 @@ return remove_popo($branch_string);
 function cluster_branches($branch_list,$depth,$min_similarity){
 // $branch_list est un array contenant toutes les infos des branches
 /// retour un array contenant
-// ['grouped_indexes']: un array de groupes d'indices mentionnant les labels similaires
-// ['Ngram_arrays']: un array contenant pour chaque groupe d'indices, un array pour labelliser le groupe dont les clés sont des NGram pris jusqu'à une profondeur $depth et les valeurs leur nombre d'occurrences dans les labels
+// ['grouped_indexes']: un array de groupes d'indices mentionnant les branches associées
+// ['Ngram_arrays']: un array contenant pour chaque groupe d'indices, un array pour labelliser le groupe dont les clés sont des NGram pris jusqu'à une profondeur $depth et les valeurs leur nombre d'occurrences dans le corpus
 // calcul des similarités entre labels de branches
 $label_rows_groups=array();
 $label_groups=array();
@@ -214,13 +215,17 @@ while (count($label_rows_remaining_to_process)>0){
          }
     }
     array_push($label_rows_groups,$target_label_raw);
-    // on reconstruit l'array des labels de branche
-    $target_branches_label=array();
+    // on reconstruit l'array des labels_id de branche
+    $target_branches_label_ids=array();
     for ($i=0;$i<count($target_branches);$i++){
-        array_push($target_branches_label,$target_branches[$i]['label']);       
+        array_push($target_branches_label_ids,$target_branches[$i]['label_ids']);
     }
-   $a=label_label_group($target_branches_label,$depth);
-   array_push($label_groups,label_label_group($target_branches_label,$depth));
+   if (count($target_branches_label_ids)>1){
+   $a=groups_labels($target_branches_label_ids,$depth);
+
+}
+   
+   array_push($label_groups,groups_labels($target_branches_label_ids,$depth));
 }
 $resultat=array();
 $resultat['grouped_indexes']=$label_rows_groups;
@@ -239,36 +244,37 @@ return $resultat;
 ////////////////
 
 
-function label_label_group($target_labels,$depth){
-// calcul les Ngrammes les plus fréquent d'un ensemble de labels formés de Ngrammes
-$ngram_array=array();
-if (count($target_labels)>1){
-    while (count($target_labels)>0 ){
-        $ngrams=explode(',',array_pop($target_labels));
-         while (count($ngrams)>0 ){
-                $ngram=array_pop($ngrams);
-                if ($ngram_array[trim($ngram)]==null){
-                    $ngram_array[trim($ngram)]=1;
-                }else{
-                    $ngram_array[trim($ngram)]++;
-                }
+function groups_labels($target_labels_ids,$depth){
+// calcul les $depth Ngrammes les plus fréquents dans le corpus parmis d'un ensemble de labels_ids formés de Ngrammes
+$ngram_ids_array=array();
+    //creation du tableau contenant tous les ids de ,grammes intervenant dans un label
+    while (count($target_labels_ids)>0 ){
+        $ngrams_ids=explode('_',array_pop($target_labels_ids));
+        $ngram_ids_array=array_merge($ngram_ids_array,$ngrams_ids);
+    }
+     $ngram_ids_array=array_unique($ngram_ids_array);
+
+    // calcul des formes principales et des occurrences associées dans le corpus
+    $ngram_array=array();
+    while (count($ngram_ids_array)>0){
+        $ngram_id=array_pop($ngram_ids_array);
+        $sql = 'SELECT forme_principale from concepts WHERE id='.$ngram_id;
+	$resultat = mysql_query($sql);
+        $ngram=mysql_fetch_array ( $resultat) ;
+        $ngram=$ngram[forme_principale];
+
+        $sql='select id_cluster_univ FROM cluster WHERE concept='.$ngram_id;
+        $resultat=mysql_query($sql) or die ("<b>Requête non exécutée (récupération des occurrences dans le corpus)</b>.");
+        $nb_occ=0;
+        while ($ligne=mysql_fetch_array($resultat)) {
+            $nb_occ++;
         }
+        $ngram_array[$ngram]=$nb_occ;
     }
     return get_keys_with_highest_values($ngram_array,$depth);
-}else{
-    $ngrams=explode(',',array_pop($target_labels));
-
-    while (count($ngrams)>0 ){
-                $ng=array_pop($ngrams);
-                if ($ng!=null){
-                    $result[$ng]=1;
-                }
-    }
-    return $result;
-}
 }
 
-    function branch_similarity($branch1,$branch2){
+function branch_similarity($branch1,$branch2){
 // calcul une similarité entre branches en fonctions des termes quelles contiennent et de leurs occurrences
 // utilise le cos des vecteurs des occ de termes normalisées
 $branch1_terms=explode('_',$branch1['terms']);
@@ -313,6 +319,59 @@ return ($similarity*$similarity/$branch1_squares/$branch2_squares);
 /////////////////////////////////
 //////// veilles fonctions //////
 /////////////////////////////////
+function label_label_group($target_labels,$depth){
+// calcul les Ngrammes les plus fréquent d'un ensemble de labels formés de Ngrammes
+echo 'entering label_label_group<br/>';
+echo '$target_labels : <br/>';
+    print_r($target_labels);
+    echo '<br/>';
+$ngram_array=array();
+echo 'nb labels:'.count($target_labels);
+if (count($target_labels)>1){
+    while (count($target_labels)>0 ){
+        $ngrams=explode(',',array_pop($target_labels));
+        echo 'Incorporating<br/>';
+        print_r($ngrams);
+        echo '<br/>';
+         while (count($ngrams)>0 ){
+                $ngram=array_pop($ngrams);
+                echo 'added:'.$ngram.'<br/>';
+                if ($ngram_array[trim($ngram)]==null){
+                    $ngram_array[trim($ngram)]=1;
+                }else{
+                    echo 'incrementing: '.trim($ngram).'<br/>';
+                    $ngram_array[trim($ngram)]=$ngram_array[trim($ngram)]+1;
+                }
+        }
+    echo '$ngram_array : <br/>';
+    print_r($ngram_array);
+    echo '<br/>';
+    }
+
+echo 'Several Targets; ngram array<br/>';
+print_r($ngram_array);
+echo '<br/>';
+
+echo 'label<br/>';
+print_r(get_keys_with_highest_values($ngram_array,$depth));
+echo '<br/>';
+
+    return get_keys_with_highest_values($ngram_array,$depth);
+}else{
+    $ngrams=explode(',',array_pop($target_labels));
+    while (count($ngrams)>0 ){
+                $ng=array_pop($ngrams);
+                if ($ng!=null){
+                    $result[$ng]=1;
+                }
+    }
+    echo 'legend:'.'<br/';
+    print_r($result);
+    echo '<br/';
+    return $result;
+}
+}
+
 
 function group_list($label_list,$depth,$min_similarity){
 // $label_list est un array de labels composés de ngrammes séparés par des virgules
@@ -369,7 +428,6 @@ $resultat['grouped_indexes']=$label_rows_groups;
 $resultat['Ngram_arrays']=$label_groups;
 return $resultat;
 }
-
 
 //on ferme l'acces à la base de donnees
 mysql_close($ink);

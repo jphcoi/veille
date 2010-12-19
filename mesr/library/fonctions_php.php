@@ -239,7 +239,6 @@ function adjust_date_jours($s){
 
 
 //renvoie la liste pondérée de concepts associée à un ensemble d'ids de clusters
-// David : Je ne vois pas le pondéré ...
 function export_concepts_pondere($ids_cluster,$periode){
 	$concept_list=array();
 	for( $i = 0 ; $i < count($ids_cluster) ; $i++ )
@@ -296,6 +295,15 @@ function convert_forme_principale($concepts){
 	}
  	return $concept_arr;
 }
+
+//renvoie l'id associé à une forme principale
+function forme_principale2id($forme_principale){
+        $query="SELECT id FROM concepts WHERE forme_principale=$forme_principale";
+        $resultat=mysql_query($query) or die ("<b>Requête non exécutée (récupération des l'id associé à une FP)</b>.");	
+ 	return mysql_fetch_array($resultat);
+}
+
+
 
 //renvoie les formes principales associées à une id avec des lemmes
 function convert_forme_principale_id($concepts){
