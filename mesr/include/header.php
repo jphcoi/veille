@@ -1,15 +1,16 @@
 <?
 echo '<html>';
 echo '<head>';
-if (!isset($titleheader)) $titleheader="v0.2";
+if (!isset($titleheader)) $titleheader="v1.2";
 if (isset($jsprotovis)) $jsheader='<script type="text/javascript" src="protovis-r3.2.js"></script>'; else $jsheader="";
 //if (isset($jsjquery)) $jsheader2='<script type="text/javascript" src="js/jquery/jquery-1.4.4.js"></script>'; else $jsheader2="";
-$jsheader2='<script charset="utf-8" type="text/javascript" src="js/jquery/jquery-1.4.2.min.js" language="javascript"></script><script charset="utf-8" type="text/javascript" src="js/jquery-ui/jquery-ui-1.8.min.js" language="javascript"></script>';
+$jsheader2='
+	<script charset="utf-8" type="text/javascript" src="js/jquery/jquery-1.4.2.min.js" language="javascript"></script>
+	<script charset="utf-8" type="text/javascript" src="js/jquery-ui/jquery-ui-1.8.min.js" language="javascript"></script>';
 
 echo "<title>".$titleheader." [MESR/VD]</title>";
 echo ' '.$jsheader;
 echo $jsheader2;
-
 
 echo '<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">';
 
@@ -18,7 +19,6 @@ echo '<link rel="stylesheet" title="Default" type="text/css" href="style.css" me
 echo '<link rel="stylesheet" type="text/css" href="css/custom-theme/jquery-ui-1.7.3.custom.css"/>';
 
 echo '<meta name="author" content="CCR"/>';
-
 
 echo '</head>';
 

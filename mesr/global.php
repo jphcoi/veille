@@ -36,12 +36,9 @@ if(isset( $_GET['id_source']))
 //*******************************************
 
 
-
-
 function get_concepts_in($id_proj,$periode)
 {
 	$sql="select id_cluster FROM cluster WHERE concept=".$id_proj." AND periode=\"$periode\"";
-//	echo $sql;
 	$resultat=mysql_query($sql) or die ("Requite non executée.");
 	while ($ligne=mysql_fetch_array($resultat)) $liste_clusters[] = $ligne['id_cluster'];
 	return $liste_clusters;
@@ -49,102 +46,86 @@ function get_concepts_in($id_proj,$periode)
 
 function get_sources_in($id_proj,$periode)
 {
-	
-
-	
-	
 	$sql="select cluster FROM biparti WHERE (id_auteur LIKE "."'%, ".$id_proj.",%' OR id_auteur LIKE "."'%[".$id_proj.",%' OR id_auteur LIKE "."'%[".$id_proj."]%' OR id_auteur LIKE "."'%, ".$id_proj."]%')  AND periode=\"$periode\" and overlap_size/cluster_size>0.15 GROUP by cluster ";
 	$resultat=mysql_query($sql) or die ("Requite non executée.");
 	$liste_clusters=array();
 	while ($ligne=mysql_fetch_array($resultat)) $liste_clusters[] = $ligne['cluster'];
 	return $liste_clusters;
-	}
-
+}
 
 
 function transforme_gexf($mapgexf,$projection,$id_proj,$periode)
 {
-//	echo $mapgexf;
 	$texte='';
-	if ($projection == "concept")
-	{
-		$liste_clusters=get_concepts_in($id_proj,$periode);
-	}
-	elseif($projection == "source")
-	{
-		$liste_clusters=get_sources_in($id_proj,$periode);
-			
-	}
+	if ($projection == "concept") { $liste_clusters=get_concepts_in($id_proj,$periode); }
+	elseif($projection == "source") { $liste_clusters=get_sources_in($id_proj,$periode); }
+
+	$fichier=$mapgexf;
+	$tabfich=file($fichier); 		
 	
-		
-//		$fichier= 'http://maps.sciencemapping.com'.$mapgexf;
-		$fichier=$mapgexf;
-		$tabfich=file($fichier); 		
-		
-		if (is_dir("TMP") == False)
-		{mkdir("TMP");}
-		if (is_dir("TMP/".$_COOKIE['ID_my_site']) == False)
-		{mkdir("TMP/".$_COOKIE['ID_my_site']);}
-		$tmpfname = tempnam("TMP", "TMP-cartes_");
-		unlink($tmpfname);
-		$tmpfnamev=explode('/',$tmpfname);
-		$tmpfname='TMP'.'/'.$_COOKIE['ID_my_site'].'/'.$tmpfnamev[count($tmpfnamev)-1].'.gexf';
-		$temp=$tmpfname;
-		
-		$sortie=$temp;
-		//echo $sortie;
-		$fichier_out = fopen($sortie,'w');
-		for( $i = 0 ; $i < count($tabfich) ; $i++ )
+	if (is_dir("TMP") == False)
+	{mkdir("TMP");}
+	if (is_dir("TMP/".$_COOKIE['ID_my_site']) == False)
+	{mkdir("TMP/".$_COOKIE['ID_my_site']);}
+	$tmpfname = tempnam("TMP", "TMP-cartes_");
+	unlink($tmpfname);
+	$tmpfnamev=explode('/',$tmpfname);
+	$tmpfname='TMP'.'/'.$_COOKIE['ID_my_site'].'/'.$tmpfnamev[count($tmpfnamev)-1].'.gexf';
+	$temp=$tmpfname;
+	
+	$sortie=$temp;
+	//echo $sortie;
+	$fichier_out = fopen($sortie,'w');
+	for( $i = 0 ; $i < count($tabfich) ; $i++ )
+	{
+		if(stristr($tabfich[$i], '</gexf>')=== FALSE)
+		{}
+		else
 		{
-			if(stristr($tabfich[$i], '</gexf>')=== FALSE)
-			{}
-			else
-			{
-				$texte = $texte.$tabfich[$i];
-				fputs($fichier_out,$texte);
-			}
-			
-			if(stristr($tabfich[$i], 'node id=') === FALSE) 
-				{
-					
-					if(stristr($tabfich[$i], 'viz:color') === FALSE) 
-						{
-							$texte = $texte.$tabfich[$i];
-						}
-					else
-						{		
-							$texte  = $texte."<viz:color b=\"250\" g=\"250\" r=\"250\"/>\n";
-						}
-				}
-			else
-			{	
-				$texte =  $texte.$tabfich[$i];
-				if ($sauf >0)
-				{
-					
-					$texte=str_replace("<viz:color b=\"250\" g=\"250\" r=\"250\"","<viz:color b=\"50\" g=\"50\" r=\"200\"",$texte);
-					}
-				fputs($fichier_out,$texte);
-				$texte='';
-			}
-			  if(stristr($tabfich[$i], 'cluster.php') === FALSE) 
-				{}
-				else{
-					$ligne =  $tabfich[$i];					
-					$substr = split('id_cluster=',$ligne);
-					$id_clu = split('&',$substr[1]);
-					$sauf=0;
-					if (count($liste_clusters)>0){
-					if (in_array($id_clu[0],$liste_clusters))
-					{
-						$sauf =1;
-					}}
-				
-				}		
-			
+			$texte = $texte.$tabfich[$i];
+			fputs($fichier_out,$texte);
 		}
-		fclose($fichier_out);
-	
+		
+		if(stristr($tabfich[$i], 'node id=') === FALSE) 
+			{
+				
+				if(stristr($tabfich[$i], 'viz:color') === FALSE) 
+					{
+						$texte = $texte.$tabfich[$i];
+					}
+				else
+					{		
+						$texte  = $texte."<viz:color b=\"250\" g=\"250\" r=\"250\"/>\n";
+					}
+			}
+		else
+		{	
+			$texte =  $texte.$tabfich[$i];
+			if ($sauf >0)
+			{
+				
+				$texte=str_replace("<viz:color b=\"250\" g=\"250\" r=\"250\"","<viz:color b=\"50\" g=\"50\" r=\"200\"",$texte);
+				}
+			fputs($fichier_out,$texte);
+			$texte='';
+		}
+		  if(stristr($tabfich[$i], 'cluster.php') === FALSE) 
+			{}
+			else{
+				$ligne =  $tabfich[$i];					
+				$substr = split('id_cluster=',$ligne);
+				$id_clu = split('&',$substr[1]);
+				$sauf=0;
+				if (count($liste_clusters)>0){
+				if (in_array($id_clu[0],$liste_clusters))
+				{
+					$sauf =1;
+				}}
+			
+			}		
+	}
+	fclose($fichier_out);
+
 	$mapgexf_projete = $sortie;
 	return $mapgexf_projete;
 }
@@ -179,35 +160,7 @@ include("banner.php");
 
 
 
-echo "
-	<script>
-	// increase the default animation speed to exaggerate the effect
-	$.fx.speeds._default = 1000;
-	$(function() {
-		$( '#dialog' ).dialog({
-			autoOpen: false,
-			show: 'blind',
-                        stack: true,
-                        position:['left','top'],
-                        width:800,
-                        closeOnEscape:true,
-                        dialogClass: 'alert',
-			hide: 'explode'
-		});
 
-		$( '#opener' ).click(function() {
-			$( '#dialog' ).dialog( 'open' );
-			return false;
-		});
-	});
-	</script>";
-
-
-//array();
-//for ($i=0;$i<count($periode_brute);$i++) {
-//	$periode=arrange_periode($periode_brute[$i]);
-//	if (end($list_of_periods)!=$periode) $list_of_periods[]=$periode;
-//}
 
 //*******************************************
 //bloc choix du terme
@@ -289,11 +242,33 @@ if ($projection=="concept") echo 'projetée sur le terme "<i>'.$dico_termes[$id_
 if ($projection=="source") echo 'projetée sur la source "<i>'.$dico_auteurs[$id_source].'</i>"';
 
 echo "
+	<script>
+	// increase the default animation speed to exaggerate the effect
+	$.fx.speeds._default = 1000;
+	$(function() {
+		$('#dialog').dialog({
+			autoOpen: false,
+            //stack: true,
+            position:'center',
+            width:600,
+            closeOnEscape:true
+		});
+
+		$( '#opener' ).click(function(e) {
+			x=$(this).pageX;
+			y=$(this).pageY;
+			$('#dialog').dialog('option','position', [x,y]);
+			$('#dialog').dialog('open');
+			return false;
+		});
+	});
+	</script>";
+	
+echo "
 <span class='demo'>
 
 <div id='dialog' title='Raccourcis clavier (après avoir cliqué sur la carte):' >
 <table class=commentitems width=100% ><tr valign=top><td><table class=commentitems>
-<tr></tr>
 <tr><td>
 - <i>déplacement haut, bas, gauche droite:</i> flèches correspondantes</td></tr>
 <tr><td>
@@ -302,11 +277,11 @@ echo "
 
 <td align=right>
 <i>- Cliquer sur un noeud pour aller sur la page du cluster correspondant.<br/>
-<i><b>-Cliquez sur <img src='images/fullscreen.jpg' width='25' align='absmiddle' height='23'> pour une vue plein écran</b>
+<i><b>- Cliquez sur <img src='images/fullscreen.jpg' width='25' align='absmiddle' height='23'> pour une vue plein écran</b>
 </td></table>
 </div>
 
-<button id='opener'>?</button>
+<img src='images/question-mark.gif' id='opener'>
 
 </span><!-- End demo -->
 ";
