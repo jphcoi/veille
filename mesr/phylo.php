@@ -46,11 +46,11 @@ echo "
 
 	<ul>
 <table width=100% class=tableitems>
-<tr valign=top></td><td><h2 class=subtitle>dynamiques thématiques / phylogénie</h2></tr>
+<tr valign=top></td><td><h2 class=subtitle>Fils thématiques (branches phylogénétiques)</h2></tr>
 </table >
-		<li><a href='#tabs-1'>Principaux thèmes d'actualité</a></li>
-		<li><a href='#tabs-2'>Thèmes récents</a></li>
-		<li><a href='#tabs-3'>Thèmes passés</a></li>
+		<li><a href='#tabs-1'>Actifs</a></li>
+		<li><a href='#tabs-2'>Potentiellements émergents </a></li>
+		<li><a href='#tabs-3'>En suspens</a></li>
 	</ul>
 	<div id='tabs-1'>
 ";
@@ -58,7 +58,7 @@ echo "
 $query="select * FROM partitions WHERE nb_period_covered >= $phylo_min_nb_periods_covered AND last_period=$last_period";
 $resultat=mysql_query($query) or die ("<b>Requête non exécutée (récupération des principales thématiques)</b>.");
 $branch_list=branch_list_string($resultat,$depth,$min_similarity);
-        echo "<h3>Principaux thèmes d'actualité (couvrant au moins 4 périodes)</h3>";
+        echo "<h3>Fils thématiques actifs <span style='font-size: x-small;'> (couvrant au moins 4 périodes) </span></h3>";
 	echo $branch_list;
 echo "
 	</div>
@@ -66,7 +66,7 @@ echo "
             $query="select * FROM partitions WHERE nb_period_covered > 1 AND nb_period_covered < 4 AND  last_period=$last_period";
             $resultat=mysql_query($query) or die ("<b>Requête non exécutée (récupération des principales thématiques)</b>.");
             $branch_list=branch_list_string($resultat,$depth,$min_similarity);
-            echo "<h3>Thématiques potentiellement émergentes (couvrant 2 ou 3 périodes)</h3>";
+            echo "<h3>Thématiques potentiellement émergentes <span style='font-size: x-small;'> (couvrant 2 ou 3 périodes)</span></h3>";
             echo $branch_list;
 
 echo "
@@ -75,7 +75,7 @@ echo "
 		$query="select * FROM partitions WHERE nb_period_covered >= $phylo_min_nb_periods_covered AND last_period<$last_period";
 $resultat=mysql_query($query) or die ("<b>Requête non exécutée (récupération des principales thématiques)</b>.");
 $branch_list=branch_list_string($resultat,$depth,$min_similarity);
-        echo "<h3>Thématiques passées (couvrant au moins 4 périodes)</h3>";
+        echo "<h3>Fils thématiques passés <span style='font-size: x-small;'> (couvrant au moins 4 périodes)</span></h3>";
 	echo $branch_list;
 
 echo "       	</div>
