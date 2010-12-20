@@ -21,14 +21,17 @@ include("banner.php");
 $phylo_min_nb_periods_covered=4;
 $phylo_recent_min_nb_periods_covered=2;
 
-echo "
-<script>
-	$(function() {
-		$( '#tabs' ).tabs();
-                   event: 'mouseover'
-	});
-	</script>
-";
+//echo "
+//<script>
+//	$(function() {
+//		
+
+$jscriptmp="	$( '#tabs' ).tabs();
+                   event: 'mouseover'";
+//	});
+//	</script>
+//";
+
 /////////// On regarde quel est la dernière période afin de pouvoir afficher les thématiques actives
 $last_period_list=array();
 $resultat=mysql_query("select last_period FROM partitions GROUP BY last_period") or die ("<b>Requête non exécutée (récupération des principales thématiques)</b>.");
@@ -46,7 +49,22 @@ echo "
 
 	<ul>
 <table width=100% class=tableitems>
-<tr valign=top></td><td><h2 class=subtitle>Fils thématiques (branches phylogénétiques)";
+<tr valign=top></td><td><h2 class=subtitle>fils thématiques (branches phylogénétiques)";
+
+$jscriptmp.=display_helper('Fils thématiques','Les fils thématiques sont des ensembles de champs thématiques sur des sujets similaires répartis sur plusieurs périodes. Ils sont classés ici en trois catégories:
+	<ul style="font-size:small;"><li>
+    	"<b style="font-variant:small-caps;">Actifs</b>": Fils thématiques couvrant au moins quatre périodes et qui sont toujours actifs à la dernière période.
+	    </li>
+    	<li>
+	    "<b style="font-variant:small-caps;">Potentiellement émergents </b>":
+	    Fils thématiques couvrant au plus trois périodes dont la plus récente.
+    	</li>
+	    <li>
+	    <b style="font-variant:small-caps;">En suspens</b>:
+    	Fils thématiques couvrant au moins quatre périodes mais qui ne sont pas présents sur la dernière période. Cette rupture du fil thématique peut être temporaire, témoignant d\'une baisse d\'intérêt pour le sujet concerné, ou définitive.
+	    </li>
+		</ul>
+		',"helper");
 echo "</h2></tr>
 </table >
 		<li><a href='#tabs-1'>Actifs</a></li>
@@ -472,5 +490,7 @@ return $resultat;
 mysql_close($ink);
 
 echo '</div>';
+echo '
+	<script> $(function() { '.$jscriptmp.' });</script>';
 include("footer.php");
 ?>
