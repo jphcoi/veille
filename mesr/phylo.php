@@ -46,7 +46,7 @@ echo "
 
 	<ul>
 <table width=100% class=tableitems>
-<tr valign=top></td><td><h2 class=subtitle>Phylogénie</h2></tr>
+<tr valign=top></td><td><h2 class=subtitle>dynamiques thématiques / phylogénie</h2></tr>
 </table >
 		<li><a href='#tabs-1'>Principaux thèmes d'actualité</a></li>
 		<li><a href='#tabs-2'>Thèmes récents</a></li>
@@ -469,5 +469,7 @@ return $resultat;
 
 //on ferme l'acces à la base de donnees
 mysql_close($ink);
+
+echo '</div>';
 include("footer.php");
 ?>

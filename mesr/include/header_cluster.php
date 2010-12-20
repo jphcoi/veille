@@ -3,11 +3,13 @@ echo '<html>';
 echo '<head>';
 if (!isset($titleheader)) $titleheader="v0.2";
 if (isset($jsprotovis)) $jsheader='<script type="text/javascript" src="protovis-r3.2.js"></script>'; else $jsheader="";
-//if (isset($jsjquery)) $jsheader2='<script type="text/javascript" src="jquery-1.4.4.js"></script>'; else $jsheader2="";
-$jsheader2='<script type="text/javascript" src="jquery-1.4.4-min.js"></script>';
+//if (isset($jsjquery)) $jsheader2='<script type="text/javascript" src="js/jquery/jquery-1.4.4.js"></script>'; else $jsheader2="";
+$jsheader2='
+	<script charset="utf-8" type="text/javascript" src="js/jquery/jquery-1.4.2.min.js" language="javascript"></script>
+	<script charset="utf-8" type="text/javascript" src="js/jquery-ui/jquery-ui-1.8.min.js" language="javascript"></script>';
+
 echo "<title>".$titleheader." [MESR/VD]</title>";
-echo '
-'.$jsheader;
+echo ' '.$jsheader;
 echo $jsheader2;
 
 echo '<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">';
