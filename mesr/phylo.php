@@ -63,8 +63,10 @@ $branch_list=branch_list_string($resultat,$depth,$min_similarity);
 echo "
 	</div>
 	<div id='tabs-2'>";
+            $query="select * FROM partitions WHERE nb_period_covered > 1 AND nb_period_covered < 4 AND  last_period=$last_period";
+            $resultat=mysql_query($query) or die ("<b>Requête non exécutée (récupération des principales thématiques)</b>.");
             $branch_list=branch_list_string($resultat,$depth,$min_similarity);
-            echo "<h3>Thématiques récentes</h3>";
+            echo "<h3>Thématiques récentes (couvrant 2 ou trois périodes)</h3>";
             echo $branch_list;
 
 echo "
@@ -120,7 +122,6 @@ $nb_branches=count($branch_list);
 
 $grouped_labels=cluster_branches($branch_list,$depth,$min_similarity);
 
-// ICI
 //$grouped_labels=group_list($label_list,1,4);
 $grouped_indexes=$grouped_labels[grouped_indexes]; // groupes des index branches
 
@@ -138,13 +139,19 @@ for ($i=0;$i<count($grouped_indexes);$i++){
             $group_title=$group_title.key($Ngrams).', ';
             next($Ngrams);
         }
-        $group_title=substr($group_title, 0, -1);
+        $group_title=ucfirst(substr(trim($group_title), 0, -1));
         $branch_string=$branch_string.'<b>'.$group_title.' :</b>'.'<br/><ul>';
         while ((count($index_grouped)>0)&&($index = current($index_grouped))){
-            $branch='<li><i><a href="cluster.php?id_cluster='.$branch_list[$index]['branch_last_period_cluster_id'].'&periode='.str_replace(' ','-',$branch_list[$index]['branch_last_period']).'">';
-            $branch=$branch.ucfirst($branch_list[$index]['label']).'</a></i><br/>';
-            $branch_string=$branch_string.$branch;
+         $branch_id=$branch_list[$index]['id_partition'];
+         $sql='SELECT * from partitions WHERE id_partition='.$branch_id;
+         $resultat=mysql_query($sql) or die ("<b>Requête non exécutée (récupération des infos de partition)</b>.");
+         while ($ligne=mysql_fetch_array($resultat)) {
+            $dates='<span style="font-size: x-small;">('.$ligne[nb_fields].' champs / '.adjust_date_jours($ligne[first_period]).'-'.adjust_date_jours($ligne[last_period]).')</span>';
+         }
 
+            $branch='<li><i><a href="cluster.php?id_cluster='.$branch_list[$index]['branch_last_period_cluster_id'].'&periode='.str_replace(' ','-',$branch_list[$index]['branch_last_period']).'">';
+            $branch=$branch.ucfirst($branch_list[$index]['label']).'</a></i>  '.$dates.'<br/>';
+            $branch_string=$branch_string.$branch;
             next($index_grouped);
         }
         $branch_string=$branch_string.'</ul></p>';
@@ -156,9 +163,15 @@ for ($i=0;$i<count($grouped_indexes);$i++){
 
        //  echo $branch_list['branch_last_period'][$index_grouped[0]].'<br/>';
        //  echo $branch_list['label'][$index_grouped[0]].'<br/>';
-
+         $branch_id=$branch_list[$index_grouped[0]]['id_partition'];
+         $sql='SELECT * from partitions WHERE id_partition='.$branch_id;
+         $resultat=mysql_query($sql) or die ("<b>Requête non exécutée (récupération des infos de partition)</b>.");
+         while ($ligne=mysql_fetch_array($resultat)) {
+            $dates='<span style="font-size: x-small;">('.$ligne[nb_fields].' champs / '.adjust_date_jours($ligne[first_period]).'-'.adjust_date_jours($ligne[last_period]).')</span>';
+         }
+         
          $branch='<a href="cluster.php?id_cluster='.$branch_list[$index_grouped[0]]['branch_last_period_cluster_id'].'&periode='.str_replace(' ','-',$branch_list[$index_grouped[0]]['branch_last_period']).'">';
-         $branch=$branch.ucfirst($branch_list[$index_grouped[0]]['label']).'</a><br/>';
+         $branch=$branch.ucfirst($branch_list[$index_grouped[0]]['label']).'</a>  '.$dates.'<br/>';
          $branch_string=$branch_string.$branch;
     }
     $branch_string=$branch_string.'</ul>'.'<br/>';
@@ -227,6 +240,30 @@ while (count($label_rows_remaining_to_process)>0){
    
    array_push($label_groups,groups_labels($target_branches_label_ids,$depth));
 }
+
+/// on réordonne par nombre de sujets groupés
+$groups_sizes=array();
+
+for ($i=0;$i<count($label_rows_groups);$i++){    
+    array_push($groups_sizes,count($label_rows_groups[$i]));
+}
+
+uasort($groups_sizes, 'compare');
+$new_order=array_keys($groups_sizes);
+
+//
+$label_rows_groups_temp=array();
+for  ($i=0;$i<count($label_rows_groups);$i++){
+    array_push($label_rows_groups_temp,$label_rows_groups[$new_order[$i]]);
+}
+$label_rows_groups=$label_rows_groups_temp;
+//
+$label_groups_temp=array();
+for  ($i=0;$i<count($label_groups);$i++){
+    array_push($label_groups_temp,$label_groups[$new_order[$i]]);
+}
+$label_groups=$label_groups_temp;
+//
 $resultat=array();
 $resultat['grouped_indexes']=$label_rows_groups;
 //echo '<br/>';
@@ -277,8 +314,9 @@ $ngram_ids_array=array();
 function branch_similarity($branch1,$branch2){
 // calcul une similarité entre branches en fonctions des termes quelles contiennent et de leurs occurrences
 // utilise le cos des vecteurs des occ de termes normalisées
-$branch1_terms=explode('_',$branch1['terms']);
-$branch2_terms=explode('_',$branch2['terms']);
+$branch1_terms_ids=explode('_',$branch1['terms']);
+$branch1_terms=explode('_',$branch1['label']);
+$branch2_terms_ids=explode('_',$branch2['terms']);
 $nb_fields1=$branch1['nb_fields'];
 $squared_nb_fields1=$nb_fields1*$nb_fields1;
 $nb_fields2=$branch2['nb_fields'];
@@ -290,12 +328,12 @@ $branch1_terms_occ=explode('_',$branch1['terms_occ']);
 $branch2_terms_occ=explode('_',$branch2['terms_occ']);
 
 
-$common_terms=array_intersect($branch1_terms,$branch2_terms);
+$common_terms=array_intersect($branch1_terms_ids,$branch2_terms_ids);
 $similarity=0;
 while (count($common_terms)>0){
     $term=array_pop($common_terms);
-    $rank_in_branch1=search($term, $branch1_terms);
-    $rank_in_branch2=search($term, $branch2_terms);
+    $rank_in_branch1=search($term, $branch1_terms_ids);
+    $rank_in_branch2=search($term, $branch2_terms_ids);
     $similarity=$similarity+($branch1_terms_occ[$rank_in_branch1]/$nb_fields1*$branch2_terms_occ[$rank_in_branch2]/$nb_fields2);
 }
 
