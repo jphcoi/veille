@@ -1,12 +1,10 @@
 <?
 include("login_check.php");
 include("library/fonctions_php.php");
-include("library/JQscripts.php");
 include("parametre.php");
 
 $all_periode=0;
 
-//////////////////
 
 if (isset($_POST['all_periode'])) $all_periode = intval($_POST['all_periode']); else $all_periode = 0;
 
@@ -22,8 +20,6 @@ function href_cluster($periode,$id_cluster)//construit la liste des liens vers l
 	$href = "cluster.php?id_cluster=".$id_cluster.'&periode='.$periode;
 	return $href;
 }
-
-
 
 function display_term_table($l,$b){
 	echo '<table class=commentitems rules=cols border=1>';
