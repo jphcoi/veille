@@ -125,8 +125,10 @@ create_concept_string();
 
 
 //bloc recuperation infos cluster
-$resultat=mysql_query("SELECT label_1,label_2,periode,concept,lettre FROM cluster WHERE id_cluster=".$id_cluster." AND periode=\"".derange_periode($periode)."\" ORDER by periode,concept") or die ("Requête non executée.");
+$resultat=mysql_query("SELECT label_1,label_2,periode,concept,lettre,pseudo FROM cluster WHERE id_cluster=".$id_cluster." AND periode=\"".derange_periode($periode)."\" ORDER by periode,concept") or die ("Requête non executée.");
 while ($ligne=mysql_fetch_array($resultat)) $cluster[]=$ligne;
+
+
 
 //bloc recuperation infos termes
 $resultat=mysql_query("select id,forme_principale FROM concepts ORDER by forme_principale") or die ("Requête non executée.");
@@ -142,6 +144,20 @@ while ($ligne=mysql_fetch_array($resultat)) {
 		$successeur[] = $ligne['id_cluster_2'];
 		$periode_apres[] =$periode_avant_temp; }
 	}
+
+
+// A optimiser ...
+$sql="SELECT pseudo FROM cluster WHERE id_cluster=".$id_cluster." AND periode=\"".derange_periode($periode)."\" ";
+$resultat=mysql_query($sql) or die ("Requête non executée.");
+while ($partit=mysql_fetch_array($resultat)) {
+    $id_partition=$partit[pseudo];
+}
+
+$sql="SELECT * FROM partitions WHERE id_partition=".$id_partition;
+$partQuery=mysql_query($sql);
+while ($part=mysql_fetch_array($partQuery)){
+    $partition_infos=$part;
+}
 
 $sql="SELECT id_cluster_1,periode_1 FROM phylo WHERE id_cluster_2=\"".$id_cluster."\" AND periode_2=\"".derange_periode($periode)."\"";
 $resultat=mysql_query($sql) or die ("Requête non executée.");
@@ -217,7 +233,9 @@ echo '<tr valign=top><td width=2.5%></td><td><h2 class=subtitle>champ thématiqu
 if ($lettre_current!="") echo '('.$lettre_current.')';
 echo '</i>';
 echo ' &nbsp; <b style="font-size:medium; color:#666666;">[<a href='.$googletext.'><img src='.$hrefroot.$racine.'/images/googleG.png alt="(google)" valign=middle width=18 style="border-style:none;"></a>]</b>';
+echo '<br/><span style="font-size: x-small;">Thématique :'.substr($partition_infos[label],0,-1).'</span>';
 echo '</h2></td><td width=2.5%></td></tr>';
+//echo '<tr valign=center halign=center><td ><span style="font-size: x-small;">Thématique : '.substr($partition_infos[label],0,-1).'</span></td></tr>';
 echo '</table>';
 
 echo "<table width=100%><tr valign=top><td width=2.5%></td><td width=95%>";
@@ -255,7 +273,6 @@ echo '<td width=2.5%></td></tr>';
 echo '</table>';
 
 
-
 //// CREATION PHYLOGENIE (UNIQUEMENT POUR "PHYLO" OU "SOC")
 
 if ($nav=="phylo" or $nav=="soc" or $nav == "cooc" or $nav=="source"){
@@ -272,6 +289,8 @@ if ($nav=="phylo" or $nav=="soc" or $nav == "cooc" or $nav=="source"){
 	if (count($pred)==0) $nopred=1; else $nopred=0;
 	if (count($succ)==0) $nosucc=1; else $nosucc=0;
 }
+
+
 
 
 echo '<table width=100%><tr valign=top><td width=2.5%></td><td width=95%>';
