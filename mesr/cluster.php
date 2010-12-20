@@ -144,9 +144,11 @@ while ($ligne=mysql_fetch_array($resultat)) {
 		$successeur[] = $ligne['id_cluster_2'];
 		$periode_apres[] =$periode_avant_temp; }
 	}
-
-
+////////////////////////////////////////////////////////
+//// retrait des infos sur la partition courante ///////
+////////////////////////////////////////////////////////
 // A optimiser ...
+
 $sql="SELECT pseudo FROM cluster WHERE id_cluster=".$id_cluster." AND periode=\"".derange_periode($periode)."\" ";
 $resultat=mysql_query($sql) or die ("Requête non executée.");
 while ($partit=mysql_fetch_array($resultat)) {
@@ -158,6 +160,13 @@ $partQuery=mysql_query($sql);
 while ($part=mysql_fetch_array($partQuery)){
     $partition_infos=$part;
 }
+
+$sql="SELECT id_cluster FROM cluster WHERE periode='".$partition_infos[last_period_string]."' AND pseudo=".$partition_infos['id_partition']." GROUP BY id_cluster";
+$resultat=mysql_query($sql) or die ("Cluster de la dernière période non récupérés");
+while ($partit=mysql_fetch_array($resultat)) {
+    $last_period_cluster_id=$partit[id_cluster];
+}
+
 
 $sql="SELECT id_cluster_1,periode_1 FROM phylo WHERE id_cluster_2=\"".$id_cluster."\" AND periode_2=\"".derange_periode($periode)."\"";
 $resultat=mysql_query($sql) or die ("Requête non executée.");
@@ -233,7 +242,9 @@ echo '<tr valign=top><td width=2.5%></td><td><h2 class=subtitle>champ thématiqu
 if ($lettre_current!="") echo '('.$lettre_current.')';
 echo '</i>';
 echo ' &nbsp; <b style="font-size:medium; color:#666666;">[<a href='.$googletext.'><img src='.$hrefroot.$racine.'/images/googleG.png alt="(google)" valign=middle width=18 style="border-style:none;"></a>]</b>';
-echo '<br/><span style="font-size: x-small;">Fil thématique :'.substr($partition_infos[label],0,-1).'</span>';
+echo '<br/><span style="font-size: x-small;">Fil thématique :';
+echo '<a href="cluster.php?id_cluster='.$last_period_cluster_id.'&periode='.str_replace(' ','-',$partition_infos['last_period_string']).'"><font color="#ffffff">';
+echo substr($partition_infos[label],0,-1).'</font></a></span>';
 echo '</h2></td><td width=2.5%></td></tr>';
 //echo '<tr valign=center halign=center><td ><span style="font-size: x-small;">Thématique : '.substr($partition_infos[label],0,-1).'</span></td></tr>';
 echo '</table>';
