@@ -76,12 +76,12 @@ function diehard()
 		$page_origine=str_replace('@@', "&",$page_origine);
 		$page_origine=str_replace('**', "?",$page_origine);
 		
-	//	$page_origine='global.php';
+	//	$page_origine='phylo.php';
 	}
 	else
 	{
-		$page_origine='global.php';
-		$page_ori='global.php';
+		$page_origine='phylo.php';
+		$page_ori='phylo.php';
 	}
 	//$page_origine='global.php';
 	//echo $page_origine;
