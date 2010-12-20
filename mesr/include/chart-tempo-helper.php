@@ -3,7 +3,6 @@
 	
 	$resultat=mysql_query("select idx,js FROM term_neighborhood WHERE idx=$id_concept");
 	$temp_neighborhood=mysql_fetch_array($resultat);
-        echo 'Selected term'.idx;
 	$myabove='<script type="text/javascript">'.$temp_neighborhood['js'].'</script>'.'
 		<hr>
 		<table class=tableitems width="100%">
