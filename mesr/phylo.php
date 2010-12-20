@@ -373,5 +373,7 @@ return $resultat;
 
 //on ferme l'acces à la base de donnees
 mysql_close($ink);
+
+echo '</div>';
 include("footer.php");
 ?>
