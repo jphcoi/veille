@@ -66,7 +66,7 @@ echo "
             $query="select * FROM partitions WHERE nb_period_covered > 1 AND nb_period_covered < 4 AND  last_period=$last_period";
             $resultat=mysql_query($query) or die ("<b>Requête non exécutée (récupération des principales thématiques)</b>.");
             $branch_list=branch_list_string($resultat,$depth,$min_similarity);
-            echo "<h3>Thématiques récentes (couvrant 2 ou trois périodes)</h3>";
+            echo "<h3>Thématiques potentiellement émergentes (couvrant 2 ou 3 périodes)</h3>";
             echo $branch_list;
 
 echo "

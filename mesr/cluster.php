@@ -233,7 +233,7 @@ echo '<tr valign=top><td width=2.5%></td><td><h2 class=subtitle>champ thématiqu
 if ($lettre_current!="") echo '('.$lettre_current.')';
 echo '</i>';
 echo ' &nbsp; <b style="font-size:medium; color:#666666;">[<a href='.$googletext.'><img src='.$hrefroot.$racine.'/images/googleG.png alt="(google)" valign=middle width=18 style="border-style:none;"></a>]</b>';
-echo '<br/><span style="font-size: x-small;">Thématique :'.substr($partition_infos[label],0,-1).'</span>';
+echo '<br/><span style="font-size: x-small;">Fil thématique :'.substr($partition_infos[label],0,-1).'</span>';
 echo '</h2></td><td width=2.5%></td></tr>';
 //echo '<tr valign=center halign=center><td ><span style="font-size: x-small;">Thématique : '.substr($partition_infos[label],0,-1).'</span></td></tr>';
 echo '</table>';
