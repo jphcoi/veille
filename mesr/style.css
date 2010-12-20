@@ -52,7 +52,7 @@ H1 {
 }
 
 .commentitems {
-  font-size:small;
+  font-size:9pt;
   color: DarkSlateGray;
 }
 
@@ -177,7 +177,7 @@ table.subbanner {
 
 .specialsubbanner {
   color:SlateGray;
-  font-size:small;
+  font-size:11pt;
   font-variant:small-caps;
   margin-bottom: 0px;
   background:#CCC;
