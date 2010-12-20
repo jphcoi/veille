@@ -46,10 +46,11 @@ echo "
 
 	<ul>
 <table width=100% class=tableitems>
-<tr valign=top></td><td><h2 class=subtitle>Fils thématiques (branches phylogénétiques)</h2></tr>
+<tr valign=top></td><td><h2 class=subtitle>Fils thématiques (branches phylogénétiques)";
+echo "</h2></tr>
 </table >
 		<li><a href='#tabs-1'>Actifs</a></li>
-		<li><a href='#tabs-2'>Potentiellements émergents </a></li>
+		<li><a href='#tabs-2'>Potentiellement émergents </a></li>
 		<li><a href='#tabs-3'>En suspens</a></li>
 	</ul>
 	<div id='tabs-1'>
@@ -136,10 +137,10 @@ for ($i=0;$i<count($grouped_indexes);$i++){
     if (count($index_grouped)>1){
         $group_title='<p>';
         while ((count($Ngrams)>0)&&($line = current($Ngrams))){
-            $group_title=$group_title.key($Ngrams).', ';
+            $group_title=$group_title.ucfirst(key($Ngrams)).', ';
             next($Ngrams);
         }
-        $group_title=ucfirst(substr(trim($group_title), 0, -1));
+        $group_title=substr(trim($group_title), 0, -1);
         $branch_string=$branch_string.'<b>'.$group_title.' :</b>'.'<br/><ul>';
         while ((count($index_grouped)>0)&&($index = current($index_grouped))){
          $branch_id=$branch_list[$index]['id_partition'];
