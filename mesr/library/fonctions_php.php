@@ -1069,7 +1069,7 @@ function display_billets($info_sources,$list_of_concepts,$my_period,$type_notice
 			$conc = implode("; ", convert_forme_principale_id($info_sources[$key]['concepts'][$i]));
 			//echo $conc;
 			//il faut normaliser le nom de l'index pour que javascript ne soit pas perdu
-			$index=str_replace(".","",str_replace("-","",$key."-".$i));
+			$index=str_replace("/","",str_replace(".","",str_replace("-","",$key."-".$i)));
 			$jscriptmp.="
 				$('#dialog".$index."')
 					.dialog({ autoOpen: false, stack: true, modal:true, width:600, closeOnEscape:true})
