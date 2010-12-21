@@ -244,7 +244,7 @@ echo '</i>';
 echo ' &nbsp; <b style="font-size:medium; color:#666666;">[<a href='.$googletext.'><img src='.$hrefroot.$racine.'/images/googleG.png alt="(google)" valign=middle width=18 style="border-style:none;"></a>]</b>';
 echo '<br/><span style="font-size: x-small;">fil thématique: ';
 echo '<a href="cluster.php?id_cluster='.$last_period_cluster_id.'&periode='.str_replace(' ','-',$partition_infos['last_period_string']).'">';
-echo '<font color='.$backdark.'>';
+echo '<font color='.$backdarker.'>';
 echo remove_popo(substr($partition_infos[label],0,-1)).'</font></a></span>';
 echo '</h2></td><td width=2.5%></td></tr>';
 //echo '<tr valign=center halign=center><td ><span style="font-size: x-small;">Thématique : '.substr($partition_infos[label],0,-1).'</span></td></tr>';

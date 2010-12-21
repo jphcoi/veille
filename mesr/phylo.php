@@ -146,7 +146,7 @@ $grouped_indexes=$grouped_labels[grouped_indexes]; // groupes des index branches
 
 $Ngram_arrays=$grouped_labels[Ngram_arrays]; // array pour les labelliser
 
-$branch_string='<i>('.$nb_branches.' thématiques dans cette catégorie)'.'<i><br/><p></p>'; // html avec la liste des branches
+$branch_string='<i>('.$nb_branches.' thématiques dans cette catégorie)'.'</i><br/><p></p>'; // html avec la liste des branches
 
 
 for ($i=0;$i<count($grouped_indexes);$i++){
