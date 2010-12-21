@@ -16,9 +16,59 @@ if (isset($_GET['periode'])) {
 	else $periodestr="";
 	}
 else $periodstr="";
+$page_current_v =  explode('/',$_SERVER['PHP_SELF']);
+$page_current =  $page_current_v[count($page_current_v)-1];
+switch ($page_current) {
+    case 'phylo.php':
+		$page = 'fils';
+        break;
+
+    case 'global.php':
+        $page = 'carte';
+        break;
+
+    case 'entree_clusters.php':
+		$page = 'champs';
+        break;
+    case 'cluster.php':
+		$page = 'champs';
+        break;
+
+    case 'entree_sources.php':
+		$page = 'sources';
+        break;
+    case 'source.php':
+		$page = 'sources';
+        break;
+
+    case 'entree_termes.php':
+		$page = 'termes';
+        break;
+    case 'chart.php':
+        $page = 'termes';
+        break;
+
+	case 'commentaires.php';
+		$page = 'commentaires';
+		break;
+
+}
 echo '<table class=tableitems style="font-variant:small-caps;" width="100%">
 	<tr>
-	<td><a href=phylo.php>fils thématiques</a> - <a href=global.php'.$periodstr.'>cartes</a> - <a href=entree_clusters.php'.$periodstr.'>champs thématiques</a> - <a href=entree_sources.php'.$periodstr.'>sources</a> - <a href=entree_termes.php'.$periodstr.'>termes</a> </td><td style="text-align: right"><a href=commentaires.php>commentaires</a></td>
+	<td><a href=phylo.php>';
+if ($page=="fils") echo "<b>fils thématiques</b>"; else echo "fils thématiques";
+echo '</a> - <a href=global.php'.$periodstr.'>';
+
+ if ($page=="carte") echo "<b>cartes</b>"; else echo "cartes";
+echo '</a> - <a href=entree_clusters.php'.$periodstr.'>';
+if ($page=="champs") echo "<b>champs thématiques</b>"; else echo "champs thématiques";
+echo '</a> - <a href=entree_sources.php'.$periodstr.'>';
+if ($page=="sources") echo "<b>sources</b>"; else echo "sources";
+echo '</a> - <a href=entree_termes.php'.$periodstr.'>';
+if ($page=="termes") echo "<b>termes</b>"; else echo "termes";
+echo '</a> </td><td style="text-align: right"><a href=commentaires.php>';
+if ($page=="commentaires") echo "<b>commentaires</b>"; else echo "commentaires";
+echo '</a></td>
 	</tr>
 	</table>';
 echo '</div>';
