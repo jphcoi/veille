@@ -965,9 +965,9 @@ function display_helper($title,$text,$indexsuffix) {
 // cette fonction affiche un point d'interrogation correspondant au dialogue d'id "dialog$indexsuffix"
 // et renvoie le bout de script JS-Jquery qui doit être ajouté à la commande d'affichage de script JQuery à la fin
 	echo "
+	<img src='images/question-mark.gif' id='opener".$indexsuffix."'>
 	<div id='dialog".$indexsuffix."' title=".str_replace(" ","&nbsp;",$title).">".$text."
 	</div>
-	<img src='images/question-mark.gif' id='opener".$indexsuffix."'>
 	";
 	
 	return("
@@ -1083,7 +1083,9 @@ function display_billets($info_sources,$list_of_concepts,$my_period,$type_notice
 					});";
 			$insertedtext="";
 			if (count($list_of_concepts)>1){ 
-				$insertedtext=" (".number_format(100*$info_sources[$key]['nbtermes'][$i]/count($list_of_concepts)/log10(10+$info_sources[$key]['nbsize'][$i]-$info_sources[$key]['nbtermes'][$i]), 0, ',', ' ')."%)";
+				//echo 
+				///log10(10+$info_sources[$key]['nbsize'][$i]-$info_sources[$key]['nbtermes'][$i]
+				$insertedtext=" (".number_format(100*$info_sources[$key]['nbtermes'][$i]/count($list_of_concepts)/log10(10+max($info_sources[$key]['nbsize'][$i],$info_sources[$key]['nbtermes'][$i])-$info_sources[$key]['nbtermes'][$i]), 0, ',', ' ')."%)";
 				//	echo $info_sources[$key]['nbtermes'][$i];
 				//	echo '<br>';
 				//	echo count($list_of_concepts);

@@ -56,7 +56,7 @@ $jscriptmp.=display_helper('Fils thématiques','Les fils thématiques sont des e
     	"<b style="font-variant:small-caps;">Actifs</b>": Fils thématiques couvrant au moins quatre périodes et qui sont toujours actifs à la période la plus récente.
 	    </li>
     	<li>
-	    "<b style="font-variant:small-caps;">Potentiellement émergents </b>":
+	    "<b style="font-variant:small-caps;">Potentiellement émergents</b>":
 	    Fils thématiques couvrant au plus trois périodes dont la plus récente.
     	</li>
 	    <li>
@@ -147,7 +147,7 @@ $grouped_indexes=$grouped_labels[grouped_indexes]; // groupes des index branches
 
 $Ngram_arrays=$grouped_labels[Ngram_arrays]; // array pour les labelliser
 
-$branch_string='<i>('.$nb_branches.' thématiques dans cette catégorie)'.'<i><br/><p></p>'; // html avec la liste des branches
+$branch_string='<i>('.$nb_branches.' thématiques dans cette catégorie)'.'</i><br/><p></p>'; // html avec la liste des branches
 
 
 for ($i=0;$i<count($grouped_indexes);$i++){

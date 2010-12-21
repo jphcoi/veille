@@ -1,6 +1,6 @@
 <?
 
-   //if ($norm==1) $helpernormstring='(2)+" fois/billet'; else $helpernormstring='(0)+" fois';
+   //if ($norm==1) $helpernormstring='(2)+" fois/1000 billets'; else $helpernormstring='(0)+" fois';
 	
    $mydatajson=json_encode($data);
    $mylabels=json_encode($datalabels);
@@ -72,7 +72,7 @@
 	
 	/* X-axis and ticks. */
 	vis.add(pv.Rule)
-		.data(x.ticks())
+		.data(x.ticks(20))
 		.visible(function(d) d)
 		.left(x)
 		.bottom(-5)

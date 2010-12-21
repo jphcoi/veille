@@ -242,8 +242,9 @@ echo '<tr valign=top><td width=2.5%></td><td><h2 class=subtitle>champ thématiqu
 if ($lettre_current!="") echo '('.$lettre_current.')';
 echo '</i>';
 echo ' &nbsp; <b style="font-size:medium; color:#666666;">[<a href='.$googletext.'><img src='.$hrefroot.$racine.'/images/googleG.png alt="(google)" valign=middle width=18 style="border-style:none;"></a>]</b>';
-echo '<br/><span style="font-size: x-small;">fil thématique :';
-echo '<a href="cluster.php?id_cluster='.$last_period_cluster_id.'&periode='.str_replace(' ','-',$partition_infos['last_period_string']).'"><font color="#ffffff">';
+echo '<br/><span style="font-size: x-small;">fil thématique: ';
+echo '<a href="cluster.php?id_cluster='.$last_period_cluster_id.'&periode='.str_replace(' ','-',$partition_infos['last_period_string']).'">';
+echo '<font color='.$backdarker.'>';
 echo remove_popo(substr($partition_infos[label],0,-1)).'</font></a></span>';
 echo '</h2></td><td width=2.5%></td></tr>';
 //echo '<tr valign=center halign=center><td ><span style="font-size: x-small;">Thématique : '.substr($partition_infos[label],0,-1).'</span></td></tr>';
@@ -267,7 +268,7 @@ echo "<table width=100%><tr valign=top><td width=2.5%></td><td width=95%>";
 	echo " - ";
 	if ($nav=="cooc") echo $select_string."réseau de cooccurrence</b>"; else echo $href_string."cooc>réseau de cooccurrence</a>";
 	echo " - ";
-	if ($nav=="soc") echo $select_string."réseau social</b>"; else echo $href_string."soc>réseau social</a>";
+	if ($nav=="soc") echo $select_string."environnement social</b>"; else echo $href_string."soc>environnement social</a>";
 	echo " - ";
 	if ($nav=="source") echo $select_string."billets</b>"; else echo $href_string."source>billets</a>";
 	echo " - ";
@@ -479,6 +480,7 @@ if ($nav=="socsem"){
 	//print_r($datalabels);
 	echo '<p>';
 	$maxdata*=1.05;
+	//print_r($data);
 	include('include/cluster-evol-helper.php');
 	echo $myscript;
 
