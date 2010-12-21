@@ -53,12 +53,10 @@ switch ($page_current) {
 		break;
 
 }
-echo '<table class=tableitems style="font-variant:small-caps;" width="100%">
-	<tr>
-	<td><a href=phylo.php>';
+echo '<table class=tableitems style="font-variant:small-caps;" width="100%"><tr><td>';
+echo '<a href=phylo.php>';
 if ($page=="fils") echo "<b>fils thématiques</b>"; else echo "fils thématiques";
 echo '</a> - <a href=global.php'.$periodstr.'>';
-
  if ($page=="carte") echo "<b>cartes</b>"; else echo "cartes";
 echo '</a> - <a href=entree_clusters.php'.$periodstr.'>';
 if ($page=="champs") echo "<b>champs thématiques</b>"; else echo "champs thématiques";
