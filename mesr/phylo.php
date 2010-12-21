@@ -56,11 +56,11 @@ $jscriptmp.=display_helper('Fils thématiques','Les fils thématiques sont des e
     	"<b style="font-variant:small-caps;">Actifs</b>": Fils thématiques couvrant au moins quatre périodes et qui sont toujours actifs à la dernière période.
 	    </li>
     	<li>
-	    "<b style="font-variant:small-caps;">Potentiellement émergents </b>":
+	    "<b style="font-variant:small-caps;">Potentiellement émergents</b>":
 	    Fils thématiques couvrant au plus trois périodes dont la plus récente.
     	</li>
 	    <li>
-	    <b style="font-variant:small-caps;">En suspens</b>:
+	    "<b style="font-variant:small-caps;">En suspens</b>":
     	Fils thématiques couvrant au moins quatre périodes mais qui ne sont pas présents sur la dernière période. Cette rupture du fil thématique peut être temporaire, témoignant d\'une baisse d\'intérêt pour le sujet concerné, ou définitive.
 	    </li>
 		</ul>
