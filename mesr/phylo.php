@@ -51,9 +51,9 @@ echo "
 <table width=100% class=tableitems>
 <tr valign=top></td><td><h2 class=subtitle>fils thématiques (branches phylogénétiques)";
 
-$jscriptmp.=display_helper('Fils thématiques','Les fils thématiques sont des ensembles de champs thématiques sur des sujets similaires répartis sur plusieurs périodes. Ils sont classés ici en trois catégories:
+$jscriptmp.=display_helper('Fils thématiques','Les fils thématiques sont des ensembles de champs thématiques sur des sujets similaires couvrant sur plusieurs périodes. Ils sont classés ici en trois catégories:
 	<ul style="font-size:small;"><li>
-    	"<b style="font-variant:small-caps;">Actifs</b>": Fils thématiques couvrant au moins quatre périodes et qui sont toujours actifs à la dernière période.
+    	"<b style="font-variant:small-caps;">Actifs</b>": Fils thématiques couvrant au moins quatre périodes et qui sont toujours actifs à la période la plus récente.
 	    </li>
     	<li>
 	    "<b style="font-variant:small-caps;">Potentiellement émergents </b>":
@@ -61,9 +61,10 @@ $jscriptmp.=display_helper('Fils thématiques','Les fils thématiques sont des e
     	</li>
 	    <li>
 	    <b style="font-variant:small-caps;">En suspens</b>:
-    	Fils thématiques couvrant au moins quatre périodes mais qui ne sont pas présents sur la dernière période. Cette rupture du fil thématique peut être temporaire, témoignant d\'une baisse d\'intérêt pour le sujet concerné, ou définitive.
+    	Fils thématiques couvrant au moins quatre périodes mais qui n\'ont pas de champ thématique sur la période la plus récente. Cette rupture du fil thématique peut être temporaire, témoignant d\'une baisse d\'intérêt pour le sujet concerné, ou définitive. Cela fait de ce champs un ancrage pour l'exploration du fil thématique.
 	    </li>
 		</ul>
+        Chaque label de fil thématique fait un lien vers l\'un des champs thématiques de la période la plus récente de ce fil thématique.
 		',"helper");
 echo "</h2></tr>
 </table >
