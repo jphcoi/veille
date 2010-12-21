@@ -1,6 +1,6 @@
 <?
 
-   if ($norm==1) $helpernormstring='(2)+" fois/billet'; else $helpernormstring='(0)+" fois';
+   if ($norm==1) $helpernormstring='(2)+" fois/1000 billets'; else $helpernormstring='(0)+" fois';
 	
    $mydata2=json_encode($data);
    //echo $mydata2;
