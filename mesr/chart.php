@@ -44,7 +44,7 @@ $wikipediatext="http://fr.wikipedia.org/w/index.php?search=".str_replace(" ","_"
 echo '<tr valign=top><td width=2.5%></td><td>';
 echo '<table width=100% class=subtitle><tr>';
 echo '<td align=left>';
-echo 'terme "<i>'.remove_popo($concept[0]).'</i>"'.$concept[0];
+echo 'terme "<i>'.remove_popo($concept[0]).'</i>"';//.$concept[0];
 echo '</td>';
 echo '</tr></table>';
 echo '</h2></td><td width=2.5%></td></tr></table>';
