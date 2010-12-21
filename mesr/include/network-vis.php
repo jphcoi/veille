@@ -60,7 +60,7 @@
 				force.bound(true);
 				//force.springConstant(0.0001);
 				//force.springDamping(0.1);
-				//force.springLength(50);
+				force.springLength(50);
 				
 				force.link.add(pv.Line);
 				
