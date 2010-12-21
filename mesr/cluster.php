@@ -242,7 +242,7 @@ echo '<tr valign=top><td width=2.5%></td><td><h2 class=subtitle>champ thématiqu
 if ($lettre_current!="") echo '('.$lettre_current.')';
 echo '</i>';
 echo ' &nbsp; <b style="font-size:medium; color:#666666;">[<a href='.$googletext.'><img src='.$hrefroot.$racine.'/images/googleG.png alt="(google)" valign=middle width=18 style="border-style:none;"></a>]</b>';
-echo '<br/><span style="font-size: x-small;">fil thématique: ';
+echo '<br/><span style="font-size: x-small; color:'.$backdark.';">fil thématique: ';
 echo '<a href="cluster.php?id_cluster='.$last_period_cluster_id.'&periode='.str_replace(' ','-',$partition_infos['last_period_string']).'"><font color="#ffffff">';
 echo remove_popo(substr($partition_infos[label],0,-1)).'</font></a></span>';
 echo '</h2></td><td width=2.5%></td></tr>';
