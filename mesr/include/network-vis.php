@@ -56,7 +56,7 @@
 					.nodes(mynetwork.nodes)
 					.links(mynetwork.links);
 				
-				if (mynetwork.nodes.length>50) force.iterations(100);
+				if (mynetwork.nodes.length>75) force.iterations(100);
 				force.bound(true);
 				//force.springConstant(0.0001);
 				//force.springDamping(0.1);
