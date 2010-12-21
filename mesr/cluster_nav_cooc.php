@@ -5,15 +5,14 @@ function microtime_float() {
 
 $peroides = explode_period($periode);
 
-		//$temps_fin1 = microtime_float();
+		//ancienne version avec slider: on récupérait la valeur depuis le slideer
+		//$query="SELECT slider_val FROM  tbl_slider WHERE user='".$_COOKIE['ID_my_site']."'";
+		// $result=mysql_query($query);
+		// $row=mysql_fetch_array($result);
+		// $pertinence = $row['slider_val'];
+		// $pertinence =intval($pertinence);
 		
-		$query="SELECT slider_val FROM  tbl_slider WHERE user='".$_COOKIE['ID_my_site']."'";
-//		echo $query;
-		$result=mysql_query($query);
-		$row=mysql_fetch_array($result);
-		$pertinence = $row['slider_val'];
-	//	echo '<br> pertinence '.$pertinence.'<br>';
-		$pertinence =intval($pertinence);
+		$pertinence = 0;
 
 		//$temps_fin2 = microtime_float();
 		//echo '<br><br>on a tourve auteur : '.round(//$temps_fin2 - //$temps_fin1, 4).'<br><br>';
@@ -273,31 +272,33 @@ $liste_auteur_unique=$list_of_concepts;
 	
 	
 	<?
-		echo '<table width=100%><tr valign=top>';
-		
-		echo "<td width=10%></td>";
-		echo "<td align=right class=tableitems><i>nombre de cooccurrences minimum: ".$pertinence."</i>";
-
-		$old_url  =$_SERVER['REQUEST_URI'];
-		$old_urlv = explode($racine.'/',$old_url);
-		if (count($old_urlv)>0)
-			{$old_url = $old_urlv[1];}
-		$old_urls = explode('&old_pertinence=',$old_url);
-		$new_url=$old_urls[0].'&old_pertinence='.$pertinence;
-
-		$modifer='<input type="button" name="refresh" value="Modifier" onclick="location.replace(\''.$new_url.'\');">'; 
-
+		// echo '<table width=100%><tr valign=top>';
+		// 
+		// echo "<td width=10%></td>";
+		// echo "<td align=right class=tableitems><i>nombre de cooccurrences minimum: ".$pertinence."</i>";
+		// 
+		// $old_url  =$_SERVER['REQUEST_URI'];
+		// $old_urlv = explode($racine.'/',$old_url);
+		// if (count($old_urlv)>0)
+		// 	{$old_url = $old_urlv[1];}
+		// $old_urls = explode('&old_pertinence=',$old_url);
+		// $new_url=$old_urls[0].'&old_pertinence='.$pertinence;
+		// 
+		// $modifer='<input type="button" name="refresh" value="Modifier" onclick="location.replace(\''.$new_url.'\');">'; 
+		// 
 
 		?>
-			</td>
+			<!-- </td>
 
 			<td align=left valign=top>
 
 			<DIV class=carpe_slider_group>
 			 <DIV class=carpe_horizontal_slider_display_combo>
 			  <DIV class=carpe_slider_display_holder>
+				!>
 			   <!-- Default value: 0 -->
-			   <input name="Input" class=carpe_slider_display id="display1" alue="<?=$row['slider_val']?>" />
+			   <!--
+				<input name="Input" class=carpe_slider_display id="display1" alue="<?=$row['slider_val']?>" />
 			  </DIV>
 			 <DIV class=carpe_horizontal_slider_track>
 			 <DIV class=carpe_slider_slit></DIV>
@@ -307,7 +308,7 @@ $liste_auteur_unique=$list_of_concepts;
 			<DIV class=carpe_horizontal_slider_display_combo></DIV>
 			<DIV class=carpe_horizontal_slider_display_combo></DIV>
 			<DIV class=carpe_horizontal_slider_display_combo></DIV>
-			</DIV>
+			</DIV> -->
 
 
 			<?
@@ -316,13 +317,13 @@ $liste_auteur_unique=$list_of_concepts;
 
 
 		<?
-		echo $modifer;
-
-		$result=mysql_query($query);
-		echo "</td>";
-		echo "<td width=10%></td>";
-		echo "</tr>";
-		echo '</table>';
+		// echo $modifer;
+		// 
+		// $result=mysql_query($query);
+		// echo "</td>";
+		// echo "<td width=10%></td>";
+		// echo "</tr>";
+		// echo '</table>';
 		
 	
 		

@@ -72,7 +72,7 @@
 	
 	/* X-axis and ticks. */
 	vis.add(pv.Rule)
-		.data(x.ticks())
+		.data(x.ticks(20))
 		.visible(function(d) d)
 		.left(x)
 		.bottom(-5)
