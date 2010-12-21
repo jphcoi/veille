@@ -267,7 +267,7 @@ echo "<table width=100%><tr valign=top><td width=2.5%></td><td width=95%>";
 	echo " - ";
 	if ($nav=="cooc") echo $select_string."réseau de cooccurrence</b>"; else echo $href_string."cooc>réseau de cooccurrence</a>";
 	echo " - ";
-	if ($nav=="soc") echo $select_string."réseau social</b>"; else echo $href_string."soc>réseau social</a>";
+	if ($nav=="soc") echo $select_string."environnement social</b>"; else echo $href_string."soc>environnement social</a>";
 	echo " - ";
 	if ($nav=="source") echo $select_string."billets</b>"; else echo $href_string."source>billets</a>";
 	echo " - ";

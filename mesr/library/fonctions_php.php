@@ -1083,7 +1083,9 @@ function display_billets($info_sources,$list_of_concepts,$my_period,$type_notice
 					});";
 			$insertedtext="";
 			if (count($list_of_concepts)>1){ 
-				$insertedtext=" (".number_format(100*$info_sources[$key]['nbtermes'][$i]/count($list_of_concepts)/log10(10+$info_sources[$key]['nbsize'][$i]-$info_sources[$key]['nbtermes'][$i]), 0, ',', ' ')."%)";
+				//echo 
+				///log10(10+$info_sources[$key]['nbsize'][$i]-$info_sources[$key]['nbtermes'][$i]
+				$insertedtext=" (".number_format(100*$info_sources[$key]['nbtermes'][$i]/count($list_of_concepts)/log10(10+max($info_sources[$key]['nbsize'][$i],$info_sources[$key]['nbtermes'][$i])-$info_sources[$key]['nbtermes'][$i]), 0, ',', ' ')."%)";
 				//	echo $info_sources[$key]['nbtermes'][$i];
 				//	echo '<br>';
 				//	echo count($list_of_concepts);

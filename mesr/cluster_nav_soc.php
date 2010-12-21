@@ -183,7 +183,20 @@ if ($affichage>0)
 	else echo '<i style="font-variant:small-caps; background-color:white;">(pas de prédécesseur)</i>';
 	echo '</td>';
 
-	echo '<td align=center width=80%><i><b>RÉSEAU SOCIAL (80 articles les plus pertinents au-delà du seuil)</b><br>PÉRIODE ACTUELLE</i> <i style="font-variant:normal; font-size:xx-small;">('.get_string_periode($my_period).')</i></td>';
+	echo '<td align=center width=80%><i><b>ENVIRONNEMENT SOCIAL</b>';
+	
+	$jscriptmp.=display_helper('Réseau social','L\'environnement social du champ thématique courant permet de repérer la structure sociale éventuellement formée par les liens de citations existant entre les sources participant au champ courant et dont le seuil de pertinence est supérieur au seuil choisi (paramétrable via l\'onglet seuil de pertinence en dessous à droite du réseau). Différentes options sont à disposition pour faire varier la focale sur cet environnement social:
+		<ul style="font-size:small;"><li>
+	    	"<b style="font-variant:small-caps;">N\'afficher que les liens entre billets pertinents</b>": Cette option permet de n\'afficher que les liens étant apparus entre les billets pertinents durant la période sélectionnée. On peut faire l\'hypothèse que cette vue permet de repérer des liens de citations dont l\'activation est partie liée à la thématique courante.
+		    </li>
+	    	<li>
+		    "<b style="font-variant:small-caps;">Afficher les liens enregistrés sur l\'ensemble des périodes</b>":
+		    Cette option affiche l\'ensemble des liens entre sources indépendamment de la période à laquelle la citation a été faite. Cette visualisation permet de visualiser la structure sociale d\'ensemble entre les sources indépendamment de la période et du champ considéré.
+	    	</li>
+			</ul>
+			',"helper");
+
+	echo '<br>PÉRIODE ACTUELLE</i> <i style="font-variant:normal; font-size:xx-small;">('.get_string_periode($my_period).')</i></td>';
 	echo '<td align=center width=10% style="font-variant:small-caps; font-weight:bold; '.$back_apres.'">';
 	if (!$nosucc) 
 		echo '<i>période ultérieure</i><div class=commentitems style="font-weight:normal; font-variant:normal; font-size:xx-small;"><i>('.get_string_periode(arrange_periode($min_periode_apres)).')</i></div>';
@@ -430,5 +443,7 @@ if ($affichage>0)
 		echo '</table>';
 			echo '</table>';
 	
+			echo '
+				<script> $(function() { '.$jscriptmp.' });</script>';
 		
 	?>
