@@ -135,7 +135,7 @@ function display_cluster_title ($s, $direction) {
 	$sid=$s['id']."_".str_replace(" ","_",$s['periode']);
 	
 	echo '<td>';
-	$jscriptmp.=display_helper($dico_termes[$label1].' - '.$dico_termes[$label2],'<div style="font-size:x-small; font-variant:small-caps;">période: '.$speriode.'</div>'.$sbox,$sid,"magnify.png","resizable: false");
+	$jscriptmp.=display_helper($dico_termes[$label1].' - '.$dico_termes[$label2],'<div style="font-size:x-small; font-variant:small-caps;">période: '.$speriode.'</div>'.$sbox,$sid,"magnify.png","resizable: true");
 	echo '</td>';
 	echo '
 		<td class=tableitems style="font-variant:small-caps; size:small; font-style:italic;">';
@@ -419,17 +419,14 @@ if ($nav=="phylo"){
 	//echo '</div>';
 	
 	echo '<p><table width=100% rules=all>';
-	echo '<tr>';
+	echo '<tr valign=top>';
 	
 	if ($ecart_pred==1) $back_avant='background-color:white;';
 	echo '<td width='.(30-4*$ecart_pred).'% align=center class=tableitems style="font-variant:small-caps; size:small; font-style:italic;'.$back_avant.'">';
 		
 	if ($nopred) echo "<b>(pas de prédécesseur)</b>";
 	else {
-		//echo '<b>période antérieure</b>';
-		//echo '<br><div class=commentitems style="font-weight:normal; font-variant:normal; font-size:xx-small;">('.get_string_periode(arrange_periode($max_periode_avant)).")</div><br>";
-		
-		echo '<table width=100%>';
+		echo '<br><table width=100%>';
 		$last_display_periode="";
 		foreach ($pred as $p) display_cluster_title($p,"pred");
 		echo '</table>';
@@ -487,7 +484,7 @@ if ($nav=="phylo"){
 	echo '<td width='.(30-4*$ecart_succ).'% align=center class=tableitems style="font-variant:small-caps; size:small; font-style:italic;'.$back_apres.'">';	
 	if ($nosucc) echo "<b>(pas de successeur)</b>"; 
 	else {
-		echo '<table width=100% valign=middle>';
+		echo '<br><table width=100% valign=middle>';
 		$last_display_periode="";
 		foreach ($succ as $s) display_cluster_title($s,"succ");
 		echo '</table>';
