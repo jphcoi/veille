@@ -62,17 +62,17 @@ function list_clusters($periodes,$clusters,$okperiode)
 
 function selective_column_tt($arraykey,$list,$plus,$minus,$main=0){
 	global $dico_termes,$my_period,$backdark,$backdarker;
-	$fz="";
-	if ($main>0) $backcolor=$backdarker; 
-	if ($main==0) $backcolor=$backdark;
+	$fz="
+		";
+	$backcolor=$backdarker;
 	$ncolumns=2;
 	$wcolumns=width_column($ncolumns,$arraykey)-2;
 	$columns=make_columns($ncolumns,count($arraykey));
 	$fz.='<table class="commentitems" ';
-	if ($main>=0) $fz.='style="background-color:'.$backcolor.';"';
+	$fz.='style="background-color:'.$backcolor.';"';
 	$fz.=' rules=groups border=1>';
 	$fz.='<tr align=left valign=top>';
-	for ($i=0;$i<$ncolumns;$i++){
+	for ($i=0;$i<$ncolumns;$i++) {
 		$fz.="<td>";
 		for ($j=$columns[$i][0];$j<=$columns[$i][1];$j++) {
 			$terme=$arraykey[$j][1];
@@ -80,27 +80,22 @@ function selective_column_tt($arraykey,$list,$plus,$minus,$main=0){
 			if (in_array($terme,$plus)) $added=1;
 			if (in_array($terme,$list)) $there=1;
 			if (in_array($terme,$minus)) $removed=1;
-
-			$gothru=1;//si on affiche la période sélectionnée, il faut simplement sauter les termes non-présents, sinon faire comme si ils venaient d'être ajoutés (added=1)
-			if ($main==1) if (!$there) $gothru=0;
 			
-			if ($gothru==1)
-				if ($there OR $removed) {
-					if ($there) {
-						$fz.="<a href=chart.php?id_concept=".$terme."&periode=".arrange_periode($my_period);
-						if ($main==0) $fz.=" class=dead";
-						$fz.=">";
-						}
-					if (!$added) $fz.="<b>";
-					if ($removed) $fz.='<s style="color:#AAAAAA;">';
-					$fz.=remove_popo($dico_termes[$terme]);
-					if ($removed) $fz.="</s>";
-					if (!$added) $fz.="</b>";
-					if ($there) $fz.="</a>";
-				}
-				
+			if ($there OR $removed) {
+				if ($there) {
+					$fz.="<a href=chart.php?id_concept=".$terme."&periode=".arrange_periode($my_period);
+					$fz.=">";
+					}
+				if (!$added) $fz.="<b>";
+				if ($removed) $fz.='<s style="color:#AAAAAA;">';
+				$fz.=remove_popo($dico_termes[$terme]);
+				if ($removed) $fz.="</s>";
+				if (!$added) $fz.="</b>";
+				if ($there) $fz.="</a>";
+				}	
 			$fz.=("<br>");
 			}
+			
 		$fz.='</td>';
 		if ($i<$ncolumns-1) $fz.="<td width=10%></td>";
 		}
@@ -140,8 +135,11 @@ function display_cluster_title ($s, $direction) {
 	echo '
 		<td class=tableitems style="font-variant:small-caps; size:small; font-style:italic;">';
 	
-	echo '<a id="'.$sid.'" class="questionMark jTip jTip_element_'.$sid.'S jTip_width_300" name="Détails" href="'.$shref.'">';
-
+	//echo '<a id="'.$sid.'" class="questionMark jTip jTip_element_'.$sid.'S jTip_width_300" name="Détails" href="'.$shref.'">';
+	echo '
+		<span onMouseOver="ShowContent(\'box'.$sid.'\'); ShowContent(\'title'.$sid.'\'); HideContent(\'mainbox\'); HideContent(\'maintitle\');" 
+			  onMouseOut="HideContent(\'box'.$sid.'\'); HideContent(\'title'.$sid.'\'); ShowContent(\'mainbox\'); ShowContent(\'maintitle\');">';
+	echo '<a id="'.$sid.'" href="'.$shref.'">';
 	echo $stitle;
 	if ($lettre!="") echo ' ('.$lettre.')';
 	
@@ -153,9 +151,10 @@ function display_cluster_title ($s, $direction) {
 		}
 	
 	echo '</a>';
-	echo '<span id="'.$sid.'S" class="JT_hidden">';
-	echo $sbox;
 	echo '</span>';
+	//echo '<span id="'.$sid.'S" class="JT_hidden">';
+	//echo $sbox;
+	//echo '</span>';
 	
 	echo '</td>';
 	
@@ -411,14 +410,52 @@ echo '<table width=100%><tr valign=top><td width=2.5%></td><td width=95%>';
 
 if ($nav=="phylo"){
 
-	//echo '<div id="contentPad"><p><strong>Roll over a question mark:</strong></p>';
-	//echo '<label style="padding-right:5px">Password</label>';
-	//echo '<input name="" type="text" /><span class="formInfo">';
-	//echo '<a href="http://www.yahoo.fr" class="jTip" id="one" name="Password must follow these rules:">?</a>';
-	//echo '</span>';
-	//echo '</div>';
+	echo '<script type="text/javascript" language="JavaScript">
+			function HideContent(d) {
+			document.getElementById(d).style.display = "none";}
+			function ShowContent(d) {
+			var dd = document.getElementById(d);
+			dd.style.display = "block";
+			}</script>';
+			
+	echo '<table width=100%>';
+	echo '<tr width=100%>';
+	echo '<td width=100% align=center class=tableitems style="font-variant:small-caps; size:small; font-style:italic;">';
+	echo '<span id="maintitle">';
+	echo '"<b>'.$label1_current.'</b> - '.$label2_current.'"';
+	if ($lettre_current!="") echo ' ('.$lettre_current.')';
+	echo '</span>';
 	
-	echo '<p><table width=100% rules=all>';
+	foreach ($succ as $s) {
+		$label1=$s['label1'];$label2=$s['label2'];$lettre=$s['lettre'];
+		$sid=$s['id']."_".str_replace(" ","_",$s['periode']);
+		echo '
+			<span style="display:none;" id="title'.$sid.'">';
+		echo '<a href=cluster.php?id_cluster='.$s['id']."&periode=".arrange_periode($s['periode']).'&nav=phylo>';
+		echo '"<b>'.remove_popo($dico_termes[$label1]).'</b> - '.remove_popo($dico_termes[$label2]).'"';
+		if (intval($s['fils'])>0) {	echo '&darr'; $mainloc=0; } else $mainloc=-1;
+		if ($lettre!="") echo ' ('.$lettre.')';
+		echo '</a><br>';
+		echo '</span>';
+		}
+	foreach ($pred as $s) {
+		$label1=$s['label1'];$label2=$s['label2'];$lettre=$s['lettre'];
+		$sid=$s['id']."_".str_replace(" ","_",$s['periode']);
+		echo '
+			<span style="display:none;" id="title'.$sid.'">';
+		echo '<a href=cluster.php?id_cluster='.$s['id']."&periode=".arrange_periode($s['periode']).'&nav=phylo>';
+		echo '"<b>'.remove_popo($dico_termes[$label1]).'</b> - '.remove_popo($dico_termes[$label2]).'"';
+		if (intval($s['pere'])>0) {	echo '&uarr'; $mainloc=0; } else $mainloc=-1;
+		if ($lettre!="") echo ' ('.$lettre.')';
+		echo '</a><br>';
+		echo '
+			</span>';
+	}	
+	
+	echo '</td></tr>';
+	echo '</table>';
+	
+	echo '<table width=100% rules=all>';
 	echo '<tr valign=top>';
 	
 	if ($ecart_pred==1) $back_avant='background-color:white;';
@@ -466,11 +503,30 @@ if ($nav=="phylo"){
 	
 	echo '<td width=40% align=center style="background-color:'.$backdark.'; font-size:medium; font-variant:small-caps; font-style:italic;">';
 	
-	echo '"<b>'.$label1_current.'</b> - '.$label2_current.'"';
-	if ($lettre_current!="") echo ' ('.$lettre_current.')';
- 	echo '<br>';
+	echo '<span id="mainbox">';
 	$nonlist=array();
 	echo selective_column_tt($arraykey,$list_of_concepts,$nonlist,$nonlist,1);
+	echo '</span>';
+	
+	foreach ($succ as $s) {
+ 		$sid=$s['id']."_".str_replace(" ","_",$s['periode']);
+ 		echo '
+ 			<span style="display:none;" id="box'.$sid.'">';
+		echo selective_column_tt($arraykey,$s['termes'],$s['plus'],$s['minus'],0);	
+		echo '
+			</span>';
+	}
+	
+	foreach ($pred as $s) {
+		$sid=$s['id']."_".str_replace(" ","_",$s['periode']);
+		echo '
+			<span style="display:none;" id="box'.$sid.'">';
+		echo selective_column_tt($arraykey,$s['termes'],$s['plus'],$s['minus'],0);	
+		echo '
+			</span>';
+	}
+	
+	
 	
 	echo '</td>';
 	
