@@ -28,17 +28,17 @@ function delete_comm($comm_unique)
 	if(isset($_GET['suppr'])) {delete_comm($_GET['suppr']);}
 
 	if(isset( $_GET['id_concept'] ) ){
-			  $id_concept = intval( $_GET['id_concept'] );}
+			  $id_concept = intval($_GET['id_concept'] );}
 			else
 			 { $id_concept='';}
 	if(isset( $_GET['id_cluster'] ) ){
-			  $id_cluster = intval( $_GET['id_cluster'] );}
+			  $id_cluster = intval($_GET['id_cluster'] );}
 			else
 			 { $id_cluster='';}
 	
 	if( isset( $_GET['id_source'] ) )
 			{
-			  $id_source = intval( $_GET['id_source'] );}
+			  $id_source = intval($_GET['id_source'] );}
 			else
 			  {$id_source='';
 			}
