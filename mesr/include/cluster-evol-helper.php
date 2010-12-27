@@ -13,10 +13,6 @@
    			return { x: parseInt(x), y: x in datajson['.$i.'] ? datajson['.$i.'][x] : 0 }})';
    		if ($i<count($data)-1) $mystring.=', '; else $mystring.=']';
    		}
-   	//echo $mystring;
-   	
-	  
-	// echo "<p>";
 	$myscript='<script type="text/javascript+protovis">
 
 	var datajson = '.$mydatajson.';
