@@ -408,6 +408,8 @@ echo '<table width=100%><tr valign=top><td width=2.5%></td><td width=95%>';
 
 if ($nav=="phylo"){
 
+	// routines de masquage/affichage des boites
+	
 	echo '<script type="text/javascript" language="JavaScript">
 			function HideContent(d) {
 			document.getElementById(d).style.display = "none";}
@@ -415,7 +417,9 @@ if ($nav=="phylo"){
 			var dd = document.getElementById(d);
 			dd.style.display = "block";
 			}</script>';
-			
+	
+	// affichage du titre
+	
 	echo '<table width=100%>';
 	echo '<tr width=100%>';
 	echo '<td width=100% align=center class=tableitems style="font-variant:small-caps; size:small; font-style:italic;">';
@@ -453,44 +457,20 @@ if ($nav=="phylo"){
 	echo '</td></tr>';
 	echo '</table>';
 	
+	// affichage des boites
+	
 	echo '<table width=100%>';
 	echo '<tr valign=top>';
 	
 	if ($ecart_pred==1) $back_avant='background-color:white;';
 	echo '<td width='.(30-4*$ecart_pred).'% align=center class=tableitems style="font-variant:small-caps; size:small; font-style:italic;'.$back_avant.'">';
-		
 	if ($nopred) echo "<b>(pas de prédécesseur)</b>";
 	else {
 		echo '<br><table width=100%>';
 		$last_display_periode="";
 		foreach ($pred as $p) display_cluster_title($p,"pred");
 		echo '</table>';
-		
-		//		echo '<table class=commentitems align=center width=100% cellspacing=0 cellpadding=5 style="font-variant:small-caps; size:small; font-style:italic;">';
-		// 		foreach ($pred as $p) {
-		// 			$label1=$p['label1'];
-		// 			$label2=$p['label2'];
-		// 			$lettre=$p['lettre'];
-		// 			$past = intval($p['pere']);
-		// 			echo '<tr>';
-		// 			echo '<td align=center>';
-		// 			echo '<a href=cluster.php?id_cluster='.$p['id']."&periode=".arrange_periode($p['periode']).'&nav=phylo>';
-		// 			if ($past>0)
-		// 			{
-		// 				echo '&uarr';
-		// 				$mainloc=0;
-		// 			}
-		// 			else $mainloc=-1;
-		// 			echo '"<b>'.remove_popo($dico_termes[$label1]).'</b> - '.remove_popo($dico_termes[$label2]).'"';
-		// 			if ($lettre!="") echo ' ('.$lettre.')';
-		// 			echo '</a><br>';
-		// 			echo selective_column_tt($arraykey,$p['termes'],$p['plus'],$p['minus'],$mainloc);
-		// 			echo '</td>';
-		// 			echo '</tr>';
-		// 			}
-		// 		echo '</table>';
-		}
-	
+		}	
 	echo '</td>';
 
 	if ($ecart_pred==1)	{
@@ -509,22 +489,16 @@ if ($nav=="phylo"){
 	foreach ($succ as $s) {
  		$sid=$s['id']."_".str_replace(" ","_",$s['periode']);
  		echo '
- 			<span style="display:none;" id="box'.$sid.'">';
-		echo selective_column_tt($arraykey,$s['termes'],$s['plus'],$s['minus'],0);	
-		echo '
+ 			<span style="display:none;" id="box'.$sid.'">'.selective_column_tt($arraykey,$s['termes'],$s['plus'],$s['minus'],0).'
 			</span>';
 	}
 	
 	foreach ($pred as $s) {
 		$sid=$s['id']."_".str_replace(" ","_",$s['periode']);
 		echo '
-			<span style="display:none;" id="box'.$sid.'">';
-		echo selective_column_tt($arraykey,$s['termes'],$s['plus'],$s['minus'],0);	
-		echo '
+			<span style="display:none;" id="box'.$sid.'">'.selective_column_tt($arraykey,$s['termes'],$s['plus'],$s['minus'],0).'
 			</span>';
 	}
-	
-	
 	
 	echo '</td>';
 	
@@ -542,33 +516,6 @@ if ($nav=="phylo"){
 		$last_display_periode="";
 		foreach ($succ as $s) display_cluster_title($s,"succ");
 		echo '</table>';
-		
-		// 		echo '<table class=commentitems align=center width=100% cellspacing=0  cellpadding=5 style="font-variant:small-caps; size:small; font-style:italic;">';
-		// 		foreach ($succ as $s) {
-		// 			$label1=$s['label1'];
-		// 			$label2=$s['label2'];
-		// 			$lettre=$s['lettre'];
-		// 			echo '<tr>';
-		// 			echo '<td align=center>';
-		// 			echo '<a href=cluster.php?id_cluster='.$s['id']."&periode=".arrange_periode($s['periode']).'&nav=phylo>';
-		// 			
-		// 			echo '"<b>'.remove_popo($dico_termes[$label1]).'</b> - '.remove_popo($dico_termes[$label2]).'"';
-		// 			if (intval($s['fils'])>0)
-		// 			{
-		// 				echo '&darr';
-		// 				$mainloc=0;
-		// 			}
-		// 			else $mainloc=-1;
-		// 			
-		// 			if ($lettre!="") echo ' ('.$lettre.')';
-		// 			echo '</a><br>';
-		// 			echo selective_column_tt($arraykey,$s['termes'],$s['plus'],$s['minus'],$mainloc);
-		// 			echo '</td>';
-		// 			echo '</tr>';
-		//	
-		//			}
-		//		echo '</table>';
-		
 		}
 	echo '</td>';
 	
