@@ -123,27 +123,12 @@ if ($user!="root") mysql_query("SET NAMES utf8;");
 
 create_concept_string();
 
-
+////////////////////////////////////////////////////////
 //bloc recuperation infos cluster
+////////////////////////////////////////////////////////
 $resultat=mysql_query("SELECT label_1,label_2,periode,concept,lettre,pseudo FROM cluster WHERE id_cluster=".$id_cluster." AND periode=\"".derange_periode($periode)."\" ORDER by periode,concept") or die ("Requête non executée.");
 while ($ligne=mysql_fetch_array($resultat)) $cluster[]=$ligne;
 
-
-
-//bloc recuperation infos termes
-$resultat=mysql_query("select id,forme_principale FROM concepts ORDER by forme_principale") or die ("Requête non executée.");
-while ($ligne=mysql_fetch_array($resultat)) $liste_termes[$ligne['id']] = $ligne['forme_principale'];
-
-//bloc recuperation infos phylogenie
-$sql="SELECT id_cluster_2,periode_2 FROM phylo WHERE id_cluster_1=\"".$id_cluster."\" AND periode_1=\"".derange_periode($my_period)."\"";
-//echo $sql;
-$resultat=mysql_query($sql) or die ("Requête non executée.");
-while ($ligne=mysql_fetch_array($resultat)) {
-	$periode_avant_temp = $ligne['periode_2']; 
-	if (intval($periode_avant_temp)> intval($my_period)){
-		$successeur[] = $ligne['id_cluster_2'];
-		$periode_apres[] =$periode_avant_temp; }
-	}
 ////////////////////////////////////////////////////////
 //// retrait des infos sur la partition courante ///////
 ////////////////////////////////////////////////////////
@@ -162,12 +147,30 @@ while ($part=mysql_fetch_array($partQuery)){
 }
 
 $sql="SELECT id_cluster FROM cluster WHERE periode='".$partition_infos[last_period_string]."' AND pseudo=".$partition_infos['id_partition']." GROUP BY id_cluster";
-$resultat=mysql_query($sql) or die ("Cluster de la dernière période non récupérés");
+$resultat=mysql_query($sql) or die ("Champ thématique de la dernière période non récupérés");
 while ($partit=mysql_fetch_array($resultat)) {
     $last_period_cluster_id=$partit[id_cluster];
 }
 
+////////////////////////////////////////////////////////
+//bloc recuperation infos termes
+////////////////////////////////////////////////////////
+$resultat=mysql_query("select id,forme_principale FROM concepts ORDER by forme_principale") or die ("Requête non executée.");
+while ($ligne=mysql_fetch_array($resultat)) $liste_termes[$ligne['id']] = $ligne['forme_principale'];
 
+////////////////////////////////////////////////////////
+//bloc recuperation infos phylogenie
+////////////////////////////////////////////////////////
+$sql="SELECT id_cluster_2,periode_2 FROM phylo WHERE id_cluster_1=\"".$id_cluster."\" AND periode_1=\"".derange_periode($my_period)."\"";
+//echo $sql;
+$resultat=mysql_query($sql) or die ("Requête non executée.");
+while ($ligne=mysql_fetch_array($resultat)) {
+	$periode_avant_temp = $ligne['periode_2']; 
+	if (intval($periode_avant_temp)> intval($my_period)){
+		$successeur[] = $ligne['id_cluster_2'];
+		$periode_apres[] =$periode_avant_temp; }
+	}
+	
 $sql="SELECT id_cluster_1,periode_1 FROM phylo WHERE id_cluster_2=\"".$id_cluster."\" AND periode_2=\"".derange_periode($periode)."\"";
 $resultat=mysql_query($sql) or die ("Requête non executée.");
 while ($ligne=mysql_fetch_array($resultat)) {
@@ -176,6 +179,7 @@ while ($ligne=mysql_fetch_array($resultat)) {
 		$predecesseur[] = $ligne['id_cluster_1']; 
 		$periode_avant[] = $ligne['periode_1']; }
 	}
+
 
 
 // max_periode_avant va contenir la période maximale parmi les clusters précédents, donc pas forcément la période immédiatement avant la période courante s'il y a des sauts dans la phylogénie et qu'il y a des prédécesseurs, mais pas à la période immédiatement précédente (distance temporelle >1)
