@@ -23,7 +23,8 @@
 		}
 		foreach(array_keys($tmpvalues) as $i) {
 			foreach(array_keys($tmpvalues[$i]) as $j) {
-					$tmp["links"][]=array("source" => $i, "target" => $j, "value" => $tmpvalues[$i][$j]); 
+				if ($tmpvalues[$i][$j]>1)
+					$tmp["links"][]=array("source" => $i, "target" => $j, "value" => $tmpvalues[$i][$j]);
 				}
 			}
 	}

@@ -366,7 +366,7 @@ if ($nav=="tempo")
 	
 	$data = array();
 	$id_concept = intval($_GET['id_concept']);
-	$sql = 'SELECT COUNT(*), Reponse.jours FROM(SELECT id_b,jours FROM socsem WHERE concept='.$id_concept.' and jours>= '.$dated.' GROUP by id_b) Reponse GROUP by jours';
+	$sql = 'SELECT COUNT(*), Reponse.jours FROM(SELECT id_b,jours FROM socsem WHERE concept='.$id_concept.' and jours>= '.$dated.' and jours<= '.$datef.' GROUP by id_b) Reponse GROUP by jours';
 	//echo $sql."<br>";
 	$resultat=mysql_query($sql);
 	$maxdata=0;
@@ -384,10 +384,11 @@ if ($nav=="tempo")
 	
 	$data_val=array_keys($data);
 	//print_r($data_val);
-	$dated=intval($data_val[0]);
-	$datef=intval($data_val[count($data_val)-1]);
+	//$dated=intval($data_val[0]);
+	//$datef=intval($data_val[count($data_val)-1]);
 	//echo '<br>'.$dated.'<br>'.$datef.'<p>';
-	
+	$datef = strval(intval($datef)+1);
+
 	include('include/chart-evol-helper.php');
 	echo $myscript;
 	
