@@ -64,7 +64,7 @@ function selective_column_tt($arraykey,$list,$plus,$minus,$main=0){
 	global $dico_termes,$my_period,$backdark,$backdarker;
 	$fz="
 		";
-	$backcolor=$backdarker;
+	$backcolor=$backdark;
 	$ncolumns=2;
 	$wcolumns=width_column($ncolumns,$arraykey)-2;
 	$columns=make_columns($ncolumns,count($arraykey));
@@ -129,30 +129,27 @@ function display_cluster_title ($s, $direction) {
 	
 	$sbox=selective_column_tt($arraykey,$s['termes'],$s['plus'],$s['minus']);
 	$sid=$s['id']."_".str_replace(" ","_",$s['periode']);
-	
+	if ($direction=="succ") { if (intval($s['fils'])>0) $sarrow='&darr;&nbsp;'; }
+	else { if (intval($s['pere'])>0) $sarrow='&uarr;&nbsp;'; }
+
 	echo '<td>';
-	$jscriptmp.=display_helper($dico_termes[$label1].' - '.$dico_termes[$label2],'<div style="font-size:x-small; font-variant:small-caps;">période: '.$speriode.'</div>'.$sbox,$sid,"magnify.png","resizable: true");
+	$jscriptmp.=display_helper('(période '.get_string_periode(arrange_periode($s['periode'])).')','<div style="font-variant:small-caps;"><a href='.$shref.'>'.$sarrow.$stitle.'</a></div><br>'.$sbox,$sid,"magnify.png","resizable: true");
 	echo '</td>';
 	echo '
 		<td class=tableitems style="font-variant:small-caps; size:small; font-style:italic;">';
 	
-	//echo '<a id="'.$sid.'" class="questionMark jTip jTip_element_'.$sid.'S jTip_width_300" name="Détails" href="'.$shref.'">';
 	echo '
 		<span onMouseOver="ShowContent(\'box'.$sid.'\'); ShowContent(\'title'.$sid.'\'); HideContent(\'mainbox\'); HideContent(\'maintitle\');" 
 			  onMouseOut="HideContent(\'box'.$sid.'\'); HideContent(\'title'.$sid.'\'); ShowContent(\'mainbox\'); ShowContent(\'maintitle\');">';
 	echo '<a id="'.$sid.'" href="'.$shref.'">';
-	echo $stitle;
-	if ($lettre!="") echo ' ('.$lettre.')';
 	
-	if ($direction=="succ") {
-		if (intval($s['fils'])>0) echo '&nbsp;&darr;';
-		}
-	else {
-		if (intval($s['pere'])>0) echo '&nbsp;&uarr;';
-		}
+	echo $sarrow.$stitle;
+	if ($lettre!="") echo ' ('.$lettre.')';
 	
 	echo '</a>';
 	echo '</span>';
+	
+	//echo '<a id="'.$sid.'" class="questionMark jTip jTip_element_'.$sid.'S jTip_width_300" name="Détails" href="'.$shref.'">';
 	//echo '<span id="'.$sid.'S" class="JT_hidden">';
 	//echo $sbox;
 	//echo '</span>';
@@ -433,8 +430,8 @@ if ($nav=="phylo"){
 		echo '
 			<span style="display:none;" id="title'.$sid.'">';
 		echo '<a href=cluster.php?id_cluster='.$s['id']."&periode=".arrange_periode($s['periode']).'&nav=phylo>';
+		if (intval($s['fils'])>0) echo '&darr;&nbsp;';
 		echo '"<b>'.remove_popo($dico_termes[$label1]).'</b> - '.remove_popo($dico_termes[$label2]).'"';
-		if (intval($s['fils'])>0) {	echo '&nbsp;&darr'; $mainloc=0; } else $mainloc=-1;
 		if ($lettre!="") echo ' ('.$lettre.')';
 		echo '</a><br>';
 		echo '</span>';
@@ -445,8 +442,8 @@ if ($nav=="phylo"){
 		echo '
 			<span style="display:none;" id="title'.$sid.'">';
 		echo '<a href=cluster.php?id_cluster='.$s['id']."&periode=".arrange_periode($s['periode']).'&nav=phylo>';
+		if (intval($s['pere'])>0) echo '&uarr;&nbsp;';
 		echo '"<b>'.remove_popo($dico_termes[$label1]).'</b> - '.remove_popo($dico_termes[$label2]).'"';
-		if (intval($s['pere'])>0) {	echo '&nbsp;&uarr'; $mainloc=0; } else $mainloc=-1;
 		if ($lettre!="") echo ' ('.$lettre.')';
 		echo '</a><br>';
 		echo '
@@ -456,7 +453,7 @@ if ($nav=="phylo"){
 	echo '</td></tr>';
 	echo '</table>';
 	
-	echo '<table width=100% rules=all>';
+	echo '<table width=100%>';
 	echo '<tr valign=top>';
 	
 	if ($ecart_pred==1) $back_avant='background-color:white;';
@@ -502,7 +499,7 @@ if ($nav=="phylo"){
 		echo '</td><td width=2%></td>';
 		}
 	
-	echo '<td width=40% align=center style="background-color:'.$backdark.'; font-size:medium; font-variant:small-caps; font-style:italic;">';
+	echo '<td width=40% align=center style="font-size:medium; font-variant:small-caps; font-style:italic;">';
 	
 	echo '<span id="mainbox">';
 	$nonlist=array();
