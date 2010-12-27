@@ -92,7 +92,8 @@ function selective_column_tt($arraykey,$list,$plus,$minus,$main=0){
 				if ($removed) $fz.="</s>";
 				if (!$added) $fz.="</b>";
 				if ($there) $fz.="</a>";
-				}	
+				}
+			else $fz.='<span style="color:'.$backcolor.';">'.remove_popo($dico_termes[$terme]).'</span>';
 			$fz.=("<br>");
 			}
 			
@@ -144,10 +145,10 @@ function display_cluster_title ($s, $direction) {
 	if ($lettre!="") echo ' ('.$lettre.')';
 	
 	if ($direction=="succ") {
-		if (intval($s['fils'])>0) echo ' &darr;';
+		if (intval($s['fils'])>0) echo '&nbsp;&darr;';
 		}
 	else {
-		if (intval($s['pere'])>0) echo ' &uarr;';
+		if (intval($s['pere'])>0) echo '&nbsp;&uarr;';
 		}
 	
 	echo '</a>';
@@ -433,7 +434,7 @@ if ($nav=="phylo"){
 			<span style="display:none;" id="title'.$sid.'">';
 		echo '<a href=cluster.php?id_cluster='.$s['id']."&periode=".arrange_periode($s['periode']).'&nav=phylo>';
 		echo '"<b>'.remove_popo($dico_termes[$label1]).'</b> - '.remove_popo($dico_termes[$label2]).'"';
-		if (intval($s['fils'])>0) {	echo '&darr'; $mainloc=0; } else $mainloc=-1;
+		if (intval($s['fils'])>0) {	echo '&nbsp;&darr'; $mainloc=0; } else $mainloc=-1;
 		if ($lettre!="") echo ' ('.$lettre.')';
 		echo '</a><br>';
 		echo '</span>';
@@ -445,7 +446,7 @@ if ($nav=="phylo"){
 			<span style="display:none;" id="title'.$sid.'">';
 		echo '<a href=cluster.php?id_cluster='.$s['id']."&periode=".arrange_periode($s['periode']).'&nav=phylo>';
 		echo '"<b>'.remove_popo($dico_termes[$label1]).'</b> - '.remove_popo($dico_termes[$label2]).'"';
-		if (intval($s['pere'])>0) {	echo '&uarr'; $mainloc=0; } else $mainloc=-1;
+		if (intval($s['pere'])>0) {	echo '&nbsp;&uarr'; $mainloc=0; } else $mainloc=-1;
 		if ($lettre!="") echo ' ('.$lettre.')';
 		echo '</a><br>';
 		echo '
