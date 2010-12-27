@@ -235,7 +235,7 @@ if ($lettre_current!="") $titleheader.='('.$lettre_current.') ';
 $titleheader.='('.get_short_string_periode($my_period).') [champ]';
 
 if ($nav=="cooc" or $nav=="soc" or $nav=="socsem") $jsprotovis="TRUE";
-include("include/header_cluster.php");
+include("include/header.php");
 include("banner.php");
 
 
