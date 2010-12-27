@@ -168,6 +168,14 @@ tr.subbanner {
   border-bottom-width:1px;
 }
 
+hr.dashed {
+	background: transparent;
+	color: transparent;
+	border-left: none;
+	border-right: none;
+	border-top: none;
+	border-bottom: 1px dashed #000;
+}
 
 table.subbanner {
   color:SlateGray;

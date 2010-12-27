@@ -110,6 +110,45 @@ function selective_column_tt($arraykey,$list,$plus,$minus,$main=0){
 }
 
 
+//
+// affiche le titre d'un cluster avec sa période et son pop-up
+//
+
+function display_cluster_title ($s) {
+	global $dico_termes,$mainloc,$arraykey,$last_display_periode;
+	$label1=$s['label1'];
+	$label2=$s['label2'];
+	$lettre=$s['lettre'];
+	$shref='cluster.php?id_cluster='.$s['id']."&periode=".arrange_periode($s['periode']).'&nav=phylo';
+	if ($last_display_periode!=$s['periode'] && $last_display_periode!="") echo '<tr><td></td><td><hr class="dashed"></td></tr>';
+	
+	echo '<tr valign=top>';
+	echo '<td class=commentitems style="font-weight:normal; font-variant:normal; font-size:xx-small;">';
+	if ($last_display_periode!=$s['periode']) 
+		echo get_short_string_periode(arrange_periode($s['periode']),0,1);
+	
+	echo '</td>';
+	echo '
+		<td class=tableitems style="font-variant:small-caps; size:small; font-style:italic;">';
+	
+	$sid=$s['id']."_".str_replace(" ","_",$s['periode']);
+	echo '<a id="'.$sid.'" class="questionMark jTip jTip_element_'.$sid.'S jTip_width_300" name="Détails" href="'.$shref.'">';
+	echo '"<b>'.remove_popo($dico_termes[$label1]).'</b> - '.remove_popo($dico_termes[$label2]).'"';
+	if ($lettre!="") echo ' ('.$lettre.')';
+	if (intval($s['fils'])>0) echo ' &darr;';
+	echo '</a>';
+	echo '<span id="'.$sid.'S" class="JT_hidden">';
+	echo selective_column_tt($arraykey,$s['termes'],$s['plus'],$s['minus'],$mainloc);
+	echo '</span>';
+	
+	echo '</td>';
+	
+	echo '</tr></td>';
+	
+	$last_display_periode=$s['periode'];
+}
+
+
 if(isset( $_GET['id_cluster'])) $id_cluster = intval($_GET['id_cluster']); else die("<h1>Agrégat non spécifié.</h1>");
 if(isset( $_GET['periode'])) $my_period=$_GET['periode']; else die("<h1>Agrégat non spécifié.</h1>");
 if(isset( $_GET['nav'])) $nav=$_GET['nav']; else $nav="phylo";
@@ -371,8 +410,14 @@ if ($nav=="phylo"){
 		
 	if ($nopred) echo "<b>(pas de prédécesseur)</b>";
 	else {
-		echo '<b>période antérieure</b>';
-		echo '<br><div class=commentitems style="font-weight:normal; font-variant:normal; font-size:xx-small;">('.get_string_periode(arrange_periode($max_periode_avant)).")</div><br>";
+		//echo '<b>période antérieure</b>';
+		//echo '<br><div class=commentitems style="font-weight:normal; font-variant:normal; font-size:xx-small;">('.get_string_periode(arrange_periode($max_periode_avant)).")</div><br>";
+		
+		echo '<table width=100%>';
+		$last_display_periode="";
+		foreach ($pred as $p) display_cluster_title($p);
+		echo '</table><hr>';
+		
 		echo '<table class=commentitems align=center width=100% cellspacing=0 cellpadding=5 style="font-variant:small-caps; size:small; font-style:italic;">';
 		foreach ($pred as $p) {
 			$label1=$p['label1'];
@@ -408,8 +453,6 @@ if ($nav=="phylo"){
 	
 	echo '<td width=40% align=center style="background-color:'.$backdark.'; font-size:medium; font-variant:small-caps; font-style:italic;">';
 	
-	//echo '<b>période en cours</b>';
-	//echo '<br><div class=commentitems style="font-weight:normal; font-variant:normal; font-size:xx-small;">('.get_string_periode($periode).")</div><br>";
 	echo '"<b>'.$label1_current.'</b> - '.$label2_current.'"';
 	if ($lettre_current!="") echo ' ('.$lettre_current.')';
  	echo '<br>';
@@ -428,47 +471,11 @@ if ($nav=="phylo"){
 	echo '<td width='.(30-4*$ecart_succ).'% align=center class=tableitems style="font-variant:small-caps; size:small; font-style:italic;'.$back_apres.'">';	
 	if ($nosucc) echo "<b>(pas de successeur)</b>"; 
 	else {
-		//echo '<b>période ultérieure</b>';
-		//echo '<br><div class=commentitems style="font-weight:normal; font-variant:normal; font-size:xx-small;">('.get_string_periode(arrange_periode($min_periode_apres)).")</div><br>";
-
-		//echo '<hr>';
-		echo '<table>';
-		foreach ($succ as $s)
-			{
-			$label1=$s['label1'];
-			$label2=$s['label2'];
-			$lettre=$s['lettre'];
-			$shref='cluster.php?id_cluster='.$s['id']."&periode=".arrange_periode($s['periode']).'&nav=phylo';
-
-			echo '<tr valign=top>';
-			echo '<td class=commentitems style="font-weight:normal; font-variant:normal; font-size:xx-small;">';
-			echo get_short_string_periode(arrange_periode($s['periode']),0,1);
-			echo '</td>';
-			
-			echo '
-				<td class=tableitems style="font-variant:small-caps; size:small; font-style:italic;">';
-			//echo '<a href='.$shref.'>';
-			
-			$sid=$s['id']."_".str_replace(" ","_",$s['periode']);
-			echo '<a id="'.$sid.'" class="questionMark jTip jTip_element_'.$sid.'S jTip_width_300" name="Détails" href="'.$shref.'">';
-			echo '"<b>'.remove_popo($dico_termes[$label1]).'</b> - '.remove_popo($dico_termes[$label2]).'"';
-			if ($lettre!="") echo ' ('.$lettre.')';
-			if (intval($s['fils'])>0) echo ' &darr;';
-			echo '</a>';
-			echo '<span id="'.$sid.'S" class="JT_hidden">';
-			echo selective_column_tt($arraykey,$s['termes'],$s['plus'],$s['minus'],$mainloc);
-			echo '</span>';
-
-			
-			
-			echo '</td>';
-			
-			echo '</tr></td>';
-			}
-			
-		echo '</table>';
-			
-		echo '<hr>';
+		echo '<table width=100%>';
+		$last_display_periode="";
+		foreach ($succ as $s) display_cluster_title($s);
+		echo '</table><hr>';
+		
 		echo '<table class=commentitems align=center width=100% cellspacing=0  cellpadding=5 style="font-variant:small-caps; size:small; font-style:italic;">';
 		foreach ($succ as $s) {
 			$label1=$s['label1'];
