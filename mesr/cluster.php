@@ -123,27 +123,12 @@ if ($user!="root") mysql_query("SET NAMES utf8;");
 
 create_concept_string();
 
-
+////////////////////////////////////////////////////////
 //bloc recuperation infos cluster
+////////////////////////////////////////////////////////
 $resultat=mysql_query("SELECT label_1,label_2,periode,concept,lettre,pseudo FROM cluster WHERE id_cluster=".$id_cluster." AND periode=\"".derange_periode($periode)."\" ORDER by periode,concept") or die ("Requête non executée.");
 while ($ligne=mysql_fetch_array($resultat)) $cluster[]=$ligne;
 
-
-
-//bloc recuperation infos termes
-$resultat=mysql_query("select id,forme_principale FROM concepts ORDER by forme_principale") or die ("Requête non executée.");
-while ($ligne=mysql_fetch_array($resultat)) $liste_termes[$ligne['id']] = $ligne['forme_principale'];
-
-//bloc recuperation infos phylogenie
-$sql="SELECT id_cluster_2,periode_2 FROM phylo WHERE id_cluster_1=\"".$id_cluster."\" AND periode_1=\"".derange_periode($my_period)."\"";
-//echo $sql;
-$resultat=mysql_query($sql) or die ("Requête non executée.");
-while ($ligne=mysql_fetch_array($resultat)) {
-	$periode_avant_temp = $ligne['periode_2']; 
-	if (intval($periode_avant_temp)> intval($my_period)){
-		$successeur[] = $ligne['id_cluster_2'];
-		$periode_apres[] =$periode_avant_temp; }
-	}
 ////////////////////////////////////////////////////////
 //// retrait des infos sur la partition courante ///////
 ////////////////////////////////////////////////////////
@@ -155,19 +140,40 @@ while ($partit=mysql_fetch_array($resultat)) {
     $id_partition=$partit[pseudo];
 }
 
+// Infos de la partitions concernée
 $sql="SELECT * FROM partitions WHERE id_partition=".$id_partition;
 $partQuery=mysql_query($sql);
 while ($part=mysql_fetch_array($partQuery)){
     $partition_infos=$part;
 }
 
-$sql="SELECT id_cluster FROM cluster WHERE periode='".$partition_infos[last_period_string]."' AND pseudo=".$partition_infos['id_partition']." GROUP BY id_cluster";
-$resultat=mysql_query($sql) or die ("Cluster de la dernière période non récupérés");
+// Récupère tous les clusters de la dernière période
+$last_period_clusters=array();
+$sql="SELECT * FROM cluster WHERE periode='".$partition_infos[last_period_string]."' AND pseudo=".$partition_infos['id_partition']." GROUP BY id_cluster";
+$resultat=mysql_query($sql) or die ("Champ thématique de la dernière période non récupérés");
 while ($partit=mysql_fetch_array($resultat)) {
-    $last_period_cluster_id=$partit[id_cluster];
+    array_push($last_period_clusters,$partit);
 }
 
+////////////////////////////////////////////////////////
+//bloc recuperation infos termes
+////////////////////////////////////////////////////////
+$resultat=mysql_query("select id,forme_principale FROM concepts ORDER by forme_principale") or die ("Requête non executée.");
+while ($ligne=mysql_fetch_array($resultat)) $liste_termes[$ligne['id']] = $ligne['forme_principale'];
 
+////////////////////////////////////////////////////////
+//bloc recuperation infos phylogenie
+////////////////////////////////////////////////////////
+$sql="SELECT id_cluster_2,periode_2 FROM phylo WHERE id_cluster_1=\"".$id_cluster."\" AND periode_1=\"".derange_periode($my_period)."\"";
+//echo $sql;
+$resultat=mysql_query($sql) or die ("Requête non executée.");
+while ($ligne=mysql_fetch_array($resultat)) {
+	$periode_avant_temp = $ligne['periode_2']; 
+	if (intval($periode_avant_temp)> intval($my_period)){
+		$successeur[] = $ligne['id_cluster_2'];
+		$periode_apres[] =$periode_avant_temp; }
+	}
+	
 $sql="SELECT id_cluster_1,periode_1 FROM phylo WHERE id_cluster_2=\"".$id_cluster."\" AND periode_2=\"".derange_periode($periode)."\"";
 $resultat=mysql_query($sql) or die ("Requête non executée.");
 while ($ligne=mysql_fetch_array($resultat)) {
@@ -176,6 +182,7 @@ while ($ligne=mysql_fetch_array($resultat)) {
 		$predecesseur[] = $ligne['id_cluster_1']; 
 		$periode_avant[] = $ligne['periode_1']; }
 	}
+
 
 
 // max_periode_avant va contenir la période maximale parmi les clusters précédents, donc pas forcément la période immédiatement avant la période courante s'il y a des sauts dans la phylogénie et qu'il y a des prédécesseurs, mais pas à la période immédiatement précédente (distance temporelle >1)
@@ -235,21 +242,26 @@ include("banner.php");
 ////////////////////////////
 /// MODULE DE NAVIGATION ///
 ////////////////////////////
-
+if (count($last_period_clusters)==1){
+$last_period_clusters=$last_period_clusters[0];
+$fils_thematique_htlm='<a href="'.$last_period_clusters[attribut].'"><font color='.$backdarker.'>'.remove_popo(substr($partition_infos[label],0,-1)).'</font></a></span>';
+}else{
+$last_period_clusters=$last_period_clusters[0];
+$last_period_clusters=$last_period_clusters[0];
+$fils_thematique_htlm='<a href="'.$last_period_clusters[attribut].'"><font color='.$backdarker.'>'.remove_popo(substr($partition_infos[label],0,-1)).'</font></a></span>';
+}
 
 echo '<table width=100% class=tableitems>';
-echo '<tr valign=top><td width=2.5%></td><td><h2 class=subtitle>champ thématique "<i>'.remove_popo($label1_current).'</i><i style="font-weight:normal;"> - '.remove_popo($label2_current).'" ';
+echo '<tr valign=top><td width=2.5%></td><td>';
+echo '<table width=100% class=subtitle><tr><td align=left>champ thématique "<i>'.remove_popo($label1_current).'</i><i style="font-weight:normal;"> - '.remove_popo($label2_current).'" ';
 if ($lettre_current!="") echo '('.$lettre_current.')';
 echo '</i>';
-echo ' &nbsp; <b style="font-size:medium; color:#666666;">[<a href='.$googletext.'><img src='.$hrefroot.$racine.'/images/googleG.png alt="(google)" valign=middle width=18 style="border-style:none;"></a>]</b>';
 echo '<br/><span style="font-size: x-small;">fil thématique: ';
-echo '<a href="cluster.php?id_cluster='.$last_period_cluster_id.'&periode='.str_replace(' ','-',$partition_infos['last_period_string']).'">';
-echo '<font color='.$backdarker.'>';
-echo remove_popo(substr($partition_infos[label],0,-1)).'</font></a></span>';
-echo '</h2></td><td width=2.5%></td></tr>';
-//echo '<tr valign=center halign=center><td ><span style="font-size: x-small;">Thématique : '.substr($partition_infos[label],0,-1).'</span></td></tr>';
+echo $fils_thematique_htlm;
+echo '<td align=right valign=top><b style="font-size:medium; color:#666666;">[<a href='.$googletext.'><img src='.$hrefroot.$racine.'/images/googleG.png alt="(google)" valign=middle width=18 style="border-style:none;"></a>]</b></td>';
+echo '</tr></table>';
+echo '</td><td width=2.5%></td></tr>';
 echo '</table>';
-
 echo "<table width=100%><tr valign=top><td width=2.5%></td><td width=95%>";
 
 	echo '<table width=100% class=specialsubbanner valign=top>';
