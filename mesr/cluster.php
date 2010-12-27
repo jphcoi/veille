@@ -35,7 +35,8 @@ function list_clusters($periodes,$clusters,$okperiode)
 	global $list_of_concepts;
 	$list=array();
 	for($i=0;$i<count($clusters);$i++){
-		if ($periodes[$i]==$okperiode) {
+		//if ($periodes[$i]==$okperiode) 
+		{
 			$localcluster=array();
 			$resultat=mysql_query("SELECT label_1,label_2,concept,nb_sons,nb_fathers,lettre FROM cluster WHERE id_cluster=".$clusters[$i]." AND periode=\"".derange_periode($periodes[$i])."\" ORDER by periode,concept") or die ("Requête non executée.");
 			while ($ligne=mysql_fetch_array($resultat)) {
@@ -392,6 +393,21 @@ if ($nav=="phylo"){
 		echo '<b>période ultérieure</b>';
 		echo '<br><div class=commentitems style="font-weight:normal; font-variant:normal; font-size:xx-small;">('.get_string_periode(arrange_periode($min_periode_apres)).")</div><br>";
 	
+		echo '<ul>';
+		foreach ($succ as $s)
+			{
+			$label1=$s['label1'];
+			$label2=$s['label2'];
+			$lettre=$s['lettre'];
+			echo '<li>';
+			
+			$shref='href=cluster.php?id_cluster='.$s['id']."&periode=".arrange_periode($s['periode']).'&nav=phylo';
+			
+			echo '<a '.$shref.'>';
+			echo '</li>';
+			}
+		echo '</ul>';
+			
 		echo '<table class=commentitems align=center width=100% cellspacing=0  cellpadding=5 style="font-variant:small-caps; size:small; font-style:italic;">';
 		foreach ($succ as $s) {
 			$label1=$s['label1'];

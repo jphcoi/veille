@@ -241,8 +241,8 @@ if ($projection=="") echo 'générale des champs thématiques';
 if ($projection=="concept") echo 'projetée sur le terme "<i>'.$dico_termes[$id_concept].'</i>"';
 if ($projection=="source") echo 'projetée sur la source "<i>'.$dico_auteurs[$id_source].'</i>"';
 
-
-$jscriptmp=display_helper(
+$jscriptmp="";
+$jscriptmp.=display_helper(
 	'Raccourcis clavier (après avoir cliqué sur la carte)',
 	'<ul style="font-size:small;">
 		<li><i>déplacement haut, bas, gauche droite:</i><br>
