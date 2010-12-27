@@ -38,13 +38,20 @@ include("banner.php");
 $resultat=mysql_query("select id,forme_principale FROM concepts ORDER by forme_principale") or die ("Requêtesq non executée.");
 while ($ligne=mysql_fetch_array($resultat)) $liste_termes[$ligne['id']] = $ligne['forme_principale'];
 
-echo '<table width=100% class=tableitems>';
 $googletext="http://www.google.com/search?q=".str_replace(" ","+",remove_popo($concept[0]))."&ie=UTF-8&oe=UTF-8";
 $wikipediatext="http://fr.wikipedia.org/w/index.php?search=".str_replace(" ","_",remove_popo($concept[0]))."&go=Lire";
+
+echo '<table width=100% class=tableitems>';
 echo '<tr valign=top><td width=2.5%></td><td>';
 echo '<table width=100% class=subtitle><tr>';
 echo '<td align=left>';
 echo 'terme "<i>'.remove_popo($concept[0]).'</i>"';//.$concept[0];
+echo '</td>';
+echo '<td align=right>';
+echo '<font style="color:#333333;">';
+echo '[<a href='.$googletext.'><img src='.$hrefroot.$racine.'/images/googleG.png alt="(google)" valign=bottom width=17 style="border-style:none;"></a>]';
+echo '[<a href='.$wikipediatext.'><img src='.$hrefroot.$racine.'/images/wikipediaW.png alt="(wikipedia)" valign=bottom width=17 style="border-style:none;"></a>]';
+echo '</font>';
 echo '</td>';
 echo '</tr></table>';
 echo '</h2></td><td width=2.5%></td></tr></table>';
@@ -76,11 +83,6 @@ if ($nav=="source") echo $select_string.$sourcestring."</b>"; else echo $href_st
 //echo " - ";
 //if ($nav=="composition") echo $select_string.$composition."</b>"; else echo $href_string."composition>".$sourcestring."</a>";
 
-echo '</td><td align=right>';
-echo '<font style="color:#333333;">';
-echo '[<a href='.$googletext.'><img src='.$hrefroot.$racine.'/images/googleG.png alt="(google)" valign=bottom width=17 style="border-style:none;"></a>]';
-echo '[<a href='.$wikipediatext.'><img src='.$hrefroot.$racine.'/images/wikipediaW.png alt="(wikipedia)" valign=bottom width=17 style="border-style:none;"></a>]';
-echo '</font>';
 echo '</td>';
 echo '</tr></table>';
 echo '</h2></td><td width=2.5%></td></tr></table>';

@@ -222,6 +222,7 @@ if ($check2 != 0) {
 				if ($vue=="entree_sources.php") $vue_txt='liste des sources';
 				if ($vue=="entree_clusters.php") $vue_txt='liste des clusters';
 				if ($vue=="entree_termes.php") $vue_txt='liste des termes';
+				if ($vue=="phylo.php") $vue_txt='liste des fils thématiques';
 				if ($vue=="global.php") $vue_txt='carte';
 				
 				echo '<i>'.$vue_txt.'</i>';

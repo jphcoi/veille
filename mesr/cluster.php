@@ -35,7 +35,8 @@ function list_clusters($periodes,$clusters,$okperiode)
 	global $list_of_concepts;
 	$list=array();
 	for($i=0;$i<count($clusters);$i++){
-		if ($periodes[$i]==$okperiode) {
+		//if ($periodes[$i]==$okperiode) 
+		{
 			$localcluster=array();
 			$resultat=mysql_query("SELECT label_1,label_2,concept,nb_sons,nb_fathers,lettre FROM cluster WHERE id_cluster=".$clusters[$i]." AND periode=\"".derange_periode($periodes[$i])."\" ORDER by periode,concept") or die ("Requête non executée.");
 			while ($ligne=mysql_fetch_array($resultat)) {
@@ -164,7 +165,7 @@ while ($ligne=mysql_fetch_array($resultat)) $liste_termes[$ligne['id']] = $ligne
 ////////////////////////////////////////////////////////
 //bloc recuperation infos phylogenie
 ////////////////////////////////////////////////////////
-$sql="SELECT id_cluster_2,periode_2 FROM phylo WHERE id_cluster_1=\"".$id_cluster."\" AND periode_1=\"".derange_periode($my_period)."\"";
+$sql="SELECT id_cluster_2,periode_2 FROM phylo WHERE id_cluster_1=\"".$id_cluster."\" AND periode_1=\"".derange_periode($my_period)."\" ORDER BY periode_2";
 //echo $sql;
 $resultat=mysql_query($sql) or die ("Requête non executée.");
 while ($ligne=mysql_fetch_array($resultat)) {
@@ -174,7 +175,7 @@ while ($ligne=mysql_fetch_array($resultat)) {
 		$periode_apres[] =$periode_avant_temp; }
 	}
 	
-$sql="SELECT id_cluster_1,periode_1 FROM phylo WHERE id_cluster_2=\"".$id_cluster."\" AND periode_2=\"".derange_periode($periode)."\"";
+$sql="SELECT id_cluster_1,periode_1 FROM phylo WHERE id_cluster_2=\"".$id_cluster."\" AND periode_2=\"".derange_periode($periode)."\" ORDER BY periode_1 DESC";
 $resultat=mysql_query($sql) or die ("Requête non executée.");
 while ($ligne=mysql_fetch_array($resultat)) {
 	$periode_apres_temp = $ligne['periode_1'];
@@ -234,7 +235,7 @@ if ($lettre_current!="") $titleheader.='('.$lettre_current.') ';
 $titleheader.='('.get_short_string_periode($my_period).') [champ]';
 
 if ($nav=="cooc" or $nav=="soc" or $nav=="socsem") $jsprotovis="TRUE";
-include("include/header_cluster.php");
+include("include/header.php");
 include("banner.php");
 
 
@@ -282,14 +283,15 @@ echo '</div>';
 
 
 echo '<table width=100% class=tableitems>';
-echo '<tr valign=top><td width=2.5%></td><td><h2 class=subtitle>champ thématique "<i>'.remove_popo($label1_current).'</i><i style="font-weight:normal;"> - '.remove_popo($label2_current).'" ';
+echo '<tr valign=top><td width=2.5%></td><td>';
+echo '<table width=100% class=subtitle><tr><td align=left>champ thématique "<i>'.remove_popo($label1_current).'</i><i style="font-weight:normal;"> - '.remove_popo($label2_current).'" ';
 if ($lettre_current!="") echo '('.$lettre_current.')';
 echo '</i>';
-echo ' &nbsp; <b style="font-size:medium; color:#666666;">[<a href='.$googletext.'><img src='.$hrefroot.$racine.'/images/googleG.png alt="(google)" valign=middle width=18 style="border-style:none;"></a>]</b>';
 echo '<br/><span style="font-size: x-small;">fil thématique: ';
 echo $fils_thematique_htlm;
-echo '</h2></td><td width=2.5%></td></tr>';
-//echo '<tr valign=center halign=center><td ><span style="font-size: x-small;">Thématique : '.substr($partition_infos[label],0,-1).'</span></td></tr>';
+echo '<td align=right valign=top><b style="font-size:medium; color:#666666;">[<a href='.$googletext.'><img src='.$hrefroot.$racine.'/images/googleG.png alt="(google)" valign=middle width=18 style="border-style:none;"></a>]</b></td>';
+echo '</tr></table>';
+echo '</td><td width=2.5%></td></tr>';
 echo '</table>';
 echo "<table width=100%><tr valign=top><td width=2.5%></td><td width=95%>";
 
@@ -418,9 +420,35 @@ if ($nav=="phylo"){
 	echo '<td width='.(30-4*$ecart_succ).'% align=center class=tableitems style="font-variant:small-caps; size:small; font-style:italic;'.$back_apres.'">';	
 	if ($nosucc) echo "<b>(pas de successeur)</b>"; 
 	else {
-		echo '<b>période ultérieure</b>';
-		echo '<br><div class=commentitems style="font-weight:normal; font-variant:normal; font-size:xx-small;">('.get_string_periode(arrange_periode($min_periode_apres)).")</div><br>";
-	
+		//echo '<b>période ultérieure</b>';
+		//echo '<br><div class=commentitems style="font-weight:normal; font-variant:normal; font-size:xx-small;">('.get_string_periode(arrange_periode($min_periode_apres)).")</div><br>";
+
+		//echo '<hr>';
+		echo '<table>';
+		foreach ($succ as $s)
+			{
+			$label1=$s['label1'];
+			$label2=$s['label2'];
+			$lettre=$s['lettre'];
+			$shref='href=cluster.php?id_cluster='.$s['id']."&periode=".arrange_periode($s['periode']).'&nav=phylo';
+
+			echo '<tr  valign=top>';
+			echo '<td class=commentitems style="font-weight:normal; font-variant:normal; font-size:xx-small;">';
+			echo get_string_periode(arrange_periode($s['periode']));
+			echo '</td>';
+			
+			echo '<td class=tableitems style="font-variant:small-caps; size:small; font-style:italic;">';
+			echo '<a '.$shref.'>';
+			echo '"<b>'.remove_popo($dico_termes[$label1]).'</b> - '.remove_popo($dico_termes[$label2]).'"';
+			echo '</a>';
+			echo '</td>';
+			
+			echo '</tr></td>';
+			}
+			
+		echo '</table>';
+			
+		echo '<hr>';
 		echo '<table class=commentitems align=center width=100% cellspacing=0  cellpadding=5 style="font-variant:small-caps; size:small; font-style:italic;">';
 		foreach ($succ as $s) {
 			$label1=$s['label1'];
@@ -430,10 +458,8 @@ if ($nav=="phylo"){
 			echo '<td align=center>';
 			echo '<a href=cluster.php?id_cluster='.$s['id']."&periode=".arrange_periode($s['periode']).'&nav=phylo>';
 			
-			$futur = intval($s['fils']);
-			
 			echo '"<b>'.remove_popo($dico_termes[$label1]).'</b> - '.remove_popo($dico_termes[$label2]).'"';
-			if ($futur>0)
+			if (intval($s['fils'])>0)
 			{
 				echo '&darr';
 				$mainloc=0;
