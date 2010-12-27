@@ -252,14 +252,15 @@ $fils_thematique_htlm='<a href="'.$last_period_clusters[attribut].'"><font color
 }
 
 echo '<table width=100% class=tableitems>';
-echo '<tr valign=top><td width=2.5%></td><td><h2 class=subtitle>champ thématique "<i>'.remove_popo($label1_current).'</i><i style="font-weight:normal;"> - '.remove_popo($label2_current).'" ';
+echo '<tr valign=top><td width=2.5%></td><td>';
+echo '<table class=subtitle><tr><td align=left>champ thématique "<i>'.remove_popo($label1_current).'</i><i style="font-weight:normal;"> - '.remove_popo($label2_current).'" ';
 if ($lettre_current!="") echo '('.$lettre_current.')';
 echo '</i>';
-echo ' &nbsp; <b style="font-size:medium; color:#666666;">[<a href='.$googletext.'><img src='.$hrefroot.$racine.'/images/googleG.png alt="(google)" valign=middle width=18 style="border-style:none;"></a>]</b>';
 echo '<br/><span style="font-size: x-small;">fil thématique: ';
 echo $fils_thematique_htlm;
-echo '</h2></td><td width=2.5%></td></tr>';
-//echo '<tr valign=center halign=center><td ><span style="font-size: x-small;">Thématique : '.substr($partition_infos[label],0,-1).'</span></td></tr>';
+echo '<td align=right valign=top><b style="font-size:medium; color:#666666;">[<a href='.$googletext.'><img src='.$hrefroot.$racine.'/images/googleG.png alt="(google)" valign=middle width=18 style="border-style:none;"></a>]</b></td>';
+echo '</tr></table>';
+echo '</td><td width=2.5%></td></tr>';
 echo '</table>';
 echo "<table width=100%><tr valign=top><td width=2.5%></td><td width=95%>";
 
