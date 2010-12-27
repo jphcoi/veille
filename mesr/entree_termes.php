@@ -14,7 +14,7 @@ if ($user!="root") mysql_query("SET NAMES utf8;");
 
 $periode_concepts=array();
 $periode_brute=array();
-$resultat=mysql_query("select concept,periode,id_cluster FROM cluster ORDER by periode") or die ("<b>Requête non exécutée (récupération des périodes pour les concepts)</b>.");
+$resultat=mysql_query("select concept,periode FROM cluster ORDER by periode") or die ("<b>Requête non exécutée (récupération des périodes pour les concepts)</b>.");
 while ($ligne=mysql_fetch_array($resultat)) {
 	$id=$ligne['concept'];
 	$per=$ligne['periode'];

@@ -243,6 +243,7 @@ include("banner.php");
 /// MODULE DE NAVIGATION ///
 ////////////////////////////
 if (count($last_period_clusters)==1){
+print_r($last_period_clusters);
 $last_period_clusters=$last_period_clusters[0];
 $fils_thematique_htlm='<a href="'.$last_period_clusters[attribut].'"><font color='.$backdarker.'>'.remove_popo(substr($partition_infos[label],0,-1)).'</font></a></span>';
 }else{

@@ -1,4 +1,5 @@
 <?
+$jscriptmp=''; // string temporaire pour afficher les pop up box
 echo '<html>';
 echo '<head>';
 if (!isset($titleheader)) $titleheader="v0.2";
