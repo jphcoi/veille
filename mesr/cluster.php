@@ -155,16 +155,19 @@ while ($partit=mysql_fetch_array($resultat)) {
     $id_partition=$partit[pseudo];
 }
 
+// Infos de la partitions concernée
 $sql="SELECT * FROM partitions WHERE id_partition=".$id_partition;
 $partQuery=mysql_query($sql);
 while ($part=mysql_fetch_array($partQuery)){
     $partition_infos=$part;
 }
 
-$sql="SELECT id_cluster FROM cluster WHERE periode='".$partition_infos[last_period_string]."' AND pseudo=".$partition_infos['id_partition']." GROUP BY id_cluster";
+// Récupère tous les clusters de la dernière période
+$last_period_clusters=array();
+$sql="SELECT * FROM cluster WHERE periode='".$partition_infos[last_period_string]."' AND pseudo=".$partition_infos['id_partition']." GROUP BY id_cluster";
 $resultat=mysql_query($sql) or die ("Cluster de la dernière période non récupérés");
 while ($partit=mysql_fetch_array($resultat)) {
-    $last_period_cluster_id=$partit[id_cluster];
+    array_push($last_period_clusters,$partit);
 }
 
 
@@ -235,7 +238,14 @@ include("banner.php");
 ////////////////////////////
 /// MODULE DE NAVIGATION ///
 ////////////////////////////
-
+if (count($last_period_clusters)==1){
+$last_period_clusters=$last_period_clusters[0];
+$fils_thematique_htlm='<a href="'.$last_period_clusters[attribut].'"><font color='.$backdarker.'>'.remove_popo(substr($partition_infos[label],0,-1)).'</font></a></span>';
+}else{
+$last_period_clusters=$last_period_clusters[0];
+$last_period_clusters=$last_period_clusters[0];
+$fils_thematique_htlm='<a href="'.$last_period_clusters[attribut].'"><font color='.$backdarker.'>'.remove_popo(substr($partition_infos[label],0,-1)).'</font></a></span>';
+}
 
 echo '<table width=100% class=tableitems>';
 echo '<tr valign=top><td width=2.5%></td><td><h2 class=subtitle>champ thématique "<i>'.remove_popo($label1_current).'</i><i style="font-weight:normal;"> - '.remove_popo($label2_current).'" ';
@@ -243,13 +253,10 @@ if ($lettre_current!="") echo '('.$lettre_current.')';
 echo '</i>';
 echo ' &nbsp; <b style="font-size:medium; color:#666666;">[<a href='.$googletext.'><img src='.$hrefroot.$racine.'/images/googleG.png alt="(google)" valign=middle width=18 style="border-style:none;"></a>]</b>';
 echo '<br/><span style="font-size: x-small;">fil thématique: ';
-echo '<a href="cluster.php?id_cluster='.$last_period_cluster_id.'&periode='.str_replace(' ','-',$partition_infos['last_period_string']).'">';
-echo '<font color='.$backdarker.'>';
-echo remove_popo(substr($partition_infos[label],0,-1)).'</font></a></span>';
+echo $fils_thematique_htlm;
 echo '</h2></td><td width=2.5%></td></tr>';
 //echo '<tr valign=center halign=center><td ><span style="font-size: x-small;">Thématique : '.substr($partition_infos[label],0,-1).'</span></td></tr>';
 echo '</table>';
-
 echo "<table width=100%><tr valign=top><td width=2.5%></td><td width=95%>";
 
 	echo '<table width=100% class=specialsubbanner valign=top>';
