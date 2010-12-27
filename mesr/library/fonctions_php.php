@@ -624,21 +624,22 @@ function get_date_since($jour)
 		return $dt;
 	}
 
-function get_date($date_depart,$jour)
+function get_date($date_depart,$jour,$short=0)
 { 
 	global $conf;
 	if ($jour<1000)
 	{
-	$univ_time_begin = 	"2009-12-31";
-		
-	setlocale (LC_TIME, 'fr_FR.UTF8','fra');	
-	$date_depart = strtotime($univ_time_begin);
-	eval( '$newd = date(\'n/j/Y\', strtotime(\'+'.$jour.' days\',$date_depart));');
-	$date = date('n/j/Y', strtotime('+7 days', $date_depart));
-	$special_date_string="%e";
-	//version David / Windows: %#d remplace %e
-	if ($conf==3) { $special_date_string="%#d";}
-	$dt = strftime($special_date_string." %b", strtotime($newd));  }
+		$univ_time_begin = 	"2009-12-31";
+		setlocale (LC_TIME, 'fr_FR.UTF8','fra');	
+		$date_depart = strtotime($univ_time_begin);
+		eval( '$newd = date(\'n/j/Y\', strtotime(\'+'.$jour.' days\',$date_depart));');
+		$date = date('n/j/Y', strtotime('+7 days', $date_depart));
+		$special_date_string="%e";
+		//version David / Windows: %#d remplace %e
+		if ($conf==3) { $special_date_string="%#d";}
+		if ($short==0) { $dt=strftime($special_date_string." %b", strtotime($newd));}
+			else { $dt=strftime("%d/%m",strtotime($newd));}
+	}
 	else
 	{
 		$dt = $jour;
@@ -670,13 +671,13 @@ function get_string_periode($periode,$brk=0)
 	return 'du '.$dt1.'au '.$dt2;
 }
 
-function get_short_string_periode($periode,$brk=0)
+function get_short_string_periode($periode,$brk=0,$short=0)
 {
 	if ($periode==-1) return ("***");
 	$date_depart=$univ_time_begin;
 	$periodes = explode('-',$periode);
-	$dt1 = get_date($date_depart,$periodes[0]);
-	$dt2 = get_date($date_depart,$periodes[1]);
+	$dt1 = get_date($date_depart,$periodes[0],$short);
+	$dt2 = get_date($date_depart,$periodes[1],$short);
 	if ($brk!=0) $dt1=$dt1.'<br>'; else $dt1=$dt1.'';
 	return str_replace("- ","-",$dt1.'-'.$dt2);
 }

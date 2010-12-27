@@ -60,6 +60,55 @@ function list_clusters($periodes,$clusters,$okperiode)
 // affiche une table de champs thématiques prédécesseurs, principal ou successeurs, rangés en colonnes de termes
 //
 
+function selective_column_tt($arraykey,$list,$plus,$minus,$main=0){
+	global $dico_termes,$my_period,$backdark,$backdarker;
+	$fz="";
+	if ($main>0) $backcolor=$backdarker; 
+	if ($main==0) $backcolor=$backdark;
+	$ncolumns=2;
+	$wcolumns=width_column($ncolumns,$arraykey)-2;
+	$columns=make_columns($ncolumns,count($arraykey));
+	$fz.='<table class="commentitems" ';
+	if ($main>=0) $fz.='style="background-color:'.$backcolor.';"';
+	$fz.=' rules=groups border=1>';
+	$fz.='<tr align=left valign=top>';
+	for ($i=0;$i<$ncolumns;$i++){
+		$fz.="<td>";
+		for ($j=$columns[$i][0];$j<=$columns[$i][1];$j++) {
+			$terme=$arraykey[$j][1];
+			$added=0;$removed=0;$there=0;
+			if (in_array($terme,$plus)) $added=1;
+			if (in_array($terme,$list)) $there=1;
+			if (in_array($terme,$minus)) $removed=1;
+
+			$gothru=1;//si on affiche la période sélectionnée, il faut simplement sauter les termes non-présents, sinon faire comme si ils venaient d'être ajoutés (added=1)
+			if ($main==1) if (!$there) $gothru=0;
+			
+			if ($gothru==1)
+				if ($there OR $removed) {
+					if ($there) {
+						$fz.="<a href=chart.php?id_concept=".$terme."&periode=".arrange_periode($my_period);
+						if ($main==0) $fz.=" class=dead";
+						$fz.=">";
+						}
+					if (!$added) $fz.="<b>";
+					if ($removed) $fz.='<s style="color:#AAAAAA;">';
+					$fz.=remove_popo($dico_termes[$terme]);
+					if ($removed) $fz.="</s>";
+					if (!$added) $fz.="</b>";
+					if ($there) $fz.="</a>";
+				}
+				
+			$fz.=("<br>");
+			}
+		$fz.='</td>';
+		if ($i<$ncolumns-1) $fz.="<td width=10%></td>";
+		}
+	$fz.="</tr>";
+	$fz.="</table>";
+	return ($fz);
+}
+
 function selective_column($arraykey,$list,$plus,$minus,$main=0){
 	global $dico_termes,$my_period,$backdark,$backdarker;
 	if ($main>0) $backcolor=$backdarker; 
@@ -322,9 +371,15 @@ echo '<table width=100%><tr valign=top><td width=2.5%></td><td width=95%>';
 
 //// BLOC NAVIGATION PHYLOGENETIQUE
 
-
 if ($nav=="phylo"){
 
+	//echo '<div id="contentPad"><p><strong>Roll over a question mark:</strong></p>';
+	//echo '<label style="padding-right:5px">Password</label>';
+	//echo '<input name="" type="text" /><span class="formInfo">';
+	//echo '<a href="http://www.yahoo.fr" class="jTip" id="one" name="Password must follow these rules:">?</a>';
+	//echo '</span>';
+	//echo '</div>';
+	
 	echo '<p><table width=100% rules=all>';
 	echo '<tr valign=top>';
 	
@@ -370,8 +425,8 @@ if ($nav=="phylo"){
 	
 	echo '<td width=40% align=center style="background-color:'.$backdark.'; font-size:medium; font-variant:small-caps; font-style:italic;">';
 	
-	echo '<b>période en cours</b>';
-	echo '<br><div class=commentitems style="font-weight:normal; font-variant:normal; font-size:xx-small;">('.get_string_periode($periode).")</div><br>";
+	//echo '<b>période en cours</b>';
+	//echo '<br><div class=commentitems style="font-weight:normal; font-variant:normal; font-size:xx-small;">('.get_string_periode($periode).")</div><br>";
 	echo '"<b>'.$label1_current.'</b> - '.$label2_current.'"';
 	if ($lettre_current!="") echo ' ('.$lettre_current.')';
  	echo '<br>';
@@ -400,17 +455,29 @@ if ($nav=="phylo"){
 			$label1=$s['label1'];
 			$label2=$s['label2'];
 			$lettre=$s['lettre'];
-			$shref='href=cluster.php?id_cluster='.$s['id']."&periode=".arrange_periode($s['periode']).'&nav=phylo';
+			$shref='cluster.php?id_cluster='.$s['id']."&periode=".arrange_periode($s['periode']).'&nav=phylo';
 
-			echo '<tr  valign=top>';
+			echo '<tr valign=top>';
 			echo '<td class=commentitems style="font-weight:normal; font-variant:normal; font-size:xx-small;">';
-			echo get_string_periode(arrange_periode($s['periode']));
+			echo get_short_string_periode(arrange_periode($s['periode']),0,1);
 			echo '</td>';
 			
-			echo '<td class=tableitems style="font-variant:small-caps; size:small; font-style:italic;">';
-			echo '<a '.$shref.'>';
+			echo '
+				<td class=tableitems style="font-variant:small-caps; size:small; font-style:italic;">';
+			//echo '<a href='.$shref.'>';
+			
+			$sid=$s['id']."_".str_replace(" ","_",$s['periode']);
+			echo '<a id="'.$sid.'" class="questionMark jTip jTip_element_'.$sid.'S jTip_width_300" name="Détails" href="'.$shref.'">';
 			echo '"<b>'.remove_popo($dico_termes[$label1]).'</b> - '.remove_popo($dico_termes[$label2]).'"';
+			if ($lettre!="") echo ' ('.$lettre.')';
+			if (intval($s['fils'])>0) echo ' &darr;';
 			echo '</a>';
+			echo '<span id="'.$sid.'S" class="JT_hidden">';
+			echo selective_column_tt($arraykey,$s['termes'],$s['plus'],$s['minus'],$mainloc);
+			echo '</span>';
+
+			
+			
 			echo '</td>';
 			
 			echo '</tr></td>';
@@ -438,7 +505,7 @@ if ($nav=="phylo"){
 			
 			if ($lettre!="") echo ' ('.$lettre.')';
 			echo '</a><br>';
-			selective_column($arraykey,$s['termes'],$s['plus'],$s['minus'],$mainloc);
+			echo selective_column_tt($arraykey,$s['termes'],$s['plus'],$s['minus'],$mainloc);
 			echo '</td>';
 			echo '</tr>';
 			
