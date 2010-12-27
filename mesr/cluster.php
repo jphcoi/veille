@@ -4,7 +4,7 @@ include("library/fonctions_php.php");
 include("parametre.php");
 
 $all_periode=0;
-
+$jscriptmp="";
 
 if (isset($_POST['all_periode'])) $all_periode = intval($_POST['all_periode']); else $all_periode = 0;
 
@@ -115,25 +115,34 @@ function selective_column_tt($arraykey,$list,$plus,$minus,$main=0){
 //
 
 function display_cluster_title ($s, $direction) {
-	global $dico_termes,$mainloc,$arraykey,$last_display_periode;
+	global $dico_termes,$mainloc,$arraykey,$last_display_periode,$jscriptmp;
 	$label1=$s['label1'];
 	$label2=$s['label2'];
 	$lettre=$s['lettre'];
 	$shref='cluster.php?id_cluster='.$s['id']."&periode=".arrange_periode($s['periode']).'&nav=phylo';
-	if ($last_display_periode!=$s['periode'] && $last_display_periode!="") echo '<tr><td></td><td><hr class="dashed"></td></tr>';
+	$speriode=get_short_string_periode(arrange_periode($s['periode']),0,1);
+	$stitle='"<b>'.remove_popo($dico_termes[$label1]).'</b> - '.remove_popo($dico_termes[$label2]).'"';
+	
+	if ($last_display_periode!=$s['periode'] && $last_display_periode!="") echo '<tr><td></td><td></td><td><hr class="dashed"></td></tr>';
 	
 	echo '<tr valign=top>';
 	echo '<td class=commentitems style="font-weight:normal; font-variant:normal; font-size:xx-small;">';
-	if ($last_display_periode!=$s['periode']) 
-		echo get_short_string_periode(arrange_periode($s['periode']),0,1);
+	if ($last_display_periode!=$s['periode']) echo $speriode;
 	
+	echo '</td>';
+	
+	$sbox=selective_column_tt($arraykey,$s['termes'],$s['plus'],$s['minus']);
+	$sid=$s['id']."_".str_replace(" ","_",$s['periode']);
+	
+	echo '<td>';
+	$jscriptmp.=display_helper($dico_termes[$label1].' - '.$dico_termes[$label2],'<div style="font-size:x-small; font-variant:small-caps;">période: '.$speriode.'</div>'.$sbox,$sid,"magnify.png","resizable: false");
 	echo '</td>';
 	echo '
 		<td class=tableitems style="font-variant:small-caps; size:small; font-style:italic;">';
 	
-	$sid=$s['id']."_".str_replace(" ","_",$s['periode']);
 	echo '<a id="'.$sid.'" class="questionMark jTip jTip_element_'.$sid.'S jTip_width_300" name="Détails" href="'.$shref.'">';
-	echo '"<b>'.remove_popo($dico_termes[$label1]).'</b> - '.remove_popo($dico_termes[$label2]).'"';
+
+	echo $stitle;
 	if ($lettre!="") echo ' ('.$lettre.')';
 	
 	if ($direction=="succ") {
@@ -145,7 +154,7 @@ function display_cluster_title ($s, $direction) {
 	
 	echo '</a>';
 	echo '<span id="'.$sid.'S" class="JT_hidden">';
-	echo selective_column_tt($arraykey,$s['termes'],$s['plus'],$s['minus'],$mainloc);
+	echo $sbox;
 	echo '</span>';
 	
 	echo '</td>';
@@ -410,7 +419,7 @@ if ($nav=="phylo"){
 	//echo '</div>';
 	
 	echo '<p><table width=100% rules=all>';
-	echo '<tr valign=middle>';
+	echo '<tr>';
 	
 	if ($ecart_pred==1) $back_avant='background-color:white;';
 	echo '<td width='.(30-4*$ecart_pred).'% align=center class=tableitems style="font-variant:small-caps; size:small; font-style:italic;'.$back_avant.'">';
