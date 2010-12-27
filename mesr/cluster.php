@@ -292,14 +292,44 @@ include("banner.php");
 ////////////////////////////
 /// MODULE DE NAVIGATION ///
 ////////////////////////////
+
+//// préparation des liens de fils thématiques
+$jscriptmp.="
+               $('#dialogfilThematique')
+		  .dialog({ autoOpen: false, stack: true, resizable: false, modal:true, width:600, closeOnEscape:true})
+		  .click(function () { $('#dialogfilThematique').dialog('close'); });
+
+		$('#openerfilThematique').click(function(e) {
+			if (!$('#dialogfilThematique').dialog('isOpen'))
+				$('#dialogfilThematique').dialog('option','position', [$(this).position().left+25,25]).dialog('open');
+			else
+				$('#dialogfilThematique').dialog('close');
+			return false;
+			});";
+
 if (count($last_period_clusters)==1){
-$last_period_clusters=$last_period_clusters[0];
-$fils_thematique_htlm='<a href="'.$last_period_clusters[attribut].'"><font color='.$backdarker.'>'.remove_popo(substr($partition_infos[label],0,-1)).'</font></a></span>';
+    $last_period_clusters=$last_period_clusters[0];
+    $fils_thematique_htlm='<a href="'.$last_period_clusters[attribut].'"><font color='.$backdarker.'>'.remove_popo(substr($partition_infos[label],0,-1)).'</font></a></span>';
 }else{
-$last_period_clusters=$last_period_clusters[0];
-$last_period_clusters=$last_period_clusters[0];
-$fils_thematique_htlm='<a href="'.$last_period_clusters[attribut].'"><font color='.$backdarker.'>'.remove_popo(substr($partition_infos[label],0,-1)).'</font></a></span>';
+    $cluster_Link_html='<ul><font color=blue>';
+    for ($i=0;$i<count($last_period_clusters);$i++){
+        $cluster_Link_html.='<li><a href="'.$last_period_clusters[$i][attribut].'"><font color=blue>'.str_replace('---','/',remove_popo($last_period_clusters[$i][label])).'</a>';
+    }
+    $cluster_Link_html.='</ul>';
+    $fils_thematique_htlm='<a href scr=# id="openerfilThematique"'.'><font color='.$backdarker.'>'.remove_popo(substr($partition_infos[label],0,-1)).'</font></a>';
+    
 }
+
+echo '<div id="dialogfilThematique" title="Liens vers l\'extrémité du fil thématique ('.get_short_string_periode(arrange_periode($last_period_clusters[0][periode])).')">';
+echo 'Ce fil thématique a plusieurs champs en dernière période :';                                 ;
+echo $cluster_Link_html;
+echo '</div>';
+
+
+
+//////////////
+
+
 
 echo '<table width=100% class=tableitems>';
 echo '<tr valign=top><td width=2.5%></td><td>';
@@ -602,6 +632,8 @@ mysql_close();
 //if ($nav == "soc")
 //{ echo "<a href = social_net.php?id_cluster=".$id_cluster.'&periode='.$periode.">visualiser le réseau</a>";}
 
+echo '
+		<script> $(function() { '.$jscriptmp.' });</script>';
 
 
 include("footer.php");
