@@ -109,55 +109,6 @@ function selective_column_tt($arraykey,$list,$plus,$minus,$main=0){
 	return ($fz);
 }
 
-function selective_column($arraykey,$list,$plus,$minus,$main=0){
-	global $dico_termes,$my_period,$backdark,$backdarker;
-	if ($main>0) $backcolor=$backdarker; 
-	if ($main==0) $backcolor=$backdark;
-	$ncolumns=2;
-	$wcolumns=width_column($ncolumns,$arraykey)-2;
-	$columns=make_columns($ncolumns,count($arraykey));
-	echo '<table class=';//tableitems';
-	//if ($main==1) echo '"tableitems"'; else 
-		echo '"commentitems"';
-	if ($main>=0) echo 'style="background-color:'.$backcolor.';"';
-	echo ' rules=groups border=1>';
-	echo '<tr align=left valign=top>';
-	for ($i=0;$i<$ncolumns;$i++){
-		echo "<td>";// width=".$wcolumns."%>";
-		for ($j=$columns[$i][0];$j<=$columns[$i][1];$j++) {
-			$terme=$arraykey[$j][1];
-			$added=0;$removed=0;$there=0;
-			if (in_array($terme,$plus)) $added=1;
-			if (in_array($terme,$list)) $there=1;
-			if (in_array($terme,$minus)) $removed=1;
-
-			
-			$gothru=1;//si on affiche la période sélectionnée, il faut simplement sauter les termes non-présents, sinon faire comme si ils venaient d'être ajoutés (added=1)
-			if ($main==1) if (!$there) $gothru=0;
-			
-			if ($gothru==1)
-				if ($there OR $removed) {
-					if ($there) {
-						echo "<a href=chart.php?id_concept=".$terme."&periode=".arrange_periode($my_period);
-						if ($main==0) echo " class=dead";
-						echo ">";
-						}
-					if (!$added) echo "<b>";
-					if ($removed) echo '<s style="color:#AAAAAA;">';
-					echo remove_popo($dico_termes[$terme]);
-					if ($removed) echo "</s>";
-					if (!$added) echo "</b>";
-					if ($there) echo "</a>";
-				}
-				
-			echo ("<br>");
-			}
-		echo '</td>';
-		if ($i<$ncolumns-1) echo "<td width=10%></td>";
-		}
-	echo "</tr>";
-	echo "</table>";
-}
 
 if(isset( $_GET['id_cluster'])) $id_cluster = intval($_GET['id_cluster']); else die("<h1>Agrégat non spécifié.</h1>");
 if(isset( $_GET['periode'])) $my_period=$_GET['periode']; else die("<h1>Agrégat non spécifié.</h1>");
@@ -310,7 +261,9 @@ $jscriptmp.="
 if (count($last_period_clusters)==1){
     $last_period_clusters=$last_period_clusters[0];
     $fils_thematique_htlm='<a href="'.$last_period_clusters[attribut].'"><font color='.$backdarker.'>'.remove_popo(substr($partition_infos[label],0,-1)).'</font></a></span>';
-}else{
+	}
+else
+	{
     $cluster_Link_html='<ul><font color=blue>';
     for ($i=0;$i<count($last_period_clusters);$i++){
         $cluster_Link_html.='<li><a href="'.$last_period_clusters[$i][attribut].'"><font color=blue>'.str_replace('---','/',remove_popo($last_period_clusters[$i][label])).'</a>';
@@ -438,7 +391,7 @@ if ($nav=="phylo"){
 			echo '"<b>'.remove_popo($dico_termes[$label1]).'</b> - '.remove_popo($dico_termes[$label2]).'"';
 			if ($lettre!="") echo ' ('.$lettre.')';
 			echo '</a><br>';
-			selective_column($arraykey,$p['termes'],$p['plus'],$p['minus'],$mainloc);
+			echo selective_column_tt($arraykey,$p['termes'],$p['plus'],$p['minus'],$mainloc);
 			echo '</td>';
 			echo '</tr>';
 			}
@@ -461,7 +414,7 @@ if ($nav=="phylo"){
 	if ($lettre_current!="") echo ' ('.$lettre_current.')';
  	echo '<br>';
 	$nonlist=array();
-	selective_column($arraykey,$list_of_concepts,$nonlist,$nonlist,1);
+	echo selective_column_tt($arraykey,$list_of_concepts,$nonlist,$nonlist,1);
 	
 	echo '</td>';
 	
