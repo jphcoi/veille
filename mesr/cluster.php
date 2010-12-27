@@ -165,7 +165,7 @@ while ($ligne=mysql_fetch_array($resultat)) $liste_termes[$ligne['id']] = $ligne
 ////////////////////////////////////////////////////////
 //bloc recuperation infos phylogenie
 ////////////////////////////////////////////////////////
-$sql="SELECT id_cluster_2,periode_2 FROM phylo WHERE id_cluster_1=\"".$id_cluster."\" AND periode_1=\"".derange_periode($my_period)."\"";
+$sql="SELECT id_cluster_2,periode_2 FROM phylo WHERE id_cluster_1=\"".$id_cluster."\" AND periode_1=\"".derange_periode($my_period)."\" ORDER BY periode_2";
 //echo $sql;
 $resultat=mysql_query($sql) or die ("Requête non executée.");
 while ($ligne=mysql_fetch_array($resultat)) {
@@ -175,7 +175,7 @@ while ($ligne=mysql_fetch_array($resultat)) {
 		$periode_apres[] =$periode_avant_temp; }
 	}
 	
-$sql="SELECT id_cluster_1,periode_1 FROM phylo WHERE id_cluster_2=\"".$id_cluster."\" AND periode_2=\"".derange_periode($periode)."\"";
+$sql="SELECT id_cluster_1,periode_1 FROM phylo WHERE id_cluster_2=\"".$id_cluster."\" AND periode_2=\"".derange_periode($periode)."\" ORDER BY periode_1 DESC";
 $resultat=mysql_query($sql) or die ("Requête non executée.");
 while ($ligne=mysql_fetch_array($resultat)) {
 	$periode_apres_temp = $ligne['periode_1'];
@@ -390,24 +390,35 @@ if ($nav=="phylo"){
 	echo '<td width='.(30-4*$ecart_succ).'% align=center class=tableitems style="font-variant:small-caps; size:small; font-style:italic;'.$back_apres.'">';	
 	if ($nosucc) echo "<b>(pas de successeur)</b>"; 
 	else {
-		echo '<b>période ultérieure</b>';
-		echo '<br><div class=commentitems style="font-weight:normal; font-variant:normal; font-size:xx-small;">('.get_string_periode(arrange_periode($min_periode_apres)).")</div><br>";
-	
-		echo '<ul>';
+		//echo '<b>période ultérieure</b>';
+		//echo '<br><div class=commentitems style="font-weight:normal; font-variant:normal; font-size:xx-small;">('.get_string_periode(arrange_periode($min_periode_apres)).")</div><br>";
+
+		//echo '<hr>';
+		echo '<table>';
 		foreach ($succ as $s)
 			{
 			$label1=$s['label1'];
 			$label2=$s['label2'];
 			$lettre=$s['lettre'];
-			echo '<li>';
-			
 			$shref='href=cluster.php?id_cluster='.$s['id']."&periode=".arrange_periode($s['periode']).'&nav=phylo';
+
+			echo '<tr  valign=top>';
+			echo '<td class=commentitems style="font-weight:normal; font-variant:normal; font-size:xx-small;">';
+			echo get_string_periode(arrange_periode($s['periode']));
+			echo '</td>';
 			
+			echo '<td class=tableitems style="font-variant:small-caps; size:small; font-style:italic;">';
 			echo '<a '.$shref.'>';
-			echo '</li>';
-			}
-		echo '</ul>';
+			echo '"<b>'.remove_popo($dico_termes[$label1]).'</b> - '.remove_popo($dico_termes[$label2]).'"';
+			echo '</a>';
+			echo '</td>';
 			
+			echo '</tr></td>';
+			}
+			
+		echo '</table>';
+			
+		echo '<hr>';
 		echo '<table class=commentitems align=center width=100% cellspacing=0  cellpadding=5 style="font-variant:small-caps; size:small; font-style:italic;">';
 		foreach ($succ as $s) {
 			$label1=$s['label1'];
@@ -417,10 +428,8 @@ if ($nav=="phylo"){
 			echo '<td align=center>';
 			echo '<a href=cluster.php?id_cluster='.$s['id']."&periode=".arrange_periode($s['periode']).'&nav=phylo>';
 			
-			$futur = intval($s['fils']);
-			
 			echo '"<b>'.remove_popo($dico_termes[$label1]).'</b> - '.remove_popo($dico_termes[$label2]).'"';
-			if ($futur>0)
+			if (intval($s['fils'])>0)
 			{
 				echo '&darr';
 				$mainloc=0;

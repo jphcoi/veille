@@ -652,7 +652,8 @@ function get_date($date_depart,$jour)
 function get_string_periode($periode,$brk=0)
 {
 	if (strlen($periodes[0])!=4)
-	{$date_depart =$univ_time_begin;
+	{
+	$date_depart =$univ_time_begin;
 	$periodes = explode('-',$periode);
 	$dt1 = get_date($date_depart,$periodes[0]);
 	$dt2 = get_date($date_depart,$periodes[1]);}
@@ -667,7 +668,6 @@ function get_string_periode($periode,$brk=0)
 	
 	if ($brk!=0) $dt1=$dt1.'<br>'; else $dt1=$dt1.' ';
 	return 'du '.$dt1.'au '.$dt2;
-	
 }
 
 function get_short_string_periode($periode,$brk=0)
