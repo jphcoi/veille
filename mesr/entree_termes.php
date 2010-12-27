@@ -29,7 +29,10 @@ while ($ligne=mysql_fetch_array($resultat)) {
 
 //agrégats	
 $list_of_periods=sort_periods($periode_brute);
-if(isset( $_GET['periode'])) $my_period=$_GET['periode']; else $my_period=arrange_periode(end($list_of_periods));
+//on arrive sur la dernière période
+//if(isset( $_GET['periode'])) $my_period=$_GET['periode']; else $my_period=arrange_periode(end($list_of_periods));
+//on arrive sur l'ensemble des périodes
+if(isset( $_GET['periode'])) $my_period=$_GET['periode']; else $my_period=-1;
 
 $titleheader="liste des termes (".get_short_string_periode($my_period).")";
 include("include/header.php");
