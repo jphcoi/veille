@@ -253,7 +253,7 @@ $fils_thematique_htlm='<a href="'.$last_period_clusters[attribut].'"><font color
 
 echo '<table width=100% class=tableitems>';
 echo '<tr valign=top><td width=2.5%></td><td>';
-echo '<table class=subtitle><tr><td align=left>champ thématique "<i>'.remove_popo($label1_current).'</i><i style="font-weight:normal;"> - '.remove_popo($label2_current).'" ';
+echo '<table width=100% class=subtitle><tr><td align=left>champ thématique "<i>'.remove_popo($label1_current).'</i><i style="font-weight:normal;"> - '.remove_popo($label2_current).'" ';
 if ($lettre_current!="") echo '('.$lettre_current.')';
 echo '</i>';
 echo '<br/><span style="font-size: x-small;">fil thématique: ';
