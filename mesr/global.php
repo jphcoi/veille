@@ -5,7 +5,7 @@ include("library/fonctions_php.php");
 //connexion a la base de donnees
 
 include("parametre.php");
-$ink  =mysql_connect($server,$user,$password);
+$ink  =mysql_connect( $server,$user,$password);if ($encodage=="utf-8") mysql_query("SET NAMES utf8;");
 @mysql_select_db($database) or die( "Unable to select database");
 //à préciser lorsqu'on est sur sciencemapping.com
 if ($user!="root") mysql_query("SET NAMES utf8;");
