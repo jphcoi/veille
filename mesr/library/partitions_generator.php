@@ -8,6 +8,7 @@ mysql_connect( $server,$user,$password);if ($encodage=="utf-8") mysql_query("SET
 if ($user!="root") mysql_query("SET NAMES utf8;");
 
 /// creation de la table
+$query="
 CREATE TABLE IF NOT EXISTS 'partitions' (
   'id_partition' int(11) DEFAULT NULL,
   'label' varchar(1000) NOT NULL,
@@ -23,6 +24,8 @@ CREATE TABLE IF NOT EXISTS 'partitions' (
   'nb_terms' smallint(6) DEFAULT NULL,
   UNIQUE KEY 'id_partition' ('id_partition')
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+";
+mysql_query($query) or die ("<b>Requête non exécutée (creation de la table partition)</b>.");
 
 /////
 
