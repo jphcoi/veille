@@ -70,7 +70,7 @@ function selective_column_tt($arraykey,$list,$plus,$minus,$main=0){
 	$columns=make_columns($ncolumns,count($arraykey));
 	$fz.='<table class="commentitems" ';
 	$fz.='style="background-color:'.$backcolor.';"';
-	$fz.=' rules=groups border=1>';
+	$fz.=' rules=groups border=1 cellpadding=5>';
 	$fz.='<tr align=left valign=top>';
 	for ($i=0;$i<$ncolumns;$i++) {
 		$fz.="<td>";
