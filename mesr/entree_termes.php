@@ -14,7 +14,7 @@ if ($user!="root") mysql_query("SET NAMES utf8;");
 
 $periode_concepts=array();
 $periode_brute=array();
-$resultat=mysql_query("select concept,periode FROM cluster ORDER by periode") or die ("<b>Requête non exécutée (récupération des périodes pour les concepts)</b>.");
+$resultat=mysql_query("select concept,periode,id_cluster FROM cluster ORDER by periode") or die ("<b>Requête non exécutée (récupération des périodes pour les concepts)</b>.");
 while ($ligne=mysql_fetch_array($resultat)) {
 	$id=$ligne['concept'];
 	$per=$ligne['periode'];
@@ -122,6 +122,9 @@ display_arrow_periodes($my_period,$total_list_periods);
 
 echo '<form action="entree_termes.php" method="get" style="display:inline;">';
 echo '<select name="periode">';
+echo '<option value="-1"';
+if ($my_period==-1) echo ('selected');
+echo '>* aucune * (obtenir la liste complète des termes)</option>';
 for ($i=0;$i<count($list_of_periods);$i++) {
 	echo '<option value='.$list_of_periods[$i];
 	if ($list_of_periods[$i]==$my_period) echo(" selected");
@@ -129,9 +132,6 @@ for ($i=0;$i<count($list_of_periods);$i++) {
 	echo get_string_periode($list_of_periods[$i]);
 	echo '</option>';
 	}
-echo '<option value="-1"';
-if ($my_period==-1) echo (' selected');
-echo '>* aucune * (obtenir la liste complète des termes)</option>';
 echo '</select>';
 echo '<input type="submit" value="Changer">';
 echo '</form>';

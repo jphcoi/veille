@@ -13,6 +13,10 @@ echo "<title>".$titleheader." [MESR/VD]</title>";
 echo ' '.$jsheader;
 echo $jsheader2;
 
+echo '
+	<script src="js/jtip.js" type="text/javascript"></script>';
+
+
 echo '<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">';
 
 echo '<link rel="stylesheet" title="Default" type="text/css" href="style.css" media="screen"/>';

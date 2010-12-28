@@ -624,21 +624,22 @@ function get_date_since($jour)
 		return $dt;
 	}
 
-function get_date($date_depart,$jour)
+function get_date($date_depart,$jour,$short=0)
 { 
 	global $conf;
 	if ($jour<1000)
 	{
-	$univ_time_begin = 	"2009-12-31";
-		
-	setlocale (LC_TIME, 'fr_FR.UTF8','fra');	
-	$date_depart = strtotime($univ_time_begin);
-	eval( '$newd = date(\'n/j/Y\', strtotime(\'+'.$jour.' days\',$date_depart));');
-	$date = date('n/j/Y', strtotime('+7 days', $date_depart));
-	$special_date_string="%e";
-	//version David / Windows: %#d remplace %e
-	if ($conf==3) { $special_date_string="%#d";}
-	$dt = strftime($special_date_string." %b", strtotime($newd));  }
+		$univ_time_begin = 	"2009-12-31";
+		setlocale (LC_TIME, 'fr_FR.UTF8','fra');	
+		$date_depart = strtotime($univ_time_begin);
+		eval( '$newd = date(\'n/j/Y\', strtotime(\'+'.$jour.' days\',$date_depart));');
+		$date = date('n/j/Y', strtotime('+7 days', $date_depart));
+		$special_date_string="%e";
+		//version David / Windows: %#d remplace %e
+		if ($conf==3) { $special_date_string="%#d";}
+		if ($short==0) { $dt=strftime($special_date_string." %b", strtotime($newd));}
+			else { $dt=strftime("%d/%m",strtotime($newd));}
+	}
 	else
 	{
 		$dt = $jour;
@@ -670,13 +671,13 @@ function get_string_periode($periode,$brk=0)
 	return 'du '.$dt1.'au '.$dt2;
 }
 
-function get_short_string_periode($periode,$brk=0)
+function get_short_string_periode($periode,$brk=0,$short=0)
 {
 	if ($periode==-1) return ("***");
 	$date_depart=$univ_time_begin;
 	$periodes = explode('-',$periode);
-	$dt1 = get_date($date_depart,$periodes[0]);
-	$dt2 = get_date($date_depart,$periodes[1]);
+	$dt1 = get_date($date_depart,$periodes[0],$short);
+	$dt2 = get_date($date_depart,$periodes[1],$short);
 	if ($brk!=0) $dt1=$dt1.'<br>'; else $dt1=$dt1.'';
 	return str_replace("- ","-",$dt1.'-'.$dt2);
 }
@@ -961,18 +962,18 @@ function display_box($titre,$auteurs,$abstract,$permalien,$concepts,$type_notice
 	';
 }
 
-function display_helper($title,$text,$indexsuffix) {
+function display_helper($title,$text,$indexsuffix,$img="question-mark.gif",$options="resizable: false, modal:true, width:600") {
 // cette fonction affiche un point d'interrogation correspondant au dialogue d'id "dialog$indexsuffix"
 // et renvoie le bout de script JS-Jquery qui doit être ajouté à la commande d'affichage de script JQuery à la fin
 	echo "
-	<img src='images/question-mark.gif' id='opener".$indexsuffix."'>
+	<img src='images/".$img."' id='opener".$indexsuffix."'>
 	<div id='dialog".$indexsuffix."' title=".str_replace(" ","&nbsp;",$title).">".$text."
 	</div>
 	";
 	
 	return("
 		$('#dialog".$indexsuffix."')
-		  .dialog({ autoOpen: false, stack: true, resizable: false, modal:true, width:600, closeOnEscape:true})
+		  .dialog({ autoOpen: false, stack: true, ".$options.", closeOnEscape:true})
 		  .click(function () { $('#dialog".$indexsuffix."').dialog('close'); });
 
 		$('#opener".$indexsuffix."').click(function(e) {
@@ -983,7 +984,6 @@ function display_helper($title,$text,$indexsuffix) {
 			return false;
 			});");
 }
-
 
 function recup_id_auteurs($chaine)
 {

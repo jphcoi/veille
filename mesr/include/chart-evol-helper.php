@@ -3,12 +3,12 @@
    if ($norm==1) $helpernormstring='(2)+" fois/1000 billets'; else $helpernormstring='(0)+" fois';
 	
    $mydata2=json_encode($data);
-   //echo $mydata2;
-   
    $mydata='pv.range('.$dated.', '.$datef.').map(function(x) {
    			return { x: parseInt(x), y: x in data2 ? data2[x] : 0 }
    		})';
 	  
+	$step = strval(($datef-$dated) /7);
+    $step=  20;
 
    $myscript='<script type="text/javascript+protovis">
 
@@ -26,11 +26,12 @@
 	
 	
 	var DateArray = new Array();
-	var periods=x.ticks(20);
+	var periods=x.ticks('.$step.');
 	var time;
 	for(time in periods) {
 	  	var newDate = new Date( );
-		newDate.setTime((1279152000+86400*(periods[time]-'.$dated.'))*1000);
+		//newDate.setTime((1279152000+86400*(periods[time]-'.$dated.'))*1000);
+		newDate.setTime((86400*(14609+periods[time]))*1000);
 		dateString = newDate.toUTCString();
 		dt=dateString.split(" ");
 		DateArray.push(dt[1]+" "+dt[2]);
@@ -39,7 +40,8 @@
 	var iDateArray = new Array();
 	for (time='.$dated.'; time<='.$datef.';time++) {
 		var xnewDate = new Date( );	
-		xnewDate.setTime((1279152000+86400*(time-'.$dated.'))*1000);
+		//xnewDate.setTime((1279152000+86400*(time-'.$dated.'))*1000);
+		xnewDate.setTime((86400*(14609+time))*1000);
 		dateString = xnewDate.toUTCString();
 		dt=dateString.split(" ");
 		iDateArray.push(dt[1]+" "+dt[2]);
@@ -63,7 +65,7 @@
 	
 	/* X-axis and ticks. */
 	vis.add(pv.Rule)
-		.data(x.ticks(20))
+		.data(x.ticks('.$step.'))
 		.visible(function(d) d)
 		.left(x)
 		.bottom(-5)

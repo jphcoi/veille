@@ -1,6 +1,27 @@
 <?
 	// recuperer la variable de voisinage semantique temporel depuis la base SQL
-	$myabove='<script type="text/javascript">'.$js.'</script>'.'
+	$resultat=mysql_query("select term2,distances,forcemoy,direction FROM term_neighbour WHERE term1=$id_concept LIMIT 10");
+	//echo "select term2,distances,forcemoy,direction FROM term_neighbour WHERE term1=$id_concept";
+	$temp_neighborhood=mysql_fetch_array($resultat);
+	
+	$json_data ="var years=[";
+	
+	foreach (range($dated, $datef-1) as $number) {
+    $json_data= $json_data.$number.',';}
+	$json_data=substr($json_data,0,strlen($json_data)-1)."]; var dynamics= {";
+	create_concept_string();
+	
+	while ($ligne=mysql_fetch_array($resultat))	
+	{
+		$json_data =$json_data.'"'.strval($liste_termes[$ligne['term2']]).'": { activity: ['.$ligne['distances'].'] },';
+	}
+	$delcaract = substr($string,0,strlen($string)-1);
+	$json_data=substr($json_data,0,strlen($json_data)-1).'};';
+//version antérieure du script d'import avec importation des données depuis la table term_neighborhood 
+//	$resultat=mysql_query("select idx,js FROM term_neighborhood WHERE idx=$id_concept");
+//	$temp_neighborhood=mysql_fetch_array($resultat);
+//	$myabove='<script type="text/javascript">'.$temp_neighborhood['js'].'</script>'.'
+	$myabove='<script type="text/javascript">'.$json_data.'</script>'.'
 		<hr>
 		<table class=tableitems width="100%">
 		<tr valign=bottom>
@@ -67,7 +88,8 @@
 		var speriods=sx.ticks(20);
 		for(var time in speriods) {
 		   var snewDate = new Date( );
-		   snewDate.setTime((1279152000+86400*(speriods[time]-'.$dated.'))*1000);
+		   //14610 = nombre de jours écoulés entre 1er janvier 70 et 1er janvier 2010
+		   snewDate.setTime((86400*(14609+speriods[time]))*1000);
 		   sdateString = snewDate.toUTCString();
 		   sdt=sdateString.split(" ")
 		   sDateArray.push(sdt[1]+" "+sdt[2]);
