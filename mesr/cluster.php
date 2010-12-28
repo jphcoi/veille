@@ -119,12 +119,11 @@ function display_cluster_title ($s, $direction) {
 	$speriode=get_short_string_periode(arrange_periode($s['periode']),0,1);
 	$stitle='"<b>'.remove_popo($dico_termes[$label1]).'</b> - '.remove_popo($dico_termes[$label2]).'"';
 	
-	if ($last_display_periode!=$s['periode'] && $last_display_periode!="") echo '<tr><td></td><td></td><td><hr class="dashed"></td></tr>';
+	if ($last_display_periode!=$s['periode'] && $last_display_periode!="") echo '<tr><td></td><td></td><td></td><td><hr class="dashed"></td></tr>';
 	
-	echo '<tr valign=top>';
+	echo '<tr valign=top><td></td>';
 	echo '<td class=commentitems style="font-weight:normal; font-variant:normal; font-size:xx-small;">';
-	if ($last_display_periode!=$s['periode']) echo $speriode;
-	
+	if ($last_display_periode!=$s['periode']) echo $speriode."&nbsp;";
 	echo '</td>';
 	
 	$sbox=selective_column_tt($arraykey,$s['termes'],$s['plus'],$s['minus']);
@@ -143,7 +142,7 @@ function display_cluster_title ($s, $direction) {
 			  onMouseOut="HideContent(\'box'.$sid.'\'); HideContent(\'title'.$sid.'\'); ShowContent(\'mainbox\'); ShowContent(\'maintitle\');">';
 	echo '<a id="'.$sid.'" href="'.$shref.'">';
 	
-	echo $sarrow.$stitle;
+	echo '<span style="font-style:normal;">'.$sarrow.'</span>'.$stitle;
 	if ($lettre!="") echo ' ('.$lettre.')';
 	
 	echo '</a>';
@@ -466,8 +465,8 @@ if ($nav=="phylo"){
 	echo '<td width='.(30-4*$ecart_pred).'% align=center class=tableitems style="font-variant:small-caps; size:small; font-style:italic;'.$back_avant.'">';
 	if ($nopred) echo "<b>(pas de prédécesseur)</b>";
 	else {
-		echo '<table width=100% cellspacing=0 cellpadding=3>';
-		echo '<tr class=commentitems style="font-variant:small-caps; background-color:'.$backdark.';"><td>période</td><td></td><td>champ</td></tr>';
+		echo '<table width=100% cellspacing=0 cellpadding=0>';
+		echo '<tr class=commentitems style="font-variant:small-caps; background-color:'.$backdark.';"><td width=5px></td><td>période</td><td></td><td>champ</td></tr>';
 		$last_display_periode="";
 		foreach ($pred as $p) display_cluster_title($p,"pred");
 		echo '</table>';
@@ -513,8 +512,8 @@ if ($nav=="phylo"){
 	echo '<td width='.(30-4*$ecart_succ).'% align=center class=tableitems style="font-variant:small-caps; size:small; font-style:italic;'.$back_apres.'">';	
 	if ($nosucc) echo "<b>(pas de successeur)</b>"; 
 	else {
-		echo '<table width=100% cellspacing=0 cellpadding=3>';
-		echo '<tr class=commentitems style="font-variant:small-caps; background-color:'.$backdark.';"><td>période</td><td></td><td>champ</td></tr>';
+		echo '<table width=100% cellspacing=0 cellpadding=0>';
+		echo '<tr class=commentitems style="font-variant:small-caps; background-color:'.$backdark.';"><td width=5px></td><td>période</td><td></td><td>champ</td></tr>';
 		$last_display_periode="";
 		foreach ($succ as $s) display_cluster_title($s,"succ");
 		echo '</table>';
