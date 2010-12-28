@@ -1,7 +1,7 @@
 <?
 // Connects to your Database
 include("parametre.php");
-mysql_connect($server,$user,$password);
+mysql_connect( $server,$user,$password);if ($encodage=="utf-8") mysql_query("SET NAMES utf8;");
 @mysql_select_db($database) or die( "Unable to select database");
 $admins=array();
 $admins[]='chavalarias';

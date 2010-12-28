@@ -9,7 +9,7 @@ include('../admin_check.php');
 //mysql_connect("your.hostaddress.com", "username", "password") or die(mysql_error());
 //mysql_select_db("Database_Name") or die(mysql_error());
 include("../parametre.php");
-mysql_connect($server,$user,$password);
+mysql_connect( $server,$user,$password);if ($encodage=="utf-8") mysql_query("SET NAMES utf8;");
 @mysql_select_db($database) or die( "Unable to select database");
 //à préciser lorsqu'on est sur sciencemapping.com
 if ($user!="root") mysql_query("SET NAMES utf8;");
