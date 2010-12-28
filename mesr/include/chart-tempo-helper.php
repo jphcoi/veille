@@ -1,6 +1,7 @@
 <?
 	// recuperer la variable de voisinage semantique temporel depuis la base SQL
-	$resultat=mysql_query("select term2,distances,forcemoy,direction FROM term_neighbour WHERE term1=$id_concept LIMIT 10");
+	$resultat=mysql_query("select term2,distances,force_moy,direction FROM termneighbour WHERE term1=$id_concept LIMIT 10");
+//	echo "select term2,distances,forcemoy,direction FROM termneighbour WHERE term1=$id_concept LIMIT 10";
 	//echo "select term2,distances,forcemoy,direction FROM term_neighbour WHERE term1=$id_concept";
 	$temp_neighborhood=mysql_fetch_array($resultat);
 	
