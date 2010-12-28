@@ -20,17 +20,10 @@ include("banner.php");
 
 $phylo_min_nb_periods_covered=4;
 $phylo_recent_min_nb_periods_covered=2;
-
-//echo "
-//<script>
-//	$(function() {
-//		
+		
 
 $jscriptmp="	$( '#tabs' ).tabs();
                    event: 'mouseover'";
-//	});
-//	</script>
-//";
 
 /////////// On regarde quel est la dernière période afin de pouvoir afficher les thématiques actives
 $last_period_list=array();

@@ -1,11 +1,11 @@
 <?php
 include("login_check.php");
 include("library/fonctions_php.php");
-
+$jsprotovis="TRUE";
 
 $depth=2;// rang dans le nombre d'occurences des termes acceptés pour labellisation des branches
 $min_similarity=0.005;// seuil de similarité pour clusteriser
-$phylo_min_nb_periods_covered=14;
+$phylo_min_nb_periods_covered=4;
 $phylo_recent_min_nb_periods_covered=2;
 
 //connexion a la base de donnees
@@ -46,6 +46,9 @@ $period_string=explode(' ',$period_string);
 $dT=$period_string[1]-$period_string[0];// fenêtre temporelle utilisée  pour le calcul des clusters
 $time_steps=$last_period_list[1]-$last_period_list[0]; // pas de la fenêtre glissante
 
+$query="select * FROM partitions WHERE nb_period_covered >= $phylo_min_nb_periods_covered AND last_period=$last_period";
+$json_data=query2streamgraphData($query,$first_period,$last_period,$dT,$time_steps);
+include('include/streamgraph.php');
 
 //////////
 
@@ -65,12 +68,9 @@ echo "</h2></tr>
 	<div id='tabs-1'>
 ";
 /// Première tab  ////
-$query="select * FROM partitions WHERE nb_period_covered >= $phylo_min_nb_periods_covered AND last_period=$last_period";
         echo "<h3>Fils thématiques actifs <span style='font-size: x-small;'> (couvrant au moins 4 périodes) </span></h3>";	
-        $json_data=query2streamgraphData($query,$first_period,$last_period,$dT,$time_steps);
-        include('include/streamgraph.php');
-        
-
+        echo $myabove;
+        echo $myscript;
 echo "
 	</div>
 	<div id='tabs-2'>";
@@ -112,7 +112,7 @@ while ($partition_resultat=mysql_fetch_array($resultat)){
        if (strcmp(substr($partition_label,-1),',')==0){
             $lab=substr($partition_label,0,-1);
             }
-    $streamgraphString.='"'.$partition_label.'":'.fiels_list2JSON($id_partition,$first_period,$last_period,$dT,$time_steps);
+    $streamgraphString.='"'.substr($partition_label,0,-1).'":'.fiels_list2JSON($id_partition,$first_period,$last_period,$dT,$time_steps);
     }
 $streamgraphString=substr($streamgraphString,0,-1).'};';
 return $streamgraphString;

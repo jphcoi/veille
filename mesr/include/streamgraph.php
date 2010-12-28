@@ -3,15 +3,13 @@
 // $resultat=mysql_query("select idx,js FROM term_neighborhood WHERE idx=$id_concept");
 // $temp_neighborhood=mysql_fetch_array($resultat);
 // $myabove='<script type="text/javascript">'.$temp_neighborhood['js'].'</script>'.'
-echo 'Debug: Données pour streamgraph: '.$json_data.'<br/>';
 
-$myabove='<script type="text/javascript">'.$json_data.'</script>'.'
-<hr>
+$myabove='<script type="text/javascript">'.$json_data.'</script>';
+$myscript='<hr>
 <table class=tableitems width="100%">
 <tr valign=bottom>
-<td align="left">
-ACTIVITÉ DES TERMES PROCHES
-</td><td align="right" style="font-variant:small-caps;">
+<td align="left">'.$tabTitle.
+'</td><td align="right" style="font-variant:small-caps;">
 <label for="query">rechercher: </label>
 <input id="query" type="text" onkeyup="search(this.value);">
 &nbsp;&nbsp;&nbsp;&nbsp;vue:
@@ -20,12 +18,11 @@ ACTIVITÉ DES TERMES PROCHES
 <option value="expand">Pourcentage</option>
 </select>
 </td></tr></table>
-</div>
-';
-
-$myscript='<script type="text/javascript+protovis">
+'.'<script type="text/javascript+protovis">
 
 /* Interaction state. */
+$dated=years[1];
+$datef=years[years.length-1];
 var offset="zero";
 var gender = 0,
 re = "";
@@ -54,7 +51,7 @@ dynamics.forEach(function(d) d.coarse = d.people);
 var sw = .88*document.body.clientWidth,
 sh = 270,
 sx = pv.Scale.linear('.$dated.', '.$datef.').range(0, sw),
-sy = pv.Scale.linear(0, 10).range(0, sh),
+sy = pv.Scale.linear(0, 40).range(0, sh),
 color = pv.Scale.ordinal(1, 2).range("#33f", "#f33"),
 alpha = pv.Scale.linear(pv.values(sumByJob)).range(.4, .8),
 startyear='.$dated.',
@@ -130,7 +127,7 @@ svis.add(pv.Panel)
 .anchor("center").add(pv.Label)
 .def("max", function(d) pv.max.index(d.values, function(d) d.coarse))
 .visible(function() this.index == this.max())
-.font(function(d) Math.round(8 + Math.sqrt(sy(d.coarse))) + "px sans-serif")
+.font(function(d) 0 + "px sans-serif")
 .textMargin(6)
 //.textStyle("#fff")
 .textStyle(function(d) "rgba(0, 0, 0, " + (Math.sqrt(sy(d.percent))) + ")")
