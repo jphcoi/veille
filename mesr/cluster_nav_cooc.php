@@ -105,7 +105,7 @@ while ($ligne=mysql_fetch_array($resultat))
 }
 //Toute cette partie ci-dessus pourra être remplacée par les données déjà chargée via sem_weighted ci-dessus pour plus de concision.
 //Pour le moment un petit bug dans le remplissage de sem_weighted rend l'opération encore délicate
-print_r($aut_occ);
+//print_r($aut_occ);
 $legende=$list_of_concepts_simple;
 $liste_auteur_unique=$list_of_concepts;
 
