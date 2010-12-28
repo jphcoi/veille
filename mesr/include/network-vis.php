@@ -65,7 +65,7 @@
 				force.link.add(pv.Line);
 				
 				var noeuds = force.node.add(pv.Dot)
-					.size(function(d) ('.$node_size_function.'(d.linkDegree)) * Math.pow(this.scale, -1.5))
+					.size(function(d) ('.$node_size_function.'(d.ourDEG)) * Math.pow(this.scale, -1.5))
 					.shape(function (d) {if (d.group=="0") {return "square";} else {return "circle";}})
 					.fillStyle(function(d) d.fix ? "brown" : colors(d.group))
 					.strokeStyle(function() this.fillStyle().darker())

@@ -14,6 +14,18 @@ $resultat=mysql_query($query) or die ("<b>Requête non exécutée (récupératio
 
 }
 
+function retrieve_periods()
+{
+	//on recupere la liste des periodes
+$periode_brute=array();
+$resultat=mysql_query("select periode FROM cluster group by periode order by periode") or die ("<b>Requête non exécutée (récupération des périodes pour les concepts)</b>.");
+while ($ligne=mysql_fetch_array($resultat)) {
+	$per=$ligne['periode'];
+	$periode_brute[]=$per;
+}
+return $periode_brute;
+}
+
 function similarity($string1,$string2){
 // calcule le nombre de Ngram communs de strings formées de ngrammes séparés par des virgules
 $str1=array();

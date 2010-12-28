@@ -20,6 +20,9 @@ $peroides = explode_period($periode);
 	
 	$affichage= 1;
 
+$periodes_brute=retrieve_periods();
+$periodes_brute_trans= array_flip($periodes_brute);
+$periode_index = $periodes_brute_trans[join($peroides,' ')];
 
 ////version sans la sélection sur les bipartis
 	// $commande_sql_pert = "SELECT id_billet,overlap_size from biparti where cluster = '".$id_cluster."' AND periode = '".derange_periode($my_period)."' AND overlap_size>=2";
@@ -43,8 +46,6 @@ $peroides = explode_period($periode);
 
 
 
-	$liens_from=array();
-	$liens_to=array();
 
 
 
@@ -60,74 +61,33 @@ $peroides = explode_period($periode);
 if ($affichage>0)
 {		
 
-	
-		// $sql = "SELECT concept1,concept2 from sem where id_b=";
-		// 	for( $i = 0 ; $i < count($liste_id_billets) ; $i++ )
-		// 	{
-		// 		$sql=$sql.' '.$liste_id_billets[$i];
-		// 		if ($i < count($liste_id_billets)-1)
-		// 		{
-		// 			$sql=$sql.' OR id_b = ';			
-		// 		}
-		// 	}
-		// 	echo $sql;
-		// 	$sql_id=$sql;
-		// 
-		$sql = "SELECT concept1,concept2 from sem where (concept1=";
-		for( $i = 0 ; $i < count($list_of_concepts) ; $i++ )
-		{
-			$sql=$sql.' '.$list_of_concepts[$i];
-			if ($i < count($list_of_concepts)-1)
-			{
-				$sql=$sql.' OR concept1 = ';			
-			}
-		}
-		$sql=$sql.') AND (concept2 =';
-		for( $i = 0 ; $i < count($list_of_concepts) ; $i++ )
-		{
-			$sql=$sql.' '.$list_of_concepts[$i];
-			if ($i < count($list_of_concepts)-1)
-			{
-				$sql=$sql.' OR concept2 = ';			
-			}
-		}
-		$sql = $sql.')';
-		$sql =$sql.' AND jours<='.$peroides['to']." AND jours>=".strval(intval($peroides['from']));
-		//echo $sql;
-		
+
+		$sql = "SELECT concept1,concept2,cooccurrences from sem_weighted where concept1 in ";
+		$sql = $sql."('";
+		$sql = $sql.join("','", $list_of_concepts);
+		$sql = $sql."')";
+		$sql = $sql." AND concept2 in ";
+		$sql = $sql."('";
+		$sql = $sql.join("','", $list_of_concepts);
+		$sql = $sql."')";
+		$sql = $sql." and periode = ".$periode_index;
 		
 		$sql_cooc = mysql_query($sql);
-		$concepts_b = array();
+		//$concepts_b = array();
+		$liens_from=array();
+		$liens_to=array();
+		$liens_weight=array();
 		while ($rwos=mysql_fetch_array($sql_cooc))
 		{
-			if (in_array($rwos['concept1'],$list_of_concepts) and in_array($rwos['concept2'],$list_of_concepts) )
+			if ($rwos['concept1']!=$rwos['concept2'])
 			{$liens_from[] = $rwos['concept1'];
-			$liens_to[] = $rwos['concept2'];}
+			$liens_to[] = $rwos['concept2'];
+			$liens_weight[] = $rwos['cooccurrences'];
+			}
 		}
 
-			// foreach($liste_id_billets as $id_bil)
-			// 		{
-			// 			$sql = "SELECT * from socsem where id_b=". $id_bil;
-			// 			
-			// 			$sql_cooc = mysql_query($sql);
-			// 			$concepts_b = array();
-			// 			while ($rwos=mysql_fetch_array($sql_cooc))
-			// 			{
-			// 				if (in_array($rwos['concept'],$list_of_concepts) and !in_array($rwos['concept'],$concepts_b) )
-			// 				{$concepts_b[] = $rwos['concept'];}
-			// 			}
-			// 			foreach($concepts_b as $c1)
-			// 			{
-			// 				foreach($concepts_b as $c2)
-			// 				{
-			// 					if ($c1 != $c2)
-			// 					{
-			// 						$liens_from[]=$c1;
-			// 						$liens_to[]=$c2;
-			// 					}
-			// 				}
-			// 			}
-			// 		}
+		
+
 				
 $aut_occ=array();
 foreach($list_of_concepts as $id_concept)
@@ -143,7 +103,9 @@ while ($ligne=mysql_fetch_array($resultat))
 	$aut_occ[$id_concept]=$ligne[0];
 }
 }
-
+//Toute cette partie ci-dessus pourra être remplacée par les données déjà chargée via sem_weighted ci-dessus pour plus de concision.
+//Pour le moment un petit bug dans le remplissage de sem_weighted rend l'opération encore délicate
+print_r($aut_occ);
 $legende=$list_of_concepts_simple;
 $liste_auteur_unique=$list_of_concepts;
 
