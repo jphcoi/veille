@@ -112,7 +112,7 @@ $liste_auteur_unique=$list_of_concepts;
 
 // DEFINITION DU RESEAU POUR AFFICHAGE JAVASCRIPT
 	
-	include("include/network-def.php");
+	include("include/network-def-cooc.php");
 			
 // DEFINITION DU SCRIPT JAVASCRIPT POUR AFFICHER LE RESEAU
 	

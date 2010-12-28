@@ -11,22 +11,14 @@
 	}
 	
 	$tmpvalues=array();
-	
-	if (count($liens_from)>0){
+		if (count($liens_from)>0){
 		foreach(range(0,count($liens_from)-1) as $i)
 		{
 			$tmpfrom=$flip_source[$liens_from[$i]];
 			$tmpto=$flip_source[$liens_to[$i]];
-			if (!array_key_exists($tmpfrom,$tmpvalues)) {$tmpvalues[$tmpfrom]=array();}
-			if (!array_key_exists($tmpto,$tmpvalues[$tmpfrom])) {$tmpvalues[$tmpfrom][$tmpto]=0;}
-			$tmpvalues[$tmpfrom][$tmpto]+=1;
+			$tmpweight = $liens_weight[$i];
+			//if ($tmpweight>1)			//filtre à + d'1 occurrences stricte
+			{$tmp["links"][]=array("source" => $tmpfrom, "target" => $tmpto, "value" => $tmpweight);}
 		}
-		foreach(array_keys($tmpvalues) as $i) {
-			foreach(array_keys($tmpvalues[$i]) as $j) {
-				if ($tmpvalues[$i][$j]>1)
-					$tmp["links"][]=array("source" => $i, "target" => $j, "value" => $tmpvalues[$i][$j]);
-				}
-			}
-	}
-
+		}
 ?>
