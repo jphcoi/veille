@@ -7,6 +7,25 @@ mysql_connect($server,$user,$password);
 //à préciser lorsqu'on est sur sciencemapping.com
 if ($user!="root") mysql_query("SET NAMES utf8;");
 
+/// creation de la table
+CREATE TABLE IF NOT EXISTS 'partitions' (
+  'id_partition' int(11) DEFAULT NULL,
+  'label' varchar(1000) NOT NULL,
+  'label_ids' varchar(1000) NOT NULL,
+  'first_period' varchar(50) DEFAULT NULL,
+  'last_period' varchar(50) DEFAULT NULL,
+  'last_period_string' varchar(50) DEFAULT NULL,
+  'nb_period_covered' smallint(6) DEFAULT NULL,
+  'nb_fields' smallint(6) DEFAULT NULL,
+  'score' float(7,4) DEFAULT NULL,
+  'terms' varchar(20000) DEFAULT NULL,
+  'terms_occ' varchar(20000) NOT NULL,
+  'nb_terms' smallint(6) DEFAULT NULL,
+  UNIQUE KEY 'id_partition' ('id_partition')
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+/////
+
 
 echo 'computing partitions <br/>';
 $resultat=mysql_query("select id_cluster_univ FROM cluster GROUP by id_cluster_univ") or die ("<b>Requête non exécutée (récupération de la liste des clusters)</b>.");
