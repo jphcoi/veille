@@ -14,7 +14,14 @@ create_concept_string();
 
 while ($ligne=mysql_fetch_array($resultat))
 {
-$json_data =$json_data.'"'.strval(remove_popo($liste_termes[$ligne['term2']])).'": { activity: ['.$ligne['distances'].'] },';
+	$evo = array();
+	$semaines = explode(',',$ligne['distances']);
+	foreach ($semaines as $sem) 
+	{$evo[]=$sem;$evo[]=$sem;$evo[]=$sem;$evo[]=$sem;$evo[]=$sem;$evo[]=$sem;$evo[]=$sem; }
+	//print_r($evo);
+	$evo_texte = implode(',',$evo);
+	//echo $evo_texte;
+$json_data =$json_data.'"'.strval(remove_popo($liste_termes[$ligne['term2']])).'": { activity: ['.$evo_texte.'] },';
 }
 $delcaract = substr($string,0,strlen($string)-1);
 $json_data=substr($json_data,0,strlen($json_data)-1).'};';
