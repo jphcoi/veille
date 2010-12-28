@@ -399,7 +399,10 @@ if ($nav=="tempo")
 	</form>
 	
 	<?
-	
+
+	$resultat=mysql_query("select idx,js FROM term_neighborhood WHERE idx=$id_concept");
+	$temp_neighborhood=mysql_fetch_array($resultat);
+        $js=$temp_neighborhood['js'];
 	include('include/chart-tempo-helper.php');
 	
 	echo $myabove;

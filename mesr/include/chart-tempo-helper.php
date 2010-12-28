@@ -1,9 +1,6 @@
 <?
 	// recuperer la variable de voisinage semantique temporel depuis la base SQL
-	
-	$resultat=mysql_query("select idx,js FROM term_neighborhood WHERE idx=$id_concept");
-	$temp_neighborhood=mysql_fetch_array($resultat);
-	$myabove='<script type="text/javascript">'.$temp_neighborhood['js'].'</script>'.'
+	$myabove='<script type="text/javascript">'.$js.'</script>'.'
 		<hr>
 		<table class=tableitems width="100%">
 		<tr valign=bottom>
@@ -20,6 +17,7 @@
 		</td></tr></table>
         </div>
 		';
+                echo 'test:'.$js;
 	
 	$myscript='<script type="text/javascript+protovis">
 
