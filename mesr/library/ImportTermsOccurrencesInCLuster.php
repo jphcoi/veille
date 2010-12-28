@@ -7,6 +7,8 @@ mysql_connect( $server,$user,$password);if ($encodage=="utf-8") mysql_query("SET
 //à préciser lorsqu'on est sur sciencemapping.com
 if ($user!="root") mysql_query("SET NAMES utf8;");
 
+$query="ALTER TABLE concepts ADD occurrences_in_clusters mediumint(9);";
+mysql_query($query) or die ("<b>Requête non exécutée (creation du champ occurrences_in_cluster dans la table concepts)</b>.");
 
 // importe les valeurs occurrences des termes dans les clusters dans la table concept dans le champs occurrences_in_clusters
 $sql = 'SELECT id from concepts';
