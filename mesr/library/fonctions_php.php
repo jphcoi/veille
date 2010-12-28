@@ -962,7 +962,7 @@ function display_box($titre,$auteurs,$abstract,$permalien,$concepts,$type_notice
 	';
 }
 
-function display_helper($title,$text,$indexsuffix,$img="question-mark.gif") {
+function display_helper($title,$text,$indexsuffix,$img="question-mark.gif",$options="resizable: false, modal:true, width:600") {
 // cette fonction affiche un point d'interrogation correspondant au dialogue d'id "dialog$indexsuffix"
 // et renvoie le bout de script JS-Jquery qui doit être ajouté à la commande d'affichage de script JQuery à la fin
 	echo "
@@ -973,7 +973,7 @@ function display_helper($title,$text,$indexsuffix,$img="question-mark.gif") {
 	
 	return("
 		$('#dialog".$indexsuffix."')
-		  .dialog({ autoOpen: false, stack: true, resizable: false, modal:true, width:600, closeOnEscape:true})
+		  .dialog({ autoOpen: false, stack: true, ".$options.", closeOnEscape:true})
 		  .click(function () { $('#dialog".$indexsuffix."').dialog('close'); });
 
 		$('#opener".$indexsuffix."').click(function(e) {
