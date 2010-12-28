@@ -343,7 +343,7 @@ if ($lettre_current!="") echo '('.$lettre_current.')';
 echo '</i>';
 echo '<br/><span style="font-size: x-small;">fil thématique: ';
 echo $fils_thematique_htlm;
-echo '<td align=right valign=top><b style="font-size:medium; color:#666666;">[<a href='.$googletext.'><img src='.$hrefroot.$racine.'/images/googleG.png alt="(google)" valign=middle width=18 style="border-style:none;"></a>]</b></td>';
+echo '<td align=right valign=top><a href='.$googletext.'><img src='.$hrefroot.$racine.'/images/googleG.png alt="(google)" valign=middle width=18 style="border-style:none;"></a>&nbsp;</td>';
 echo '</tr></table>';
 echo '</td><td width=2.5%></td></tr>';
 echo '</table>';
@@ -466,7 +466,8 @@ if ($nav=="phylo"){
 	echo '<td width='.(30-4*$ecart_pred).'% align=center class=tableitems style="font-variant:small-caps; size:small; font-style:italic;'.$back_avant.'">';
 	if ($nopred) echo "<b>(pas de prédécesseur)</b>";
 	else {
-		echo '<br><table width=100%>';
+		echo '<table width=100% cellspacing=0 cellpadding=3>';
+		echo '<tr class=commentitems style="font-variant:small-caps; background-color:'.$backdark.';"><td>période</td><td></td><td>champ</td></tr>';
 		$last_display_periode="";
 		foreach ($pred as $p) display_cluster_title($p,"pred");
 		echo '</table>';
@@ -512,7 +513,8 @@ if ($nav=="phylo"){
 	echo '<td width='.(30-4*$ecart_succ).'% align=center class=tableitems style="font-variant:small-caps; size:small; font-style:italic;'.$back_apres.'">';	
 	if ($nosucc) echo "<b>(pas de successeur)</b>"; 
 	else {
-		echo '<br><table width=100% valign=middle>';
+		echo '<table width=100% cellspacing=0 cellpadding=3>';
+		echo '<tr class=commentitems style="font-variant:small-caps; background-color:'.$backdark.';"><td>période</td><td></td><td>champ</td></tr>';
 		$last_display_periode="";
 		foreach ($succ as $s) display_cluster_title($s,"succ");
 		echo '</table>';
