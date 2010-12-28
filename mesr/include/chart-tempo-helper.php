@@ -1,6 +1,7 @@
 <?
 // recuperer la variable de voisinage semantique temporel depuis la base SQL
-$resultat=mysql_query("select term2,distances,forcemoy,direction FROM term_neighbour WHERE term1=$id_concept LIMIT 10");
+$resultat=mysql_query("select term2,distances,force_moy,direction FROM termneighbour WHERE term1=$id_concept LIMIT 20");
+//echo "select term2,distances,forcemoy,direction FROM termneighbour WHERE term1=$id_concept LIMIT 10";
 //echo "select term2,distances,forcemoy,direction FROM term_neighbour WHERE term1=$id_concept";
 $temp_neighborhood=mysql_fetch_array($resultat);
 
@@ -13,8 +14,7 @@ create_concept_string();
 
 while ($ligne=mysql_fetch_array($resultat))
 {
-echo $ligne['distances'].'<br/>';
-$json_data =$json_data.'"'.strval($liste_termes[$ligne['term2']]).'": { activity: ['.$ligne['distances'].'] },';
+$json_data =$json_data.'"'.strval(remove_popo($liste_termes[$ligne['term2']])).'": { activity: ['.$ligne['distances'].'] },';
 }
 $delcaract = substr($string,0,strlen($string)-1);
 $json_data=substr($json_data,0,strlen($json_data)-1).'};';

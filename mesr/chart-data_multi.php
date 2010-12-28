@@ -4,7 +4,7 @@
 include('parametre.php');
 include("library/fonctions_php.php");
 $steps_nb=5;
-mysql_connect($server,$user,$password);
+mysql_connect( $server,$user,$password);if ($encodage=="utf-8") mysql_query("SET NAMES utf8;");
 @mysql_select_db($database) or die( "Unable to select database");
 
 
