@@ -180,7 +180,7 @@ function macrobranch_label($macrobranch_terms,$depth){
         $i++;
     };
     $label=substr($label, 0, -1);
-    $output['label']=$label;
+    $output['label']=remove_popo($label);
     $output['label_ids']=$id_array;
 
     return $output;

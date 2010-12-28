@@ -24,8 +24,7 @@ while ($ligne=mysql_fetch_array($concepts)) {
         }
 
     $sql="UPDATE concepts SET occurrences_in_clusters=$nb_occ WHERE id=$ngram_id";
-    echo 'occurrences for '.$ngram_id.'updated to'.$nb_occ.'<br/>';
-    echo $sql;
+    echo 'occurrences for '.$ngram_id.' updated to '.$nb_occ.'<br/>';
     mysql_query($sql) or die ("<b>Insert of partition data failed</b>.");;
     echo 'occurrences for '.$ngram_id.'updated to'.$nb_occ.'<br/>';
 

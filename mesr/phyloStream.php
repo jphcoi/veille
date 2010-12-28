@@ -5,7 +5,8 @@ include("library/fonctions_php.php");
 
 $depth=2;// rang dans le nombre d'occurences des termes acceptés pour labellisation des branches
 $min_similarity=0.005;// seuil de similarité pour clusteriser
-
+$phylo_min_nb_periods_covered=14;
+$phylo_recent_min_nb_periods_covered=2;
 
 //connexion a la base de donnees
 
@@ -18,8 +19,7 @@ if ($user!="root") mysql_query("SET NAMES utf8;");
 include("include/header.php");
 include("banner.php");
 
-$phylo_min_nb_periods_covered=14;
-$phylo_recent_min_nb_periods_covered=2;
+
 
 //echo "
 //<script>
@@ -39,10 +39,13 @@ while ($ligne=mysql_fetch_array($resultat)) {
         array_push($last_period_list,$ligne[last_period]);
         $period_string=$ligne[last_period_string];
 }
+
 $last_period=max($last_period_list);
 $first_period=min($last_period_list);
 $period_string=explode(' ',$period_string);
-$dT=$period_string[1]-$period_string[0];
+$dT=$period_string[1]-$period_string[0];// fenêtre temporelle utilisée  pour le calcul des clusters
+$time_steps=$last_period_list[1]-$last_period_list[0]; // pas de la fenêtre glissante
+
 
 //////////
 
@@ -64,8 +67,9 @@ echo "</h2></tr>
 /// Première tab  ////
 $query="select * FROM partitions WHERE nb_period_covered >= $phylo_min_nb_periods_covered AND last_period=$last_period";
         echo "<h3>Fils thématiques actifs <span style='font-size: x-small;'> (couvrant au moins 4 périodes) </span></h3>";	
-        $js=query2streamgraphData($query,$first_period,$last_period,$dT);
-	include('include/streamgraph.php');
+        $json_data=query2streamgraphData($query,$first_period,$last_period,$dT,$time_steps);
+        include('include/streamgraph.php');
+        
 
 echo "
 	</div>
@@ -87,14 +91,14 @@ echo "       	</div>
 ////////////////////////////////
 ///////Fonction locales /////////
 ////////////////////////////////
-function query2streamgraphData($query,$first_period,$last_period,$dT){
+function query2streamgraphData($query,$first_period,$last_period,$dT,$time_steps){
 // transforme un ensemble de données de partition d'une requête sur la table partition en un streamgraph par partition
 
 $resultat=mysql_query($query) or die ("<b>Requête non exécutée (récupération des principales thématiques)</b>.");
 
 
 $year_String='var years = [';
-for ($i=$first_period;$i<=$last_period;$i+=($dT+1)/2){
+for ($i=$first_period;$i<=$last_period;$i+=$time_steps){
     $year_String.=$i.', ';
 }
 $year_String=substr($year_String,0,-2).'];';
@@ -108,25 +112,18 @@ while ($partition_resultat=mysql_fetch_array($resultat)){
        if (strcmp(substr($partition_label,-1),',')==0){
             $lab=substr($partition_label,0,-1);
             }
-    // retrait des clusters associés
-    //$fields_array=array();
-    //$sql="SELECT id_cluster_univ FROM cluster WHERE pseudo =".$id_partition." GROUP BY id_cluster_univ";
-    //$fieldlist=mysql_query($sql) or die ("<b>Requête non exécutée (récupération des champs d'une partition)</b>.");
-    //while ($field=mysql_fetch_array($fieldlist)) {
-    //    array_push($fields_array,$field[id_cluster_univ]);
-    //    }
-    $streamgraphString.='"'.$partition_label.'":'.fiels_list2JSON($id_partition,$first_period,$last_period,$dT);
+    $streamgraphString.='"'.$partition_label.'":'.fiels_list2JSON($id_partition,$first_period,$last_period,$dT,$time_steps);
     }
-$streamgraphString.=substr($streamgraphString,0,-1).'};';
+$streamgraphString=substr($streamgraphString,0,-1).'};';
 return $streamgraphString;
 }
 /////////////////////////////////////////////
-function fiels_list2JSON($id_partition,$first_period,$last_period,$dT){
+function fiels_list2JSON($id_partition,$first_period,$last_period,$dT,$time_steps){
 // transforme un ensemble de champs en un JSon pour streagraph
 // { activity: [ value1, ..., valueN]}
 $JSON_string="{ activity: [";
 
-for ($i=$first_period;$i<=$last_period;$i+=($dT+1)/2){
+for ($i=$first_period;$i<=$last_period;$i+=$time_steps){
     $period_string=($i-$dT).' '.$i;
     $period_score=0;
     $sql="SELECT id_cluster,periode FROM cluster WHERE pseudo=$id_partition AND periode='".$period_string."' GROUP BY id_cluster";
@@ -138,7 +135,8 @@ for ($i=$first_period;$i<=$last_period;$i+=($dT+1)/2){
             $period_score+=$billet[overlap_size]/$billet[cluster_size]/log10(10+$billet[billet_size]-$billet[overlap_size])/10;
         }
     }
-    $JSON_string.=round($period_score,4).', ';    
+    $JSON_string.=round($period_score,4).', ';
+    
 }
 $JSON_string=substr($JSON_string,0,-2);
 $JSON_string.='] },';
