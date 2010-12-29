@@ -5,8 +5,8 @@ $jsprotovis="TRUE";
 ///// PARAMETRES ///
 $depth=2;// rang dans le nombre d'occurences des termes acceptés pour labellisation des branches
 $min_similarity=0.005;// seuil de similarité pour clusteriser
-$phylo_min_nb_periods_covered=4;
-$phylo_recent_min_nb_periods_covered=2;
+$phylo_min_nb_periods_covered=3;
+$phylo_recent_min_nb_periods_covered=4;
 ////////////////////
 
 /// on récupère pour chaque catégorie les données pré-calculées pour les streamgraph
@@ -19,20 +19,20 @@ while ($ligne=mysql_fetch_array($resultat)) {
 }
 
 //// Branches émergentes
-$cle='branches_emergentes_'.$phylo_recent_min_nb_periods_covered;
-$sql="SELECT * FROM data WHERE cle='".$cle."';";
-$resultat=mysql_query($sql) or die ("<b>Requête non exécutée (données streamgraph actives)</b>.");
-while ($ligne=mysql_fetch_array($resultat)) {
-        $json_dataEmergentes=$ligne[valeur];
-}
+//$cle='branches_emergentes_'.$phylo_recent_min_nb_periods_covered;
+//$sql="SELECT * FROM data WHERE cle='".$cle."';";
+//$resultat=mysql_query($sql) or die ("<b>Requête non exécutée (données streamgraph actives)</b>.");
+//while ($ligne=mysql_fetch_array($resultat)) {
+//        $json_dataEmergentes=$ligne[valeur];
+//}
 
 //// Branches en suspens
-$cle='branches_suspens_'.$phylo_min_nb_periods_covered;
-$sql="SELECT * FROM data WHERE cle='".$cle."';";
-$resultat=mysql_query($sql) or die ("<b>Requête non exécutée (données streamgraph actives)</b>.");
-while ($ligne=mysql_fetch_array($resultat)) {
-        $json_dataSuspens=$ligne[valeur];
-}
+//$cle='branches_suspens_'.$phylo_min_nb_periods_covered;
+//$sql="SELECT * FROM data WHERE cle='".$cle."';";
+//$resultat=mysql_query($sql) or die ("<b>Requête non exécutée (données streamgraph actives)</b>.");
+//while ($ligne=mysql_fetch_array($resultat)) {
+//        $json_dataSuspens=$ligne[valeur];
+//}
 
 
 //connexion a la base de donnees
@@ -60,12 +60,12 @@ while ($ligne=mysql_fetch_array($resultat)) {
 $last_period=max($last_period_list);
 //////////
 include('include/streamgraphActives.php');
-include('include/streamgraphEmergentes.php');
-include('include/streamgraphSuspens.php');
+//include('include/streamgraphEmergentes.php');
+//include('include/streamgraphSuspens.php');
 
 echo $myaboveActives;
-echo $myaboveSuspens;
-echo $myaboveEmergentes;
+//echo $myaboveSuspens;
+//echo $myaboveEmergentes;
 
 
 //// Début des tab /////////
@@ -78,20 +78,23 @@ echo "
 <table width=100% class=tableitems>
 <tr valign=top></td><td><h2 class=subtitle>fils thématiques (branches phylogénétiques)";
 
-$jscriptmp.=display_helper('Fils thématiques','Les fils thématiques sont des ensembles de champs thématiques sur des sujets similaires répartis sur plusieurs périodes. Ils sont classés ici en trois catégories:
-	<ul style="font-size:small;"><li>
-    	"<b style="font-variant:small-caps;">Actifs</b>": Fils thématiques couvrant au moins quatre périodes et qui sont toujours actifs à la dernière période.
-	    </li>
-    	<li>
-	    "<b style="font-variant:small-caps;">Potentiellement émergents</b>":
-	    Fils thématiques couvrant au plus trois périodes dont la plus récente.
-    	</li>
-	    <li>
-	    "<b style="font-variant:small-caps;">En suspens</b>":
-    	Fils thématiques couvrant au moins quatre périodes mais qui ne sont pas présents sur la dernière période. Cette rupture du fil thématique peut être temporaire, témoignant d\'une baisse d\'intérêt pour le sujet concerné, ou définitive.
-	    </li>
-		</ul>
-		',"helper");
+    $jscriptmp.=display_helper('Fils thématiques','Les fils thématiques sont des ensembles de champs thématiques sur des sujets similaires répartis sur plusieurs périodes. Ils sont classés ici en trois catégories:
+            <ul style="font-size:small;"><li>
+            "<b style="font-variant:small-caps;">Actifs</b>": Fils thématiques couvrant au moins quatre périodes et qui sont toujours actifs à la dernière période.
+                </li>
+            <li>
+                "<b style="font-variant:small-caps;">Potentiellement émergents</b>":
+                Fils thématiques couvrant au plus trois périodes dont la plus récente.
+            </li>
+                <li>
+                "<b style="font-variant:small-caps;">En suspens</b>":
+            Fils thématiques couvrant au moins quatre périodes mais qui ne sont pas présents sur la dernière période. Cette rupture du fil thématique peut être temporaire, témoignant d\'une baisse d\'intérêt pour le sujet concerné, ou définitive.
+                </li>
+                    </ul>
+            <p>Dans chaque catégorie, les fils thématiques sont labélisés par leur composantes les plus représentatives puis regroupés par grands thèmes.
+              Un click sur le nom d\'un fil thématique permet d\'accéder aux champs thématiques les plus récents de ce fil.</p><p>Pour chaque fil, sont par
+            ailleurs indiqués la fenêtre temporelle couverte par ce fil thématique ainsi que le nombre de champs qu\'il comporte.</p>
+                    ',"helper");
 echo "</h2></tr>
 </table >
 		<li><a href='#tabs-1'>Actifs</a></li>
@@ -104,8 +107,10 @@ echo "</h2></tr>
 $query="select * FROM partitions WHERE nb_period_covered >= $phylo_min_nb_periods_covered AND last_period=$last_period";
 $resultat=mysql_query($query) or die ("<b>Requête non exécutée (récupération des principales thématiques)</b>.");
 $branch_list=branch_list_string($resultat,$depth,$min_similarity);
-        echo "<h3>Fils thématiques actifs <span style='font-size: x-small;'> (couvrant au moins 4 périodes) </span></h3>";
+        echo "<h3>Fils thématiques actifs";
+        echo " <span style='font-size: x-small;'> (couvrant au moins 4 périodes) </span></h3>";
         echo $myscriptActives;
+        echo '<br/>';
 	echo $branch_list;
 echo "
 	</div>
@@ -114,7 +119,7 @@ echo "
             $resultat=mysql_query($query) or die ("<b>Requête non exécutée (récupération des principales thématiques)</b>.");
             $branch_list=branch_list_string($resultat,$depth,$min_similarity);
             echo "<h3>Thématiques potentiellement émergentes <span style='font-size: x-small;'> (couvrant 2 ou 3 périodes)</span></h3>";
-            echo $myscriptEmergentes;
+            //echo $myscriptEmergentes;
             echo $branch_list;
 
 echo "
@@ -124,7 +129,7 @@ echo "
 $resultat=mysql_query($query) or die ("<b>Requête non exécutée (récupération des principales thématiques)</b>.");
 $branch_list=branch_list_string($resultat,$depth,$min_similarity);
         echo "<h3>Fils thématiques passés <span style='font-size: x-small;'> (couvrant au moins 4 périodes)</span></h3>";
-        echo $myscriptSuspens;
+        //echo $myscriptSuspens;
 	echo $branch_list;
 
 echo "       	</div>

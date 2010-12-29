@@ -997,6 +997,34 @@ function display_helper($title,$text,$indexsuffix,$img="question-mark.gif",$opti
 			});");
 }
 
+function display_helper_two_outputs($title,$text,$indexsuffix,$img="question-mark.gif",$options="resizable: false, modal:true, width:600") {
+// Comme display_helper sauf qu'elle renvoie un array avec les deux strings au lieu de faire un echo
+// cette fonction affiche un point d'interrogation correspondant au dialogue d'id "dialog$indexsuffix"
+// et renvoie le bout de script JS-Jquery qui doit être ajouté à la commande d'affichage de script JQuery à la fin
+	$question_mark= "
+	<img src='images/".$img."' id='opener".$indexsuffix."'>
+	<div id='dialog".$indexsuffix."' title=".str_replace(" ","&nbsp;",$title).">".$text."
+	</div>
+	";
+
+        $script="
+		$('#dialog".$indexsuffix."')
+		  .dialog({ autoOpen: false, stack: true, ".$options.", closeOnEscape:true})
+		  .click(function () { $('#dialog".$indexsuffix."').dialog('close'); });
+
+		$('#opener".$indexsuffix."').click(function(e) {
+			if (!$('#dialog".$indexsuffix."').dialog('isOpen'))
+				$('#dialog".$indexsuffix."').dialog('option','position', [$(this).position().left+25,25]).dialog('open');
+			else
+				$('#dialog".$indexsuffix."').dialog('close');
+			return false;
+			});";
+       $out=array();
+       $out[]=$question_mark;
+       $out[]=$script;
+       return $out;
+}
+
 function recup_id_auteurs($chaine)
 {
 //	ex:[10996, 9787, 9924, 5918, 3948, 4666, 14409, 8136, 2959, 15818, 4316, 6424, 3900, 4151, 12036, 16938, 4624, 11684, 8305, 13840, 12663, 3821, 1681, 10779, 13426, 14139, 5008, 420, 10750, 1182, 1272, 15173, 6696, 9327, 14410, 6143, 15316, 7044, 5609, 14252, 11229, 11474, 14943, 12279, 8393]martinez, d ; berka, rm ; henrissat, b ; saloheimo, m ; arvas, m ; baker, se ; chapman, j ; chertkov, o ; coutinho, pm ; cullen, d
