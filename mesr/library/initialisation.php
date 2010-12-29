@@ -13,7 +13,8 @@ Cliquer successivement sur les liens suivants pour regénérer la base
 <br>
 <a href="ImportTermsOccurrencesInCLuster.php?first=0" target="_blank">Calcul des occurrences de termes dans les clusters</a>
 <br>
-
+<a href="phyloStream.php?first=0" target="_blank">Calcul des JSON pour les streamgraph de phylogénies</a>
+<br>
 <a href="../entree_clusters_generate_lettres.php?first=0" target="_blank">et enfin pour apprendre l'alphabet (sélectionner toutes les périodes!!!)</a>
 <br>
 
