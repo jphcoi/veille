@@ -61,9 +61,10 @@ $periode_index = $periodes_brute_trans[join($peroides,' ')];
 if ($affichage>0)
 {		
 $type_lien='cooc';
+//$type_lien='dist';
 if ($type_lien=='cooc')
 {
-		$sql = "SELECT concept1,concept2,cooccurrences from sem_weighted where concept1 in ";
+		$sql = "SELECT concept1,concept2,cooccurrences from sem_weight where concept1 in ";
 		$sql = $sql."('";
 		$sql = $sql.join("','", $list_of_concepts);
 		$sql = $sql."')";
@@ -90,29 +91,37 @@ if ($type_lien=='cooc')
 else
 //on visualise la distance moyenne
 {
-		$sql = "SELECT term1,term2,force_moy from termneighbour where term1 in ";
+		$sql = "SELECT concept1,concept2,distance0,distance1 from sem_weight where concept1 in ";
 		$sql = $sql."('";
 		$sql = $sql.join("','", $list_of_concepts);
 		$sql = $sql."')";
-		$sql = $sql." AND term2 in ";
+		$sql = $sql." AND concept2 in ";
 		$sql = $sql."('";
 		$sql = $sql.join("','", $list_of_concepts);
 		$sql = $sql."')";
-		//$sql = $sql."and direction=0";
+		$sql = $sql." and periode = ".$periode_index;
 
 		$sql_cooc = mysql_query($sql);
 		//$concepts_b = array();
 		$liens_from=array();
 		$liens_to=array();
 		$liens_weight=array();
+		$liens_weight1=array();
+
 		while ($rwos=mysql_fetch_array($sql_cooc))
 		{
-			if ($rwos['term1']!=$rwos['term2'])
-			{$liens_from[] = $rwos['term1'];
-			$liens_to[] = $rwos['term2'];
-			$liens_weight[] = intval(floatval($rwos['force_moy'])*100.);
+			if ($rwos['concept1']!=$rwos['concept2'])
+			{$liens_from[] = $rwos['concept1'];
+			$liens_to[] = $rwos['concept2'];
+			$liens_weight[] = intval(floatval($rwos['distance0'])*5.);
+			$liens_from[] = $rwos['concept2'];
+			$liens_to[] = $rwos['concept1'];
+			$liens_weight[] = intval(floatval($rwos['distance1'])*5.);
 			}
 		}
+		//print_r($liens_from);
+		//print_r($liens_to);
+		//print_r($liens_weight);
 }
 		
 
