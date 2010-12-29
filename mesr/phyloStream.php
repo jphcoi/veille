@@ -3,10 +3,11 @@ include("login_check.php");
 include("library/fonctions_php.php");
 $jsprotovis="TRUE";
 
-$depth=2;// rang dans le nombre d'occurences des termes acceptés pour labellisation des branches
-$min_similarity=0.005;// seuil de similarité pour clusteriser
+echo 'PARAMETRES<br/>';
 $phylo_min_nb_periods_covered=4;
-$phylo_recent_min_nb_periods_covered=2;
+$phylo_recent_min_nb_periods_covered=4;
+echo 'taille minimum des branches (hors émergentes) :'.$phylo_min_nb_periods_covered.'<br/>';
+echo 'taille maximum des branches émergentes  :'.$phylo_recent_min_nb_periods_covered.'<br/>';
 
 //connexion a la base de donnees
 
@@ -17,7 +18,6 @@ $ink  =mysql_connect($server,$user,$password);
 if ($user!="root") mysql_query("SET NAMES utf8;");
 
 include("include/header.php");
-include("banner.php");
 
 
 
@@ -46,47 +46,39 @@ $period_string=explode(' ',$period_string);
 $dT=$period_string[1]-$period_string[0];// fenêtre temporelle utilisée  pour le calcul des clusters
 $time_steps=$last_period_list[1]-$last_period_list[0]; // pas de la fenêtre glissante
 
-$query="select * FROM partitions WHERE nb_period_covered >= $phylo_min_nb_periods_covered AND last_period=$last_period";
-$json_data=query2streamgraphData($query,$first_period,$last_period,$dT,$time_steps);
-include('include/streamgraph.php');
 
 //////////
-
-//// Début des tab /////////
-echo "
-<div class='demo'>
-<div id='tabs'>
-	<ul>
-<table width=100% class=tableitems>
-<tr valign=top></td><td><h2 class=subtitle>fils thématiques (branches phylogénétiques)";
-echo "</h2></tr>
-</table >
-		<li><a href='#tabs-1'>Actifs</a></li>
-		<li><a href='#tabs-2'>Potentiellement émergents </a></li>
-		<li><a href='#tabs-3'>En suspens</a></li>
-	</ul>
-	<div id='tabs-1'>
+/// creation de la table
+$query="
+CREATE TABLE IF NOT EXISTS `data` (
+  `cle` varchar(50) DEFAULT NULL,
+  `valeur` text DEFAULT NULL,
+  UNIQUE KEY `cle` (`cle`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 ";
-/// Première tab  ////
-        echo "<h3>Fils thématiques actifs <span style='font-size: x-small;'> (couvrant au moins 4 périodes) </span></h3>";	
-        echo $myabove;
-        echo $myscript;
-echo "
-	</div>
-	<div id='tabs-2'>";
-            $query="select * FROM partitions WHERE nb_period_covered > 1 AND nb_period_covered < 4 AND  last_period=$last_period";
-            $resultat=mysql_query($query) or die ("<b>Requête non exécutée (récupération des principales thématiques)</b>.");
-            echo "<h3>Thématiques potentiellement émergentes <span style='font-size: x-small;'> (couvrant 2 ou 3 périodes)</span></h3>";
+mysql_query($query);
+
+// Calcul des branches actives
+        $query="select * FROM partitions WHERE nb_period_covered >= $phylo_min_nb_periods_covered AND last_period=$last_period";
+        $json_data=query2streamgraphData($query,$first_period,$last_period,$dT,$time_steps);
+        $cle='branches_actives_'.$phylo_min_nb_periods_covered;
+        $sql="INSERT INTO data (cle,valeur) VALUES ('".$cle."','$json_data') ON DUPLICATE KEY UPDATE cle='".$cle."',valeur='$json_data';";
+        echo '<br/>'.$sql.'<br/>';        
+        mysql_query($sql) or die("<bInserts non effectués)</b>.");
+
+        $query="select * FROM partitions WHERE nb_period_covered > 1 AND nb_period_covered < 4 AND  last_period=$last_period";
+        $json_data=query2streamgraphData($query,$first_period,$last_period,$dT,$time_steps);
+        $cle='branches_emergentes_'.$phylo_recent_min_nb_periods_covered;
+        $sql="INSERT INTO data (cle,valeur) VALUES ('".$cle."','$json_data') ON DUPLICATE KEY UPDATE cle='".$cle."',valeur='$json_data';";
+        echo '<br/>'.$sql.'<br/>';
+        mysql_query($sql) or die("<bInserts non effectués)</b>.");
             
-echo "
-	</div>
-	<div id='tabs-3'>";
-		$query="select * FROM partitions WHERE nb_period_covered >= $phylo_min_nb_periods_covered AND last_period<$last_period";
-$resultat=mysql_query($query) or die ("<b>Requête non exécutée (récupération des principales thématiques)</b>.");
-        echo "<h3>Fils thématiques passés <span style='font-size: x-small;'> (couvrant au moins 4 périodes)</span></h3>";
-
-echo "       	</div>
-";
+        $query="select * FROM partitions WHERE nb_period_covered >= $phylo_min_nb_periods_covered AND last_period<$last_period";
+        $json_data=query2streamgraphData($query,$first_period,$last_period,$dT,$time_steps);
+        $cle='branches_suspend_'.$phylo_min_nb_periods_covered;
+        $sql="INSERT INTO data (cle,valeur) VALUES ('".$cle."','$json_data') ON DUPLICATE KEY UPDATE cle='".$cle."',valeur='$json_data';";
+        echo '<br/>'.$sql.'<br/>';
+        mysql_query($sql) or die("<bInserts non effectués)</b>.");
 
 ////////////////////////////////
 ///////Fonction locales /////////
@@ -108,11 +100,11 @@ $streamgraphString=$year_String.'var dynamics= {';
 while ($partition_resultat=mysql_fetch_array($resultat)){
     //infos sur la partition
     $id_partition=$partition_resultat[id_partition];
-    $partition_label=remove_popo($partition_resultat[label]);
+    $partition_label=$partition_resultat[label];
        if (strcmp(substr($partition_label,-1),',')==0){
             $lab=substr($partition_label,0,-1);
             }
-    $streamgraphString.='"'.substr($partition_label,0,-1).'":'.fiels_list2JSON($id_partition,$first_period,$last_period,$dT,$time_steps);
+    $streamgraphString.='"'.remove_popo(substr($partition_label,0,-1)).'":'.fiels_list2JSON($id_partition,$first_period,$last_period,$dT,$time_steps);
     }
 $streamgraphString=substr($streamgraphString,0,-1).'};';
 return $streamgraphString;
