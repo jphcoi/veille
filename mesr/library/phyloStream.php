@@ -3,7 +3,7 @@ include("fonctions_php.php");
 $jsprotovis="TRUE";
 
 echo 'PARAMETRES<br/>';
-$phylo_min_nb_periods_covered=3;
+$phylo_min_nb_periods_covered=4;
 $phylo_recent_min_nb_periods_covered=4;
 echo 'taille minimum des branches (hors émergentes) :'.$phylo_min_nb_periods_covered.'<br/>';
 echo 'taille maximum des branches émergentes  :'.$phylo_recent_min_nb_periods_covered.'<br/>';

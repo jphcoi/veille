@@ -4,8 +4,8 @@ include("library/fonctions_php.php");
 $jsprotovis="TRUE";
 ///// PARAMETRES ///
 $depth=2;// rang dans le nombre d'occurences des termes acceptés pour labellisation des branches
-$min_similarity=0.005;// seuil de similarité pour clusteriser
-$phylo_min_nb_periods_covered=3;
+$min_similarity=0.007;// seuil de similarité pour clusteriser
+$phylo_min_nb_periods_covered=4;
 $phylo_recent_min_nb_periods_covered=4;
 ////////////////////
 
