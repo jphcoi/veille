@@ -1,7 +1,4 @@
 <?
-function microtime_float() {
-    return array_sum(explode(' ', microtime()));
-}
 
 $peroides = explode_period($periode);
 

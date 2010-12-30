@@ -83,54 +83,52 @@ if ($affichage>0)
 			$sql =$sql." OR ";
 		}
 	}
-				$sql  = $sql.")";
+	$sql  = $sql.")";
 
 
-				if ($all_periode==0)//on prend le réseau social sur la période uniquement
-				{$peroides = explode_period($periode);
-				$sql =$sql.' AND jours<='.$peroides['to']." AND jours>=".strval(intval($peroides['from']));
-				}
+	if ($all_periode==0)//on prend le réseau social sur la période uniquement
+	{$peroides = explode_period($periode);
+	$sql =$sql.' AND jours<='.$peroides['to']." AND jours>=".strval(intval($peroides['from']));
+	}
 
-				if ($_POST['reduced']==1)//on prend le réseau social sur les liens des billets pertinents uniquement
-				{
-					$sql=$sql.' AND (';
-					$id_billets_list = array_keys($liste_of_posts);	
-					for( $i = 0 ; $i < count($id_billets_list) ; $i++ )
-					{
-						$sql=$sql.' id_b='.$id_billets_list[$i];
-						if ($i+1<count($id_billets_list))
-						{
-							$sql=$sql.' OR ';
-						}
-					}
-							$sql=$sql.' ) ';	
-				}
+	if ($_POST['reduced']==1) {//on prend le réseau social sur les liens des billets pertinents uniquement
+		$sql=$sql.' AND (';
+		$id_billets_list = array_keys($liste_of_posts);	
+		for( $i = 0 ; $i < count($id_billets_list) ; $i++ ) {
+			$sql=$sql.' id_b='.$id_billets_list[$i];
+			if ($i+1<count($id_billets_list)) {
+				$sql=$sql.' OR ';
+			}
+		}
+	
+		$sql=$sql.' ) ';	
+	}
 
 
-				$res = mysql_query($sql);
-				while ($sql_liens=mysql_fetch_array($res))
-				{
-					$aut1 = $sql_liens['auteur1'];
-					$aut2 = $sql_liens['auteur2'];
-					if ($aut1 ==$aut2)
-					{}
-					else
-					{//$liens[$aut1]=$aut2;
-						$liens_from[]=remove_popo($aut1);
-						$liens_to[]=remove_popo($aut2);
-		//				echo 'lien de '.$legende[$aut1].' à '.$legende[$aut2].'<br>';
-					}
-				}
-	
-	// DEFINITION DU RESEAU POUR AFFICHAGE JAVASCRIPT
-	
-	include("include/network-def.php");
-	
-		
-	// DEFINITION DU SCRIPT JAVASCRIPT POUR AFFICHER LE RESEAU
-	
-	include("include/network-vis.php");
-	
+	$res = mysql_query($sql);
+	while ($sql_liens=mysql_fetch_array($res))
+	{
+		$aut1 = $sql_liens['auteur1'];
+		$aut2 = $sql_liens['auteur2'];
+		if ($aut1 ==$aut2)
+		{}
+		else
+		{//$liens[$aut1]=$aut2;
+			$liens_from[]=remove_popo($aut1);
+			$liens_to[]=remove_popo($aut2);
+//				echo 'lien de '.$legende[$aut1].' à '.$legende[$aut2].'<br>';
+		}
+	}
+
+// DEFINITION DU RESEAU POUR AFFICHAGE JAVASCRIPT
+
+include("include/network-def.php");
+
+
+// DEFINITION DU SCRIPT JAVASCRIPT POUR AFFICHER LE RESEAU
+
+include("include/network-vis.php");
+
 	
 	}
 	
@@ -203,156 +201,6 @@ echo "</tr>";
 
 echo '</table>';
 
-echo '	
-	<table>
-	<tr>
-	<td align=left>
-	<form method="post" action="<?$_SERVER[\'PHP_SELF\']?>" >	 
-		<input type="checkbox" name="reduced" ';
-		
-if ($reduced=='1') echo ' checked="checked" '; 
-echo ' value="1" />
-	 <input type="submit" name="formSubmit" value="N\'afficher que les liens entre billets pertinents" />
-	</form>
 
-	<form method="post" action="<?$_SERVER[\'PHP_SELF\']?>" >	 
-		<input type="checkbox" name="all_periode" ';
-
-if ($all_periode=='1') echo ' checked="checked" '; 
-echo ' value="1" />
-	 <input type="submit" name="formSubmit" value="Afficher les liens enregistrés sur l\'ensemble des périodes" />
-	</form>';
-	
-echo '</td>';
-	
-	
-echo "<td align=right class=tableitems width=20%><i>seuil de pertinence:</i>";
-
-$old_url  =$_SERVER['REQUEST_URI'];
-$old_urlv = explode('MESR_bac/',$old_url);
-if (count($old_urlv)>0)
-	{$old_url = $old_urlv[1];}
-$old_urls = explode('&pertinence=',$old_url);
-$new_url=$old_urls[0];//.'&pertinence=';
-
-echo '<form action="'.$new_url.'" method="get" style="display:inline;">';
-echo '<select name="pertinence">';
-	echo '<option value=10';
-	if ($pertinence==0.1) echo(" selected");
-	echo '>';
-	echo "minimal (>10%)";
-	echo '</option>';
-
-	echo '<option value=20';
-	if ($pertinence==0.2) echo(" selected");
-	echo '>';
-	echo "faible (>20%)";
-	echo '</option>';
-
-	echo '<option value=30';
-	if ($pertinence==0.3) echo(" selected");
-	echo '>';
-	echo "médian (>30%)";
-	echo '</option>';
-
-	echo '<option value=40';
-	if ($pertinence==0.4) echo(" selected");
-	echo '>';
-	echo "fort (>40%)";
-	echo '</option>';
-
-echo '</select>';
-echo '<input type="hidden" value="'.$id_cluster.'" name="id_cluster">';
-echo '<input type="hidden" value="'.$nav.'" name="nav">';
-echo '<input type="hidden" value="'.$periode.'" name="periode">';
-
-
-echo '<input type="submit" value="Modifier le seuil de pertinence">';
-echo '</form>';
-
-
-
-
-$result=mysql_query($query);
-echo "</td>";
-echo "</tr>";
-echo "</table>";
-
-
-echo '<table class=tableitems width=100% cellspacing=0 cellpadding=1 style="font-variant:small-caps;">';
-echo '<tr>';
-	
-echo "<td align=left width=40%><i>les 5 billets les plus pertinents</i></td>";
-
-echo "</tr>";
-echo '</table>';
-
-
-echo "<table class=tableitems rules=all width=100% cellspacing=0 cellpadding=0>";
-echo '<tr>';
-echo "<td align=left width=100%>";
-		
-if ($affichage>0){
-
-	//COHERENT:
-	//				$commande_sql_pert = "SELECT id_billet,overlap_size,billet_size from biparti where cluster = '".$id_cluster."' AND periode = '".derange_periode($my_period)."' AND overlap_size/cluster_size/log10(10+billet_size-overlap_size)>=".$pertinence.' and overlap_size/cluster_size>0.1 LIMIT 5';
-	//TOP 5 tout le temps:
-	$commande_sql_pert = "SELECT id_billet,overlap_size,billet_size from biparti where cluster = '".$id_cluster."' AND periode = '".derange_periode($my_period)."' ORDER BY overlap_size/cluster_size/log10(10+billet_size-overlap_size) DESC LIMIT 5";//.$pertinence.' and overlap_size/cluster_size>0.1 LIMIT 5';
-	//ANCIEN
-	//			$commande_sql_pert = "SELECT id_billet,overlap_size,billet_size from biparti where cluster = '".$id_cluster."' AND periode = '".derange_periode($my_period)."'".' and overlap_size/cluster_size>0.15'.' ORDER BY overlap_size/cluster_size/log10(10+billet_size-overlap_size) DESC LIMIT 5';
-	
-	$res_temp = mysql_query($commande_sql_pert);
-	$liste_of_posts=array();
-	$liste_of_size=array();
-	while ($row = mysql_fetch_array ($res_temp))
-	{
-		$liste_of_posts[$row['id_billet']]=$row['overlap_size'];
-		$liste_of_size[$row['id_billet']]=$row['billet_size'];
-	}
-	
-	$nb_termes_list = $liste_of_posts;
-	$nb_size_list = $liste_of_size;
-	$resultat = extract_permalink(array_keys($liste_of_posts));
-	$i=0;
-	$info_sources=array();
-	while( $row = mysql_fetch_array ($resultat))
-	{
-		$perma=$row['permalink'];
-		$site=strip_www($row['site']);
-		$site =str_replace('***','; ',$site);
-		$id = $row['id'];
-		$nb_terme=$nb_termes_list[$id];
-		$nb_size=$nb_size_list[$id];
-		$idauteur=$row['auteur_id']; 
-		$content=$row['content'];
-		$concepts=$row['concepts_id'];
-		if (!array_key_exists($site,$info_sources)) {
-		$info_sources[$site]=array('site'=>$site,'idauteur'=>$idauteur,'permaliens'=>array(),'titres'=>array(),'dates'=>array(),'nbtermes'=>array(),'nbsize'=>array());
-		}
-		$info_sources[$site]['permaliens'][]=$perma;
-		$info_sources[$site]['titres'][]=clean_text(str_replace('popostrophe',"'",$row['title']));
-		if (strlen($row['jours'])>3)
-		{$info_sources[$site]['dates'][]=$row['jours'];}
-		else
-		{$info_sources[$site]['dates'][]=adjust_date_jours($row['jours']);}
-		$info_sources[$site]['nbtermes'][]=$nb_terme;
-		$info_sources[$site]['nbsize'][]=$nb_size;
-		$info_sources[$site]['content'][]=$content;
-		$info_sources[$site]['concepts'][]=$concepts;
-
-		$i++;
-	}
-
-	uksort($info_sources,"strcasecmpcam");
-	
-	display_billets($info_sources,$list_of_concepts,$my_period,$type_notice);
-	
-	}
-else
-	{
-	echo "aucun billet pertinent";
-	}
-	
-echo "</td></tr></table>";
 	
 ?>
