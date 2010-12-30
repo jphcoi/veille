@@ -289,6 +289,10 @@ echo "</tr>";
 echo "</table>";
 
 
+/////////////////////////////////////////////
+/////////////////////////////////////////////
+/////////////////////////////////////////////
+
 echo '<table class=tableitems width=100% cellspacing=0 cellpadding=1 style="font-variant:small-caps;">';
 echo '<tr>';
 	
@@ -296,6 +300,11 @@ echo "<td align=left width=40%><i>les 5 billets les plus pertinents</i></td>";
 
 echo "</tr>";
 echo '</table>';
+
+
+/////////////////////////////////////////////
+/////////////////////////////////////////////
+/////////////////////////////////////////////
 
 
 echo "<table class=tableitems rules=all width=100% cellspacing=0 cellpadding=0>";
