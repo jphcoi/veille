@@ -15,6 +15,42 @@
 
 
 	//echo "\n<p><table width=100%><tr valign=top><td width=95%>";
+	
+	
+	
+echo '
+	<table class=tableitems width=100% cellspacing=0 cellpadding=1 style="font-variant:small-caps;">';
+echo '<tr valign=top>';
+	
+// PANEL DE GAUCHE: PERIODES PRECEDENTES
+	
+if ($nopred) $back_avant='background-color:'.$backdarker.';';
+echo '<td width=22% align=center class=tableitems style="font-variant:small-caps; size:small; font-style:italic;'.$back_avant.'">';
+if ($nopred) echo "<b>(pas de prédécesseur)</b>";
+else {
+	echo '<table width=100% cellspacing=0 cellpadding=0>';
+	echo '<tr width=100% class=commentitems style="font-variant:small-caps; background-color:'.$backdark.';"><td width=5px></td><td>période</td><td></td><td>champ</td></tr>';
+	$last_display_periode="";
+	foreach ($pred as $p) display_cluster_title($p,"pred");
+	echo '</table>';
+	}	
+echo '</td>';
+
+
+// PANEL CENTRAL
+
+echo '<td align=center width=56%>';
+
+
+	/////////////////////////////////////////////	
+	/////	/////	/////	/////	/////	/////
+	///// DEBUT DE L'AFFICHAGE DES BILLETS	/////
+	/////	/////	/////	/////	/////	/////
+	/////////////////////////////////////////////
+
+
+
+	
 	echo '<table class=tableitems width=100% cellspacing=0 cellpadding=1 style="font-variant:small-caps;">';
 	echo '<tr>';
 	
@@ -139,6 +175,9 @@
 			{
 				echo "aucun billet pertinent";
 			}
+			
+			
+	
 //		echo "</td>";
 //		echo "</tr>";
 //		echo "</table>";
@@ -146,8 +185,34 @@
 	
 	
 	
+	/////////////////////////////////////////////	
+	/////	/////	/////	/////	/////	/////
+	///// FIN DE L'AFFICHAGE DES BILLETS	/////
+	/////	/////	/////	/////	/////	/////
+	/////////////////////////////////////////////
+
+echo '</td>';
+
+// PANEL DE DROITE: PERIODES SUIVANTES
+
+if ($nosucc) $back_apres='background-color:'.$backdarker.';';
+echo '<td width=22% align=center class=tableitems style="font-variant:small-caps; size:small; font-style:italic;'.$back_apres.'">';	
+if ($nosucc) echo "<b>(pas de successeur)</b>"; 
+else {
+	echo '<table width=100% cellspacing=0 cellpadding=0>';
+	echo '<tr class=commentitems style="font-variant:small-caps; background-color:'.$backdark.';"><td width=5px></td><td>période</td><td></td><td>champ</td></tr>';
+	$last_display_periode="";
+	foreach ($succ as $s) 
+		display_cluster_title($s,"succ");
+	echo '</table>';
+	}
+echo '</td>';
 	
-	
+echo "</tr>";
+
+echo '</table>';
+
+
 	
 	
 	
