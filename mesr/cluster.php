@@ -339,8 +339,7 @@ else
 }
 
 echo '<span id="dialogfilThematique" title="Liens vers l\'extrémité du fil thématique ('.get_short_string_periode(arrange_periode($last_period_clusters[0][periode])).')">';
-echo 'Ce fil thématique a plusieurs champs en dernière période :';
-echo $cluster_Link_html;
+echo 'Ce fil thématique a plusieurs champs en dernière période :'.$cluster_Link_html;
 echo '</span>';
 
 
@@ -356,7 +355,7 @@ if ($lettre_current!="") echo '('.$lettre_current.')';
 echo '</i>';
 echo '<br/><span style="font-size: x-small;">fil thématique: ';
 echo $fils_thematique_html;
-echo '<td align=right valign=top><a href='.$googletext.'><img src='.$hrefroot.$racine.'/images/googleG.png alt="(google)" valign=middle width=18 style="border-style:none;"></a>&nbsp;</td>';
+echo '<td align=right><span style="font-size:8pt;">'.get_string_periode($my_period).'</span>&nbsp;&nbsp;</td>';
 echo '</tr></table>';
 echo '</td><td width=2.5%></td></tr>';
 echo '</table>';
@@ -385,11 +384,10 @@ echo "<table width=100%><tr valign=top><td width=2.5%></td><td width=95%>";
 	
 	if ($nav=="socsem") echo $select_string."profil d'évolution</b>"; else echo $href_string."socsem>profil d'évolution</a>";
 
-	echo '</td><td align=right>';
-	echo '<div style="';
-	echo 'font-size:8pt;';
-	echo '">'.get_string_periode($my_period).'</div>';
-	echo '</td></tr>';
+	echo '</td>';
+	echo '<td align=right><a href='.$googletext.'><img src='.$hrefroot.$racine.'/images/googleGinv.png alt="(google)" valign=middle width=18 style="border-style:none;"></a></td>';
+	//echo '<td align=right><div style="font-size:8pt;">'.get_string_periode($my_period).'</div></td>';
+	echo '</tr>';
 	echo '</table>';
 
 echo '<td width=2.5%></td></tr>';
