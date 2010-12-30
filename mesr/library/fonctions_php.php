@@ -1142,6 +1142,7 @@ function display_billets($info_sources,$list_of_concepts,$my_period,$type_notice
 		echo "</tr>";
 	}
 	echo "</table>";
+	echo "</table>";
 	//echo '
 	//<script> $(function() { '.$jscriptmp.' 
 	//	});</script>';
