@@ -325,7 +325,7 @@ $jscriptmp.="
 
 if (count($last_period_clusters)==1){
     $last_period_clusters=$last_period_clusters[0];
-    $fils_thematique_htlm='<a href="'.$last_period_clusters[attribut].'"><font color='.$backdarker.'>'.remove_popo(substr($partition_infos[label],0,-1)).'</font></a></span>';
+    $fils_thematique_html='<a href="'.$last_period_clusters[attribut].'"><font color='.$backdarker.'>'.remove_popo(substr($partition_infos[label],0,-1)).'</font></a></span>';
 	}
 else
 	{
@@ -334,14 +334,14 @@ else
         $cluster_Link_html.='<li><a href="'.$last_period_clusters[$i][attribut].'"><font color=blue>'.str_replace('---','/',remove_popo($last_period_clusters[$i][label])).'</a>';
     }
     $cluster_Link_html.='</ul>';
-    $fils_thematique_htlm='<a href scr=# id="openerfilThematique"'.'><font color='.$backdarker.'>'.remove_popo(substr($partition_infos[label],0,-1)).'</font></a>';
+    $fils_thematique_html='<a href scr=# id="openerfilThematique"'.'><font color='.$backdarker.'>'.remove_popo(substr($partition_infos[label],0,-1)).'</font></a>';
     
 }
 
-echo '<div id="dialogfilThematique" title="Liens vers l\'extrémité du fil thématique ('.get_short_string_periode(arrange_periode($last_period_clusters[0][periode])).')">';
+echo '<span id="dialogfilThematique" title="Liens vers l\'extrémité du fil thématique ('.get_short_string_periode(arrange_periode($last_period_clusters[0][periode])).')">';
 echo 'Ce fil thématique a plusieurs champs en dernière période :';
 echo $cluster_Link_html;
-echo '</div>';
+echo '</span>';
 
 
 
@@ -355,7 +355,7 @@ echo '<table width=100% class=subtitle><tr><td align=left>champ thématique "<i>
 if ($lettre_current!="") echo '('.$lettre_current.')';
 echo '</i>';
 echo '<br/><span style="font-size: x-small;">fil thématique: ';
-echo $fils_thematique_htlm;
+echo $fils_thematique_html;
 echo '<td align=right valign=top><a href='.$googletext.'><img src='.$hrefroot.$racine.'/images/googleG.png alt="(google)" valign=middle width=18 style="border-style:none;"></a>&nbsp;</td>';
 echo '</tr></table>';
 echo '</td><td width=2.5%></td></tr>';
