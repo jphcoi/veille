@@ -83,6 +83,7 @@ for ($i=$first_period;$i<=$last_period;$i+=$time_steps){
     $year_String.=$i.', ';
 }
 $year_String=substr($year_String,0,-2).'];';
+echo $year_String;
 // ajout des var pour chaque branche
 $streamgraphString=$year_String.'var dynamics= {';
 
@@ -93,34 +94,41 @@ while ($partition_resultat=mysql_fetch_array($resultat)){
        if (strcmp(substr($partition_label,-1),',')==0){
             $lab=substr($partition_label,0,-1);
             }
-    $streamgraphString.='"'.remove_popo(substr($partition_label,0,-1)).'":'.fiels_list2JSON($id_partition,$first_period,$last_period,$dT,$time_steps);
+    $streamgraphString.='"'.remove_popo(substr($partition_label,0,-1)).'":'.partition2JSON($id_partition,$first_period,$last_period,$dT,$time_steps);
     }
 $streamgraphString=substr($streamgraphString,0,-1).'};';
 return $streamgraphString;
 }
 /////////////////////////////////////////////
-function fiels_list2JSON($id_partition,$first_period,$last_period,$dT,$time_steps){
+function partition2JSON($id_partition,$first_period,$last_period,$dT,$time_steps){
 // transforme un ensemble de champs en un JSon pour streagraph
 // { activity: [ value1, ..., valueN]}
 $JSON_string="{ activity: [";
 
 for ($i=$first_period;$i<=$last_period;$i+=$time_steps){
     $period_string=($i-$dT).' '.$i;
+    echo $period_string.'<br/>';
     $period_score=0;
     $sql="SELECT id_cluster,periode FROM cluster WHERE pseudo=$id_partition AND periode='".$period_string."' GROUP BY id_cluster";
     $resultat=mysql_query($sql) or die ("<b>Requête non exécutée (récupération des clusters d'une période pour une partition)</b>.");
+    echo $sql.'<br/>';
+    $count=0;
     while ($ligne=mysql_fetch_array($resultat)) {
-        $commande_sql_pert = "SELECT id_billet,overlap_size,billet_size,cluster_size from biparti where cluster = '".$ligne[id_cluster]."' AND periode = '".$ligne[periode]."' AND overlap_size/cluster_size/log10(10+billet_size-overlap_size)>="."0.3"."and overlap_size/cluster_size>0.25" ;
+        $commande_sql_pert = "SELECT id_billet,overlap_size,billet_size,cluster_size from biparti where cluster = '".$ligne[id_cluster]."' AND periode = '".$ligne[periode]."' AND overlap_size/cluster_size/log10(10+billet_size-overlap_size)>="."0.3"."and overlap_size/cluster_size>0.4" ;
         $billet_list=mysql_query($commande_sql_pert) or die ("<b>Requête non exécutée (récupération des billets associés à un cluster)</b>.");
         while ($billet=mysql_fetch_array($billet_list)) {
             $period_score+=$billet[overlap_size]/$billet[cluster_size]/log10(10+$billet[billet_size]-$billet[overlap_size])/10;
+        $count++;
         }
     }
+    echo $count.' billets<br/>';
+    echo ' ------------------------<br/>';
     $JSON_string.=round($period_score,4).', ';
     
 }
 $JSON_string=substr($JSON_string,0,-2);
 $JSON_string.='] },';
+echo $JSON_string;
 return $JSON_string;
 }
 ////////////////

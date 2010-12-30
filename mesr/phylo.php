@@ -2,11 +2,24 @@
 include("login_check.php");
 include("library/fonctions_php.php");
 $jsprotovis="TRUE";
+
+//connexion a la base de donnees
+include("parametre.php");
+$ink  =mysql_connect( $server,$user,$password);if ($encodage=="utf-8") mysql_query("SET NAMES utf8;");
+@mysql_select_db($database) or die( "Unable to select database");
+//à préciser lorsqu'on est sur sciencemapping.com
+if ($user!="root") mysql_query("SET NAMES utf8;");
+
+include("include/header.php");
+include("banner.php");
+
+
 ///// PARAMETRES ///
 $depth=2;// rang dans le nombre d'occurences des termes acceptés pour labellisation des branches
-$min_similarity=0.007;// seuil de similarité pour clusteriser
+$min_similarity=0.001;// seuil de similarité pour clusteriser
 $phylo_min_nb_periods_covered=4;
 $phylo_recent_min_nb_periods_covered=4;
+
 ////////////////////
 
 /// on récupère pour chaque catégorie les données pré-calculées pour les streamgraph
@@ -35,17 +48,6 @@ while ($ligne=mysql_fetch_array($resultat)) {
 //}
 
 
-//connexion a la base de donnees
-
-include("parametre.php");
-$ink  =mysql_connect( $server,$user,$password);if ($encodage=="utf-8") mysql_query("SET NAMES utf8;");
-@mysql_select_db($database) or die( "Unable to select database");
-//à préciser lorsqu'on est sur sciencemapping.com
-if ($user!="root") mysql_query("SET NAMES utf8;");
-
-include("include/header.php");
-include("banner.php");
-
 
 
 $jscriptmp="	$( '#tabs' ).tabs();
@@ -58,6 +60,11 @@ while ($ligne=mysql_fetch_array($resultat)) {
         array_push($last_period_list,$ligne[last_period]);
 }
 $last_period=max($last_period_list);
+
+
+$dated=min($last_period_list);
+$datef=max($last_period_list);
+
 //////////
 include('include/streamgraphActives.php');
 //include('include/streamgraphEmergentes.php');
@@ -185,6 +192,7 @@ $branch_string='<i>('.$nb_branches.' thématiques dans cette catégorie)'.'</i><
 
 
 for ($i=0;$i<count($grouped_indexes);$i++){
+
     $index_grouped=$grouped_indexes[$i];
     $Ngrams=$Ngram_arrays[$i];
     if (count($index_grouped)>1){
@@ -193,6 +201,9 @@ for ($i=0;$i<count($grouped_indexes);$i++){
             $group_title=$group_title.ucfirst(key($Ngrams)).', ';
             next($Ngrams);
         }
+        echo '<br/>'.$group_title.'<br/>';
+        echo count($index_grouped).'<br/>';
+        print_r($index_grouped);
         $group_title=substr(trim($group_title), 0, -1);
         $branch_string=$branch_string.'<b>'.$group_title.' :</b>'.'<br/><ul>';
         while ((count($index_grouped)>0)&&($index = current($index_grouped))){

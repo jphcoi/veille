@@ -10,7 +10,7 @@ setlocale (LC_TIME, 'fr_FR','fra');
 
 function error(){
 $query="select * FROM partifgdfgtions WHERE nb_period_covered >= $phylo_min_nb_periods_covered";
-$resultat=mysql_query($query) or die ("<b>Requête non exécutée (récupération des principales thématiques)</b>.");
+$resultat=mysql_query($query) or die ("<b>planned error succesful ! </b>.");
 
 }
 

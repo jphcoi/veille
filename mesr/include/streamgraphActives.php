@@ -9,7 +9,6 @@ $out=display_helper_two_outputs('Graph d\'évolution des fils thématiques','<p>
                     ',"evolution");
 
 $jscriptmp.=$out[1];
-
 $myscriptActives='<hr>
 <table class=tableitems width="100%">
 <tr valign=bottom>
@@ -27,8 +26,6 @@ $myscriptActives.='</td><td align="right" style="font-variant:small-caps;">
 '.'<script type="text/javascript+protovis">
 
 /* Interaction state. */
-$dated=years[1];
-$datef=years[years.length-1];
 var offset="zero";
 var gender = 0,
 re = "";
