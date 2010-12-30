@@ -331,7 +331,7 @@ else
 	{
     $cluster_Link_html='<ul><font color=blue>';
     for ($i=0;$i<count($last_period_clusters);$i++){
-        $cluster_Link_html.='<li><a href="'.$last_period_clusters[$i][attribut].'"><font color=blue>'.str_replace('---','/',remove_popo($last_period_clusters[$i][label])).'</a>';
+        $cluster_Link_html.='<li><a href="'.$last_period_clusters[$i][attribut].'"><font color=blue>'.str_replace('---','/',remove_popo($last_period_clusters[$i][label])).'</a></li>';
     }
     $cluster_Link_html.='</ul>';
     $fils_thematique_html='<a href scr=# id="openerfilThematique"'.'><font color='.$backdarker.'>'.remove_popo(substr($partition_infos[label],0,-1)).'</font></a>';
