@@ -1068,15 +1068,12 @@ function prone($chaine,$n)
 
 function display_billets($info_sources,$list_of_concepts,$my_period,$type_notice)
 {
+	global $jscriptmp;
 	$backdark="#DDDDDD";
 	$backdarker="#CCCCCC";
 	
-	echo "<table class=tableitems rules=all width=100% cellspacing=0 cellpadding=0>";
-	echo "</td>";
-	echo "<td align=left width=80%>";
-	echo "<table width=100% cellspacing=0 cellpadding=0>";
+	echo "<table class=tableitems width=100% cellspacing=0 cellpadding=0>";
 	$odd=0;
-	$jscriptmp="";
 	foreach(array_keys($info_sources) as $key)
 	{
 		//print_r($info_sources[$key]['dates']);
@@ -1141,10 +1138,6 @@ function display_billets($info_sources,$list_of_concepts,$my_period,$type_notice
 		echo "</tr>";
 	}
 	echo "</table>";
-	echo '
-	<script> $(function() { '.$jscriptmp.' 
-		});</script>';
-
 }
 					
 ////////////
