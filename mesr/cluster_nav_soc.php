@@ -1,21 +1,17 @@
 <?
 
-	$commande_sql_pert = "SELECT id_billet,overlap_size,billet_size from biparti where cluster = '".$id_cluster."' AND periode = '".derange_periode($my_period)."' AND overlap_size/cluster_size/log10(10+billet_size-overlap_size)>=".$pertinence.' and overlap_size/cluster_size>0.1 LIMIT 80';
-	$res_temp = mysql_query($commande_sql_pert);
-	while ($row = mysql_fetch_array ($res_temp))
-	{
-		$liste_of_posts[$row['id_billet']]=$row['overlap_size'];
-		$liste_of_size[$row['id_billet']]=$row['billet_size'];
-	}
+$commande_sql_pert = "SELECT id_billet,overlap_size,billet_size from biparti where cluster = '".$id_cluster."' AND periode = '".derange_periode($my_period)."' AND overlap_size/cluster_size/log10(10+billet_size-overlap_size)>=".$pertinence.' and overlap_size/cluster_size>0.1 LIMIT 80';
+$res_temp = mysql_query($commande_sql_pert);
+while ($row = mysql_fetch_array ($res_temp))
+{
+	$liste_of_posts[$row['id_billet']]=$row['overlap_size'];
+	$liste_of_size[$row['id_billet']]=$row['billet_size'];
+}
 
-	if (count($liste_of_posts)==0)
-	{
-		$affichage=0;
-	}
-	else
-	{
-		$affichage=1;
-	}
+if (count($liste_of_posts)==0)
+	$affichage=0;
+else
+	$affichage=1;
 
 if ($affichage>0)
 {
@@ -24,91 +20,69 @@ if ($affichage>0)
 	$commande_sql = "SELECT label_1, label_2 from cluster where id_cluster = '".$id_cluster."' AND periode = '".derange_periode($my_period)."'";
 
 	$resultat=mysql_query($commande_sql);
-	while ($billes=mysql_fetch_array($resultat))
-		{
+	while ($billes=mysql_fetch_array($resultat)) {
 		$commande_sql2 = "SELECT forme_principale from concepts where id = '".$billes['label_1']."'";
 		$resultat2=mysql_query($commande_sql2);	
-		while ($billes2=mysql_fetch_array($resultat2))	
-		{
-		$label_1 = $billes2['forme_principale'];
+		while ($billes2=mysql_fetch_array($resultat2))	{ $label_1 = $billes2['forme_principale']; }
+
+		$commande_sql2 = "SELECT forme_principale from concepts where id = '".$billes['label_2']."'";
+		$resultat2=mysql_query($commande_sql2);	
+		while ($billes2=mysql_fetch_array($resultat2))	{ $label_2 = $billes2['forme_principale']; }
+		$cluster_name =$label_1.' - '.$label_2.' ('.$id_cluster.', '.$my_period.')';
+		$cluster_name ='champ:'.$id_cluster.','.$my_period;
+	}
+
+	//on repart de res_temp: requete qui donne les billets associés au champ au-delà d'un certain score de pertinence
+	$res_temp = mysql_query($commande_sql_pert);
+	while ($billes=mysql_fetch_array($res_temp)) {
+		$billet_index = $billes['id_billet'];
+		$sql_auteur = "SELECT auteur_id,site from billets where id = '$billet_index'";
+		$res_auteur=mysql_query($sql_auteur);
+		while ($sql_auteurs=mysql_fetch_array($res_auteur)) {
+			$champ_aut_id = $sql_auteurs['auteur_id'];
+			if ($champ_aut_id[0]='[') {
+				$champ_aut_id = str_replace('[','',$champ_aut_id);
+				$champ_aut_id = str_replace(']','',$champ_aut_id);
+				$champ_aut_id = explode(', ',$champ_aut_id);
+				$sql_auteurs_names=$sql_auteurs['site'];
+				$sql_auteurs_names=explode(' *** ',$sql_auteurs_names);
+				for( $i = 0 ; $i < count($champ_aut_id) ; $i++ ) {
+					$auteurs[] = $champ_aut_id[$i];
+					$legende[$champ_aut_id[$i]]=$sql_auteurs_names[$i];
+				}				
+			}
+			else {
+				$auteurs[] = $sql_auteurs['auteur_id'];
+				$legende[$sql_auteurs['auteur_id']]=strip_www($sql_auteurs['site']);
+			}
 		}
+	}
 
-					$commande_sql2 = "SELECT forme_principale from concepts where id = '".$billes['label_2']."'";
-					$resultat2=mysql_query($commande_sql2);	
-					while ($billes2=mysql_fetch_array($resultat2))	
-					{
-						$label_2 = $billes2['forme_principale'];
-					}
-					$cluster_name =$label_1.' - '.$label_2.' ('.$id_cluster.', '.$my_period.')';
-					$cluster_name ='champ:'.$id_cluster.','.$my_period;
+	$aut_occ = array_count_values($auteurs);
+	//print_r($aut_occ);
+	foreach($aut_occ as $key => $value) {
+		$liste_auteur_unique[] = $key;
+	}
 
-				}
+	$sql = "SELECT auteur1, auteur2 from soc where (";
+	$compteur = 0;
+	foreach($liste_auteur_unique as $value) {
+		$compteur = $compteur+1;
+		$sql =$sql."auteur1 = '".$value."'";
+		if ($compteur < count($liste_auteur_unique)) {
+			$sql =$sql." OR ";
+		}
+	}
+	$sql  = $sql.") AND (";
 
-	//		$commande_sql = "SELECT id_billet from biparti where cluster = '".$id_cluster."' AND periode = '".derange_periode($my_period)."'";
-	//		$resultat=mysql_query($commande_sql);
-			//while ($billes=mysql_fetch_array($resultat))
-			//on repart de res_temp: requete qui donne les billets associés au champ au-delà d'un certain score de pertinence
-			$res_temp = mysql_query($commande_sql_pert);
-			while ($billes=mysql_fetch_array($res_temp))
-				{
-					$billet_index = $billes['id_billet'];
-					$sql_auteur = "SELECT auteur_id,site from billets where id = '$billet_index'";
-					$res_auteur=mysql_query($sql_auteur);
-					while ($sql_auteurs=mysql_fetch_array($res_auteur))
-					{
-						$champ_aut_id = $sql_auteurs['auteur_id'];
-						if ($champ_aut_id[0]='[')
-						{
-							$champ_aut_id = str_replace('[','',$champ_aut_id);
-							$champ_aut_id = str_replace(']','',$champ_aut_id);
-							$champ_aut_id = explode(', ',$champ_aut_id);
-							$sql_auteurs_names=$sql_auteurs['site'];
-							$sql_auteurs_names=explode(' *** ',$sql_auteurs_names);
-							for( $i = 0 ; $i < count($champ_aut_id) ; $i++ )
-							{
-								$auteurs[] = $champ_aut_id[$i];
-								$legende[$champ_aut_id[$i]]=$sql_auteurs_names[$i];
-							}
-							
-						}
-						else
-						{$auteurs[] = $sql_auteurs['auteur_id'];
-						$legende[$sql_auteurs['auteur_id']]=strip_www($sql_auteurs['site']);}
-					}
-				}
-			//echo 	$commande_sql;
-			
-			
-				$aut_occ = array_count_values($auteurs);
-				//print_r($aut_occ);
-				foreach($aut_occ as $key => $value) {
-				$liste_auteur_unique[] = $key;
-				}
-
-				$sql = "SELECT auteur1, auteur2 from soc where (";
-				$compteur = 0;
-				foreach($liste_auteur_unique as $value)
-				{
-					$compteur = $compteur+1;
-					$sql =$sql."auteur1 = '".$value."'";
-					if ($compteur < count($liste_auteur_unique))
-					{
-						$sql =$sql." OR ";
-					}
-
-				}
-				$sql  = $sql.") AND (";
-
-				$compteur = 0;
-				foreach($liste_auteur_unique as $value)
-				{
-					$compteur = $compteur+1;
-					$sql =$sql."auteur2 = '".$value."'";
-					if ($compteur < count($liste_auteur_unique))
-					{
-						$sql =$sql." OR ";
-					}
-				}
+	$compteur = 0;
+	foreach($liste_auteur_unique as $value) {
+		$compteur = $compteur+1;
+		$sql =$sql."auteur2 = '".$value."'";
+		if ($compteur < count($liste_auteur_unique)) {
+			$sql =$sql." OR ";
+		}
+	}
 				$sql  = $sql.")";
 
 
@@ -160,8 +134,7 @@ if ($affichage>0)
 	
 	}
 	
-	///////FIN DES CALCULS FICHIERS JSON DU RESEAU SOCIAL ECRIT
-
+///////FIN DES CALCULS FICHIERS JSON DU RESEAU SOCIAL ECRIT
 
 	
 echo '<p>';
@@ -253,8 +226,7 @@ echo ' value="1" />
 echo '</td>';
 	
 	
-echo "<td align=right class=tableitems width=20%><i>seuil de pertinence: "//.strval(100*$pertinence)
-	."</i>";
+echo "<td align=right class=tableitems width=20%><i>seuil de pertinence:</i>";
 
 $old_url  =$_SERVER['REQUEST_URI'];
 $old_urlv = explode('MESR_bac/',$old_url);
@@ -272,31 +244,31 @@ echo '<select name="pertinence">';
 	echo '</option>';
 
 	echo '<option value=20';
-			if ($pertinence==0.2) echo(" selected");
-			echo '>';
-			echo "faible (>20%)";
-			echo '</option>';
+	if ($pertinence==0.2) echo(" selected");
+	echo '>';
+	echo "faible (>20%)";
+	echo '</option>';
 
-			echo '<option value=30';
-			if ($pertinence==0.3) echo(" selected");
-			echo '>';
-			echo "médian (>30%)";
-			echo '</option>';
+	echo '<option value=30';
+	if ($pertinence==0.3) echo(" selected");
+	echo '>';
+	echo "médian (>30%)";
+	echo '</option>';
 
-			echo '<option value=40';
-			if ($pertinence==0.4) echo(" selected");
-			echo '>';
-			echo "fort (>40%)";
-			echo '</option>';
+	echo '<option value=40';
+	if ($pertinence==0.4) echo(" selected");
+	echo '>';
+	echo "fort (>40%)";
+	echo '</option>';
 
-		echo '</select>';
-		echo '<input type="hidden" value="'.$id_cluster.'" name="id_cluster">';
-		echo '<input type="hidden" value="'.$nav.'" name="nav">';
-		echo '<input type="hidden" value="'.$periode.'" name="periode">';
+echo '</select>';
+echo '<input type="hidden" value="'.$id_cluster.'" name="id_cluster">';
+echo '<input type="hidden" value="'.$nav.'" name="nav">';
+echo '<input type="hidden" value="'.$periode.'" name="periode">';
 
 
-		echo '<input type="submit" value="Modifier le seuil de pertinence">';
-		echo '</form>';
+echo '<input type="submit" value="Modifier le seuil de pertinence">';
+echo '</form>';
 
 
 
