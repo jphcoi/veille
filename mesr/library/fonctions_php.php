@@ -1072,9 +1072,9 @@ function display_billets($info_sources,$list_of_concepts,$my_period,$type_notice
 	$backdark="#DDDDDD";
 	$backdarker="#CCCCCC";
 	
-	echo "<table class=tableitems rules=all width=100% cellspacing=0 cellpadding=0>";
-	echo "<tr>";
-	echo "<td align=left width=80%>";
+// 	echo "<table class=tableitems rules=all width=100% cellspacing=0 cellpadding=0>";
+// 	echo "<tr>";
+// 	echo "<td align=left width=80%>";
 	echo "<table width=100% cellspacing=0 cellpadding=0>";
 	$odd=0;
 	//$jscriptmp="";
@@ -1141,7 +1141,7 @@ function display_billets($info_sources,$list_of_concepts,$my_period,$type_notice
 		echo "</td>";
 		echo "</tr>";
 	}
-	echo "</table>";
+//	echo "</table>";
 	echo "</table>";
 	//echo '
 	//<script> $(function() { '.$jscriptmp.' 
