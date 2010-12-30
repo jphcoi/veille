@@ -118,33 +118,35 @@ function display_cluster_title ($s, $direction) {
 	$shref='cluster.php?id_cluster='.$s['id']."&periode=".arrange_periode($s['periode']).'&nav=phylo';
 	$speriode=get_short_string_periode(arrange_periode($s['periode']),0,1);
 	$stitle='"<b>'.remove_popo($dico_termes[$label1]).'</b> - '.remove_popo($dico_termes[$label2]).'"';
+
+	// $periodchange indique si on a un changement de période par rapport au dernier champ thématique affiché
+	$periodchange=($last_display_periode!=$s['periode']); 
+
+	if ($periodchange && $last_display_periode!="")
+		echo '<tr style="background:white;"><td></td><td></td><td></td><td><hr class="dashed"></td></tr>';
+
+	$ecart=floor(abs(compute_periode(derange_periode($my_period))-compute_periode($s['periode']))/7001000);
 	
-	if ($last_display_periode!=$s['periode'] && $last_display_periode!="") {
-		echo '<tr><td></td><td></td><td></td><td><hr class="dashed"></td></tr>';
-	}
-	$ecart=0;
-	if ($last_display_periode=="") // on est dans le cas de la premiere periode apres/avant la periode courante
-		{
-			if (abs(compute_periode(derange_periode($my_period))-compute_periode($s['periode']))>7500000) $ecart=1;
-		}
-	//echo $last_display_periode."/".abs(compute_periode(derange_periode($my_period))-compute_periode($s['periode']))."/".$s['periode']."/".$ecart;
-	
-	echo '<tr valign=top>';
+	echo '<tr valign=top'.($ecart>0?' style="background:white;"':'').'>';
 	echo '<td class=commentitems style="font-size:xx-small;">';
 
-	if ($ecart==1) echo ("...&nbsp;");
+	if ($ecart>0 && $periodchange) echo ("<b>...</b>&nbsp;");
 	echo '</td>';
 	echo '<td class=commentitems style="font-size:xx-small;">';
 	if ($last_display_periode!=$s['periode']) echo $speriode."&nbsp;";
+	if ($ecart>0 && $periodchange) echo "<b>&nbsp;[".($direction=="succ"?"+":"-").($ecart+1)."&nbsp;sem.]&nbsp;</b>";
 	echo '</td>';
 	
 	$sbox=selective_column_tt($arraykey,$s['termes'],$s['plus'],$s['minus']);
 	$sid=$s['id']."_".str_replace(" ","_",$s['periode']);
-	if ($direction=="succ") { if (intval($s['fils'])>0) $sarrow='&darr;&nbsp;'; }
-	else { if (intval($s['pere'])>0) $sarrow='&uarr;&nbsp;'; }
+	
+	if ($direction=="succ") 
+		{ if (intval($s['fils'])>0) $sarrow='&darr;&nbsp;'; }
+	else 
+		{ if (intval($s['pere'])>0) $sarrow='&uarr;&nbsp;'; }
 
 	echo '<td>';
-	$jscriptmp.=display_helper('(période '.get_string_periode(arrange_periode($s['periode'])).')','<div style="font-variant:small-caps;"><a href='.$shref.'>'.$sarrow.$stitle.'</a></div><br>'.$sbox,$sid,"magnify.png","resizable: true");
+	$jscriptmp.=display_helper('(période '.get_string_periode(arrange_periode($s['periode'])).')','<div style="font-variant:small-caps;"><a href='.$shref.'>'.$sarrow.$stitle.'</a></div><br>'.$sbox,$sid,"magnify-wide.png","resizable: true");
 	echo '</td>';
 	echo '
 		<td class=tableitems style="font-variant:small-caps; size:small; font-style:italic;">';
@@ -472,10 +474,11 @@ if ($nav=="phylo"){
 	// affichage des boites
 	
 	echo '<table width=100%>';
+
 	echo '<tr valign=top>';
 	
-//	if ($ecart_pred==1) $back_avant='background-color:white;';
-	echo '<td width=30% align=center class=tableitems style="font-variant:small-caps; size:small; font-style:italic;">';
+	if ($nopred) $back_avant='background-color:'.$backdarker.';';
+	echo '<td width=30% align=center class=tableitems style="font-variant:small-caps; size:small; font-style:italic;'.$back_avant.'">';
 	if ($nopred) echo "<b>(pas de prédécesseur)</b>";
 	else {
 		echo '<table width=100% cellspacing=0 cellpadding=0>';
@@ -485,12 +488,6 @@ if ($nav=="phylo"){
 		echo '</table>';
 		}	
 	echo '</td>';
-
-// 	if ($ecart_pred==1)	{
-// 		echo '<td width=2% align=center style="background-color:'.$backdark.'; vertical-align:middle;">'; 
-// 		if (!$nopred) echo (' (...) ');
-// 		echo '</td><td width=2%></td>';
-// 		}
 	
 	echo '<td width=40% align=center style="font-size:medium; font-variant:small-caps; font-style:italic;">';
 	
@@ -515,13 +512,6 @@ if ($nav=="phylo"){
 	
 	echo '</td>';
 	
-// 	if ($ecart_succ==1)	{
-// 		echo '<td width=2%></td><td width=2% style="background-color:'.$backdark.'; vertical-align:middle;">';
-// 		if (!$nosucc) echo ' (...) ';
-// 		echo '</td>';
-// 		$back_apres='background-color:white;';
-// 		}
-		
 	if ($nosucc) $back_apres='background-color:'.$backdarker.';';
 	echo '<td width=30% align=center class=tableitems style="font-variant:small-caps; size:small; font-style:italic;'.$back_apres.'">';	
 	if ($nosucc) echo "<b>(pas de successeur)</b>"; 
