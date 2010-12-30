@@ -19,7 +19,7 @@
 
 				var mynetwork = '.(json_encode($tmp)).';
 				
-				var w = .8*.9*document.body.clientWidth,
+				var w = .56*.9*document.body.clientWidth,
 					h = .75*document.body.clientHeight,
 					colors = pv.Colors.category19();
 				
