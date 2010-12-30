@@ -37,9 +37,11 @@ else {
 echo '</td>';
 
 
+echo '<td width=1%></td>';
+
 // PANEL CENTRAL
 
-echo '<td align=center width=56%>';
+echo '<td align=center width=54%>';
 
 
 	/////////////////////////////////////////////	
@@ -51,7 +53,7 @@ echo '<td align=center width=56%>';
 
 
 	
-	echo '<table class=tableitems width=100% cellspacing=0 cellpadding=1 style="font-variant:small-caps;">';
+	echo '<table class=tableitems width=100% cellspacing=0 cellpadding=1>';
 	echo '<tr>';
 	
 	//décommenter pour récupérer 
@@ -61,10 +63,10 @@ echo '<td align=center width=56%>';
 //		echo "</td>";
 	//echo "<td width=5%></td>";
 	
-	echo "<td align=left><i>ENSEMBLE DES SOURCES AU-DELA DU SEUIL DE PERTINENCE</i></td>";
-	echo "<td align=right class=tableitems><i>seuil de pertinence: "//.strval(100*$pertinence)
-	."</i>";
-
+	echo '<td align=left style="font-variant:small-caps;"><i>ENSEMBLE DES SOURCES AU-DELA DU SEUIL DE PERTINENCE POUR LA PÉRIODE COURANTE</i></td>';
+	echo '<td width=5%></td>';
+	echo '<td align=right class=tableitems style="font-size:x-small;">seuil de pertinence: ';//.strval(100*$pertinence)
+	
 	$old_url  =$_SERVER['REQUEST_URI'];
 	$old_urlv = explode($racine.'/',$old_url);
 	if (count($old_urlv)>0)
@@ -173,7 +175,7 @@ echo '<td align=center width=56%>';
 					
 			else
 			{
-				echo "aucun billet pertinent";
+				echo "<br><b><i>aucun billet pertinent</i></b>";
 			}
 			
 			
@@ -192,6 +194,8 @@ echo '<td align=center width=56%>';
 	/////////////////////////////////////////////
 
 echo '</td>';
+
+echo '<td width=1%></td>';
 
 // PANEL DE DROITE: PERIODES SUIVANTES
 
