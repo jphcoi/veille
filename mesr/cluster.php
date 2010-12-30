@@ -111,7 +111,7 @@ function selective_column_tt($arraykey,$list,$plus,$minus,$main=0){
 //
 
 function display_cluster_title ($s, $direction) {
-	global $dico_termes,$mainloc,$arraykey,$last_display_periode,$jscriptmp;
+	global $dico_termes,$mainloc,$arraykey,$last_display_periode,$jscriptmp,$my_period;
 	$label1=$s['label1'];
 	$label2=$s['label2'];
 	$lettre=$s['lettre'];
@@ -119,10 +119,22 @@ function display_cluster_title ($s, $direction) {
 	$speriode=get_short_string_periode(arrange_periode($s['periode']),0,1);
 	$stitle='"<b>'.remove_popo($dico_termes[$label1]).'</b> - '.remove_popo($dico_termes[$label2]).'"';
 	
-	if ($last_display_periode!=$s['periode'] && $last_display_periode!="") echo '<tr><td></td><td></td><td></td><td><hr class="dashed"></td></tr>';
+	if ($last_display_periode!=$s['periode'] && $last_display_periode!="") {
+		echo '<tr><td></td><td></td><td></td><td><hr class="dashed"></td></tr>';
+	}
+	$ecart=0;
+	if ($last_display_periode=="") // on est dans le cas de la premiere periode apres/avant la periode courante
+		{
+			if (abs(compute_periode(derange_periode($my_period))-compute_periode($s['periode']))>7500000) $ecart=1;
+		}
+	//echo $last_display_periode."/".abs(compute_periode(derange_periode($my_period))-compute_periode($s['periode']))."/".$s['periode']."/".$ecart;
 	
-	echo '<tr valign=top><td></td>';
-	echo '<td class=commentitems style="font-weight:normal; font-variant:normal; font-size:xx-small;">';
+	echo '<tr valign=top>';
+	echo '<td class=commentitems style="font-size:xx-small;">';
+
+	if ($ecart==1) echo ("...&nbsp;");
+	echo '</td>';
+	echo '<td class=commentitems style="font-size:xx-small;">';
 	if ($last_display_periode!=$s['periode']) echo $speriode."&nbsp;";
 	echo '</td>';
 	
@@ -252,8 +264,8 @@ for($i=0;$i<count($periode_apres);$i++) {
 	if (compute_periode($periode_value)<compute_periode($min_periode_apres)) $min_periode_apres=$periode_value;
 	$periode_apres_rv[$periode_value][]=$successeur[$i];
 	}
-if (compute_periode($periode)-compute_periode($max_periode_avant)>7500000) $ecart_pred=1; else $ecart_pred=0;//echo ("y'a de l'écart<br>");
-if (compute_periode($min_periode_apres)-compute_periode($periode)>7500000) $ecart_succ=1; else $ecart_succ=0;//echo ("y'a de l'écart<br>");
+//if (compute_periode($periode)-compute_periode($max_periode_avant)>7500000) $ecart_pred=1; else $ecart_pred=0;//echo ("y'a de l'écart<br>");
+//if (compute_periode($min_periode_apres)-compute_periode($periode)>7500000) $ecart_succ=1; else $ecart_succ=0;//echo ("y'a de l'écart<br>");
 
 
 //bloc recuperation liste de termes
@@ -462,8 +474,8 @@ if ($nav=="phylo"){
 	echo '<table width=100%>';
 	echo '<tr valign=top>';
 	
-	if ($ecart_pred==1) $back_avant='background-color:white;';
-	echo '<td width='.(30-4*$ecart_pred).'% align=center class=tableitems style="font-variant:small-caps; size:small; font-style:italic;'.$back_avant.'">';
+//	if ($ecart_pred==1) $back_avant='background-color:white;';
+	echo '<td width=30% align=center class=tableitems style="font-variant:small-caps; size:small; font-style:italic;">';
 	if ($nopred) echo "<b>(pas de prédécesseur)</b>";
 	else {
 		echo '<table width=100% cellspacing=0 cellpadding=0>';
@@ -474,11 +486,11 @@ if ($nav=="phylo"){
 		}	
 	echo '</td>';
 
-	if ($ecart_pred==1)	{
-		echo '<td width=2% align=center style="background-color:'.$backdark.'; vertical-align:middle;">'; 
-		if (!$nopred) echo (' (...) ');
-		echo '</td><td width=2%></td>';
-		}
+// 	if ($ecart_pred==1)	{
+// 		echo '<td width=2% align=center style="background-color:'.$backdark.'; vertical-align:middle;">'; 
+// 		if (!$nopred) echo (' (...) ');
+// 		echo '</td><td width=2%></td>';
+// 		}
 	
 	echo '<td width=40% align=center style="font-size:medium; font-variant:small-caps; font-style:italic;">';
 	
@@ -503,20 +515,22 @@ if ($nav=="phylo"){
 	
 	echo '</td>';
 	
-	if ($ecart_succ==1)	{
-		echo '<td width=2%></td><td width=2% style="background-color:'.$backdark.'; vertical-align:middle;">';
-		if (!$nosucc) echo ' (...) ';
-		echo '</td>';
-		$back_apres='background-color:white;';
-		}
+// 	if ($ecart_succ==1)	{
+// 		echo '<td width=2%></td><td width=2% style="background-color:'.$backdark.'; vertical-align:middle;">';
+// 		if (!$nosucc) echo ' (...) ';
+// 		echo '</td>';
+// 		$back_apres='background-color:white;';
+// 		}
 		
-	echo '<td width='.(30-4*$ecart_succ).'% align=center class=tableitems style="font-variant:small-caps; size:small; font-style:italic;'.$back_apres.'">';	
+	if ($nosucc) $back_apres='background-color:'.$backdarker.';';
+	echo '<td width=30% align=center class=tableitems style="font-variant:small-caps; size:small; font-style:italic;'.$back_apres.'">';	
 	if ($nosucc) echo "<b>(pas de successeur)</b>"; 
 	else {
 		echo '<table width=100% cellspacing=0 cellpadding=0>';
 		echo '<tr class=commentitems style="font-variant:small-caps; background-color:'.$backdark.';"><td width=5px></td><td>période</td><td></td><td>champ</td></tr>';
 		$last_display_periode="";
-		foreach ($succ as $s) display_cluster_title($s,"succ");
+		foreach ($succ as $s) 
+			display_cluster_title($s,"succ");
 		echo '</table>';
 		}
 	echo '</td>';
