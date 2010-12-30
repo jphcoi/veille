@@ -160,25 +160,25 @@ echo '</td>';
 
 echo '<td align=center width=56%>';
 
-echo '<i><b>ENVIRONNEMENT SOCIAL</b></i>';	
-$jscriptmp.=display_helper('Réseau social','L\'environnement social du champ thématique courant permet de repérer la structure sociale éventuellement formée par les liens de citations existant entre les sources participant au champ courant et dont le seuil de pertinence est supérieur au seuil choisi (paramétrable via l\'onglet seuil de pertinence en dessous à droite du réseau). Différentes options sont à disposition pour faire varier la focale sur cet environnement social:
-		<ul style="font-size:small;"><li>
-	    	"<b style="font-variant:small-caps;">N\'afficher que les liens entre billets pertinents</b>": Cette option permet de n\'afficher que les liens étant apparus entre les billets pertinents durant la période sélectionnée. On peut faire l\'hypothèse que cette vue permet de repérer des liens de citations dont l\'activation est partie liée à la thématique courante.
-		    </li>
-	    	<li>
-		    "<b style="font-variant:small-caps;">Afficher les liens enregistrés sur l\'ensemble des périodes</b>":
-		    Cette option affiche l\'ensemble des liens entre sources indépendamment de la période à laquelle la citation a été faite. Cette visualisation permet de visualiser la structure sociale d\'ensemble entre les sources indépendamment de la période et du champ considéré.
-	    	</li>
-			</ul>
-			',"helper");
+//echo '<i><b>ENVIRONNEMENT SOCIAL</b></i>';	
+// $jscriptmp.=display_helper('Réseau social','L\'environnement social du champ thématique courant permet de repérer la structure sociale éventuellement formée par les liens de citations existant entre les sources participant au champ courant et dont le seuil de pertinence est supérieur au seuil choisi (paramétrable via l\'onglet seuil de pertinence en dessous à droite du réseau). Différentes options sont à disposition pour faire varier la focale sur cet environnement social:
+// 		<ul style="font-size:small;"><li>
+// 	    	"<b style="font-variant:small-caps;">N\'afficher que les liens entre billets pertinents</b>": Cette option permet de n\'afficher que les liens étant apparus entre les billets pertinents durant la période sélectionnée. On peut faire l\'hypothèse que cette vue permet de repérer des liens de citations dont l\'activation est partie liée à la thématique courante.
+// 		    </li>
+// 	    	<li>
+// 		    "<b style="font-variant:small-caps;">Afficher les liens enregistrés sur l\'ensemble des périodes</b>":
+// 		    Cette option affiche l\'ensemble des liens entre sources indépendamment de la période à laquelle la citation a été faite. Cette visualisation permet de visualiser la structure sociale d\'ensemble entre les sources indépendamment de la période et du champ considéré.
+// 	    	</li>
+// 			</ul>
+// 			',"helper");
 
-echo "<br><i>";	
+echo "<b><i>";	
 if ($affichage>0)
 	echo $myscript;	
 else
 	echo "pas de sources";
 	
-echo "</i>";
+echo "</i></b>";
 	
 echo '</td>';
 
@@ -236,7 +236,7 @@ echo ' value="1" />
 echo '</td>';
 	
 	
-echo "<td align=right class=tableitems><i>seuil de pertinence:</i>";
+echo "<td align=right class=tableitems width=20%><i>seuil de pertinence:</i><br>";
 
 $old_url  =$_SERVER['REQUEST_URI'];
 $old_urlv = explode('MESR_bac/',$old_url);

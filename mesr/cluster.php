@@ -367,6 +367,23 @@ echo '<td align=right><span style="font-size:8pt;">'.get_string_periode($my_peri
 echo '</tr></table>';
 echo '</td><td width=2.5%></td></tr>';
 echo '</table>';
+
+
+function display_helper_environnementsocial() {
+	global $jscriptmp;
+	$jscriptmp.=display_helper('Environnement social','L\'environnement social du champ thématique courant permet de repérer la structure sociale éventuellement formée par les liens de citations existant entre les sources participant au champ courant et dont le seuil de pertinence est supérieur au seuil choisi (paramétrable via l\'onglet seuil de pertinence en dessous à droite du réseau). Différentes options sont à disposition pour faire varier la focale sur cet environnement social:
+		<ul style="font-size:small;"><li>
+	    	"<b style="font-variant:small-caps;">N\'afficher que les liens entre billets pertinents</b>": Cette option permet de n\'afficher que les liens étant apparus entre les billets pertinents durant la période sélectionnée. On peut faire l\'hypothèse que cette vue permet de repérer des liens de citations dont l\'activation est partie liée à la thématique courante.
+		    </li>
+	    	<li>
+		    "<b style="font-variant:small-caps;">Afficher les liens enregistrés sur l\'ensemble des périodes</b>":
+		    Cette option affiche l\'ensemble des liens entre sources indépendamment de la période à laquelle la citation a été faite. Cette visualisation permet de visualiser la structure sociale d\'ensemble entre les sources indépendamment de la période et du champ considéré.
+	    	</li>
+			</ul>
+			',"helper");
+	}
+
+
 echo "<table width=100%><tr valign=top><td width=2.5%></td><td width=95%>";
 
 	echo '<table width=100% class=specialsubbanner valign=top>';
@@ -387,7 +404,10 @@ echo "<table width=100%><tr valign=top><td width=2.5%></td><td width=95%>";
 	echo " - ";
         if ($nav=="cooc") echo $select_string."réseau de cooccurrence</b>"; else echo $href_string."cooc>réseau de cooccurrence</a>";
 	echo " - ";
-	if ($nav=="soc") echo $select_string."environnement social</b>"; else echo $href_string."soc>environnement social</a>";
+	if ($nav=="soc") 
+		{echo $select_string."environnement social"; display_helper_environnementsocial(); echo"</b>";}
+	else 
+		{echo $href_string."soc>environnement social</a>"; display_helper_environnementsocial();}
 	echo " - ";
 	
 	if ($nav=="socsem") echo $select_string."profil d'évolution</b>"; else echo $href_string."socsem>profil d'évolution</a>";
