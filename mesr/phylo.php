@@ -201,12 +201,11 @@ for ($i=0;$i<count($grouped_indexes);$i++){
             $group_title=$group_title.ucfirst(key($Ngrams)).', ';
             next($Ngrams);
         }
-        echo '<br/>'.$group_title.'<br/>';
-        echo count($index_grouped).'<br/>';
-        print_r($index_grouped);
         $group_title=substr(trim($group_title), 0, -1);
         $branch_string=$branch_string.'<b>'.$group_title.' :</b>'.'<br/><ul>';
-        while ((count($index_grouped)>0)&&($index = current($index_grouped))){
+
+        for ($j=0;$j<count($index_grouped);$j++){
+        $index = $index_grouped[$j];
          $branch_id=$branch_list[$index]['id_partition'];
          $sql='SELECT * from partitions WHERE id_partition='.$branch_id;
          $resultat=mysql_query($sql) or die ("<b>Requête non exécutée (récupération des infos de partition)</b>.");
