@@ -111,23 +111,27 @@ function selective_column_tt($arraykey,$list,$plus,$minus,$main=0){
 //
 
 function display_cluster_title ($s, $direction) {
-	global $dico_termes,$mainloc,$arraykey,$last_display_periode,$jscriptmp,$my_period;
+	global $dico_termes,$mainloc,$arraykey,$last_display_periode,$jscriptmp,$my_period,$nav;
 	$label1=$s['label1'];
 	$label2=$s['label2'];
 	$lettre=$s['lettre'];
-	$shref='cluster.php?id_cluster='.$s['id']."&periode=".arrange_periode($s['periode']).'&nav=phylo';
+	$shref='cluster.php?id_cluster='.$s['id']."&periode=".arrange_periode($s['periode']).'&nav='.$nav;
 	$speriode=get_short_string_periode(arrange_periode($s['periode']),0,1);
 	$stitle='"<b>'.remove_popo($dico_termes[$label1]).'</b> - '.remove_popo($dico_termes[$label2]).'"';
 
 	// $periodchange indique si on a un changement de période par rapport au dernier champ thématique affiché
 	$periodchange=($last_display_periode!=$s['periode']); 
 
-	if ($periodchange && $last_display_periode!="")
-		echo '<tr style="background:white;"><td></td><td></td><td></td><td><hr class="dashed"></td></tr>';
-
 	$ecart=floor(abs(compute_periode(derange_periode($my_period))-compute_periode($s['periode']))/7001000);
+
+	//if ($periodchange && $last_display_periode!="")
+	//	echo '<tr style="background:white;"><td></td><td></td><td></td><td><hr class="dashed"></td></tr>';
+	//else
+		{ //if (!$periodchange) 
+		echo '<tr style="height:4px;font-size:0pt;'.($ecart>0?' background:white;':'').'"><td>&nbsp;</td><td></td><td></td><td></td></tr>';
+		}
 	
-	echo '<tr valign=top'.($ecart>0?' style="background:white;"':'').'>';
+	echo '<tr width=100% valign=top'.($ecart>0?' style="background:white;"':'').'>';
 	echo '<td class=commentitems style="font-size:xx-small;">';
 
 	if ($ecart>0 && $periodchange) echo ("<b>...</b>&nbsp;");
@@ -169,7 +173,11 @@ function display_cluster_title ($s, $direction) {
 	
 	echo '</td>';
 	
-	echo '</tr></td>';
+	echo '</tr>';
+	
+	echo '<tr style="height:4px;font-size:0pt;'.($ecart>0?' background:white;':'').'"><td>&nbsp;</td><td></td><td></td><td></td></tr>';
+	
+	echo '</td>';
 	
 	$last_display_periode=$s['periode'];
 }
