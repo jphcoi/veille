@@ -363,7 +363,7 @@ if ($lettre_current!="") echo '('.$lettre_current.')';
 echo '</i>';
 echo '<br/><span style="font-size: x-small;">fil thématique: ';
 echo $fils_thematique_html;
-echo '<td align=right><span style="font-size:8pt;">'.get_string_periode($my_period).'</span>&nbsp;&nbsp;</td>';
+echo '<td align=right><span style="font-size:8pt;">'.str_replace(" ","&nbsp;",get_string_periode($my_period)).'</span>&nbsp;&nbsp;</td>';
 echo '</tr></table>';
 echo '</td><td width=2.5%></td></tr>';
 echo '</table>';
