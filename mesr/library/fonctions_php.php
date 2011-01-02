@@ -1147,6 +1147,28 @@ function display_billets($info_sources,$list_of_concepts,$my_period,$type_notice
 					
 ////////////
 
+
+
+function display_box_plus($titre,$auteurs,$abstract,$permalien,$concepts,$type_notice,$index,$insertedtext)
+{
+	$notice = mise_en_forme_abstract($titre,$auteurs,$abstract,$concepts,$type_notice);
+	echo '<span align=left id="dialog'.$index.'" title="'.$titre.'" style="font-size:8pt;">'.$notice.'</span>';
+	echo '<a ';
+	if (strpos($permalien,'http:')>-1) {
+		echo 'href="'.$permalien.'"';
+		}
+	else {
+		echo 'href="'.'http://scholar.google.com/scholar?hl=en&q='.str_replace(' ','+',$titre).'"';
+		}
+	echo '>';
+	echo '<img alt="aller sur le site" src="images/externallink.png"  border="0" align=left height=16> ';
+	echo '</a>';
+	echo '</td>';
+	echo '<td width=83%>';
+	echo '<span id="opener'.$index.'"><a href=#>'.$titre.'</a>'.$insertedtext.'</span>
+	';
+}
+
 // cette fonction affiche les billets pour les variables $info_sources équipées du champ "pertinences"
 function display_billets_plus($info_sources,$list_of_concepts,$my_period,$type_notice)
 {
@@ -1155,9 +1177,7 @@ function display_billets_plus($info_sources,$list_of_concepts,$my_period,$type_n
 	$backdark="#E8E8E8";
 	$backlight="#E1E1E1";
 	
-	echo '<table width=100% cellspacing=0 cellpadding=0>';
 	//definitionnel
-	echo '<tr width=100%><td width=13%></td><td width=2%></td><td width=2%>
 	foreach(array_keys($info_sources) as $key)
 	{
 		$max_pert=10;
@@ -1168,13 +1188,19 @@ function display_billets_plus($info_sources,$list_of_concepts,$my_period,$type_n
 		$sourcetagid=id_maker($pertmp);
 		$sourcetagidtext='value="pert'.$sourcetagid.'"';
 		
-		echo '<tr id="'.$info_sources[$key]['idauteur'].'" '.$sourcetagidtext.' valign=top class=tableitems style="background-color:'.$backdark.'; "  onMouseOver="this.style.backgroundColor=\''.$backlight.'\';" onMouseOut="this.style.backgroundColor=\''.$backdark.'\';">';
+		echo '<table width=100% id=tab"'.$info_sources[$key]['idauteur'].'" '.$sourcetagidtext.' cellspacing=0 cellpadding=0>';
+		//onMouseOver="this.style.backgroundColor=\''.$backlight.'\';" onMouseOut="this.style.backgroundColor=\''.$backdark.'\';">';
+
+		echo '<tr width=100% id=top"'.$info_sources[$key]['idauteur'].'" '.$sourcetagidtext.'>';
+		echo '<td width=13%></td><td width=2%></td><td width=2%><td width=83%></td></tr>';
 		
-		echo "<td width=100%>";
+		echo '<tr width=100% id=tab"'.$info_sources[$key]['idauteur'].'" '.$sourcetagidtext.' valign=top class=tableitems style="background-color:'.$backdark.'; ">';
 		
-		echo '<table width=100% align=left width=100%>';// onMouseOver="this.style.backgroundColor=\''.$backlight.'\';" onMouseOut="this.style.backgroundColor=\''.$backdark.'\';">';
-		echo '<tr width=100%>';
-		echo '<td width=100% style="font-size:x-small;">';
+		//echo "<td width=100%>";
+		
+		//echo '<table width=100% align=left width=100%>';// onMouseOver="this.style.backgroundColor=\''.$backlight.'\';" onMouseOut="this.style.backgroundColor=\''.$backdark.'\';">';
+		//echo '<tr width=100%>';
+		echo '<td colspan=6 style="font-size:x-small;">';
 		$ids_auteur=recup_id_auteurs($info_sources[$key]['idauteur']);
 		$keys = recup_names_auteurs($key);
 
@@ -1187,10 +1213,10 @@ function display_billets_plus($info_sources,$list_of_concepts,$my_period,$type_n
 		
 		echo '</td>';
 		echo '</tr>';
-		echo '</table>';
+		//echo '</table>';
 		
 		
-		echo '<table class=commentitems width=100%>';
+		//echo '<table class=commentitems width=100%>';
 		for ($i=0;$i<count($info_sources[$key]['titres']);$i++){
 			$idtext='value="pert'.id_maker($info_sources[$key]['pertinences'][$i]).'"';
 			
@@ -1218,31 +1244,29 @@ function display_billets_plus($info_sources,$list_of_concepts,$my_period,$type_n
 				$insertedtext.=" (".number_format(round(100*$info_sources[$key]['pertinences'][$i]), 0, ',', ' ')."%)";
 				}
 			
-			echo '<tr valign=top width=100%>';
+			echo '<tr id=bil"'.$info_sources[$key]['idauteur'].$i.'" '.$idtext.' valign=top class=commentitems width=100% style="background-color:'.$backdark.';">';
 			echo '<td width=13% style=\"font-size:x-small;\">';
 			echo $info_sources[$key]['dates'][$i];
 			echo "</td>";
 			echo "<td width=2%>";
 			echo "</td>";
 			echo "<td width=2%>";
-			echo display_box($info_sources[$key]['titres'][$i],$key,$chaine,$info_sources[$key]['permaliens'][$i],$conc,$type_notice,$index,$insertedtext);
+			echo display_box_plus($info_sources[$key]['titres'][$i],$key,$chaine,$info_sources[$key]['permaliens'][$i],$conc,$type_notice,$index,$insertedtext);
 			echo "</td>";
 			echo "</tr>";
 			}
-		echo "</table>";
+		//echo "</table>";
 
-		echo "</td>";
-		echo "</tr>";
+		//echo "</td>";
+		//echo "</tr>";
 		
-		echo '<tr id="'.$info_sources[$key]['idauteur'].'rr" '.$sourcetagidtext.'  style="height:2px;background-color:'.$backlight.';">';
-		echo '<td></td>';
+		echo '<tr id="'.$info_sources[$key]['idauteur'].'r" '.$sourcetagidtext.'  style="height:2px;background-color:'.$backlight.';">';
+		echo '<td colspan=6></td>';
 		echo '</tr>';
-		
-		echo '
-		</span>
-		';
+
+		echo "</table>";		
 	}
-	echo "</table>";
+
 }
 					
 ////////////

@@ -459,26 +459,16 @@ if ($nav=="phylo"){
 				dd.style.display = "block";
 				}
 			function HideContents(d) {
-				arr=document.getElementsByTagName("span");
-				for (var i=0; i < arr.length; i++) { if (arr[i].getAttribute(\'value\')==d) arr[i].style.display=\'none\'; }
-				arr=document.getElementsByTagName("div");
-				for (var i=0; i < arr.length; i++) { if (arr[i].getAttribute(\'value\')==d) arr[i].style.display=\'none\'; }
-				arr=document.getElementsByTagName("table");
-				for (var i=0; i < arr.length; i++) { if (arr[i].getAttribute(\'value\')==d) arr[i].style.display=\'none\'; }
-				arr=document.getElementsByTagName("td");
-				for (var i=0; i < arr.length; i++) { if (arr[i].getAttribute(\'value\')==d) arr[i].style.display=\'none\'; }
 				arr=document.getElementsByTagName("tr");
-				for (var i=0; i < arr.length; i++) { if (arr[i].getAttribute(\'value\')==d) arr[i].style.display=\'none\'; }
+				for (var i=0; i < arr.length; i++) { if (arr[i].getAttribute(\'value\')==d) arr[i].style.display="none"; }
+				arr=document.getElementsByTagName("table");
+				for (var i=0; i < arr.length; i++) { if (arr[i].getAttribute(\'value\')==d) arr[i].style.display="none"; }
 				}
 			function ShowContents(d) {
-				arr=document.getElementsByTagName("span");
-				for (var i=0; i < arr.length; i++) { if (arr[i].getAttribute(\'value\')==d) arr[i].style.display=\'block\';}
 				arr=document.getElementsByTagName("table");
-				for (var i=0; i < arr.length; i++) { if (arr[i].getAttribute(\'value\')==d) arr[i].style.display=\'block\';}
-				arr=document.getElementsByTagName("td");
-				for (var i=0; i < arr.length; i++) { if (arr[i].getAttribute(\'value\')==d) arr[i].style.display=\'block\';}
+				for (var i=0; i < arr.length; i++) { if (arr[i].getAttribute(\'value\')==d) arr[i].style.display="";}
 				arr=document.getElementsByTagName("tr");
-				for (var i=0; i < arr.length; i++) { if (arr[i].getAttribute(\'value\')==d) arr[i].style.display=\'block\';}
+				for (var i=0; i < arr.length; i++) { if (arr[i].getAttribute(\'value\')==d) arr[i].style.display="";}
 				}
 			</script>';
 	

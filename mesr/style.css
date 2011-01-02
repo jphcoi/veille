@@ -13,6 +13,16 @@ LI {
   text-align: justify;
 }
 
+tablehidden {
+  display: none;
+  font-variant:small-caps;
+}
+
+tableshow {
+  background-color: white;
+  font-weight: bold;
+}
+
 B.listtitle {
   color: black; 
   font-size:11pt;
@@ -289,6 +299,7 @@ form {
 .JT_hidden {
   display:none;
 }
+
 
 /*.questionMark, .questionMark:link, .questionMark:visited, .questionMark:active{
   background-color:#369;
