@@ -150,6 +150,9 @@ div.subbanner {
   border-bottom-width:1px;
 }
 
+table.normal { background-color: #CCCCCC }
+table.highlight { background-color: #8888FF }
+
 tr.subbanner {
   color:SlateGray;
   font-size:large;

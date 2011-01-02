@@ -958,7 +958,7 @@ function mise_en_forme_abstract($titre,$auteurs,$abstract,$concepts,$type_notice
 function display_box($titre,$auteurs,$abstract,$permalien,$concepts,$type_notice,$index,$insertedtext)
 {
 	$notice = mise_en_forme_abstract($titre,$auteurs,$abstract,$concepts,$type_notice);
-	echo '<div id="dialog'.$index.'" title="'.$titre.'" style="font-size:8pt;">'.$notice.'</div>';
+	echo '<div align=left id="dialog'.$index.'" title="'.$titre.'" style="font-size:8pt;">'.$notice.'</div>';
 	echo '<a ';
 	if (strpos($permalien,'http:')>-1) {
 		echo 'href="'.$permalien.'"';
@@ -1149,9 +1149,11 @@ function display_billets_plus($info_sources,$list_of_concepts,$my_period,$type_n
 {
 	global $jscriptmp;
 	$backdark="#E8E8E8";
-	$backdarker="#E1E1E1";
+	//$backdarker="#E1E1E1";
+	$backdarker="#E8E8E8";
+	$backlight="#E1E1E1";
 	
-	echo "<table class=tableitems width=100% cellspacing=0 cellpadding=0>";
+	echo "<table class=tableitems width=100% cellspacing=0 cellpadding=0 rules=rows>";
 	$odd=0;
 	foreach(array_keys($info_sources) as $key)
 	{
@@ -1160,24 +1162,30 @@ function display_billets_plus($info_sources,$list_of_concepts,$my_period,$type_n
 		if ($odd%2==0) $bckclr=$backdark; else $bckclr=$backdarker;
 		echo ('<tr valign=top class=tableitems style="background-color:'.$bckclr.'; ">');
 		echo "<td  width=100%>";
-		echo '<table class=tableitems width=100%><tr><td width=100%>';
+		echo '<table width=100% class=commentitems align=left width=100% onMouseOver="this.style.backgroundColor=\''.$backlight.'\';" onMouseOut="this.style.backgroundColor=\''.$backdark.'\';">';
+		echo '<tr width=100%>';
+		echo '<td colspan=6 width=100% style="font-size:x-small;">';
 		$ids_auteur=recup_id_auteurs($info_sources[$key]['idauteur']);
 		$keys = recup_names_auteurs($key);
 
 		for ($j=0;$j<count($ids_auteur);$j++)
 		{
-			echo '<a href=source.php?id_source='.$ids_auteur[$j]."&periode=".$my_period.'><i>'.$keys[$j]."</i></a>";
+			echo '<a href=source.php?id_source='.$ids_auteur[$j]."&periode=".$my_period.'><b>'.$keys[$j]."</b></a>";
 			if ($j<count($ids_auteur)-1)
 			{echo '; ';}
 		}
 		
-		echo '</td></tr></table>';
-		echo "<table class=commentitems width=100%>";
+		echo '</td>';
+		echo '</tr>';
+		//echo '</table>';
+		//echo '<table class=commentitems width=100% onMouseOver="this.style.backgroundColor=\''.$backlight.'\';" onMouseOut="this.style.backgroundColor=\''.$backdark.'\';">';
 		for ($i=0;$i<count($info_sources[$key]['titres']);$i++){
-			echo "<tr valign=top><td width=13% style=\"font-size:x-small;\">";
+			echo '<tr valign=top width=100%>';
+			echo '<td width=13% style=\"font-size:x-small;\">';
 			echo $info_sources[$key]['dates'][$i];
 			echo "</td><td width=2%>";
-			echo "</td><td width=18px>";
+			echo "</td>
+			<td width=18px>";
 			$chaine=$info_sources[$key]['content'][$i];
 			//coupe l'abstract aux 15 premières lignes
 			$chaine = prone($chaine,8);

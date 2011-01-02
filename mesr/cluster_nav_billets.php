@@ -97,7 +97,6 @@ else {
 	$nb_termes_list = $liste_of_posts;
 	$nb_size_list = $liste_of_size;
 	$resultat = extract_permalink(array_keys($liste_of_posts));
-	echo count($resultat);
 	$i=0;
 	$info_sources=array();
 	while( $row = mysql_fetch_array ($resultat)) {
@@ -111,7 +110,7 @@ else {
 		$concepts=$row['concepts_id'];				
 		//echo $concepts;
 		$content=str_replace('"','\'',$row['content']);
-		echo "<BR>BRR ".$id."<br>";
+		//echo "<BR>BRR ".$id."<br>";
 		if (!array_key_exists($site,$info_sources)) {		
 			$info_sources[$site]=array('site'=>$site,'idauteur'=>$idauteur,'permaliens'=>array(),'ids'=>array(),'pertinences'=>array(),'titres'=>array(),'dates'=>array(),'nbtermes'=>array(),'nbsize'=>array(),'content'=>array());
 			}
@@ -135,7 +134,7 @@ else {
 
 	uksort($info_sources,"strcasecmpcam");
 	//print_r($info_sources);
-	display_billets($info_sources,$list_of_concepts,$my_period,$type_notice);
+	display_billets_plus($info_sources,$list_of_concepts,$my_period,$type_notice);
 	}
 					
 		
