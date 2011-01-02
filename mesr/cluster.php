@@ -452,11 +452,35 @@ if ($nav=="phylo"){
 	
 	echo '<script type="text/javascript" language="JavaScript">
 			function HideContent(d) {
-			document.getElementById(d).style.display = "none";}
+				document.getElementById(d).style.display = "none";
+				}		
 			function ShowContent(d) {
-			var dd = document.getElementById(d);
-			dd.style.display = "block";
-			}</script>';
+				var dd = document.getElementById(d);
+				dd.style.display = "block";
+				}
+			function HideContents(d) {
+				arr=document.getElementsByTagName("span");
+				for (var i=0; i < arr.length; i++) { if (arr[i].getAttribute(\'value\')==d) arr[i].style.display=\'none\'; }
+				arr=document.getElementsByTagName("div");
+				for (var i=0; i < arr.length; i++) { if (arr[i].getAttribute(\'value\')==d) arr[i].style.display=\'none\'; }
+				arr=document.getElementsByTagName("table");
+				for (var i=0; i < arr.length; i++) { if (arr[i].getAttribute(\'value\')==d) arr[i].style.display=\'none\'; }
+				arr=document.getElementsByTagName("td");
+				for (var i=0; i < arr.length; i++) { if (arr[i].getAttribute(\'value\')==d) arr[i].style.display=\'none\'; }
+				arr=document.getElementsByTagName("tr");
+				for (var i=0; i < arr.length; i++) { if (arr[i].getAttribute(\'value\')==d) arr[i].style.display=\'none\'; }
+				}
+			function ShowContents(d) {
+				arr=document.getElementsByTagName("span");
+				for (var i=0; i < arr.length; i++) { if (arr[i].getAttribute(\'value\')==d) arr[i].style.display=\'block\';}
+				arr=document.getElementsByTagName("table");
+				for (var i=0; i < arr.length; i++) { if (arr[i].getAttribute(\'value\')==d) arr[i].style.display=\'block\';}
+				arr=document.getElementsByTagName("td");
+				for (var i=0; i < arr.length; i++) { if (arr[i].getAttribute(\'value\')==d) arr[i].style.display=\'block\';}
+				arr=document.getElementsByTagName("tr");
+				for (var i=0; i < arr.length; i++) { if (arr[i].getAttribute(\'value\')==d) arr[i].style.display=\'block\';}
+				}
+			</script>';
 	
 	// affichage du titre
 	

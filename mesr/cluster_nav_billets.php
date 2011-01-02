@@ -34,7 +34,12 @@ $old_urls = explode('&pertinence=',$old_url);
 $new_url=$old_urls[0];//.'&pertinence=';
 
 echo '<form action="'.$new_url.'" method="get" style="display:inline;">';
-echo '<select name="pertinence">';
+echo '<select name="pertinence" onchange="val=this.options[this.selectedIndex].value;
+	if (val<=10) {ShowContents(\'pert10\');} else {HideContents(\'pert10\');}
+	if (val<=20) {ShowContents(\'pert20\');} else {HideContents(\'pert20\');}
+	if (val<=30) {ShowContents(\'pert30\');} else {HideContents(\'pert30\');}
+	if (val<=40) {ShowContents(\'pert40\');} else {HideContents(\'pert40\');}"
+	>';
 	echo '<option value=10';
 	if ($pertinence==0.1) echo(" selected");
 	echo '>';
@@ -85,10 +90,11 @@ while ($row = mysql_fetch_array ($res_temp)) {
 	$liste_of_pertinences[$id]=$overlap/$clustersize/log10(10+$billetsize-$overlap);
 }
 	
-print_r($liste_of_posts);
-echo '<br>';
-print_r($liste_of_pertinences);
-echo '<br>';
+//echo '<span id="pert10">Pert 10</span> - <span id="pert20">pert 20</span> - <span id="pert30">pert 30</span> - <span id="pert40">pert 40</span><br>';
+//print_r($liste_of_posts);
+//echo '<br>';
+//print_r($liste_of_pertinences);
+//echo '<br>';
 if (count($liste_of_posts)==0)
 {
 	echo "<br><b><i>aucun billet pertinent</i></b>";
@@ -110,7 +116,6 @@ else {
 		$concepts=$row['concepts_id'];				
 		//echo $concepts;
 		$content=str_replace('"','\'',$row['content']);
-		//echo "<BR>BRR ".$id."<br>";
 		if (!array_key_exists($site,$info_sources)) {		
 			$info_sources[$site]=array('site'=>$site,'idauteur'=>$idauteur,'permaliens'=>array(),'ids'=>array(),'pertinences'=>array(),'titres'=>array(),'dates'=>array(),'nbtermes'=>array(),'nbsize'=>array(),'content'=>array());
 			}
