@@ -561,7 +561,7 @@ if ($nav=="phylo"){
 	echo '</table>';
 	
 	
-	echo '<hr>';
+	//echo '<hr>';
 	include("cluster_nav_billets.php");
 
 }
