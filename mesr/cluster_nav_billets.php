@@ -1,6 +1,6 @@
 <?
 
-$commande_sql_pert = "SELECT id_billet,overlap_size,billet_size from biparti where cluster = '".$id_cluster."' AND periode = '".derange_periode($my_period)."' AND overlap_size/cluster_size/log10(10+billet_size-overlap_size)>=".$pertinence.' and overlap_size/cluster_size>0.1 '.' ORDER BY overlap_size/cluster_size/log10(10+billet_size-overlap_size) DESC';
+$commande_sql_pert = "SELECT id_billet,overlap_size,billet_size,cluster_size from biparti where cluster = '".$id_cluster."' AND periode = '".derange_periode($my_period)."' AND overlap_size/cluster_size/log10(10+billet_size-overlap_size)>=".$pertinence.' and overlap_size/cluster_size>0.1 '.' ORDER BY overlap_size/cluster_size/log10(10+billet_size-overlap_size) DESC';
 $res_temp = mysql_query($commande_sql_pert);
 $liste_of_posts=array();
 $liste_of_size=array();
@@ -68,95 +68,85 @@ echo '<input type="hidden" value="'.$periode.'" name="periode">';
 echo '<input type="submit" value="Modifier le seuil">';
 echo '</form>';
 
-	
 
-		$result=mysql_query($query);
-	echo "</td>";
-	echo "</tr>";
-	echo '</table>';
-	
-	
-	
-	
-	
-	while ($row = mysql_fetch_array ($res_temp))
-		{
-			$liste_of_posts[$row['id_billet']]=$row['overlap_size'];
-			$liste_of_size[$row['id_billet']]=$row['billet_size'];
-		}
-	
-	if (count($liste_of_posts)>0)
-	{
-		
-		$nb_termes_list = $liste_of_posts;
-		$nb_size_list = $liste_of_size;
-		$resultat = extract_permalink(array_keys($liste_of_posts));
-		$i=0;
-		$info_sources=array();
-		while( $row = mysql_fetch_array ($resultat))
-		{
-			$perma=$row['permalink'];
-			$site=strip_www($row['site']);
-			$site =str_replace('***','; ',$site);
-			$id = $row['id'];
-			$nb_terme=$nb_termes_list[$id];
-			$nb_size=$nb_size_list[$id];
-			$idauteur=$row['auteur_id'];
-			$concepts=$row['concepts_id'];				
-			//echo $concepts;
-			$content=str_replace('"','\'',$row['content']);
-			
-			if (!array_key_exists($site,$info_sources)) {																  $info_sources[$site]=array('site'=>$site,'idauteur'=>$idauteur,'permaliens'=>array(),'titres'=>array(),'dates'=>array(),'nbtermes'=>array(),'nbsize'=>array(),'content'=>array());
-		}
-			$info_sources[$site]['permaliens'][]=$perma;
-			$info_sources[$site]['content'][]=$content;
-			$info_sources[$site]['titres'][]=clean_text(str_replace('popostrophe',"'",$row['title']));
-			if ($type_date=='jour')
-					{$info_sources[$site]['dates'][]=adjust_date_jours($row['jours']);}
-			else
-					{$info_sources[$site]['dates'][]=$row['jours'];}
-		
-			$info_sources[$site]['nbtermes'][]=$nb_terme;
-			$info_sources[$site]['nbsize'][]=$nb_size;
-			$info_sources[$site]['content'][]=$content;
-			$info_sources[$site]['concepts'][]=$concepts;
-			$i++;
-					
-		}
-			
-				uksort($info_sources,"strcasecmpcam");
-				//print_r($info_sources);
-				display_billets($info_sources,$list_of_concepts,$my_period,$type_notice);}
-					
-			else
-			{
-				echo "<br><b><i>aucun billet pertinent</i></b>";
-			}
-			
-			
-	
-//		echo "</td>";
-//		echo "</tr>";
-//		echo "</table>";
-//echo "</td></tr></table>";
-	
-	
-	
-	/////////////////////////////////////////////	
-	/////	/////	/////	/////	/////	/////
-	///// FIN DE L'AFFICHAGE DES BILLETS	/////
-	/////	/////	/////	/////	/////	/////
-	/////////////////////////////////////////////
-
-echo '</td>';
-
-	
+$result=mysql_query($query);
+echo "</td>";
 echo "</tr>";
-
 echo '</table>';
 
+while ($row = mysql_fetch_array ($res_temp)) {
+	$id=$row['id_billet'];
+	$overlap=$row['overlap_size'];
+	$billetsize=$row['billet_size'];
+	$clustersize=$row['cluster_size'];
+	
+	$liste_of_posts[$id]=$overlap;
+	$liste_of_size[$id]=$billetsize;
+	$liste_of_pertinences[$id]=$overlap/$clustersize/log10(10+$billetsize-$overlap);
+}
+	
+print_r($liste_of_posts);
+echo '<br>';
+print_r($liste_of_pertinences);
+echo '<br>';
+if (count($liste_of_posts)==0)
+{
+	echo "<br><b><i>aucun billet pertinent</i></b>";
+}
+else {
+	$nb_termes_list = $liste_of_posts;
+	$nb_size_list = $liste_of_size;
+	$resultat = extract_permalink(array_keys($liste_of_posts));
+	echo count($resultat);
+	$i=0;
+	$info_sources=array();
+	while( $row = mysql_fetch_array ($resultat)) {
+		$perma=$row['permalink'];
+		$site=strip_www($row['site']);
+		$site =str_replace('***','; ',$site);
+		$id = $row['id'];
+		$nb_terme=$nb_termes_list[$id];
+		$nb_size=$nb_size_list[$id];
+		$idauteur=$row['auteur_id'];
+		$concepts=$row['concepts_id'];				
+		//echo $concepts;
+		$content=str_replace('"','\'',$row['content']);
+		echo "<BR>BRR ".$id."<br>";
+		if (!array_key_exists($site,$info_sources)) {		
+			$info_sources[$site]=array('site'=>$site,'idauteur'=>$idauteur,'permaliens'=>array(),'ids'=>array(),'pertinences'=>array(),'titres'=>array(),'dates'=>array(),'nbtermes'=>array(),'nbsize'=>array(),'content'=>array());
+			}
+		$info_sources[$site]['permaliens'][]=$perma;
+		$info_sources[$site]['ids'][]=$id;
+		$info_sources[$site]['pertinences'][]=$liste_of_pertinences[$id];
+		$info_sources[$site]['content'][]=$content;
+		$info_sources[$site]['titres'][]=clean_text(str_replace('popostrophe',"'",$row['title']));
+		if ($type_date=='jour') {
+			$info_sources[$site]['dates'][]=adjust_date_jours($row['jours']);
+			}
+		else {
+			$info_sources[$site]['dates'][]=$row['jours'];
+			}
+		$info_sources[$site]['nbtermes'][]=$nb_terme;
+		$info_sources[$site]['nbsize'][]=$nb_size;
+		$info_sources[$site]['content'][]=$content;
+		$info_sources[$site]['concepts'][]=$concepts;
+		$i++;			
+		}
 
-	
-	
-	
+	uksort($info_sources,"strcasecmpcam");
+	//print_r($info_sources);
+	display_billets($info_sources,$list_of_concepts,$my_period,$type_notice);
+	}
+					
+		
+/////////////////////////////////////////////	
+/////	/////	/////	/////	/////	/////
+///// FIN DE L'AFFICHAGE DES BILLETS	/////
+/////	/////	/////	/////	/////	/////
+/////////////////////////////////////////////
+
+echo '</td>';
+echo "</tr>";
+echo '</table>';
+
 ?>

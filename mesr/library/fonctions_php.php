@@ -1069,8 +1069,9 @@ function prone($chaine,$n)
 function display_billets($info_sources,$list_of_concepts,$my_period,$type_notice)
 {
 	global $jscriptmp;
-	$backdark="#DDDDDD";
-	$backdarker="#CCCCCC";
+	//$backdark="#DDDDDD"; $backdarker="#CCCCCC";
+	$backdark="#E8E8E8";
+	$backdarker="#E1E1E1";
 	
 	echo "<table class=tableitems width=100% cellspacing=0 cellpadding=0>";
 	$odd=0;
@@ -1123,6 +1124,7 @@ function display_billets($info_sources,$list_of_concepts,$my_period,$type_notice
 				//echo 
 				///log10(10+$info_sources[$key]['nbsize'][$i]-$info_sources[$key]['nbtermes'][$i]
 				$insertedtext=" (".number_format(100*$info_sources[$key]['nbtermes'][$i]/count($list_of_concepts)/log10(10+max($info_sources[$key]['nbsize'][$i],$info_sources[$key]['nbtermes'][$i])-$info_sources[$key]['nbtermes'][$i]), 0, ',', ' ')."%)";
+				$insertedtext.=" [".number_format(100*$info_sources[$key]['pertinences'][$i]."%]", 0, ',', ' ')."%]";
 				//	echo $info_sources[$key]['nbtermes'][$i];
 				//	echo '<br>';
 				//	echo count($list_of_concepts);
@@ -1141,6 +1143,77 @@ function display_billets($info_sources,$list_of_concepts,$my_period,$type_notice
 }
 					
 ////////////
+
+// cette fonction affiche les billets pour les variables $info_sources équipées du champ "pertinences"
+function display_billets_plus($info_sources,$list_of_concepts,$my_period,$type_notice)
+{
+	global $jscriptmp;
+	$backdark="#E8E8E8";
+	$backdarker="#E1E1E1";
+	
+	echo "<table class=tableitems width=100% cellspacing=0 cellpadding=0>";
+	$odd=0;
+	foreach(array_keys($info_sources) as $key)
+	{
+		//print_r($info_sources[$key]['dates']);
+		$odd+=1;
+		if ($odd%2==0) $bckclr=$backdark; else $bckclr=$backdarker;
+		echo ('<tr valign=top class=tableitems style="background-color:'.$bckclr.'; ">');
+		echo "<td  width=100%>";
+		echo '<table class=tableitems width=100%><tr><td width=100%>';
+		$ids_auteur=recup_id_auteurs($info_sources[$key]['idauteur']);
+		$keys = recup_names_auteurs($key);
+
+		for ($j=0;$j<count($ids_auteur);$j++)
+		{
+			echo '<a href=source.php?id_source='.$ids_auteur[$j]."&periode=".$my_period.'><i>'.$keys[$j]."</i></a>";
+			if ($j<count($ids_auteur)-1)
+			{echo '; ';}
+		}
+		
+		echo '</td></tr></table>';
+		echo "<table class=commentitems width=100%>";
+		for ($i=0;$i<count($info_sources[$key]['titres']);$i++){
+			echo "<tr valign=top><td width=13% style=\"font-size:x-small;\">";
+			echo $info_sources[$key]['dates'][$i];
+			echo "</td><td width=2%>";
+			echo "</td><td width=18px>";
+			$chaine=$info_sources[$key]['content'][$i];
+			//coupe l'abstract aux 15 premières lignes
+			$chaine = prone($chaine,8);
+			//print_r(convert_forme_principale_id($info_sources[$key]['concepts'][$i]));
+			$conc = implode("; ", convert_forme_principale_id($info_sources[$key]['concepts'][$i]));
+			//echo $conc;
+			//il faut normaliser le nom de l'index pour que javascript ne soit pas perdu
+			$index=str_replace("/","",str_replace(".","",str_replace("-","",$key."-".$i)));
+			$jscriptmp.="
+				$('#dialog".$index."')
+					.dialog({ autoOpen: false, stack: true, modal:true, width:600, closeOnEscape:true})
+					.click(function () { $('#dialog".$index."').dialog('close'); });
+				$('#opener".$index."').click(function(e) {
+					if (!$('#dialog".$index."').dialog('isOpen')) 
+						$('#dialog".$index."').dialog('option','position', [$(this).position().left+50,'center']).dialog('open');
+					else
+						$('#dialog".$index."').dialog('close');
+					return false;
+					});";
+			$insertedtext="";
+			if (count($list_of_concepts)>1){ 
+				$insertedtext.=" (".number_format(100*$info_sources[$key]['pertinences'][$i]."%]", 0, ',', ' ')."%)";
+				}
+			echo display_box($info_sources[$key]['titres'][$i],$key,$chaine,$info_sources[$key]['permaliens'][$i],$conc,$type_notice,$index,$insertedtext);
+			echo "</i></td></tr>";
+		}
+		echo "</table>";
+
+		echo "</td>";
+		echo "</tr>";
+	}
+	echo "</table>";
+}
+					
+////////////
+
 
 function streamgraph($tabTitle,$json_data){
 // fonction qui renvoie les éléments pour afficher un streamgraph
