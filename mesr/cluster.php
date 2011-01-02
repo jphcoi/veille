@@ -398,9 +398,9 @@ echo "<table width=100%><tr valign=top><td width=2.5%></td><td width=95%>";
 	{
 		$href_string='<a href=cluster.php?id_cluster='.$id_cluster."&periode=".arrange_periode($my_period).'&nav=';
 	}
-	if ($nav=="phylo") echo $select_string."phylogénie</b>"; else echo $href_string."phylo>phylogénie</a>";
-	echo " - ";
-        if ($nav=="source") echo $select_string."billets</b>"; else echo $href_string."source>billets</a>";
+	if ($nav=="phylo") echo $select_string."contenu</b>"; else echo $href_string."phylo>contenu</a>";
+	//echo " - ";
+    //    if ($nav=="source") echo $select_string."billets</b>"; else echo $href_string."source>billets</a>";
 	echo " - ";
         if ($nav=="cooc") echo $select_string."réseau de cooccurrence</b>"; else echo $href_string."cooc>réseau de cooccurrence</a>";
 	echo " - ";
@@ -504,11 +504,15 @@ if ($nav=="phylo"){
 	echo '<tr valign=top>';
 	
 	if ($nopred) $back_avant='background-color:'.$backdarker.';';
-	echo '<td width=30% align=center class=tableitems style="font-variant:small-caps; size:small; font-style:italic;'.$back_avant.'">';
-	if ($nopred) echo "<b>(pas de prédécesseur)</b>";
+	echo '<td width=30% class=tableitems style="font-variant:small-caps; size:small; font-style:italic;'.$back_avant.'">';
+	if ($nopred) echo '<div align=center style="font-style:normal;">(pas de prédécesseur)</div>';
 	else {
+		if (count($pred)>1) $plural_string="s"; else $plural_string="";
+		echo '<span align=left style="font-weight:bold; font-style:normal;">&nbsp;champ'.$plural_string.' antérieur'.$plural_string.'</span><div style="height:4px;"></div>';
 		echo '<table width=100% cellspacing=0 cellpadding=0>';
-		echo '<tr class=commentitems style="font-variant:small-caps; background-color:'.$backdark.';"><td width=5px></td><td>période</td><td></td><td>champ</td></tr>';
+		echo '<tr class=commentitems style="font-variant:small-caps; background-color:'.$backdark.';">';
+		echo '<td width=5px></td><td>période</td><td></td><td>champ</td>';
+		echo '</tr>';
 		$last_display_periode="";
 		foreach ($pred as $p) display_cluster_title($p,"pred");
 		echo '</table>';
@@ -539,9 +543,11 @@ if ($nav=="phylo"){
 	echo '</td>';
 	
 	if ($nosucc) $back_apres='background-color:'.$backdarker.';';
-	echo '<td width=30% align=center class=tableitems style="font-variant:small-caps; size:small; font-style:italic;'.$back_apres.'">';	
-	if ($nosucc) echo "<b>(pas de successeur)</b>"; 
+	echo '<td width=30% class=tableitems style="font-variant:small-caps; size:small; font-style:italic;'.$back_apres.'">';	
+	if ($nosucc) echo '<div align=center style="font-style:normal;">(pas de successeur)</div>'; 
 	else {
+		if (count($succ)>1) $plural_string="s"; else $plural_string="";
+		echo '<span align=left style="font-weight:bold; font-style:normal;">&nbsp;champ'.$plural_string.' ultérieur'.$plural_string.'</span><div style="height:4px;"></div>';	
 		echo '<table width=100% cellspacing=0 cellpadding=0>';
 		echo '<tr class=commentitems style="font-variant:small-caps; background-color:'.$backdark.';"><td width=5px></td><td>période</td><td></td><td>champ</td></tr>';
 		$last_display_periode="";
@@ -553,6 +559,10 @@ if ($nav=="phylo"){
 	
 	echo '</tr>';
 	echo '</table>';
+	
+	
+	echo '<hr>';
+	include("cluster_nav_billets.php");
 
 }
 

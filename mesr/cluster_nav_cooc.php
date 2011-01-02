@@ -155,9 +155,11 @@ echo '
 echo '<tr valign=top>';
 	
 if ($nopred) $back_avant='background-color:'.$backdarker.';';
-echo '<td width=22% align=center class=tableitems style="font-variant:small-caps; size:small; font-style:italic;'.$back_avant.'">';
-if ($nopred) echo "<b>(pas de prédécesseur)</b>";
+echo '<td width=22% class=tableitems style="font-variant:small-caps; size:small; font-style:italic;'.$back_avant.'">';
+if ($nopred) echo '<div align=center style="font-style:normal;">(pas de prédécesseur)</div>';
 else {
+	if (count($pred)>1) $plural_string="s"; else $plural_string="";
+	echo '<span align=left style="font-weight:bold; font-style:normal;">&nbsp;champ'.$plural_string.' antérieur'.$plural_string.'</span><div style="height:4px;"></div>';
 	echo '<table width=100% cellspacing=0 cellpadding=0>';
 	echo '<tr width=100% class=commentitems style="font-variant:small-caps; background-color:'.$backdark.';"><td width=5px></td><td>période</td><td></td><td>champ</td></tr>';
 	$last_display_periode="";
@@ -176,9 +178,11 @@ else
 echo '</td>';
 
 if ($nosucc) $back_apres='background-color:'.$backdarker.';';
-echo '<td width=22% align=center class=tableitems style="font-variant:small-caps; size:small; font-style:italic;'.$back_apres.'">';	
-if ($nosucc) echo "<b>(pas de successeur)</b>"; 
+echo '<td width=22% class=tableitems style="font-variant:small-caps; size:small; font-style:italic;'.$back_apres.'">';	
+if ($nosucc) echo '<div align=center style="font-style:normal;">(pas de successeur)</div>'; 
 else {
+	if (count($succ)>1) $plural_string="s"; else $plural_string="";
+	echo '<span align=left style="font-weight:bold; font-style:normal;">&nbsp;champ'.$plural_string.' ultérieur'.$plural_string.'</span><div style="height:4px;"></div>';
 	echo '<table width=100% cellspacing=0 cellpadding=0>';
 	echo '<tr class=commentitems style="font-variant:small-caps; background-color:'.$backdark.';"><td width=5px></td><td>période</td><td></td><td>champ</td></tr>';
 	$last_display_periode="";
