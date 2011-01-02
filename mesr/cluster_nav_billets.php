@@ -69,8 +69,7 @@ echo '<input type="hidden" value="'.$id_cluster.'" name="id_cluster">';
 echo '<input type="hidden" value="'.$nav.'" name="nav">';
 echo '<input type="hidden" value="'.$periode.'" name="periode">';
 
-
-echo '<input type="submit" value="Modifier le seuil">';
+//echo '<input type="submit" value="Modifier le seuil">';
 echo '</form>';
 
 
