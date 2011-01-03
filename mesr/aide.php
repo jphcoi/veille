@@ -8,7 +8,7 @@ $ink  =mysql_connect( $server,$user,$password);if ($encodage=="utf-8") mysql_que
 //à préciser lorsqu'on est sur sciencemapping.com
 if ($user!="root") mysql_query("SET NAMES utf8;");
 
-$titleheader="Aide et ontologie";
+$titleheader="aide et ontologie";
 include("include/header.php");
 include("banner.php");
 
@@ -33,7 +33,7 @@ $term_ex=getValue(1433,'concepts','id','forme_principale');
 echo '<p><table width=100%>';
 echo '<tr valign=top><td width=2.5%></td><td><h2 class=subtitle>Aide et ontologie</h2></td><td width=2.5%></td></tr>';
 echo "<tr valign=top><td width=2.5%></td><td>
-<h3>A propos de cette plateforme</h3>
+<h3>À propos de cette plateforme</h3>
 <p>Cette plateforme présente une reconstruction des discussions sur le thème <i>'Santé et Environnement'</i>
 à partir d'un échantillon représentatif de contenus dynamiques du web français sur la période du ";
 echo adjust_date_jours($dated-2*$dT)." 2010 au ".adjust_date_jours($datef)." 2010. </p><p> Par reconstruction, il faut entendre l'extraction, à partir d'une analyse des productions de la blogosphère,
