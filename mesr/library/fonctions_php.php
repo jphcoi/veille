@@ -1189,12 +1189,12 @@ function display_billets_plus($info_sources,$list_of_concepts,$my_period,$type_n
 		$sourcetagidtext='value="pert'.$sourcetagid.'"';
 		
 		echo '<table width=100% id=tab"'.$info_sources[$key]['idauteur'].'" '.$sourcetagidtext.' cellspacing=0 cellpadding=0 style="display:none;">';
-		//onMouseOver="this.style.backgroundColor=\''.$backlight.'\';" onMouseOut="this.style.backgroundColor=\''.$backdark.'\';">';
+		//>';
 
 		echo '<tr width=100% id=top"'.$info_sources[$key]['idauteur'].'" '.$sourcetagidtext.' style="display:none;">';
 		echo '<td width=10%></td><td width=2%></td><td width=2%><td width=86%></td></tr>';
 		
-		echo '<tr width=100% id=tab"'.$info_sources[$key]['idauteur'].'" '.$sourcetagidtext.' valign=top class=tableitems style="background-color:'.$backdark.'; " style="display:none;">';
+		echo '<tr width=100% id=tab"'.$info_sources[$key]['idauteur'].'" '.$sourcetagidtext.' valign=top class=tableitems style="background-color:'.$backdark.'; display:none;">';
 		
 		echo '<td colspan=5 style="font-size:x-small;">';
 		$ids_auteur=recup_id_auteurs($info_sources[$key]['idauteur']);
@@ -1237,7 +1237,7 @@ function display_billets_plus($info_sources,$list_of_concepts,$my_period,$type_n
 				$insertedtext.=" (".number_format(round(100*$info_sources[$key]['pertinences'][$i]), 0, ',', ' ')."%)";
 				}
 			
-			echo '<tr id=bil"'.$info_sources[$key]['idauteur'].$i.'" '.$idtext.' valign=top class=commentitems width=100% style="background-color:'.$backdark.';">';
+			echo '<tr id=bil"'.$info_sources[$key]['idauteur'].$i.'" '.$idtext.' valign=top class=commentitems width=100% style="background-color:'.$backdark.';"  onMouseOver="this.style.backgroundColor=\''.$backlight.'\';" onMouseOut="this.style.backgroundColor=\''.$backdark.'\';">';
 			echo '<td width=13% style=\"font-size:x-small;\">';
 			echo '&nbsp;&nbsp;&nbsp;'.$info_sources[$key]['dates'][$i];
 			echo "</td>";
