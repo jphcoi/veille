@@ -401,6 +401,16 @@ function display_helper_contenu() {
 			',"contenthelper");
 	}
 
+function display_helper_cooccurrences() {
+	global $jscriptmp;
+	$jscriptmp.=display_helper('Réseau de cooccurrence','
+		Le réseau de cooccurrence indique les relations entre termes <i>au sein du champ thématique</i>. Cette vue permet d\'aller
+		plus loin que l\'ensemble non-ordonné de termes, notamment en vue de voir si certaines paires de termes sont
+		plus significativement / fréquemment associées que d\'autres.
+		<br>Comme sur la plupart des autres vues, il est possible de naviguer directement dans la phylogénie en 
+		accédant aux champs antérieurs ou postérieurs, s\'il en existe, à gauche et à droite respectivement (voir l\'aide 
+		contextuelle du "Contenu" pour plus d\'informations à cet égard).',"coochelper");
+	}
 
 echo "<table width=100%><tr valign=top><td width=2.5%></td><td width=95%>";
 
@@ -420,10 +430,13 @@ echo "<table width=100%><tr valign=top><td width=2.5%></td><td width=95%>";
 		{echo $select_string."contenu"; display_helper_contenu(); echo "</b>";} 
 	else 
 		{echo $href_string."phylo>contenu</a>"; display_helper_contenu();}
-	//echo " - ";
-    //    if ($nav=="source") echo $select_string."billets</b>"; else echo $href_string."source>billets</a>";
 	echo " - ";
-        if ($nav=="cooc") echo $select_string."réseau de cooccurrence</b>"; else echo $href_string."cooc>réseau de cooccurrence</a>";
+    if ($nav=="cooc") {
+    	echo $select_string."réseau de cooccurrence"; display_helper_cooccurrences(); echo "</b>"; 
+    	}
+    else {
+    	echo $href_string."cooc>réseau de cooccurrence</a>"; display_helper_cooccurrences();
+    	}
 	echo " - ";
 	if ($nav=="soc") 
 		{echo $select_string."environnement social"; display_helper_environnementsocial(); echo"</b>";}
@@ -445,7 +458,7 @@ echo '</table>';
 
 //// CREATION PHYLOGENIE (UNIQUEMENT POUR "PHYLO" OU "SOC")
 
-if ($nav=="phylo" or $nav=="soc" or $nav == "cooc" or $nav=="source"){
+if ($nav=="phylo" or $nav=="soc" or $nav == "cooc"){
  	$pred=list_clusters($periode_avant,$predecesseur,$max_periode_avant);
  	$succ=list_clusters($periode_apres,$successeur,$min_periode_apres);
 	$arraytmp=array();
@@ -483,7 +496,7 @@ if ($nav=="phylo"){
 			</script>';
 	}
 	
-if ($nav=="phylo" or $nav="soc"){
+if ($nav=="phylo" or $nav=="soc") {
 
 	// routines de masquage/affichage des billets
 	
@@ -624,14 +637,6 @@ if ($nav=="phylo"){
 
 //// BLOC NAVIGATION SEMANTIQUE
 
-
-if ($nav=="source"){
-	
-	include("cluster_nav_source.php");
-
-}
-
-
 if ($nav=="soc"){
 
 	include("cluster_nav_soc.php");	
@@ -651,9 +656,9 @@ if ($nav=="cooc"){
 //// BLOC NAVIGATION SOCIO-SEMANTIQUE / TREILLIS LOCAUX
 
 if ($nav=="socsem"){
-	//****************************************************************
+	//*********************************************************************
 	//* AFFICHAGE ACTIVITÉ TEMPORELLE DE L'ENSEMBLE DES TERMES DU CLUSTER *
-	//****************************************************************
+	//*********************************************************************
 	echo '<p>';
 
 	//print_r($list_of_concepts);
