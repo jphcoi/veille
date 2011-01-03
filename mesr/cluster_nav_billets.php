@@ -1,6 +1,7 @@
 <?
 
-$commande_sql_pert = "SELECT id_billet,overlap_size,billet_size,cluster_size from biparti where cluster = '".$id_cluster."' AND periode = '".derange_periode($my_period)."' AND overlap_size/cluster_size/log10(10+billet_size-overlap_size)>=".$pertinence.' and overlap_size/cluster_size>0.1 '.' ORDER BY overlap_size/cluster_size/log10(10+billet_size-overlap_size) DESC';
+//$commande_sql_pert = "SELECT id_billet,overlap_size,billet_size,cluster_size from biparti where cluster = '".$id_cluster."' AND periode = '".derange_periode($my_period)."' AND overlap_size/cluster_size/log10(10+billet_size-overlap_size)>=".$pertinence.' and overlap_size/cluster_size>0.1 '.' ORDER BY overlap_size/cluster_size/log10(10+billet_size-overlap_size) DESC';
+$commande_sql_pert = "SELECT id_billet,overlap_size,billet_size,cluster_size from biparti where cluster = '".$id_cluster."' AND periode = '".derange_periode($my_period)."' AND overlap_size/cluster_size>0.1 ORDER BY overlap_size/cluster_size/log10(10+billet_size-overlap_size) DESC";
 $res_temp = mysql_query($commande_sql_pert);
 $liste_of_posts=array();
 $liste_of_size=array();
@@ -34,12 +35,7 @@ $old_urls = explode('&pertinence=',$old_url);
 $new_url=$old_urls[0];//.'&pertinence=';
 
 echo '<form action="'.$new_url.'" method="get" style="display:inline;">';
-echo '<select name="pertinence" onchange="val=this.options[this.selectedIndex].value;
-	if (val<=10) {ShowContents(\'pert10\');} else {HideContents(\'pert10\');}
-	if (val<=20) {ShowContents(\'pert20\');} else {HideContents(\'pert20\');}
-	if (val<=30) {ShowContents(\'pert30\');} else {HideContents(\'pert30\');}
-	if (val<=40) {ShowContents(\'pert40\');} else {HideContents(\'pert40\');}"
-	>';
+echo '<select name="pertinence" onchange="PertinenceDisplay(this.options[this.selectedIndex].value);">';
 	echo '<option value=10';
 	if ($pertinence==0.1) echo(" selected");
 	echo '>';
@@ -89,11 +85,6 @@ while ($row = mysql_fetch_array ($res_temp)) {
 	$liste_of_pertinences[$id]=$overlap/$clustersize/log10(10+$billetsize-$overlap);
 }
 	
-//echo '<span id="pert10">Pert 10</span> - <span id="pert20">pert 20</span> - <span id="pert30">pert 30</span> - <span id="pert40">pert 40</span><br>';
-//print_r($liste_of_posts);
-//echo '<br>';
-//print_r($liste_of_pertinences);
-//echo '<br>';
 if (count($liste_of_posts)==0)
 {
 	echo "<br><b><i>aucun billet pertinent</i></b>";
@@ -137,8 +128,8 @@ else {
 		}
 
 	uksort($info_sources,"strcasecmpcam");
-	//print_r($info_sources);
 	display_billets_plus($info_sources,$list_of_concepts,$my_period,$type_notice);
+	echo '<script>PertinenceDisplay(30);</script>';
 	}
 					
 		

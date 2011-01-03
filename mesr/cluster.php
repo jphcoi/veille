@@ -470,6 +470,12 @@ if ($nav=="phylo"){
 				arr=document.getElementsByTagName("tr");
 				for (var i=0; i < arr.length; i++) { if (arr[i].getAttribute(\'value\')==d) arr[i].style.display="";}
 				}
+			function PertinenceDisplay(val) {
+				if (val<=10) {ShowContents(\'pert10\');} else {HideContents(\'pert10\');}
+				if (val<=20) {ShowContents(\'pert20\');} else {HideContents(\'pert20\');}
+				if (val<=30) {ShowContents(\'pert30\');} else {HideContents(\'pert30\');}
+				if (val<=40) {ShowContents(\'pert40\');} else {HideContents(\'pert40\');}
+				}
 			</script>';
 	
 	// affichage du titre

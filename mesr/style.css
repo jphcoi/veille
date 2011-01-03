@@ -13,16 +13,6 @@ LI {
   text-align: justify;
 }
 
-tablehidden {
-  display: none;
-  font-variant:small-caps;
-}
-
-tableshow {
-  background-color: white;
-  font-weight: bold;
-}
-
 B.listtitle {
   color: black; 
   font-size:11pt;
