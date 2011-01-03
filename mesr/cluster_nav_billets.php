@@ -22,7 +22,7 @@ echo '<td align=left width=100%>';
 
 echo '<table class=tableitems width=100% cellspacing=0 cellpadding=3>';
 echo '<tr>';	
-echo '<td align=left style="font-variant:small-caps; font-size:x-small; font-weight:bold;">ENSEMBLE DES SOURCES AU-DELA DU SEUIL DE PERTINENCE POUR LA PÉRIODE COURANTE</td>';
+echo '<td align=left style="font-variant:small-caps; font-size:x-small; font-weight:bold;">ENSEMBLE DES BILLETS ASSOCIÉS AU CHAMP AU-DELÀ DU SEUIL DE PERTINENCE</td>';
 echo '<td width=5%></td>';
 
 $jscriptmp.='
