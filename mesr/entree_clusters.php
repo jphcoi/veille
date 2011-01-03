@@ -60,7 +60,7 @@ while ($ligne=mysql_fetch_array($resultat)){
 echo '<p><table width=100% class=tableitems>';
 echo '<tr valign=top><td width=2.5%></td><td><h2 class=subtitle>liste complète des champs thématiques';
 $jscriptmp.=display_helper('Champs thématiques',
-'Les champs thématiques (niveau <i>meso</i>), décrivent le contexte d\'une
+'Les <a href="aide.php#champs"><font color=blue>champs thématiques</font></a> (niveau <i>meso</i>), décrivent le contexte d\'une
  discussion par un ensemble de termes.
 Cette liste donne l\'ensemble des champs thématiques sur la période '.
 get_short_string_periode($my_period).'. Les champs thématiques sont labellisés par leur deux

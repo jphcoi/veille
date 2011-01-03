@@ -64,19 +64,22 @@ Ceux-ci sont accessibles via le menu de navigation:
 </ul>
 </p>
 <p>
-<center>
-<img src='images/termes_carte.jpg' ><br/>
-<span style='font-size:small;'>Les <a href='entree_clusters.php'>champs thématiques</a> sont des groupes de termes. Ils s'articulent au sein de <a href='global.php'>cartes</a>.</span>
+<center><a name='champs'>
+<img src='images/termes_carte.jpg' ></a><br/>
+<span style='font-size:small;'>Les <a href='entree_clusters.php'>champs thématiques</a> sont des groupes de termes. Ils s'articulent au sein de <a href='global.php'>cartes</a>
+et sont labellisés par leur deux termes les plus représentatifs.</span>
 </center></p>
 <br/><p>
-<center>
-<img src='images/phylogenie.jpg' ><br/>
+<center><a name='phylo'>
+<img src='images/phylogenie.jpg' ></a><br/>
 <span style='font-size:small;'>Les <a href='phylo.php'>phylogénies</a> intègrent les <a href='entree_clusters.php'>champs thématiques</a> dans une structure
-temporelle qui permet de suivre leur evolutions et leurs mutations.</span>
+temporelle qui permet de suivre leur evolutions et leurs mutations.
+Un champ thématique peut provenir d'une évolution linéaire ou être le fruit de le rencontre de plusieurs
+problématiques. Il peut également donner naisssance à une ou plusieurs discussions distinctes.</span>
 </center>
 </p>
 <p>Contrairement aux explorations s'appuyant sur des termes choisis <i>a priori</i>
-ayant pour entrée le niveau 'mico', les entrées par les niveaux 'meso' et 'macro' permettent
+ayant pour entrée le niveau 'micro', les entrées par les niveaux 'meso' et 'macro' permettent
 de sélectionner des sujets à partir de leur profil d'évolution et donc de suggérer des
 parcours.
   </p>
