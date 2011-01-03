@@ -68,16 +68,20 @@ while (count($string2)>0){
 return count(array_intersect($str1, $str2));
 }
 
-function getValue($cle){
+/////////////////////////////////
+/// obtenir des valeurs des tables
+/////////////////////////////////
+function getValue($cle_value,$table='data',$cle='cle',$valeur='valeur'){
 // renvoie la valeur correspondant à la clé $cle dans la table data
-$sql = 'SELECT valeur from data WHERE cle="'.$cle.'"';
-$resultat=mysql_query($sql) or die ("<b>get value failed for ".$cle."</b>");
+$sql = 'SELECT '.$valeur.' from '.$table.' WHERE '.$cle.'="'.$cle_value.'"';
+$resultat=mysql_query($sql) or die ("<b>get value failed for ".$cle_value."</b>");
     while ($ligne=mysql_fetch_array($resultat)) {
-        $out=$ligne[valeur];
+        $out=$ligne[$valeur];
         }
 return $out;
 }
 
+/////////////////////////////////
 
 function remove_popo($st)
 {
@@ -1007,29 +1011,31 @@ function display_helper_two_outputs($title,$text,$indexsuffix,$img="question-mar
 // Comme display_helper sauf qu'elle renvoie un array avec les deux strings au lieu de faire un echo
 // cette fonction affiche un point d'interrogation correspondant au dialogue d'id "dialog$indexsuffix"
 // et renvoie le bout de script JS-Jquery qui doit être ajouté à la commande d'affichage de script JQuery à la fin
-	$question_mark= "
-	<img src='images/".$img."' id='opener".$indexsuffix."'>
-	<div id='dialog".$indexsuffix."' title=".str_replace(" ","&nbsp;",$title).">".$text."
-	</div>
-	";
+$question_mark= "
+<img src='images/".$img."' id='opener".$indexsuffix."'>
+<div id='dialog".$indexsuffix."' title=".str_replace(" ","&nbsp;",$title).">".$text."
+</div>
+";
 
         $script="
-		$('#dialog".$indexsuffix."')
-		  .dialog({ autoOpen: false, stack: true, ".$options.", closeOnEscape:true})
-		  .click(function () { $('#dialog".$indexsuffix."').dialog('close'); });
+$('#dialog".$indexsuffix."')
+.dialog({ autoOpen: false, stack: true, ".$options.", closeOnEscape:true})
+.click(function () { $('#dialog".$indexsuffix."').dialog('close'); });
 
-		$('#opener".$indexsuffix."').click(function(e) {
-			if (!$('#dialog".$indexsuffix."').dialog('isOpen'))
-				$('#dialog".$indexsuffix."').dialog('option','position', [$(this).position().left+25,25]).dialog('open');
-			else
-				$('#dialog".$indexsuffix."').dialog('close');
-			return false;
-			});";
+$('#opener".$indexsuffix."').click(function(e) {
+if (!$('#dialog".$indexsuffix."').dialog('isOpen'))
+$('#dialog".$indexsuffix."').dialog('option','position', [$(this).position().left+25,25]).dialog('open');
+else
+$('#dialog".$indexsuffix."').dialog('close');
+return false;
+});";
        $out=array();
        $out[]=$question_mark;
        $out[]=$script;
        return $out;
 }
+
+
 
 function recup_id_auteurs($chaine)
 {

@@ -242,22 +242,22 @@ if ($projection=="concept") echo 'projetée sur le terme "<i>'.$dico_termes[$id_
 if ($projection=="source") echo 'projetée sur la source "<i>'.$dico_auteurs[$id_source].'</i>"';
 
 $jscriptmp="";
-$jscriptmp.=display_helper(
-	'Raccourcis clavier (après avoir cliqué sur la carte)',
-	'<ul style="font-size:small;">
-		<li><i>déplacement haut, bas, gauche droite:</i><br>
-			flèches correspondantes
-		</li>
-		<li><i>agrandir/rétrécir: </i><br>
-		<b style="font-variant:small-caps;">ctrl</b> (ou <b style="font-variant:small-caps;">command</b>) + flèches haut/bas
-		</li>
-		<li><i>Cliquez sur un noeud pour aller sur la page du cluster correspondant.</i>
-		</li>
-		<li>
-		<i><b>Cliquez sur <img src="images/fullscreen.jpg" width="25" align="absmiddle" height="23"> pour une vue plein écran</b>
-		</li>
-	</ul>',
+display_helper(
+	'Vue globale des champs thématiques',
+	'Tous les  <a href="aide.php#champs"><font color=blue>champs thématiques</font></a> de la période sélectionnée sont représentés sur cette carte par des cercles.
+        La proximité thématique entre champs est représentée par des liens et est reflétée par
+        une proximité spatiale.',
 	'');
+$jscriptmp.="$('#dialog')
+.dialog({ autoOpen: false, stack: true, resizable: false, modal:true, width:600, closeOnEscape:true})
+.click(function () { $('#dialog').dialog('close'); });
+$('#opener').click(function(e) {
+if (!$('#dialog').dialog('isOpen'))
+$('#dialog').dialog('option','position', [$(this).position().left+25,2]).dialog('open');
+else
+$('#dialog').dialog('close');
+return false;
+});";
 	
 echo '
 		<script> $(function() { '.$jscriptmp.' });</script>';
@@ -329,7 +329,7 @@ else
 //echo "<br>";
 //echo $mapgexf;
 ?>
-<object width="100%" height="250" id="GexfExplorer">
+<object width="100%" height="300" id="GexfExplorer">
 	<script type="text/javascript">
 		<!-- Start		
 		/* Copyright (c) 2006-2009 Paranoid Ferret Productions.  All rights reserved.
@@ -398,7 +398,7 @@ else
 	<param name="bgcolor" value="#FFFFFF" />
 	<embed src="bin/GexfExplorer1.0.swf?path=
 		<? echo $mapgexf?>
-	&curvedEdges=true&scaledTextSize=false&labelSize=1800&clickableNodes=true&nodeBorderColor=0x000000&labelsColor=0x000000&font=Verdana&clickableAttribute=fathersbis&initialNodesRatio=6&edgesThickness=5&fps=false&edgesColor=0xB3D0EC" allowFullScreen="true" allowScriptAccess="always" width="100%" height="250" bgcolor="#FFFFFF">
+	&curvedEdges=true&scaledTextSize=false&labelSize=1800&clickableNodes=true&nodeBorderColor=0x000000&labelsColor=0x000000&font=Verdana&clickableAttribute=fathersbis&initialNodesRatio=6&edgesThickness=5&fps=false&edgesColor=0xB3D0EC" allowFullScreen="true" allowScriptAccess="always" width="100%" height="300" bgcolor="#FFFFFF">
 	</embed>
 </object>
 <?
@@ -437,10 +437,29 @@ echo '</select>';
 echo '<input type="hidden" value="'.$my_period.'" name="periode">';
 echo '<input type="submit" value="Explorer" name="op">';
 echo '<input type="submit" value="Projeter" name="op">';
-echo '</form>';
-echo "</td></tr></table>";
+echo '</form></td>';
+
 
 echo "<td width=2.5%></td>";
+
+//DEBUGGAGE DE LA CARTE QUI EST EFFECTIVEMENT ENVOYEE A GEXF:
+echo '<table class=commentitems width=100% ><tr valign=top><td><table class=commentitems>';
+echo '<tr><td><b>Raccourcis clavier (après avoir cliqué sur la carte):</b></td></tr>';
+echo '<tr><td>';
+echo '- <i>déplacement haut, bas, gauche droite:</i> flèches correspondantes</td></tr>';
+echo '<tr><td>';
+echo '- <i>agrandir/rétrécir: </i><b style="font-variant:small-caps;">ctrl</b> (ou <b style="font-variant:small-caps;">command</b>) + flèches haut/bas</td></tr>';
+echo '</table></td>';
+echo '<td align=right><b>Cliquez sur <img src="images/fullscreen.jpg" width="25" align="absmiddle" height="23"> pour une vue plein écran</b>';
+
+//on affiche ici le nom du gexf
+//echo '<div align=right style="font-size:5pt;">gexf:'.$mapgexf.'</div>';
+echo '</td></table>';
+
+
+echo "</tr></table>";
+
+
 echo "</tr></table>";
 
 
