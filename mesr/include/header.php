@@ -2,7 +2,7 @@
 $jscriptmp=''; // string temporaire pour afficher les pop up box
 echo '<html>';
 echo '<head>';
-if (!isset($titleheader)) $titleheader="v1.2";
+if (!isset($titleheader)) $titleheader="v1.3";
 if (isset($jsprotovis)) $jsheader='<script type="text/javascript" src="protovis-r3.2.js"></script>'; else $jsheader="";
 //if (isset($jsjquery)) $jsheader2='<script type="text/javascript" src="js/jquery/jquery-1.4.4.js"></script>'; else $jsheader2="";
 $jsheader2='
