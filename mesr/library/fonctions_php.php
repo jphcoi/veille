@@ -987,11 +987,7 @@ function display_box($titre,$auteurs,$abstract,$permalien,$concepts,$type_notice
 function display_helper($title,$text,$indexsuffix,$img="question-mark.gif",$options="resizable: false, modal:true, width:600") {
 // cette fonction affiche un point d'interrogation correspondant au dialogue d'id "dialog$indexsuffix"
 // et renvoie le bout de script JS-Jquery qui doit être ajouté à la commande d'affichage de script JQuery à la fin
-	echo "
-	<img src='images/".$img."' id='opener".$indexsuffix."'>
-	<div id='dialog".$indexsuffix."' title=".str_replace(" ","&nbsp;",$title).">".$text."
-	</div>
-	";
+	echo " <img src='images/".$img."' id='opener".$indexsuffix."'><span id='dialog".$indexsuffix."' title=".str_replace(" ","&nbsp;",$title).">".$text."</span>";
 	
 	return("
 		$('#dialog".$indexsuffix."')

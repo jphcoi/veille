@@ -430,7 +430,7 @@ echo "<table width=100%><tr valign=top><td width=2.5%></td><td width=95%>";
 		{echo $select_string."contenu"; display_helper_contenu(); echo "</b>";} 
 	else 
 		{echo $href_string."phylo>contenu</a>"; display_helper_contenu();}
-	echo " - ";
+	echo "&nbsp;-&nbsp;";
     if ($nav=="cooc") {
     	echo $select_string."réseau de cooccurrence"; display_helper_cooccurrences(); echo "</b>"; 
     	}
