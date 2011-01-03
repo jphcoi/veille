@@ -3,11 +3,9 @@ include("login_check.php");
 include("library/fonctions_php.php");
 include("parametre.php");
 
-mysql_connect($server,$user,$password);
+mysql_connect( $server,$user,$password);if ($encodage=="utf-8") mysql_query("SET NAMES utf8;");
+//if ($encodage=='utf-8') mysql_query("SET NAMES utf8;");
 @mysql_select_db($database) or die( "Unable to select database");
-//à préciser lorsqu'on est sur sciencemapping.com
-if ($user!="root") mysql_query("SET NAMES utf8;");
-
 //*******************************************
 //bloc récupération des périodes des clusters
 //*******************************************
@@ -29,7 +27,10 @@ while ($ligne=mysql_fetch_array($resultat)) {
 
 //agrégats	
 $list_of_periods=sort_periods($periode_brute);
-if(isset( $_GET['periode'])) $my_period=$_GET['periode']; else $my_period=arrange_periode(end($list_of_periods));
+//on arrive sur la dernière période
+//if(isset( $_GET['periode'])) $my_period=$_GET['periode']; else $my_period=arrange_periode(end($list_of_periods));
+//on arrive sur l'ensemble des périodes
+if(isset( $_GET['periode'])) $my_period=$_GET['periode']; else $my_period=-1;
 
 $titleheader="liste des termes (".get_short_string_periode($my_period).")";
 include("include/header.php");
@@ -119,6 +120,9 @@ display_arrow_periodes($my_period,$total_list_periods);
 
 echo '<form action="entree_termes.php" method="get" style="display:inline;">';
 echo '<select name="periode">';
+echo '<option value="-1"';
+if ($my_period==-1) echo ('selected');
+echo '>* aucune * (obtenir la liste complète des termes)</option>';
 for ($i=0;$i<count($list_of_periods);$i++) {
 	echo '<option value='.$list_of_periods[$i];
 	if ($list_of_periods[$i]==$my_period) echo(" selected");
@@ -126,9 +130,6 @@ for ($i=0;$i<count($list_of_periods);$i++) {
 	echo get_string_periode($list_of_periods[$i]);
 	echo '</option>';
 	}
-echo '<option value="-1"';
-if ($my_period==-1) echo (' selected');
-echo '>* aucune * (obtenir la liste complète des termes)</option>';
 echo '</select>';
 echo '<input type="submit" value="Changer">';
 echo '</form>';

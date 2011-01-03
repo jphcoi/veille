@@ -1,7 +1,8 @@
 <?
 
    //if ($norm==1) $helpernormstring='(2)+" fois/1000 billets'; else $helpernormstring='(0)+" fois';
-	
+	$datef = $datef +1;
+
    $mydatajson=json_encode($data);
    $mylabels=json_encode($datalabels);
    //print_r($mydatajson);
@@ -12,10 +13,6 @@
    			return { x: parseInt(x), y: x in datajson['.$i.'] ? datajson['.$i.'][x] : 0 }})';
    		if ($i<count($data)-1) $mystring.=', '; else $mystring.=']';
    		}
-   	//echo $mystring;
-   	
-	  
-	// echo "<p>";
 	$myscript='<script type="text/javascript+protovis">
 
 	var datajson = '.$mydatajson.';
@@ -38,7 +35,7 @@
 	var time;
 	for(time in periods) {
 	  	var newDate = new Date( );
-		newDate.setTime((1279152000+86400*(periods[time]-'.$dated.'))*1000);
+		newDate.setTime((86400*(14609+periods[time]))*1000);
 		dateString = newDate.toUTCString();
 		dt=dateString.split(" ");
 		DateArray.push(dt[1]+" "+dt[2]);
@@ -47,7 +44,7 @@
 	var iDateArray = new Array();
 	for (time='.$dated.'; time<='.$datef.';time++) {
 		var xnewDate = new Date( );	
-		xnewDate.setTime((1279152000+86400*(time-'.$dated.'))*1000);
+		xnewDate.setTime(86400*(14609+time)*1000);
 		dateString = xnewDate.toUTCString();
 		dt=dateString.split(" ");
 		iDateArray.push(dt[1]+" "+dt[2]);

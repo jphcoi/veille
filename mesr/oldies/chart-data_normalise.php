@@ -2,7 +2,7 @@
 
 // What you will probably do is:
 include('parametre.php');
-mysql_connect($server,$user,$password);
+mysql_connect( $server,$user,$password);if ($encodage=="utf-8") mysql_query("SET NAMES utf8;");
 @mysql_select_db($database) or die( "Unable to select database");
 
 $steps_nb=5;

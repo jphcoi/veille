@@ -2,10 +2,32 @@
 include("fonctions_php.php");
 include("../parametre.php");
 //connexion a la base de donnees
-mysql_connect($server,$user,$password);
+mysql_connect( $server,$user,$password);if ($encodage=="utf-8") mysql_query("SET NAMES utf8;");
 @mysql_select_db($database) or die( "Unable to select database");
 //à préciser lorsqu'on est sur sciencemapping.com
 if ($user!="root") mysql_query("SET NAMES utf8;");
+
+/// creation de la table
+$query="
+CREATE TABLE IF NOT EXISTS `partitions` (
+  `id_partition` int(11) DEFAULT NULL,
+  `label` varchar(1000) NOT NULL,
+  `label_ids` varchar(1000) NOT NULL,
+  `first_period` varchar(50) DEFAULT NULL,
+  `last_period` varchar(50) DEFAULT NULL,
+  `last_period_string` varchar(50) DEFAULT NULL,
+  `nb_period_covered` smallint(6) DEFAULT NULL,
+  `nb_fields` smallint(6) DEFAULT NULL,
+  `score` float(7,4) DEFAULT NULL,
+  `terms` varchar(20000) DEFAULT NULL,
+  `terms_occ` varchar(20000) NOT NULL,
+  `nb_terms` smallint(6) DEFAULT NULL,
+  UNIQUE KEY `id_partition` (`id_partition`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+";
+mysql_query($query) or die ("<b>Requête non exécutée (creation de la table partition)</b>.");
+
+/////
 
 
 echo 'computing partitions <br/>';
@@ -93,7 +115,11 @@ while (count($current_partition)>0){
    $macrobranch['nb_terms']=count($macrobranch_terms);
    $macrobranch['terms']=implode("_", array_keys($macrobranch_terms));
    $macrobranch['terms_occ']=implode("_", $macrobranch_terms);
-   $label_infos=macrobranch_label($macrobranch_terms,$depth);
+   if ($macrobranch['nb_fields']<3){
+   $label_infos=macrobranch_label($macrobranch_terms,1);
+    }else{
+    $label_infos=macrobranch_label($macrobranch_terms,$depth);
+    }
    $macrobranch['label']=$label_infos['label'];
    $macrobranch['label_ids']=implode('_',$label_infos['label_ids']);
    $macrobranch['last_period_string']=($macrobranch['last_period']-$dT).' '.$macrobranch['last_period'];
@@ -158,7 +184,7 @@ function macrobranch_label($macrobranch_terms,$depth){
         $i++;
     };
     $label=substr($label, 0, -1);
-    $output['label']=$label;
+    $output['label']=remove_popo($label);
     $output['label_ids']=$id_array;
 
     return $output;

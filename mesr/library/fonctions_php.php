@@ -10,8 +10,20 @@ setlocale (LC_TIME, 'fr_FR','fra');
 
 function error(){
 $query="select * FROM partifgdfgtions WHERE nb_period_covered >= $phylo_min_nb_periods_covered";
-$resultat=mysql_query($query) or die ("<b>Requête non exécutée (récupération des principales thématiques)</b>.");
+$resultat=mysql_query($query) or die ("<b>planned error succesful ! </b>.");
 
+}
+
+function retrieve_periods()
+{
+	//on recupere la liste des periodes
+$periode_brute=array();
+$resultat=mysql_query("select periode FROM cluster group by periode order by periode") or die ("<b>Requête non exécutée (récupération des périodes pour les concepts)</b>.");
+while ($ligne=mysql_fetch_array($resultat)) {
+	$per=$ligne['periode'];
+	$periode_brute[]=$per;
+}
+return $periode_brute;
 }
 
 function similarity($string1,$string2){
@@ -56,6 +68,16 @@ while (count($string2)>0){
 return count(array_intersect($str1, $str2));
 }
 
+function getValue($cle){
+// renvoie la valeur correspondant à la clé $cle dans la table data
+$sql = 'SELECT valeur from data WHERE cle="'.$cle.'"';
+$resultat=mysql_query($sql) or die ("<b>get value failed for ".$cle."</b>");
+    while ($ligne=mysql_fetch_array($resultat)) {
+        $out=$ligne[valeur];
+        }
+return $out;
+}
+
 
 function remove_popo($st)
 {
@@ -64,7 +86,7 @@ function remove_popo($st)
 
 function connexion_base($server,$user,$password,$database)
 {
-mysql_connect($server,$user,$password);
+mysql_connect( $server,$user,$password);if ($encodage=="utf-8") mysql_query("SET NAMES utf8;");
 @mysql_select_db($database) or die( "Unable to select database");
 //à préciser lorsqu'on est sur sciencemapping.com
 if ($user!="root") mysql_query("SET NAMES utf8;");
@@ -228,7 +250,7 @@ function adjust_date_jours($s){
 	$special_date_string="%e";
 	//version David / Windows: %#d remplace %e
 	if ($conf==3) { $special_date_string="%#d";}
-	$dt = strftime("%a ".$special_date_string." %b", strtotime($newd)); 
+	$dt = strtolower(strftime("%A ".$special_date_string." %B", strtotime($newd))); 
  }
 	else
 	{$dt=$s;}
@@ -624,21 +646,22 @@ function get_date_since($jour)
 		return $dt;
 	}
 
-function get_date($date_depart,$jour)
+function get_date($date_depart,$jour,$short=0)
 { 
 	global $conf;
 	if ($jour<1000)
 	{
-	$univ_time_begin = 	"2009-12-31";
-		
-	setlocale (LC_TIME, 'fr_FR.UTF8','fra');	
-	$date_depart = strtotime($univ_time_begin);
-	eval( '$newd = date(\'n/j/Y\', strtotime(\'+'.$jour.' days\',$date_depart));');
-	$date = date('n/j/Y', strtotime('+7 days', $date_depart));
-	$special_date_string="%e";
-	//version David / Windows: %#d remplace %e
-	if ($conf==3) { $special_date_string="%#d";}
-	$dt = strftime($special_date_string." %b", strtotime($newd));  }
+		$univ_time_begin = 	"2009-12-31";
+		setlocale (LC_TIME, 'fr_FR.UTF8','fra');	
+		$date_depart = strtotime($univ_time_begin);
+		eval( '$newd = date(\'n/j/Y\', strtotime(\'+'.$jour.' days\',$date_depart));');
+		$date = date('n/j/Y', strtotime('+7 days', $date_depart));
+		$special_date_string="%e";
+		//version David / Windows: %#d remplace %e
+		if ($conf==3) { $special_date_string="%#d";}
+		if ($short==0) { $dt=strftime($special_date_string." %b", strtotime($newd));}
+			else { $dt=strftime("%d/%m",strtotime($newd));}
+	}
 	else
 	{
 		$dt = $jour;
@@ -652,7 +675,8 @@ function get_date($date_depart,$jour)
 function get_string_periode($periode,$brk=0)
 {
 	if (strlen($periodes[0])!=4)
-	{$date_depart =$univ_time_begin;
+	{
+	$date_depart =$univ_time_begin;
 	$periodes = explode('-',$periode);
 	$dt1 = get_date($date_depart,$periodes[0]);
 	$dt2 = get_date($date_depart,$periodes[1]);}
@@ -667,16 +691,15 @@ function get_string_periode($periode,$brk=0)
 	
 	if ($brk!=0) $dt1=$dt1.'<br>'; else $dt1=$dt1.' ';
 	return 'du '.$dt1.'au '.$dt2;
-	
 }
 
-function get_short_string_periode($periode,$brk=0)
+function get_short_string_periode($periode,$brk=0,$short=0)
 {
 	if ($periode==-1) return ("***");
 	$date_depart=$univ_time_begin;
 	$periodes = explode('-',$periode);
-	$dt1 = get_date($date_depart,$periodes[0]);
-	$dt2 = get_date($date_depart,$periodes[1]);
+	$dt1 = get_date($date_depart,$periodes[0],$short);
+	$dt2 = get_date($date_depart,$periodes[1],$short);
 	if ($brk!=0) $dt1=$dt1.'<br>'; else $dt1=$dt1.'';
 	return str_replace("- ","-",$dt1.'-'.$dt2);
 }
@@ -945,7 +968,7 @@ function mise_en_forme_abstract($titre,$auteurs,$abstract,$concepts,$type_notice
 function display_box($titre,$auteurs,$abstract,$permalien,$concepts,$type_notice,$index,$insertedtext)
 {
 	$notice = mise_en_forme_abstract($titre,$auteurs,$abstract,$concepts,$type_notice);
-	echo '<div id="dialog'.$index.'" title="'.$titre.'" style="font-size:8pt;">'.$notice.'</div>';
+	echo '<div align=left id="dialog'.$index.'" title="'.$titre.'" style="font-size:8pt;">'.$notice.'</div>';
 	echo '<a ';
 	if (strpos($permalien,'http:')>-1) {
 		echo 'href="'.$permalien.'"';
@@ -956,23 +979,19 @@ function display_box($titre,$auteurs,$abstract,$permalien,$concepts,$type_notice
 	echo '>';
 	echo '<img alt="aller sur le site" src="images/externallink.png"  border="0" align=left height=16> ';
 	echo '</a>';
-	echo '</td><td>';
+	echo '</td><td width=86%>';
 	echo '<div id="opener'.$index.'"><a href=#>'.$titre.'</a>'.$insertedtext.'</div>
 	';
 }
 
-function display_helper($title,$text,$indexsuffix) {
+function display_helper($title,$text,$indexsuffix,$img="question-mark.gif",$options="resizable: false, modal:true, width:600") {
 // cette fonction affiche un point d'interrogation correspondant au dialogue d'id "dialog$indexsuffix"
 // et renvoie le bout de script JS-Jquery qui doit être ajouté à la commande d'affichage de script JQuery à la fin
-	echo "
-	<img src='images/question-mark.gif' id='opener".$indexsuffix."'>
-	<div id='dialog".$indexsuffix."' title=".str_replace(" ","&nbsp;",$title).">".$text."
-	</div>
-	";
+	echo " <img src='images/".$img."' id='opener".$indexsuffix."'><span id='dialog".$indexsuffix."' title=".str_replace(" ","&nbsp;",$title).">".$text."</span>";
 	
 	return("
 		$('#dialog".$indexsuffix."')
-		  .dialog({ autoOpen: false, stack: true, resizable: false, modal:true, width:600, closeOnEscape:true})
+		  .dialog({ autoOpen: false, stack: true, ".$options.", closeOnEscape:true})
 		  .click(function () { $('#dialog".$indexsuffix."').dialog('close'); });
 
 		$('#opener".$indexsuffix."').click(function(e) {
@@ -984,6 +1003,33 @@ function display_helper($title,$text,$indexsuffix) {
 			});");
 }
 
+function display_helper_two_outputs($title,$text,$indexsuffix,$img="question-mark.gif",$options="resizable: false, modal:true, width:600") {
+// Comme display_helper sauf qu'elle renvoie un array avec les deux strings au lieu de faire un echo
+// cette fonction affiche un point d'interrogation correspondant au dialogue d'id "dialog$indexsuffix"
+// et renvoie le bout de script JS-Jquery qui doit être ajouté à la commande d'affichage de script JQuery à la fin
+	$question_mark= "
+	<img src='images/".$img."' id='opener".$indexsuffix."'>
+	<div id='dialog".$indexsuffix."' title=".str_replace(" ","&nbsp;",$title).">".$text."
+	</div>
+	";
+
+        $script="
+		$('#dialog".$indexsuffix."')
+		  .dialog({ autoOpen: false, stack: true, ".$options.", closeOnEscape:true})
+		  .click(function () { $('#dialog".$indexsuffix."').dialog('close'); });
+
+		$('#opener".$indexsuffix."').click(function(e) {
+			if (!$('#dialog".$indexsuffix."').dialog('isOpen'))
+				$('#dialog".$indexsuffix."').dialog('option','position', [$(this).position().left+25,25]).dialog('open');
+			else
+				$('#dialog".$indexsuffix."').dialog('close');
+			return false;
+			});";
+       $out=array();
+       $out[]=$question_mark;
+       $out[]=$script;
+       return $out;
+}
 
 function recup_id_auteurs($chaine)
 {
@@ -1028,15 +1074,13 @@ function prone($chaine,$n)
 
 function display_billets($info_sources,$list_of_concepts,$my_period,$type_notice)
 {
-	$backdark="#DDDDDD";
-	$backdarker="#CCCCCC";
+	global $jscriptmp;
+	//$backdark="#DDDDDD"; $backdarker="#CCCCCC";
+	$backdark="#E8E8E8";
+	$backdarker="#E1E1E1";
 	
-	echo "<table class=tableitems rules=all width=100% cellspacing=0 cellpadding=0>";
-	echo "</td>";
-	echo "<td align=left width=80%>";
-	echo "<table width=100% cellspacing=0 cellpadding=0>";
+	echo "<table class=tableitems width=100% cellspacing=0 cellpadding=0>";
 	$odd=0;
-	$jscriptmp="";
 	foreach(array_keys($info_sources) as $key)
 	{
 		//print_r($info_sources[$key]['dates']);
@@ -1058,10 +1102,13 @@ function display_billets($info_sources,$list_of_concepts,$my_period,$type_notice
 		echo '</td></tr></table>';
 		echo "<table class=commentitems width=100%>";
 		for ($i=0;$i<count($info_sources[$key]['titres']);$i++){
-			echo "<tr valign=top><td width=13% style=\"font-size:x-small;\">";
+			echo "<tr valign=top>";
+			echo "<td width=13% style=\"font-size:x-small;\">";
 			echo $info_sources[$key]['dates'][$i];
-			echo "</td><td width=2%>";
-			echo "</td><td width=18px>";
+			echo "</td>";
+			echo "<td width=2%>";
+			echo "</td>";
+			echo "<td width=18px>";
 			$chaine=$info_sources[$key]['content'][$i];
 			//coupe l'abstract aux 15 premières lignes
 			$chaine = prone($chaine,8);
@@ -1086,6 +1133,7 @@ function display_billets($info_sources,$list_of_concepts,$my_period,$type_notice
 				//echo 
 				///log10(10+$info_sources[$key]['nbsize'][$i]-$info_sources[$key]['nbtermes'][$i]
 				$insertedtext=" (".number_format(100*$info_sources[$key]['nbtermes'][$i]/count($list_of_concepts)/log10(10+max($info_sources[$key]['nbsize'][$i],$info_sources[$key]['nbtermes'][$i])-$info_sources[$key]['nbtermes'][$i]), 0, ',', ' ')."%)";
+				$insertedtext.=" [".number_format(100*$info_sources[$key]['pertinences'][$i]."%]", 0, ',', ' ')."%]";
 				//	echo $info_sources[$key]['nbtermes'][$i];
 				//	echo '<br>';
 				//	echo count($list_of_concepts);
@@ -1101,12 +1149,313 @@ function display_billets($info_sources,$list_of_concepts,$my_period,$type_notice
 		echo "</tr>";
 	}
 	echo "</table>";
-	echo '
-	<script> $(function() { '.$jscriptmp.' 
-		});</script>';
-
 }
 					
+////////////
+
+
+
+function display_box_plus($titre,$auteurs,$abstract,$permalien,$concepts,$type_notice,$index,$insertedtext)
+{
+	$notice = mise_en_forme_abstract($titre,$auteurs,$abstract,$concepts,$type_notice);
+	echo '<span align=left id="dialog'.$index.'" title="'.$titre.'" style="font-size:8pt;">'.$notice.'</span>';
+	echo '<a ';
+	if (strpos($permalien,'http:')>-1) {
+		echo 'href="'.$permalien.'"';
+		}
+	else {
+		echo 'href="'.'http://scholar.google.com/scholar?hl=en&q='.str_replace(' ','+',$titre).'"';
+		}
+	echo '>';
+	echo '<img alt="aller sur le site" src="images/externallink.png"  border="0" align=left height=16> ';
+	echo '</a>';
+	echo '</td>';
+	echo '<td width=86%>';
+	echo '<span id="opener'.$index.'"><a href=#>'.$titre.'</a>'.$insertedtext.'</span>
+	';
+}
+
+// cette fonction affiche les billets pour les variables $info_sources équipées du champ "pertinences"
+function display_billets_plus($info_sources,$list_of_concepts,$my_period,$type_notice,$noscroll=0)
+{
+	function id_maker($x) {	$y=10*floor(round(100*$x)/10); if ($y>50) $y=50; return ($y);}
+	global $jscriptmp;
+	$backdark="#E8E8E8";
+	$backlight="#E1E1E1";
+	
+	// scrollbar?
+	if (!$noscroll){
+		$jscriptmp.="$('.scrollPane').scrollbar;";
+		echo '<div class="scrollPane">';
+		}
+		
+	foreach(array_keys($info_sources) as $key)
+	{
+		$max_pert=10;
+		for ($i=0;$i<count($info_sources[$key]['titres']);$i++){
+			$pertmp=$info_sources[$key]['pertinences'][$i];
+			if ($pertmp>$max_pert) $pertmp=$max_pert;
+			}
+		$sourcetagid=id_maker($pertmp);
+		$sourcetagidtext='value="pert'.$sourcetagid.'"';
+		
+		echo '<table width=100% id=tab"'.$info_sources[$key]['idauteur'].'" '.$sourcetagidtext.' cellspacing=0 cellpadding=0 style="display:none;">';
+		//>';
+
+		echo '<tr width=100% id="top'.$info_sources[$key]['idauteur'].'" '.$sourcetagidtext.' style="display:none;">';
+		echo '<td width=10%></td><td width=2%></td><td width=2%><td width=86%></td></tr>';
+		
+		echo '<tr width=100% id="tab'.$info_sources[$key]['idauteur'].'" '.$sourcetagidtext.' valign=top class=tableitems style="background-color:'.$backdark.'; display:none;">';
+		
+		echo '<td colspan=5 style="font-size:x-small;">';
+		$ids_auteur=recup_id_auteurs($info_sources[$key]['idauteur']);
+		$keys = recup_names_auteurs($key);
+
+		for ($j=0;$j<count($ids_auteur);$j++)
+		{
+			echo '&nbsp;<a href=source.php?id_source='.$ids_auteur[$j]."&periode=".$my_period.'><b>'.$keys[$j]."</b></a>";
+			if ($j<count($ids_auteur)-1)
+			{echo '; ';}
+		}
+		
+		echo '</td>';
+		echo '</tr>';
+
+		for ($i=0;$i<count($info_sources[$key]['titres']);$i++){
+			$idtext='value="pert'.id_maker($info_sources[$key]['pertinences'][$i]).'"';
+			
+			$chaine=$info_sources[$key]['content'][$i];
+			//coupe l'abstract aux 15 premières lignes
+			$chaine = prone($chaine,8);
+			//print_r(convert_forme_principale_id($info_sources[$key]['concepts'][$i]));
+			$conc = implode("; ", convert_forme_principale_id($info_sources[$key]['concepts'][$i]));
+			//echo $conc;
+			//il faut normaliser le nom de l'index pour que javascript ne soit pas perdu
+			$index=str_replace("/","",str_replace(".","",str_replace("-","",$key."-".$i)));
+			$jscriptmp.="
+				$('#dialog".$index."')
+					.dialog({ autoOpen: false, stack: true, modal:true, width:600, closeOnEscape:true})
+					.click(function () { $('#dialog".$index."').dialog('close'); });
+				$('#opener".$index."').click(function(e) {
+					if (!$('#dialog".$index."').dialog('isOpen')) 
+						$('#dialog".$index."').dialog('option','position', [$(this).position().left+50,'center']).dialog('open');
+					else
+						$('#dialog".$index."').dialog('close');
+					return false;
+					});";
+			$insertedtext="";
+			if (count($list_of_concepts)>1){ 
+				$insertedtext.=" (".number_format(round(100*$info_sources[$key]['pertinences'][$i]), 0, ',', ' ')."%)";
+				}
+			
+			echo '<tr id="bil'.$info_sources[$key]['idauteur'].$i.'" '.$idtext.' valign=top class=commentitems width=100% style="background-color:'.$backdark.';"  onMouseOver="this.style.backgroundColor=\''.$backlight.'\';" onMouseOut="this.style.backgroundColor=\''.$backdark.'\';">';
+			echo '<td width=13% style=\"font-size:x-small;\">';
+			echo '&nbsp;&nbsp;&nbsp;'.$info_sources[$key]['dates'][$i];
+			echo "</td>";
+			echo "<td width=2%>";
+			echo "</td>";
+			echo "<td width=2%>";
+			echo display_box_plus($info_sources[$key]['titres'][$i],$key,$chaine,$info_sources[$key]['permaliens'][$i],$conc,$type_notice,$index,$insertedtext);
+			echo "</td>";
+			echo "</tr>";
+			}
+		
+		echo '<tr id="'.$info_sources[$key]['idauteur'].'r" '.$sourcetagidtext.' style="height:2px;background-color:'.$backlight.';" style="display:none;">';
+		echo '<td colspan=6></td>';
+		echo '</tr>';
+
+		echo "</table>";		
+	}
+	if (!$noscroll) echo '</div>';
+}
+					
+////////////
+
+
+function streamgraph($tabTitle,$json_data){
+// fonction qui renvoie les éléments pour afficher un streamgraph
+// $tabTitle : titre du graph$
+// $json_data : données JSON
+// renvoie $myabove à mettre au début du doc et $myscript à placer à l'endroit où le graph doit apparaitre
+$mytest='sdfkjhdfgdkfgjhkj(';
+$myabove='<script type="text/javascript">'.$json_data.'</script>';
+$myscript='<hr>
+<table class=tableitems width="100%">
+<tr valign=bottom>
+<td align="left">'.$tabTitle.
+'</td><td align="right" style="font-variant:small-caps;">
+<label for="query">rechercher: </label>
+<input id="query" type="text" onkeyup="search(this.value);">
+&nbsp;&nbsp;&nbsp;&nbsp;vue:
+<select onchange="update_viz_type(event);">
+<option value="zero">Activité totale</option>
+<option value="expand">Pourcentage</option>
+</select>
+</td></tr></table>
+'.'<script type="text/javascript+protovis">
+
+/* Interaction state. */
+$dated=years[1];
+$datef=years[years.length-1];
+var offset="zero";
+var gender = 0,
+re = "";
+/* Flatten the tree into an array to faciliate transformation. */
+var dynamics = pv.flatten(dynamics)
+.key("job")
+.key("gender", function(g) (g == "activity") ? 1 : 2)
+.key("year", function(i) years[i])
+.key("people")
+.array();
+/*
+* Use per-year sums to normalize the data, so we can compute a
+* percentage. Use per-gender+job sums to determine a saturation encoding.
+*/
+var sumByYear = pv.nest(dynamics)
+.key(function(d) d.year)
+.rollup(function(v) pv.sum(v, function(d) d.people)),
+sumByJob = pv.nest(dynamics)
+.key(function(d) d.gender + d.job)
+.rollup(function(v) pv.sum(v, function(d) d.people));
+/* Cache the percentage of people employed per year. */
+dynamics.forEach(function(d) d.percent = 100 * d.people / sumByYear[d.year]);
+/* Cache the coarse number of notices per year. */
+dynamics.forEach(function(d) d.coarse = d.people);
+/* Sizing parameters and scales. */
+var sw = .88*document.body.clientWidth,
+sh = 270,
+sx = pv.Scale.linear('.$dated.', '.$datef.').range(0, sw),
+sy = pv.Scale.linear(0, 40).range(0, sh),
+color = pv.Scale.ordinal(1, 2).range("#33f", "#f33"),
+alpha = pv.Scale.linear(pv.values(sumByJob)).range(.4, .8),
+startyear='.$dated.',
+endyear='.$datef.',
+sp = pv.Scale.linear(0,1).range(0,sh);
+var sDateArray = new Array();
+var speriods=sx.ticks(20);
+for(var time in speriods) {
+var snewDate = new Date( );
+//14610 = nombre de jours écoulés entre 1er janvier 70 et 1er janvier 2010
+snewDate.setTime((86400*(14609+speriods[time]))*1000);
+sdateString = snewDate.toUTCString();
+sdt=sdateString.split(" ")
+sDateArray.push(sdt[1]+" "+sdt[2]);
+}
+/* The root panel. */
+var svis = new pv.Panel()
+.width(sw)
+.height(sh)
+.left(25)
+.right(15)
+.top(9.5)
+.bottom(30);
+/* A background bar to reset the search query. */
+svis.add(pv.Bar)
+.fillStyle("lightgray")
+.event("click", function() search(""))
+.cursor("pointer");
+/* Y-axis ticks and labels. */
+svis.add(pv.Rule)
+.visible(function() offset=="zero")
+.data(function() sy.ticks(10))
+.bottom(sy)
+.strokeStyle(function(d) d==0 ? "black" : "#cccccc")
+.anchor("left").add(pv.Label)
+.text(function(d) sy.tickFormat(d)+(d>0?"":""));
+/* Y-axis gridlines (shown with "expand" baseline). */
+svis.add(pv.Rule)
+.visible(function() offset=="expand")
+.data(function() sp.ticks())
+.left(-2).right(0)
+.bottom(sp)
+.strokeStyle(function(d) d==0 ? "black" : "#cccccc")
+.anchor("left").add(pv.Label)
+.text(function(d) (100*d).toFixed(0)+"%");
+/* Stack layout. */
+var area = svis.add(pv.Layout.Stack)
+.offset(function() offset)
+//on définit le type de vis souhaitée
+.layers(function() pv.nest(dynamics.filter(test))
+.key(function(d) d.gender + d.job)
+.sortKeys(function(a, b) pv.reverseOrder(a.substring(1), b.substring(1)))
+.entries())
+.values(function(d) d.values)
+.x(function(d) sx(d.year))
+// ancienneactivityt on faisait toujours la normalisation... .y(function(d) sy(d.percent))
+.y(function(d) sy(d.coarse))
+.layer.add(pv.Area)
+.def("alpha", function(d) alpha(sumByJob[d.key]))
+.interpolate("basis")
+.fillStyle(function(d) color(d.gender).alpha(this.alpha()))
+.fillStyle(pv.Colors.category20().by(function() this.parent.index))
+.cursor("pointer")
+.event("mouseover", function(d) this.alpha(1).title(d.job))
+.event("mouseout", function(d) this.alpha(null))
+.event("click", function(d) search("^" + d.job + "$"));
+/* Stack labels. */
+svis.add(pv.Panel)
+.extend(area.parent)
+.add(pv.Area)
+.extend(area)
+.fillStyle(null)
+.anchor("center").add(pv.Label)
+.def("max", function(d) pv.max.index(d.values, function(d) d.coarse))
+.visible(function() this.index == this.max())
+.font(function(d) 0 + "px sans-serif")
+.textMargin(6)
+//.textStyle("#fff")
+.textStyle(function(d) "rgba(0, 0, 0, " + (Math.sqrt(sy(d.percent))) + ")")
+.textAlign(function() this.index < 5 ? "left" : "right")
+.text(function(d, sp) sp.key.substring(1));
+/* X-axis ticks and labels. */
+svis.add(pv.Rule)
+.data(sx.ticks(20))
+.left(sx)
+.bottom(-6)
+.height(5)
+.anchor("bottom").add(pv.Label)
+.text(function(d) sDateArray[this.index]);
+/* Update the query regular expression when text is entered. */
+function search(text) {
+if (text != re) {
+if (query.value != text) {
+query.value = text;
+query.focus();
+}
+re = new RegExp(text, "i");
+update();
+}
+}
+/* Tests to see whether the specified datum matches the current filters. */
+function test(d) {
+return (!gender || d.gender == gender) && d.job.match(re);
+}
+/* Recompute the y-scale domain based on query filtering. */
+function update() {
+sy.domain(0, Math.min(100, pv.max(pv.values(pv.nest(dynamics.filter(test))
+.key(function(d) d.year)
+.rollup(function(v) pv.sum(v, function(d) d.coarse))))));
+svis.render();
+}
+/*// Recompute the y-scale domain based on query filtering.
+function update() {
+sy.domain(0, pv.max(pv.values(pv.nest(dynamics.filter(test)
+.key(function(d) d.year)
+.rollup(function(v) pv.sum(v, function(d) d.coarse))))));
+svis.render();
+}*/
+function update_viz_type(e) {
+offset = e.target.value;
+svis.render();}
+svis.render();
+</script>';
+$output=array();
+$output[]=$myabove;
+$output[]=$myscript;
+
+return $output;
+
+}
 
 
 ?>

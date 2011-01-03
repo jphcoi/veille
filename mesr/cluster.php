@@ -4,7 +4,7 @@ include("library/fonctions_php.php");
 include("parametre.php");
 
 $all_periode=0;
-
+$jscriptmp="";
 
 if (isset($_POST['all_periode'])) $all_periode = intval($_POST['all_periode']); else $all_periode = 0;
 
@@ -35,7 +35,8 @@ function list_clusters($periodes,$clusters,$okperiode)
 	global $list_of_concepts;
 	$list=array();
 	for($i=0;$i<count($clusters);$i++){
-		if ($periodes[$i]==$okperiode) {
+		//if ($periodes[$i]==$okperiode) 
+		{
 			$localcluster=array();
 			$resultat=mysql_query("SELECT label_1,label_2,concept,nb_sons,nb_fathers,lettre FROM cluster WHERE id_cluster=".$clusters[$i]." AND periode=\"".derange_periode($periodes[$i])."\" ORDER by periode,concept") or die ("Requête non executée.");
 			while ($ligne=mysql_fetch_array($resultat)) {
@@ -59,55 +60,128 @@ function list_clusters($periodes,$clusters,$okperiode)
 // affiche une table de champs thématiques prédécesseurs, principal ou successeurs, rangés en colonnes de termes
 //
 
-function selective_column($arraykey,$list,$plus,$minus,$main=0){
+function selective_column_tt($arraykey,$list,$plus,$minus,$main=0){
 	global $dico_termes,$my_period,$backdark,$backdarker;
-	if ($main>0) $backcolor=$backdarker; 
-	if ($main==0) $backcolor=$backdark;
+	$fz="
+		";
+	$backcolor=$backdark;
 	$ncolumns=2;
 	$wcolumns=width_column($ncolumns,$arraykey)-2;
 	$columns=make_columns($ncolumns,count($arraykey));
-	echo '<table class=';//tableitems';
-	//if ($main==1) echo '"tableitems"'; else 
-		echo '"commentitems"';
-	if ($main>=0) echo 'style="background-color:'.$backcolor.';"';
-	echo ' rules=groups border=1>';
-	echo '<tr align=left valign=top>';
-	for ($i=0;$i<$ncolumns;$i++){
-		echo "<td>";// width=".$wcolumns."%>";
+	$fz.='<table class="commentitems" ';
+	$fz.='style="background-color:'.$backcolor.';"';
+	$fz.=' rules=groups border=1 cellpadding=5>';
+	$fz.='<tr align=left valign=top>';
+	for ($i=0;$i<$ncolumns;$i++) {
+		$fz.="<td>";
 		for ($j=$columns[$i][0];$j<=$columns[$i][1];$j++) {
 			$terme=$arraykey[$j][1];
 			$added=0;$removed=0;$there=0;
 			if (in_array($terme,$plus)) $added=1;
 			if (in_array($terme,$list)) $there=1;
 			if (in_array($terme,$minus)) $removed=1;
-
 			
-			$gothru=1;//si on affiche la période sélectionnée, il faut simplement sauter les termes non-présents, sinon faire comme si ils venaient d'être ajoutés (added=1)
-			if ($main==1) if (!$there) $gothru=0;
-			
-			if ($gothru==1)
-				if ($there OR $removed) {
-					if ($there) {
-						echo "<a href=chart.php?id_concept=".$terme."&periode=".arrange_periode($my_period);
-						if ($main==0) echo " class=dead";
-						echo ">";
-						}
-					if (!$added) echo "<b>";
-					if ($removed) echo '<s style="color:#AAAAAA;">';
-					echo remove_popo($dico_termes[$terme]);
-					if ($removed) echo "</s>";
-					if (!$added) echo "</b>";
-					if ($there) echo "</a>";
+			if ($there OR $removed) {
+				if ($there) {
+					$fz.="<a href=chart.php?id_concept=".$terme."&periode=".arrange_periode($my_period);
+					$fz.=">";
+					}
+				if (!$added) $fz.="<b>";
+				if ($removed) $fz.='<s style="color:#AAAAAA;">';
+				$fz.=remove_popo($dico_termes[$terme]);
+				if ($removed) $fz.="</s>";
+				if (!$added) $fz.="</b>";
+				if ($there) $fz.="</a>";
 				}
-				
-			echo ("<br>");
+			else $fz.='<span style="color:'.$backcolor.';">'.remove_popo($dico_termes[$terme]).'</span>';
+			$fz.=("<br>");
 			}
-		echo '</td>';
-		if ($i<$ncolumns-1) echo "<td width=10%></td>";
+			
+		$fz.='</td>';
+		if ($i<$ncolumns-1) $fz.="<td width=10%></td>";
 		}
-	echo "</tr>";
-	echo "</table>";
+	$fz.="</tr>";
+	$fz.="</table>";
+	return ($fz);
 }
+
+
+//
+// affiche le titre d'un cluster avec sa période et son pop-up
+//
+
+function display_cluster_title ($s, $direction) {
+	global $dico_termes,$mainloc,$arraykey,$last_display_periode,$jscriptmp,$my_period,$nav;
+	$label1=$s['label1'];
+	$label2=$s['label2'];
+	$lettre=$s['lettre'];
+	$shref='cluster.php?id_cluster='.$s['id']."&periode=".arrange_periode($s['periode']).'&nav='.$nav;
+	$speriode=get_short_string_periode(arrange_periode($s['periode']),0,1);
+	$stitle='"<b>'.remove_popo($dico_termes[$label1]).'</b> - '.remove_popo($dico_termes[$label2]).'"';
+
+	// $periodchange indique si on a un changement de période par rapport au dernier champ thématique affiché
+	$periodchange=($last_display_periode!=$s['periode']); 
+
+	$ecart=floor(abs(compute_periode(derange_periode($my_period))-compute_periode($s['periode']))/7001000);
+
+	//if ($periodchange && $last_display_periode!="")
+	//	echo '<tr style="background:white;"><td></td><td></td><td></td><td><hr class="dashed"></td></tr>';
+	//else
+		{ //if (!$periodchange) 
+		echo '<tr style="height:4px;font-size:0pt;'.($ecart>0?' background:white;':'').'"><td>&nbsp;</td><td></td><td></td><td></td></tr>';
+		}
+	
+	echo '<tr width=100% valign=top'.($ecart>0?' style="background:white;"':'').'>';
+	echo '<td class=commentitems style="font-size:xx-small;">';
+
+	if ($ecart>0 && $periodchange) echo ("<b>...</b>&nbsp;");
+	echo '</td>';
+	echo '<td class=commentitems style="font-size:xx-small;">';
+	if ($last_display_periode!=$s['periode']) echo $speriode."&nbsp;";
+	if ($ecart>0 && $periodchange) echo "<br/><b>&nbsp;[".($direction=="succ"?"+":"-").($ecart+1)."&nbsp;sem.]&nbsp;</b>";
+	echo '</td>';
+	
+	$sbox=selective_column_tt($arraykey,$s['termes'],$s['plus'],$s['minus']);
+	$sid=$s['id']."_".str_replace(" ","_",$s['periode']);
+	
+	if ($direction=="succ") 
+		{ if (intval($s['fils'])>0) $sarrow='&darr;&nbsp;'; }
+	else 
+		{ if (intval($s['pere'])>0) $sarrow='&uarr;&nbsp;'; }
+
+	echo '<td>';
+	$jscriptmp.=display_helper('(période '.get_string_periode(arrange_periode($s['periode'])).')','<div style="font-variant:small-caps;"><a href='.$shref.'>'.$sarrow.$stitle.'</a></div><br>'.$sbox,$sid,"magnify-wide.png","resizable: true");
+	echo '</td>';
+	echo '
+		<td class=tableitems style="font-variant:small-caps; size:small; font-style:italic;">';
+	
+	echo '
+		<span onMouseOver="ShowContent(\'box'.$sid.'\'); ShowContent(\'title'.$sid.'\'); HideContent(\'mainbox\'); HideContent(\'maintitle\');" 
+			  onMouseOut="HideContent(\'box'.$sid.'\'); HideContent(\'title'.$sid.'\'); ShowContent(\'mainbox\'); ShowContent(\'maintitle\');">';
+	echo '<a id="'.$sid.'" href="'.$shref.'">';
+	
+	echo '<span style="font-style:normal;">'.$sarrow.'</span>'.$stitle;
+	if ($lettre!="") echo ' ('.$lettre.')';
+	
+	echo '</a>';
+	echo '</span>';
+	
+	//echo '<a id="'.$sid.'" class="questionMark jTip jTip_element_'.$sid.'S jTip_width_300" name="Détails" href="'.$shref.'">';
+	//echo '<span id="'.$sid.'S" class="JT_hidden">';
+	//echo $sbox;
+	//echo '</span>';
+	
+	echo '</td>';
+	
+	echo '</tr>';
+	
+	echo '<tr style="height:4px;font-size:0pt;'.($ecart>0?' background:white;':'').'"><td>&nbsp;</td><td></td><td></td><td></td></tr>';
+	
+	echo '</td>';
+	
+	$last_display_periode=$s['periode'];
+}
+
 
 if(isset( $_GET['id_cluster'])) $id_cluster = intval($_GET['id_cluster']); else die("<h1>Agrégat non spécifié.</h1>");
 if(isset( $_GET['periode'])) $my_period=$_GET['periode']; else die("<h1>Agrégat non spécifié.</h1>");
@@ -115,7 +189,7 @@ if(isset( $_GET['nav'])) $nav=$_GET['nav']; else $nav="phylo";
 $periode=$my_period;
 
 //connexion a la base de donnees
-mysql_connect($server,$user,$password);
+mysql_connect( $server,$user,$password);if ($encodage=="utf-8") mysql_query("SET NAMES utf8;");
 @mysql_select_db($database) or die( "Unable to select database");
 //à préciser lorsqu'on est sur sciencemapping.com
 if ($user!="root") mysql_query("SET NAMES utf8;");
@@ -123,27 +197,12 @@ if ($user!="root") mysql_query("SET NAMES utf8;");
 
 create_concept_string();
 
-
+////////////////////////////////////////////////////////
 //bloc recuperation infos cluster
+////////////////////////////////////////////////////////
 $resultat=mysql_query("SELECT label_1,label_2,periode,concept,lettre,pseudo FROM cluster WHERE id_cluster=".$id_cluster." AND periode=\"".derange_periode($periode)."\" ORDER by periode,concept") or die ("Requête non executée.");
 while ($ligne=mysql_fetch_array($resultat)) $cluster[]=$ligne;
 
-
-
-//bloc recuperation infos termes
-$resultat=mysql_query("select id,forme_principale FROM concepts ORDER by forme_principale") or die ("Requête non executée.");
-while ($ligne=mysql_fetch_array($resultat)) $liste_termes[$ligne['id']] = $ligne['forme_principale'];
-
-//bloc recuperation infos phylogenie
-$sql="SELECT id_cluster_2,periode_2 FROM phylo WHERE id_cluster_1=\"".$id_cluster."\" AND periode_1=\"".derange_periode($my_period)."\"";
-//echo $sql;
-$resultat=mysql_query($sql) or die ("Requête non executée.");
-while ($ligne=mysql_fetch_array($resultat)) {
-	$periode_avant_temp = $ligne['periode_2']; 
-	if (intval($periode_avant_temp)> intval($my_period)){
-		$successeur[] = $ligne['id_cluster_2'];
-		$periode_apres[] =$periode_avant_temp; }
-	}
 ////////////////////////////////////////////////////////
 //// retrait des infos sur la partition courante ///////
 ////////////////////////////////////////////////////////
@@ -155,20 +214,41 @@ while ($partit=mysql_fetch_array($resultat)) {
     $id_partition=$partit[pseudo];
 }
 
+// Infos de la partitions concernée
 $sql="SELECT * FROM partitions WHERE id_partition=".$id_partition;
 $partQuery=mysql_query($sql);
 while ($part=mysql_fetch_array($partQuery)){
     $partition_infos=$part;
 }
 
-$sql="SELECT id_cluster FROM cluster WHERE periode='".$partition_infos[last_period_string]."' AND pseudo=".$partition_infos['id_partition']." GROUP BY id_cluster";
-$resultat=mysql_query($sql) or die ("Cluster de la dernière période non récupérés");
+// Récupère tous les clusters de la dernière période
+$last_period_clusters=array();
+$sql="SELECT * FROM cluster WHERE periode='".$partition_infos[last_period_string]."' AND pseudo=".$partition_infos['id_partition']." GROUP BY id_cluster";
+$resultat=mysql_query($sql) or die ("Champ thématique de la dernière période non récupérés");
 while ($partit=mysql_fetch_array($resultat)) {
-    $last_period_cluster_id=$partit[id_cluster];
+    array_push($last_period_clusters,$partit);
 }
 
+////////////////////////////////////////////////////////
+//bloc recuperation infos termes
+////////////////////////////////////////////////////////
+$resultat=mysql_query("select id,forme_principale FROM concepts ORDER by forme_principale") or die ("Requête non executée.");
+while ($ligne=mysql_fetch_array($resultat)) $liste_termes[$ligne['id']] = $ligne['forme_principale'];
 
-$sql="SELECT id_cluster_1,periode_1 FROM phylo WHERE id_cluster_2=\"".$id_cluster."\" AND periode_2=\"".derange_periode($periode)."\"";
+////////////////////////////////////////////////////////
+//bloc recuperation infos phylogenie
+////////////////////////////////////////////////////////
+$sql="SELECT id_cluster_2,periode_2 FROM phylo WHERE id_cluster_1=\"".$id_cluster."\" AND periode_1=\"".derange_periode($my_period)."\" ORDER BY periode_2";
+//echo $sql;
+$resultat=mysql_query($sql) or die ("Requête non executée.");
+while ($ligne=mysql_fetch_array($resultat)) {
+	$periode_avant_temp = $ligne['periode_2']; 
+	if (intval($periode_avant_temp)> intval($my_period)){
+		$successeur[] = $ligne['id_cluster_2'];
+		$periode_apres[] =$periode_avant_temp; }
+	}
+	
+$sql="SELECT id_cluster_1,periode_1 FROM phylo WHERE id_cluster_2=\"".$id_cluster."\" AND periode_2=\"".derange_periode($periode)."\" ORDER BY periode_1 DESC";
 $resultat=mysql_query($sql) or die ("Requête non executée.");
 while ($ligne=mysql_fetch_array($resultat)) {
 	$periode_apres_temp = $ligne['periode_1'];
@@ -176,6 +256,7 @@ while ($ligne=mysql_fetch_array($resultat)) {
 		$predecesseur[] = $ligne['id_cluster_1']; 
 		$periode_avant[] = $ligne['periode_1']; }
 	}
+
 
 
 // max_periode_avant va contenir la période maximale parmi les clusters précédents, donc pas forcément la période immédiatement avant la période courante s'il y a des sauts dans la phylogénie et qu'il y a des prédécesseurs, mais pas à la période immédiatement précédente (distance temporelle >1)
@@ -193,8 +274,8 @@ for($i=0;$i<count($periode_apres);$i++) {
 	if (compute_periode($periode_value)<compute_periode($min_periode_apres)) $min_periode_apres=$periode_value;
 	$periode_apres_rv[$periode_value][]=$successeur[$i];
 	}
-if (compute_periode($periode)-compute_periode($max_periode_avant)>7500000) $ecart_pred=1; else $ecart_pred=0;//echo ("y'a de l'écart<br>");
-if (compute_periode($min_periode_apres)-compute_periode($periode)>7500000) $ecart_succ=1; else $ecart_succ=0;//echo ("y'a de l'écart<br>");
+//if (compute_periode($periode)-compute_periode($max_periode_avant)>7500000) $ecart_pred=1; else $ecart_pred=0;//echo ("y'a de l'écart<br>");
+//if (compute_periode($min_periode_apres)-compute_periode($periode)>7500000) $ecart_succ=1; else $ecart_succ=0;//echo ("y'a de l'écart<br>");
 
 
 //bloc recuperation liste de termes
@@ -227,7 +308,7 @@ if ($lettre_current!="") $titleheader.='('.$lettre_current.') ';
 $titleheader.='('.get_short_string_periode($my_period).') [champ]';
 
 if ($nav=="cooc" or $nav=="soc" or $nav=="socsem") $jsprotovis="TRUE";
-include("include/header_cluster.php");
+include("include/header.php");
 include("banner.php");
 
 
@@ -236,19 +317,100 @@ include("banner.php");
 /// MODULE DE NAVIGATION ///
 ////////////////////////////
 
+//// préparation des liens de fils thématiques
+$jscriptmp.="
+               $('#dialogfilThematique')
+		  .dialog({ autoOpen: false, stack: true, resizable: false, modal:true, width:600, closeOnEscape:true})
+		  .click(function () { $('#dialogfilThematique').dialog('close'); });
+
+		$('#openerfilThematique').click(function(e) {
+			if (!$('#dialogfilThematique').dialog('isOpen'))
+				$('#dialogfilThematique').dialog('option','position', [$(this).position().left+25,25]).dialog('open');
+			else
+				$('#dialogfilThematique').dialog('close');
+			return false;
+			});";
+
+if (count($last_period_clusters)==1){
+    $last_period_clusters=$last_period_clusters[0];
+    $fils_thematique_html='<a href="'.$last_period_clusters[attribut].'"><font color='.$backdarker.'>'.remove_popo(substr($partition_infos[label],0,-1)).'</font></a></span>';
+	}
+else
+	{
+    $cluster_Link_html='<ul><font color=blue>';
+    for ($i=0;$i<count($last_period_clusters);$i++){
+        $cluster_Link_html.='<li><a href="'.$last_period_clusters[$i][attribut].'"><font color=blue>'.str_replace('---','/',remove_popo($last_period_clusters[$i][label])).'</a></li>';
+    }
+    $cluster_Link_html.='</ul>';
+    $fils_thematique_html='<a href scr=# id="openerfilThematique"'.'><font color='.$backdarker.'>'.remove_popo(substr($partition_infos[label],0,-1)).'</font></a>';
+    
+}
+
+echo '<span id="dialogfilThematique" title="Liens vers l\'extrémité du fil thématique ('.get_short_string_periode(arrange_periode($last_period_clusters[0][periode])).')">';
+echo 'Ce fil thématique a plusieurs champs en dernière période :'.$cluster_Link_html;
+echo '</span>';
+
+
+
+//////////////
+
+
 
 echo '<table width=100% class=tableitems>';
-echo '<tr valign=top><td width=2.5%></td><td><h2 class=subtitle>champ thématique "<i>'.remove_popo($label1_current).'</i><i style="font-weight:normal;"> - '.remove_popo($label2_current).'" ';
+echo '<tr valign=top><td width=2.5%></td><td>';
+echo '<table width=100% class=subtitle><tr><td align=left>champ thématique "<i>'.remove_popo($label1_current).'</i><i style="font-weight:normal;"> - '.remove_popo($label2_current).'" ';
 if ($lettre_current!="") echo '('.$lettre_current.')';
 echo '</i>';
-echo ' &nbsp; <b style="font-size:medium; color:#666666;">[<a href='.$googletext.'><img src='.$hrefroot.$racine.'/images/googleG.png alt="(google)" valign=middle width=18 style="border-style:none;"></a>]</b>';
 echo '<br/><span style="font-size: x-small;">fil thématique: ';
-echo '<a href="cluster.php?id_cluster='.$last_period_cluster_id.'&periode='.str_replace(' ','-',$partition_infos['last_period_string']).'">';
-echo '<font color='.$backdarker.'>';
-echo remove_popo(substr($partition_infos[label],0,-1)).'</font></a></span>';
-echo '</h2></td><td width=2.5%></td></tr>';
-//echo '<tr valign=center halign=center><td ><span style="font-size: x-small;">Thématique : '.substr($partition_infos[label],0,-1).'</span></td></tr>';
+echo $fils_thematique_html;
+echo '<td align=right><span style="font-size:8pt;">'.str_replace(" ","&nbsp;",get_string_periode($my_period)).'</span>&nbsp;&nbsp;</td>';
+echo '</tr></table>';
+echo '</td><td width=2.5%></td></tr>';
 echo '</table>';
+
+
+function display_helper_environnementsocial() {
+	global $jscriptmp;
+	$jscriptmp.=display_helper('Environnement social','L\'environnement social du champ thématique courant permet de repérer la structure sociale éventuellement formée par les liens de citations existant entre les sources participant au champ courant et dont le seuil de pertinence est supérieur au seuil choisi (paramétrable via l\'onglet seuil de pertinence en dessous à droite du réseau). Différentes options sont à disposition pour faire varier la focale sur cet environnement social:
+		<ul style="font-size:small;"><li>
+	    	"<b style="font-variant:small-caps;">N\'afficher que les liens entre billets pertinents</b>": Cette option permet de n\'afficher que les liens étant apparus entre les billets pertinents durant la période sélectionnée. On peut faire l\'hypothèse que cette vue permet de repérer des liens de citations dont l\'activation est partie liée à la thématique courante.
+		    </li>
+	    	<li>
+		    "<b style="font-variant:small-caps;">Afficher les liens enregistrés sur l\'ensemble des périodes</b>":
+		    Cette option affiche l\'ensemble des liens entre sources indépendamment de la période à laquelle la citation a été faite. Cette visualisation permet de visualiser la structure sociale d\'ensemble entre les sources indépendamment de la période et du champ considéré.
+	    	</li>
+			</ul>
+			',"socialhelper");
+	}
+	
+function display_helper_contenu() {
+	global $jscriptmp;
+	$jscriptmp.=display_helper('Contenu','L\'onglet "contenu" affiche les informations principales du champ thématique courant et permet de naviguer le plus efficacement dans la phylogénie environnante:
+		<ul style="font-size:small;"><li>
+	    	<b style="font-variant:small-caps;">dans la partie haute</b>, la boîte centrale affiche par défaut les termes contenus dans le champ courant. 
+	    	Elle est entourée, à gauche et à droite respectivement, des champs potentiellement antérieurs et postérieurs, lorsqu\'il en existe.
+	    	<br>Les champs voisins qui n\'appartiennent pas à la période <i>immédiatement</i> suivante ou précédente sont affichés sur <span style="background-color:white; border:1px solid gray;">fond blanc</span>, le décalage temporel est signalé par des points de suspension ("...") et est précisé entre crochets (par exemple, "<b style="font-size:xx-small;">[+5 sem.]</b>").
+	    	<br><br>En plaçant le curseur sur l\'intitulé d\'un champ voisin, la boîte centrale indique alors les termes ajoutés ou retranchés par rapport au champ courant; cliquer sur l\'intitulé permet de naviguer directement dans ce champ.
+	    	En outre, l\'icône loupe <img src=images/magnify.png> ouvre une fenêtre rappelant le contenu d\'un champ voisin.
+		    </li>
+	    	<li>
+		    <b style="font-variant:small-caps;">dans la partie basse</b>, la liste des billets rattachés au champ courant est affichée, suivant un seuil de pertinence qu\'il convient de fixer selon le niveau de détail souhaité; plus le seuil est élevé, plus l\'appariement des billets avec le champ thématique est fort.  
+		    <br>On peut faire apparaître un résumé de chaque billet en cliquant sur son titre, tandis que l\'icône <img src="images/externallink.png"> permet de visiter directement le site web correspondant.
+	    	</li>
+			</ul>
+			',"contenthelper");
+	}
+
+function display_helper_cooccurrences() {
+	global $jscriptmp;
+	$jscriptmp.=display_helper('Réseau de cooccurrence','
+		Le réseau de cooccurrence indique les relations entre termes <i>au sein du champ thématique</i>. Cette vue permet d\'aller
+		plus loin que l\'ensemble non-ordonné de termes, notamment en vue de voir si certaines paires de termes sont
+		plus significativement / fréquemment associées que d\'autres.
+		<br>Comme sur la plupart des autres vues, il est possible de naviguer directement dans la phylogénie en 
+		accédant aux champs antérieurs ou postérieurs, s\'il en existe, à gauche et à droite respectivement (voir l\'aide 
+		contextuelle du "Contenu" pour plus d\'informations à cet égard).',"coochelper");
+	}
 
 echo "<table width=100%><tr valign=top><td width=2.5%></td><td width=95%>";
 
@@ -264,21 +426,29 @@ echo "<table width=100%><tr valign=top><td width=2.5%></td><td width=95%>";
 	{
 		$href_string='<a href=cluster.php?id_cluster='.$id_cluster."&periode=".arrange_periode($my_period).'&nav=';
 	}
-	if ($nav=="phylo") echo $select_string."phylogénie</b>"; else echo $href_string."phylo>phylogénie</a>";
+	if ($nav=="phylo") 
+		{echo $select_string."contenu"; display_helper_contenu(); echo "</b>";} 
+	else 
+		{echo $href_string."phylo>contenu</a>"; display_helper_contenu();}
+	echo "&nbsp;-&nbsp;";
+    if ($nav=="cooc") {
+    	echo $select_string."réseau de cooccurrence"; display_helper_cooccurrences(); echo "</b>"; 
+    	}
+    else {
+    	echo $href_string."cooc>réseau de cooccurrence</a>"; display_helper_cooccurrences();
+    	}
 	echo " - ";
-	if ($nav=="cooc") echo $select_string."réseau de cooccurrence</b>"; else echo $href_string."cooc>réseau de cooccurrence</a>";
+	if ($nav=="soc") 
+		{echo $select_string."environnement social"; display_helper_environnementsocial(); echo"</b>";}
+	else 
+		{echo $href_string."soc>environnement social</a>"; display_helper_environnementsocial();}
 	echo " - ";
-	if ($nav=="soc") echo $select_string."environnement social</b>"; else echo $href_string."soc>environnement social</a>";
-	echo " - ";
-	if ($nav=="source") echo $select_string."billets</b>"; else echo $href_string."source>billets</a>";
-	echo " - ";
+	
 	if ($nav=="socsem") echo $select_string."profil d'évolution</b>"; else echo $href_string."socsem>profil d'évolution</a>";
 
-	echo '</td><td align=right>';
-	echo '<div style="';
-	echo 'font-size:8pt;';
-	echo '">'.get_string_periode($my_period).'</div>';
-	echo '</td></tr>';
+	echo '</td>';
+	echo '<td align=right><a href='.$googletext.'><img src='.$hrefroot.$racine.'/images/googleGinv.png alt="(google)" valign=middle width=18px style="border-style:none;"></a></td>';
+	echo '</tr>';
 	echo '</table>';
 
 echo '<td width=2.5%></td></tr>';
@@ -287,7 +457,7 @@ echo '</table>';
 
 //// CREATION PHYLOGENIE (UNIQUEMENT POUR "PHYLO" OU "SOC")
 
-if ($nav=="phylo" or $nav=="soc" or $nav == "cooc" or $nav=="source"){
+if ($nav=="phylo" or $nav=="soc" or $nav == "cooc"){
  	$pred=list_clusters($periode_avant,$predecesseur,$max_periode_avant);
  	$succ=list_clusters($periode_apres,$successeur,$min_periode_apres);
 	$arraytmp=array();
@@ -307,124 +477,164 @@ if ($nav=="phylo" or $nav=="soc" or $nav == "cooc" or $nav=="source"){
 
 echo '<table width=100%><tr valign=top><td width=2.5%></td><td width=95%>';
 
-//// BLOC NAVIGATION PHYLOGENETIQUE
 
+//// JAVASCRIPT SELECTIF
 
 if ($nav=="phylo"){
 
-	echo '<p><table width=100% rules=all>';
-	echo '<tr valign=top>';
+	// routines de masquage/affichage des boites
 	
-	if ($ecart_pred==1) $back_avant='background-color:white;';
-	echo '<td width='.(30-4*$ecart_pred).'% align=center class=tableitems style="font-variant:small-caps; size:small; font-style:italic;'.$back_avant.'">';
-		
-	if ($nopred) echo "<b>(pas de prédécesseur)</b>";
-	else {
-		echo '<b>période antérieure</b>';
-		echo '<br><div class=commentitems style="font-weight:normal; font-variant:normal; font-size:xx-small;">('.get_string_periode(arrange_periode($max_periode_avant)).")</div><br>";
-		echo '<table class=commentitems align=center width=100% cellspacing=0 cellpadding=5 style="font-variant:small-caps; size:small; font-style:italic;">';
-		foreach ($pred as $p) {
-			$label1=$p['label1'];
-			$label2=$p['label2'];
-			$lettre=$p['lettre'];
-			$past = intval($p['pere']);
-			echo '<tr>';
-			echo '<td align=center>';
-			echo '<a href=cluster.php?id_cluster='.$p['id']."&periode=".arrange_periode($p['periode']).'&nav=phylo>';
-			if ($past>0)
-			{
-				echo '&uarr';
-				$mainloc=0;
-			}
-			else $mainloc=-1;
-			echo '"<b>'.remove_popo($dico_termes[$label1]).'</b> - '.remove_popo($dico_termes[$label2]).'"';
-			if ($lettre!="") echo ' ('.$lettre.')';
-			echo '</a><br>';
-			selective_column($arraykey,$p['termes'],$p['plus'],$p['minus'],$mainloc);
-			echo '</td>';
-			echo '</tr>';
-			}
-		echo '</table>';
-		}
+	echo '<script type="text/javascript" language="JavaScript">
+			function HideContent(d) {
+				document.getElementById(d).style.display = "none";
+				}		
+			function ShowContent(d) {
+				var dd = document.getElementById(d);
+				dd.style.display = "block";
+				}
+			</script>';
+	}
 	
-	echo '</td>';
+if ($nav=="phylo" or $nav=="soc") {
 
-	if ($ecart_pred==1)	{
-		echo '<td width=2% align=center style="background-color:'.$backdark.'; vertical-align:middle;">'; 
-		if (!$nopred) echo (' (...) ');
-		echo '</td><td width=2%></td>';
-		}
+	// routines de masquage/affichage des billets
 	
-	echo '<td width=40% align=center style="background-color:'.$backdark.'; font-size:medium; font-variant:small-caps; font-style:italic;">';
+	echo '<script type="text/javascript" language="JavaScript">
+			function HideContents(d) {
+				arr=document.getElementsByTagName("tr");
+				for (var i=0; i < arr.length; i++) { if (arr[i].getAttribute(\'value\')==d) arr[i].style.display="none"; }
+				arr=document.getElementsByTagName("table");
+				for (var i=0; i < arr.length; i++) { if (arr[i].getAttribute(\'value\')==d) arr[i].style.display="none"; }
+				}
+			function ShowContents(d) {
+				arr=document.getElementsByTagName("table");
+				for (var i=0; i < arr.length; i++) { if (arr[i].getAttribute(\'value\')==d) arr[i].style.display="";}
+				arr=document.getElementsByTagName("tr");
+				for (var i=0; i < arr.length; i++) { if (arr[i].getAttribute(\'value\')==d) arr[i].style.display="";}
+				}
+			function PertinenceDisplay(val) {
+				if (val<=10) {ShowContents(\'pert10\');} else {HideContents(\'pert10\');}
+				if (val<=20) {ShowContents(\'pert20\');} else {HideContents(\'pert20\');}
+				if (val<=30) {ShowContents(\'pert30\');} else {HideContents(\'pert30\');}
+				if (val<=40) {ShowContents(\'pert40\');} else {HideContents(\'pert40\');}
+				if (val<=50) {ShowContents(\'pert50\');} else {HideContents(\'pert50\');}
+				}
+			</script>';
+	}
+
+//// BLOC NAVIGATION PHYLOGENETIQUE	
+
+if ($nav=="phylo"){
+	// affichage du titre
 	
-	echo '<b>période en cours</b>';
-	echo '<br><div class=commentitems style="font-weight:normal; font-variant:normal; font-size:xx-small;">('.get_string_periode($periode).")</div><br>";
+	echo '<table width=100%>';
+	echo '<tr width=100%>';
+	echo '<td width=100% align=center class=tableitems style="font-variant:small-caps; size:small; font-style:italic;">';
+	echo '<span id="maintitle">';
 	echo '"<b>'.$label1_current.'</b> - '.$label2_current.'"';
 	if ($lettre_current!="") echo ' ('.$lettre_current.')';
- 	echo '<br>';
+	echo '</span>';
+	
+	foreach ($succ as $s) {
+		$label1=$s['label1'];$label2=$s['label2'];$lettre=$s['lettre'];
+		$sid=$s['id']."_".str_replace(" ","_",$s['periode']);
+		echo '
+			<span style="display:none;" id="title'.$sid.'">';
+		echo '<a href=cluster.php?id_cluster='.$s['id']."&periode=".arrange_periode($s['periode']).'&nav=phylo>';
+		if (intval($s['fils'])>0) echo '&darr;&nbsp;';
+		echo '"<b>'.remove_popo($dico_termes[$label1]).'</b> - '.remove_popo($dico_termes[$label2]).'"';
+		if ($lettre!="") echo ' ('.$lettre.')';
+		echo '</a><br>';
+		echo '</span>';
+		}
+	foreach ($pred as $s) {
+		$label1=$s['label1'];$label2=$s['label2'];$lettre=$s['lettre'];
+		$sid=$s['id']."_".str_replace(" ","_",$s['periode']);
+		echo '
+			<span style="display:none;" id="title'.$sid.'">';
+		echo '<a href=cluster.php?id_cluster='.$s['id']."&periode=".arrange_periode($s['periode']).'&nav=phylo>';
+		if (intval($s['pere'])>0) echo '&uarr;&nbsp;';
+		echo '"<b>'.remove_popo($dico_termes[$label1]).'</b> - '.remove_popo($dico_termes[$label2]).'"';
+		if ($lettre!="") echo ' ('.$lettre.')';
+		echo '</a><br>';
+		echo '
+			</span>';
+	}	
+	
+	echo '</td></tr>';
+	echo '</table>';
+	
+	// affichage des boites
+	
+	echo '<table width=100%>';
+
+	echo '<tr valign=top>';
+	
+	if ($nopred) $back_avant='background-color:'.$backdarker.';';
+	echo '<td width=30% class=tableitems style="font-variant:small-caps; size:small; font-style:italic;'.$back_avant.'">';
+	if ($nopred) echo '<div align=center style="font-style:normal;">(pas de prédécesseur)</div>';
+	else {
+		if (count($pred)>1) $plural_string="s"; else $plural_string="";
+		echo '<span align=left style="font-weight:bold; font-style:normal;">&nbsp;champ'.$plural_string.' antérieur'.$plural_string.'</span><div style="height:4px;"></div>';
+		echo '<table width=100% cellspacing=0 cellpadding=0>';
+		echo '<tr class=commentitems style="font-variant:small-caps; background-color:'.$backdark.';">';
+		echo '<td width=5px></td><td>période</td><td></td><td>champ</td>';
+		echo '</tr>';
+		$last_display_periode="";
+		foreach ($pred as $p) display_cluster_title($p,"pred");
+		echo '</table>';
+		}	
+	echo '</td>';
+	
+	echo '<td width=40% align=center style="font-size:medium; font-variant:small-caps; font-style:italic;">';
+	
+	echo '<span id="mainbox">';
 	$nonlist=array();
-	selective_column($arraykey,$list_of_concepts,$nonlist,$nonlist,1);
+	echo selective_column_tt($arraykey,$list_of_concepts,$nonlist,$nonlist,1);
+	echo '</span>';
+	
+	foreach ($succ as $s) {
+ 		$sid=$s['id']."_".str_replace(" ","_",$s['periode']);
+ 		echo '
+ 			<span style="display:none;" id="box'.$sid.'">'.selective_column_tt($arraykey,$s['termes'],$s['plus'],$s['minus'],0).'
+			</span>';
+	}
+	
+	foreach ($pred as $s) {
+		$sid=$s['id']."_".str_replace(" ","_",$s['periode']);
+		echo '
+			<span style="display:none;" id="box'.$sid.'">'.selective_column_tt($arraykey,$s['termes'],$s['plus'],$s['minus'],0).'
+			</span>';
+	}
 	
 	echo '</td>';
 	
-	if ($ecart_succ==1)	{
-		echo '<td width=2%></td><td width=2% style="background-color:'.$backdark.'; vertical-align:middle;">';
-		if (!$nosucc) echo ' (...) ';
-		echo '</td>';
-		$back_apres='background-color:white;';
-		}
-		
-	echo '<td width='.(30-4*$ecart_succ).'% align=center class=tableitems style="font-variant:small-caps; size:small; font-style:italic;'.$back_apres.'">';	
-	if ($nosucc) echo "<b>(pas de successeur)</b>"; 
+	if ($nosucc) $back_apres='background-color:'.$backdarker.';';
+	echo '<td width=30% class=tableitems style="font-variant:small-caps; size:small; font-style:italic;'.$back_apres.'">';	
+	if ($nosucc) echo '<div align=center style="font-style:normal;">(pas de successeur)</div>'; 
 	else {
-		echo '<b>période ultérieure</b>';
-		echo '<br><div class=commentitems style="font-weight:normal; font-variant:normal; font-size:xx-small;">('.get_string_periode(arrange_periode($min_periode_apres)).")</div><br>";
-	
-		echo '<table class=commentitems align=center width=100% cellspacing=0  cellpadding=5 style="font-variant:small-caps; size:small; font-style:italic;">';
-		foreach ($succ as $s) {
-			$label1=$s['label1'];
-			$label2=$s['label2'];
-			$lettre=$s['lettre'];
-			echo '<tr>';
-			echo '<td align=center>';
-			echo '<a href=cluster.php?id_cluster='.$s['id']."&periode=".arrange_periode($s['periode']).'&nav=phylo>';
-			
-			$futur = intval($s['fils']);
-			
-			echo '"<b>'.remove_popo($dico_termes[$label1]).'</b> - '.remove_popo($dico_termes[$label2]).'"';
-			if ($futur>0)
-			{
-				echo '&darr';
-				$mainloc=0;
-			}
-			else $mainloc=-1;
-			
-			if ($lettre!="") echo ' ('.$lettre.')';
-			echo '</a><br>';
-			selective_column($arraykey,$s['termes'],$s['plus'],$s['minus'],$mainloc);
-			echo '</td>';
-			echo '</tr>';
-			
-			}
+		if (count($succ)>1) $plural_string="s"; else $plural_string="";
+		echo '<span align=left style="font-weight:bold; font-style:normal;">&nbsp;champ'.$plural_string.' ultérieur'.$plural_string.'</span><div style="height:4px;"></div>';	
+		echo '<table width=100% cellspacing=0 cellpadding=0>';
+		echo '<tr class=commentitems style="font-variant:small-caps; background-color:'.$backdark.';"><td width=5px></td><td>période</td><td></td><td>champ</td></tr>';
+		$last_display_periode="";
+		foreach ($succ as $s) 
+			display_cluster_title($s,"succ");
 		echo '</table>';
 		}
 	echo '</td>';
 	
 	echo '</tr>';
 	echo '</table>';
+	
+	
+	//echo '<hr>';
+	include("cluster_nav_billets.php");
 
 }
 
 
 //// BLOC NAVIGATION SEMANTIQUE
-
-
-if ($nav=="source"){
-	
-	include("cluster_nav_source.php");
-
-}
-
 
 if ($nav=="soc"){
 
@@ -445,9 +655,9 @@ if ($nav=="cooc"){
 //// BLOC NAVIGATION SOCIO-SEMANTIQUE / TREILLIS LOCAUX
 
 if ($nav=="socsem"){
-	//****************************************************************
+	//*********************************************************************
 	//* AFFICHAGE ACTIVITÉ TEMPORELLE DE L'ENSEMBLE DES TERMES DU CLUSTER *
-	//****************************************************************
+	//*********************************************************************
 	echo '<p>';
 
 	//print_r($list_of_concepts);
@@ -498,6 +708,8 @@ mysql_close();
 //if ($nav == "soc")
 //{ echo "<a href = social_net.php?id_cluster=".$id_cluster.'&periode='.$periode.">visualiser le réseau</a>";}
 
+echo '
+		<script> $(function() { '.$jscriptmp.' });</script>';
 
 
 include("footer.php");

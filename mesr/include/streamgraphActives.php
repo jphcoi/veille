@@ -1,45 +1,20 @@
 <?
-// recuperer la variable de voisinage semantique temporel depuis la base SQL
-$resultat=mysql_query("select term2,distances,force_moy,direction FROM termneighbour WHERE term1=$id_concept and direction=1  ORDER BY force_moy DESC LIMIT 20");
-//echo "select term2,distances,forcemoy,direction FROM termneighbour WHERE term1=$id_concept LIMIT 10";
-//echo "select term2,distances,forcemoy,direction FROM term_neighbour WHERE term1=$id_concept";
-$temp_neighborhood=mysql_fetch_array($resultat);
+$myaboveActives='<script type="text/javascript">'.$json_dataActives.'</script>';
 
-$json_data ="var years=[";
+$out=display_helper_two_outputs('Graph d\'évolution des fils thématiques','<p>Ce graphique représente l\'évolution de la popularité des fils thématiques actifs.
+            Chaque couleur représente un fil thématique, l\'épaisseur des tubes étant proportionnelle à la popularité de la thématique concernée
+            sur la période correspondante. Pour afficher le nom d\'un fil thématique, laisser la souris au dessus quelques secondes.</p>
 
-foreach (range($dated, $datef-1) as $number) {
-    $json_data= $json_data.$number.',';}
-$json_data=substr($json_data,0,strlen($json_data)-1)."]; var dynamics= {";
-create_concept_string();
+            <p>Le champ de recherche permet de retrouver le profil d\'évolution d\'un des fils thématiques listés ci-dessous.</p>
+                    ',"evolution");
 
-while ($ligne=mysql_fetch_array($resultat))
-{
-	$evo = array();
-	$semaines = explode(',',$ligne['distances']);
-	foreach ($semaines as $sem) 
-	//astuce à la con pour passer des jours à des semaines.
-	{$evo[]=$sem;$evo[]=$sem;$evo[]=$sem;$evo[]=$sem;$evo[]=$sem;$evo[]=$sem;$evo[]=$sem; }
-	//print_r($evo);
-	$evo_texte = implode(',',$evo);
-	//echo $evo_texte;
-	//echo $liste_termes[$ligne['term2']]."   ".$ligne['force_moy']."  ".$ligne['direction'];
-	//echo '<br>';
-
-$json_data =$json_data.'"'.strval(remove_popo($liste_termes[$ligne['term2']])).'": { activity: ['.$evo_texte.'] },';
-}
-$delcaract = substr($string,0,strlen($string)-1);
-$json_data=substr($json_data,0,strlen($json_data)-1).'};';
-//version antérieure du script d'import avec importation des données depuis la table term_neighborhood
-// $resultat=mysql_query("select idx,js FROM term_neighborhood WHERE idx=$id_concept");
-// $temp_neighborhood=mysql_fetch_array($resultat);
-// $myabove='<script type="text/javascript">'.$temp_neighborhood['js'].'</script>'.'
-$myabove='<script type="text/javascript">'.$json_data.'</script>'.'
-<hr>
+$jscriptmp.=$out[1];
+$myscriptActives='<hr>
 <table class=tableitems width="100%">
 <tr valign=bottom>
-<td align="left">
-ACTIVITÉ DES TERMES PROCHES
-</td><td align="right" style="font-variant:small-caps;">
+<td align="left">Evolution Temporelle';
+$myscriptActives.=$out[0];
+$myscriptActives.='</td><td align="right" style="font-variant:small-caps;">
 <label for="query">rechercher: </label>
 <input id="query" type="text" onkeyup="search(this.value);">
 &nbsp;&nbsp;&nbsp;&nbsp;vue:
@@ -48,10 +23,7 @@ ACTIVITÉ DES TERMES PROCHES
 <option value="expand">Pourcentage</option>
 </select>
 </td></tr></table>
-</div>
-';
-
-$myscript='<script type="text/javascript+protovis">
+'.'<script type="text/javascript+protovis">
 
 /* Interaction state. */
 var offset="zero";
@@ -82,7 +54,7 @@ dynamics.forEach(function(d) d.coarse = d.people);
 var sw = .88*document.body.clientWidth,
 sh = 270,
 sx = pv.Scale.linear('.$dated.', '.$datef.').range(0, sw),
-sy = pv.Scale.linear(0, 10).range(0, sh),
+sy = pv.Scale.linear(0, 70).range(0, sh),
 color = pv.Scale.ordinal(1, 2).range("#33f", "#f33"),
 alpha = pv.Scale.linear(pv.values(sumByJob)).range(.4, .8),
 startyear='.$dated.',
@@ -158,7 +130,7 @@ svis.add(pv.Panel)
 .anchor("center").add(pv.Label)
 .def("max", function(d) pv.max.index(d.values, function(d) d.coarse))
 .visible(function() this.index == this.max())
-.font(function(d) Math.round(8 + Math.sqrt(sy(d.coarse))) + "px sans-serif")
+.font(function(d) 0 + "px sans-serif")
 .textMargin(6)
 //.textStyle("#fff")
 .textStyle(function(d) "rgba(0, 0, 0, " + (Math.sqrt(sy(d.percent))) + ")")

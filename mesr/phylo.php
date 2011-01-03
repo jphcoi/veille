@@ -1,16 +1,11 @@
 <?php
 include("login_check.php");
 include("library/fonctions_php.php");
-
-
-$depth=2;// rang dans le nombre d'occurences des termes acceptés pour labellisation des branches
-$min_similarity=0.005;// seuil de similarité pour clusteriser
-
+$jsprotovis="TRUE";
 
 //connexion a la base de donnees
-
 include("parametre.php");
-$ink  =mysql_connect($server,$user,$password);
+$ink  =mysql_connect( $server,$user,$password);if ($encodage=="utf-8") mysql_query("SET NAMES utf8;");
 @mysql_select_db($database) or die( "Unable to select database");
 //à préciser lorsqu'on est sur sciencemapping.com
 if ($user!="root") mysql_query("SET NAMES utf8;");
@@ -18,19 +13,45 @@ if ($user!="root") mysql_query("SET NAMES utf8;");
 include("include/header.php");
 include("banner.php");
 
-$phylo_min_nb_periods_covered=4;
-$phylo_recent_min_nb_periods_covered=2;
 
-//echo "
-//<script>
-//	$(function() {
-//		
+///// PARAMETRES ///
+$depth=2;// rang dans le nombre d'occurences des termes acceptés pour labellisation des branches
+$min_similarity=5000000;// seuil de similarité pour clusteriser
+$phylo_min_nb_periods_covered=4;
+$phylo_recent_min_nb_periods_covered=4;
+
+///////////////////
+
+/// on récupère pour chaque catégorie les données similapré-calculées pour les streamgraph
+//// Branches actives
+$cle='branches_actives_'.$phylo_min_nb_periods_covered;
+$sql="SELECT * FROM data WHERE cle='".$cle."';";
+$resultat=mysql_query($sql) or die ("<b>Requête non exécutée (données streamgraph actives)</b>.");
+while ($ligne=mysql_fetch_array($resultat)) {
+        $json_dataActives=$ligne[valeur];
+}
+
+//// Branches émergentes
+//$cle='branches_emergentes_'.$phylo_recent_min_nb_periods_covered;
+//$sql="SELECT * FROM data WHERE cle='".$cle."';";
+//$resultat=mysql_query($sql) or die ("<b>Requête non exécutée (données streamgraph actives)</b>.");
+//while ($ligne=mysql_fetch_array($resultat)) {
+//        $json_dataEmergentes=$ligne[valeur];
+//}
+
+//// Branches en suspens
+//$cle='branches_suspens_'.$phylo_min_nb_periods_covered;
+//$sql="SELECT * FROM data WHERE cle='".$cle."';";
+//$resultat=mysql_query($sql) or die ("<b>Requête non exécutée (données streamgraph actives)</b>.");
+//while ($ligne=mysql_fetch_array($resultat)) {
+//        $json_dataSuspens=$ligne[valeur];
+//}
+
+
+
 
 $jscriptmp="	$( '#tabs' ).tabs();
                    event: 'mouseover'";
-//	});
-//	</script>
-//";
 
 /////////// On regarde quel est la dernière période afin de pouvoir afficher les thématiques actives
 $last_period_list=array();
@@ -39,7 +60,20 @@ while ($ligne=mysql_fetch_array($resultat)) {
         array_push($last_period_list,$ligne[last_period]);
 }
 $last_period=max($last_period_list);
+$dT=$last_period_list[1]-$last_period_list[0];
+
+$dated=min($last_period_list);
+$datef=max($last_period_list);
+
 //////////
+include('include/streamgraphActives.php');
+//include('include/streamgraphEmergentes.php');
+//include('include/streamgraphSuspens.php');
+
+echo $myaboveActives;
+//echo $myaboveSuspens;
+//echo $myaboveEmergentes;
+
 
 //// Début des tab /////////
 echo "
@@ -51,20 +85,23 @@ echo "
 <table width=100% class=tableitems>
 <tr valign=top></td><td><h2 class=subtitle>fils thématiques (branches phylogénétiques)";
 
-$jscriptmp.=display_helper('Fils thématiques','Les fils thématiques sont des ensembles de champs thématiques sur des sujets similaires répartis sur plusieurs périodes. Ils sont classés ici en trois catégories:
-	<ul style="font-size:small;"><li>
-    	"<b style="font-variant:small-caps;">Actifs</b>": Fils thématiques couvrant au moins quatre périodes et qui sont toujours actifs à la dernière période.
-	    </li>
-    	<li>
-	    "<b style="font-variant:small-caps;">Potentiellement émergents</b>":
-	    Fils thématiques couvrant au plus trois périodes dont la plus récente.
-    	</li>
-	    <li>
-	    "<b style="font-variant:small-caps;">En suspens</b>":
-    	Fils thématiques couvrant au moins quatre périodes mais qui ne sont pas présents sur la dernière période. Cette rupture du fil thématique peut être temporaire, témoignant d\'une baisse d\'intérêt pour le sujet concerné, ou définitive.
-	    </li>
-		</ul>
-		',"helper");
+    $jscriptmp.=display_helper('Fils thématiques','Les fils thématiques sont des ensembles de champs thématiques sur des sujets similaires répartis sur plusieurs périodes. Ils sont classés ici en trois catégories:
+            <ul style="font-size:small;"><li>
+            "<b style="font-variant:small-caps;">Actifs</b>": Fils thématiques couvrant au moins quatre périodes et qui sont toujours actifs sur les trois dernières périodes.
+                </li>
+            <li>
+                "<b style="font-variant:small-caps;">Potentiellement émergents</b>":
+                Fils thématiques couvrant au plus trois périodes dont la plus récente.
+            </li>
+                <li>
+                "<b style="font-variant:small-caps;">En suspens</b>":
+            Fils thématiques couvrant au moins quatre périodes mais qui ne sont pas présents sur les trois dernières périodes. Cette rupture du fil thématique peut être temporaire, témoignant d\'une baisse d\'intérêt pour le sujet concerné, ou définitive.
+                </li>
+                    </ul>
+            <p>Dans chaque catégorie, les fils thématiques sont labélisés par leur composantes les plus représentatives puis regroupés par grands thèmes.
+              Un click sur le nom d\'un fil thématique permet d\'accéder aux champs thématiques les plus récents de ce fil.</p><p>Pour chaque fil, sont par
+            ailleurs indiqués la fenêtre temporelle couverte par ce fil thématique ainsi que le nombre de champs qu\'il comporte.</p>
+                    ',"helper");
 echo "</h2></tr>
 </table >
 		<li><a href='#tabs-1'>Actifs</a></li>
@@ -74,27 +111,33 @@ echo "</h2></tr>
 	<div id='tabs-1'>
 ";
 /// Première tab  ////
-$query="select * FROM partitions WHERE nb_period_covered >= $phylo_min_nb_periods_covered AND last_period=$last_period";
+//$query="select * FROM partitions WHERE nb_period_covered >= $phylo_min_nb_periods_covered";
+$query="select * FROM partitions WHERE nb_period_covered >=".$phylo_min_nb_periods_covered." AND last_period>=".($last_period-3*$dT);
 $resultat=mysql_query($query) or die ("<b>Requête non exécutée (récupération des principales thématiques)</b>.");
 $branch_list=branch_list_string($resultat,$depth,$min_similarity);
-        echo "<h3>Fils thématiques actifs <span style='font-size: x-small;'> (couvrant au moins 4 périodes) </span></h3>";
+        echo "<h3>Fils thématiques actifs";
+        echo " <span style='font-size: x-small;'> (couvrant au moins 4 périodes) </span></h3>";
+        echo $myscriptActives;
+        echo '<br/>';
 	echo $branch_list;
 echo "
 	</div>
 	<div id='tabs-2'>";
-            $query="select * FROM partitions WHERE nb_period_covered > 1 AND nb_period_covered < 4 AND  last_period=$last_period";
+            $query="select * FROM partitions WHERE nb_period_covered > 1 AND nb_period_covered < 4 AND  last_period>($last_period-2*$dT)";
             $resultat=mysql_query($query) or die ("<b>Requête non exécutée (récupération des principales thématiques)</b>.");
             $branch_list=branch_list_string($resultat,$depth,$min_similarity);
             echo "<h3>Thématiques potentiellement émergentes <span style='font-size: x-small;'> (couvrant 2 ou 3 périodes)</span></h3>";
+            //echo $myscriptEmergentes;
             echo $branch_list;
 
 echo "
 	</div>
 	<div id='tabs-3'>";
-		$query="select * FROM partitions WHERE nb_period_covered >= $phylo_min_nb_periods_covered AND last_period<$last_period";
+		$query="select * FROM partitions WHERE nb_period_covered >= $phylo_min_nb_periods_covered AND last_period<($last_period-3*$dT)";
 $resultat=mysql_query($query) or die ("<b>Requête non exécutée (récupération des principales thématiques)</b>.");
 $branch_list=branch_list_string($resultat,$depth,$min_similarity);
         echo "<h3>Fils thématiques passés <span style='font-size: x-small;'> (couvrant au moins 4 périodes)</span></h3>";
+        //echo $myscriptSuspens;
 	echo $branch_list;
 
 echo "       	</div>
@@ -135,13 +178,11 @@ while ($ligne=mysql_fetch_array($mysql_branch_list)) {
        //array_push($branch_last_period_cluster_id,$cluster_ligne[id_cluster]);
        array_push($branch_list,$infos);
 }
- //print_r($branch_list);
-
+ 
 $nb_branches=count($branch_list);
 
 $grouped_labels=cluster_branches($branch_list,$depth,$min_similarity);
 
-//$grouped_labels=group_list($label_list,1,4);
 $grouped_indexes=$grouped_labels[grouped_indexes]; // groupes des index branches
 
 $Ngram_arrays=$grouped_labels[Ngram_arrays]; // array pour les labelliser
@@ -150,6 +191,7 @@ $branch_string='<i>('.$nb_branches.' thématiques dans cette catégorie)'.'</i><
 
 
 for ($i=0;$i<count($grouped_indexes);$i++){
+
     $index_grouped=$grouped_indexes[$i];
     $Ngrams=$Ngram_arrays[$i];
     if (count($index_grouped)>1){
@@ -159,8 +201,10 @@ for ($i=0;$i<count($grouped_indexes);$i++){
             next($Ngrams);
         }
         $group_title=substr(trim($group_title), 0, -1);
-        $branch_string=$branch_string.'<b>'.$group_title.' :</b>'.'<br/><ul>';
-        while ((count($index_grouped)>0)&&($index = current($index_grouped))){
+        $branch_string=$branch_string.'<b>'.ucfirst($group_title).' :</b>'.'<br/><ul>';
+
+        for ($j=0;$j<count($index_grouped);$j++){
+        $index = $index_grouped[$j];
          $branch_id=$branch_list[$index]['id_partition'];
          $sql='SELECT * from partitions WHERE id_partition='.$branch_id;
          $resultat=mysql_query($sql) or die ("<b>Requête non exécutée (récupération des infos de partition)</b>.");
@@ -188,7 +232,7 @@ for ($i=0;$i<count($grouped_indexes);$i++){
          while ($ligne=mysql_fetch_array($resultat)) {
             $dates='<span style="font-size: x-small;">('.$ligne[nb_fields].' champs / '.adjust_date_jours($ligne[first_period]).'-'.adjust_date_jours($ligne[last_period]).')</span>';
          }
-         
+
          $branch='<a href="cluster.php?id_cluster='.$branch_list[$index_grouped[0]]['branch_last_period_cluster_id'].'&periode='.str_replace(' ','-',$branch_list[$index_grouped[0]]['branch_last_period']).'">';
          $branch=$branch.ucfirst($branch_list[$index_grouped[0]]['label']).'</a>  '.$dates.'<br/>';
          $branch_string=$branch_string.$branch;
@@ -214,6 +258,7 @@ for ($i=0;$i<count($branch_list);$i++){
     array_push($label_rows_remaining_to_process,$i);
 };
 
+$branch_net=array(); // liens entre branches
 
 while (count($label_rows_remaining_to_process)>0){
     $target_row=array_pop($label_rows_remaining_to_process);
@@ -233,9 +278,6 @@ while (count($label_rows_remaining_to_process)>0){
             //similar_text ( $candidate_label,$target_branches[$j],$p );
             if ($p>$min_similarity){
                 $exit_here=1;
-                //echo 'similarity: '.$p.'<br/>';
-                //echo 'candidate labels'.$candidate_label.'<br/>';
-                //echo 'target labels'.$target_branches[$j].'<br/>';
             };
             $j++;
         };
@@ -252,18 +294,17 @@ while (count($label_rows_remaining_to_process)>0){
     for ($i=0;$i<count($target_branches);$i++){
         array_push($target_branches_label_ids,$target_branches[$i]['label_ids']);
     }
-   if (count($target_branches_label_ids)>1){
-   $a=groups_labels($target_branches_label_ids,$depth);
-
-}
-   
-   array_push($label_groups,groups_labels($target_branches_label_ids,$depth));
+    if (count($target_branches_label_ids)>3){
+        array_push($label_groups,groups_labels($target_branches_label_ids,4,$target_label_raw,$branch_list));
+    }else{
+        array_push($label_groups,groups_labels($target_branches_label_ids,$depth,$target_label_raw,$branch_list));
+    }
 }
 
 /// on réordonne par nombre de sujets groupés
 $groups_sizes=array();
 
-for ($i=0;$i<count($label_rows_groups);$i++){    
+for ($i=0;$i<count($label_rows_groups);$i++){
     array_push($groups_sizes,count($label_rows_groups[$i]));
 }
 
@@ -300,33 +341,65 @@ return $resultat;
 ////////////////
 
 
-function groups_labels($target_labels_ids,$depth){
-// calcul les $depth Ngrammes les plus fréquents dans le corpus parmis d'un ensemble de labels_ids formés de Ngrammes
+function groups_labels($target_labels_ids,$depth,$target_label_raw,$branch_list){
+// calcul les $depth Ngrammes les plus fréquents dans la branche parmis d'un ensemble de labels_ids formés de Ngrammes
 $ngram_ids_array=array();
-    //creation du tableau contenant tous les ids de ,grammes intervenant dans un label
+$nb_max_fields=0; /// nombre maximum de champs d'une branche.  Sert à diminuer $depth pour les petites branches
+$ngram_array=array(); // array dont les clés sont les Ngrams et les valeurs leurs occurrences dans le cluster de banches
+    //creation du tableau contenant tous les ids de Ngrammes intervenant dans un label
     while (count($target_labels_ids)>0 ){
-        $ngrams_ids=explode('_',array_pop($target_labels_ids));
+        $ngrams_ids=explode('_',array_pop($target_labels_ids));      
         $ngram_ids_array=array_merge($ngram_ids_array,$ngrams_ids);
     }
      $ngram_ids_array=array_unique($ngram_ids_array);
-
-    // calcul des formes principales et des occurrences associées dans le corpus
-    $ngram_array=array();
-    while (count($ngram_ids_array)>0){
-        $ngram_id=array_pop($ngram_ids_array);
-        $sql = 'SELECT forme_principale from concepts WHERE id='.$ngram_id;
+     sort($ngram_ids_array);
+    // calcul des formes principales
+    $forme_principales=array();
+     for ($i=0;$i<count($ngram_ids_array);$i++){
+        $ngram_id=$ngram_ids_array[$i];
+        $sql = 'SELECT forme_principale from concepts WHERE id='.$ngram_id;      
 	$resultat = mysql_query($sql);
-        $ngram=mysql_fetch_array ( $resultat) ;
+        $ngram=mysql_fetch_array ($resultat) ;
         $ngram=$ngram[forme_principale];
-
-        $sql = 'SELECT occurrences_in_clusters from concepts WHERE id='.$ngram_id;
-	$resultat=mysql_query($sql) or die ("<b>Requête non exécutée (récupération des occurrences dans le corpus)</b>.");
-        $nb_occ=0;
-        while ($ligne=mysql_fetch_array($resultat)) {
-            $nb_occ=$ligne[occurrences_in_clusters];
-        }
-        $ngram_array[$ngram]=$nb_occ;       
+        array_push($forme_principales,$ngram);
     }
+    for ($i=0;$i<count($target_label_raw);$i++){
+        if ($nb_max_fields<$branch_list[$target_label_raw[$i]][nb_fields]){
+            $nb_max_fields=$branch_list[$target_label_raw[$i]][nb_fields];
+        }
+        //echo $i.' branche';
+        //echo '<br/>';
+        $occurrences_in_branch=explode('_',$branch_list[$target_label_raw[$i]][terms_occ]);
+        //print_r($occurrences_in_branch);
+        //echo '<br/>';
+
+        $terms_in_branch=explode('_',$branch_list[$target_label_raw[$i]][terms]);
+        //print_r($terms_in_branch);
+        //echo '<br/>';
+
+        for ($j=0;$j<count($ngram_ids_array);$j++){
+            $term_pos_in_array=array_search($ngram_ids_array[$j],$terms_in_branch);
+            if ($term_pos_in_array!=''){
+                //echo  '<br/>'.$forme_principales[$j].'<br/>';
+                //echo $ngram_ids_array[$j].' en position' .$term_pos_in_array.' occ= '.$occurrences_in_branch[$term_pos_in_array].'<br/>';
+                if ($ngram_array[$forme_principales[$j]]!=null){
+                    $ngram_array[ $forme_principales[$j]]+=$occurrences_in_branch[$term_pos_in_array]/$branch_list[$target_label_raw[$i]][nb_fields];
+                }else{
+                    $ngram_array[ $forme_principales[$j]]=$occurrences_in_branch[$term_pos_in_array]/$branch_list[$target_label_raw[$i]][nb_fields];
+                }
+
+             }  
+        
+        }
+        
+    }
+   if ($nb_max_fields<=4){
+        if ($depth==4){
+            $depth=2;
+        }else{
+            $depth=1;
+        }
+   }
     return get_keys_with_highest_values($ngram_array,$depth);
 }
 
@@ -342,6 +415,7 @@ $nb_fields2=$branch2['nb_fields'];
 
 $squared_nb_fields2=$nb_fields2*$nb_fields2;
 
+$total_number_of_clusters=getValue('total_number_of_clusters');
 
 $branch1_terms_occ=explode('_',$branch1['terms_occ']);
 $branch2_terms_occ=explode('_',$branch2['terms_occ']);
@@ -351,9 +425,15 @@ $common_terms=array_intersect($branch1_terms_ids,$branch2_terms_ids);
 $similarity=0;
 while (count($common_terms)>0){
     $term=array_pop($common_terms);
+    $sql = 'SELECT occurrences_in_clusters from concepts WHERE id='.$term;
+
+    $resultat=mysql_query($sql) or die ("<b>Requête non exécutée (récupération des occurrences dans le corpus)</b>.");
+    while ($ligne=mysql_fetch_array($resultat)) {
+        $nb_occ=$ligne[occurrences_in_clusters];
+        }
     $rank_in_branch1=search($term, $branch1_terms_ids);
     $rank_in_branch2=search($term, $branch2_terms_ids);
-    $similarity=$similarity+($branch1_terms_occ[$rank_in_branch1]/$nb_fields1*$branch2_terms_occ[$rank_in_branch2]/$nb_fields2);
+    $similarity=$similarity+($branch1_terms_occ[$rank_in_branch1]/$nb_fields1/$nb_occ*$total_number_of_clusters*$branch2_terms_occ[$rank_in_branch2]/$nb_fields2/$nb_occ*$total_number_of_clusters);
 }
 
 $branch1_squares=0;
@@ -368,7 +448,6 @@ while (count($branch2_terms_occ)>0){
     $branch2_squares=$branch2_squares+$occ*$occ/$squared_nb_fields2;
 }
 
-//echo 'Similarity'.($similarity*$similarity/$branch1_squares/$branch2_squares).'<br/>';
 return ($similarity*$similarity/$branch1_squares/$branch2_squares);
 }
 

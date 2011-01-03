@@ -1,25 +1,17 @@
 <?
-function microtime_float() {
-    return array_sum(explode(' ', microtime()));
-}
 
 $peroides = explode_period($periode);
 
-		//ancienne version avec slider: on récupérait la valeur depuis le slideer
-		//$query="SELECT slider_val FROM  tbl_slider WHERE user='".$_COOKIE['ID_my_site']."'";
-		// $result=mysql_query($query);
-		// $row=mysql_fetch_array($result);
-		// $pertinence = $row['slider_val'];
-		// $pertinence =intval($pertinence);
-		
-		$pertinence = 0;
+$pertinence = 0;
 
-		//$temps_fin2 = microtime_float();
-		//echo '<br><br>on a tourve auteur : '.round(//$temps_fin2 - //$temps_fin1, 4).'<br><br>';
-
+//$temps_fin2 = microtime_float();
+//echo '<br><br>on a tourve auteur : '.round(//$temps_fin2 - //$temps_fin1, 4).'<br><br>';
 	
-	$affichage= 1;
+$affichage=1;
 
+$periodes_brute=retrieve_periods();
+$periodes_brute_trans= array_flip($periodes_brute);
+$periode_index = $periodes_brute_trans[join($peroides,' ')];
 
 ////version sans la sélection sur les bipartis
 	// $commande_sql_pert = "SELECT id_billet,overlap_size from biparti where cluster = '".$id_cluster."' AND periode = '".derange_periode($my_period)."' AND overlap_size>=2";
@@ -43,8 +35,6 @@ $peroides = explode_period($periode);
 
 
 
-	$liens_from=array();
-	$liens_to=array();
 
 
 
@@ -59,76 +49,71 @@ $peroides = explode_period($periode);
 
 if ($affichage>0)
 {		
-
-	
-		// $sql = "SELECT concept1,concept2 from sem where id_b=";
-		// 	for( $i = 0 ; $i < count($liste_id_billets) ; $i++ )
-		// 	{
-		// 		$sql=$sql.' '.$liste_id_billets[$i];
-		// 		if ($i < count($liste_id_billets)-1)
-		// 		{
-		// 			$sql=$sql.' OR id_b = ';			
-		// 		}
-		// 	}
-		// 	echo $sql;
-		// 	$sql_id=$sql;
-		// 
-		$sql = "SELECT concept1,concept2 from sem where (concept1=";
-		for( $i = 0 ; $i < count($list_of_concepts) ; $i++ )
-		{
-			$sql=$sql.' '.$list_of_concepts[$i];
-			if ($i < count($list_of_concepts)-1)
-			{
-				$sql=$sql.' OR concept1 = ';			
-			}
-		}
-		$sql=$sql.') AND (concept2 =';
-		for( $i = 0 ; $i < count($list_of_concepts) ; $i++ )
-		{
-			$sql=$sql.' '.$list_of_concepts[$i];
-			if ($i < count($list_of_concepts)-1)
-			{
-				$sql=$sql.' OR concept2 = ';			
-			}
-		}
-		$sql = $sql.')';
-		$sql =$sql.' AND jours<='.$peroides['to']." AND jours>=".strval(intval($peroides['from']));
-		//echo $sql;
-		
+$type_lien='cooc';
+//$type_lien='dist';
+if ($type_lien=='cooc')
+{
+		$sql = "SELECT concept1,concept2,cooccurrences from sem_weight where concept1 in ";
+		$sql = $sql."('";
+		$sql = $sql.join("','", $list_of_concepts);
+		$sql = $sql."')";
+		$sql = $sql." AND concept2 in ";
+		$sql = $sql."('";
+		$sql = $sql.join("','", $list_of_concepts);
+		$sql = $sql."')";
+		$sql = $sql." and periode = ".$periode_index;
 		
 		$sql_cooc = mysql_query($sql);
-		$concepts_b = array();
+		//$concepts_b = array();
+		$liens_from=array();
+		$liens_to=array();
+		$liens_weight=array();
 		while ($rwos=mysql_fetch_array($sql_cooc))
 		{
-			if (in_array($rwos['concept1'],$list_of_concepts) and in_array($rwos['concept2'],$list_of_concepts) )
+			if ($rwos['concept1']!=$rwos['concept2'])
 			{$liens_from[] = $rwos['concept1'];
-			$liens_to[] = $rwos['concept2'];}
+			$liens_to[] = $rwos['concept2'];
+			$liens_weight[] = $rwos['cooccurrences'];
+			}
 		}
+}
+else
+//on visualise la distance moyenne
+{
+		$sql = "SELECT concept1,concept2,distance0,distance1 from sem_weight where concept1 in ";
+		$sql = $sql."('";
+		$sql = $sql.join("','", $list_of_concepts);
+		$sql = $sql."')";
+		$sql = $sql." AND concept2 in ";
+		$sql = $sql."('";
+		$sql = $sql.join("','", $list_of_concepts);
+		$sql = $sql."')";
+		$sql = $sql." and periode = ".$periode_index;
 
-			// foreach($liste_id_billets as $id_bil)
-			// 		{
-			// 			$sql = "SELECT * from socsem where id_b=". $id_bil;
-			// 			
-			// 			$sql_cooc = mysql_query($sql);
-			// 			$concepts_b = array();
-			// 			while ($rwos=mysql_fetch_array($sql_cooc))
-			// 			{
-			// 				if (in_array($rwos['concept'],$list_of_concepts) and !in_array($rwos['concept'],$concepts_b) )
-			// 				{$concepts_b[] = $rwos['concept'];}
-			// 			}
-			// 			foreach($concepts_b as $c1)
-			// 			{
-			// 				foreach($concepts_b as $c2)
-			// 				{
-			// 					if ($c1 != $c2)
-			// 					{
-			// 						$liens_from[]=$c1;
-			// 						$liens_to[]=$c2;
-			// 					}
-			// 				}
-			// 			}
-			// 		}
-				
+		$sql_cooc = mysql_query($sql);
+		//$concepts_b = array();
+		$liens_from=array();
+		$liens_to=array();
+		$liens_weight=array();
+		$liens_weight1=array();
+
+		while ($rwos=mysql_fetch_array($sql_cooc))
+		{
+			if ($rwos['concept1']!=$rwos['concept2'])
+			{$liens_from[] = $rwos['concept1'];
+			$liens_to[] = $rwos['concept2'];
+			$liens_weight[] = intval(floatval($rwos['distance0'])*5.);
+			$liens_from[] = $rwos['concept2'];
+			$liens_to[] = $rwos['concept1'];
+			$liens_weight[] = intval(floatval($rwos['distance1'])*5.);
+			}
+		}
+		//print_r($liens_from);
+		//print_r($liens_to);
+		//print_r($liens_weight);
+}
+		
+
 $aut_occ=array();
 foreach($list_of_concepts as $id_concept)
 {
@@ -143,14 +128,16 @@ while ($ligne=mysql_fetch_array($resultat))
 	$aut_occ[$id_concept]=$ligne[0];
 }
 }
-
+//Toute cette partie ci-dessus pourra être remplacée par les données déjà chargée via sem_weighted ci-dessus pour plus de concision.
+//Pour le moment un petit bug dans le remplissage de sem_weighted rend l'opération encore délicate
+//print_r($aut_occ);
 $legende=$list_of_concepts_simple;
 $liste_auteur_unique=$list_of_concepts;
 
 
 // DEFINITION DU RESEAU POUR AFFICHAGE JAVASCRIPT
 	
-	include("include/network-def.php");
+	include("include/network-def-cooc.php");
 			
 // DEFINITION DU SCRIPT JAVASCRIPT POUR AFFICHER LE RESEAU
 	
@@ -158,172 +145,55 @@ $liste_auteur_unique=$list_of_concepts;
 
 }
 	
-///////FIN DES CALCULS FICHIERS JSON DU RESEAU SOCIAL ECRIT
 
-
-
-
-	// PORTION CONCERNANT L'AFFICHAGE DU RESEAU SOCIAL
+// PORTION CONCERNANT L'AFFICHAGE DU RESEAU
 	
-	echo '<p>';
-	if ($affichage>0)
-	{
-		echo '<script src="AC_OETags.js" language="javascript"></script>';
-	}
+echo '<p>';
 	
-	if ($ecart_pred==1 || $nopred) $back_avant='background-color:white;';
-	if ($ecart_succ==1 || $nosucc) $back_apres='background-color:white;';
-
-	echo "\n";
-	echo '<table class=tableitems width=100% cellspacing=0 cellpadding=1 style="font-variant:small-caps;"><tr>';
-	echo '<td align=center width=10% style="font-variant:small-caps; font-weight:bold; '.$back_avant.'">';
-	if (!$nopred)
-		echo '<i>période antérieure</i><div class=commentitems style="font-weight:normal; font-variant:normal; font-size:xx-small;"><i>('.get_string_periode(arrange_periode($max_periode_avant)).')</i></div>';
-	else echo '<i style="font-variant:small-caps; background-color:white;">(pas de prédécesseur)</i>';
-	echo '</td>';
-	echo '<td align=center width=80%><i><b>RÉSEAU DE COOCCURRENCE</b><br>PÉRIODE ACTUELLE</i> <i style="font-variant:normal; font-size:xx-small;">('.get_string_periode($my_period).')</i></td>';
-		
-	echo '<td align=center width=10% style="font-variant:small-caps; font-weight:bold; '.$back_apres.'">';
-	if (!$nosucc) 
-		echo '<i>période ultérieure</i><div class=commentitems style="font-weight:normal; font-variant:normal; font-size:xx-small;"><i>('.get_string_periode(arrange_periode($min_periode_apres)).')</i></div>';
-	else	
-		echo '<i style="font-variant:small-caps;">(pas de successeur)</i>';
-	echo '</td>';
-	echo "</tr>";
-
-
-	echo "<tr>";
-	//on affiche les clusters précédents et un lien vers leur réseau social
-	echo '<td align=center width=10% style="'.$back_avant.'"><i>';
-	echo '<table class=commentitems align=center width=100% cellspacing=0 cellpadding=5 rules=rows style="font-variant:small-caps; size:small; font-style:italic;">';
-	foreach ($pred as $p) {
-		$label1=$p['label1'];
-		$label2=$p['label2'];
-		echo '<tr>';
-		echo '<td>';
-		echo '<a href=cluster.php?id_cluster='.$p['id']."&periode=".arrange_periode($p['periode']).'&nav=cooc>';
-		$past = intval($p['pere']);
-		if ($past>0)
-		{
-			echo '&uarr';
-		}
-		
-		echo '"<b>'.$dico_termes[$label1].'</b> - '.$dico_termes[$label2].'"';
-		echo '</a><br>';
-//		selective_column($arraykey,$p['termes'],$p['plus'],$p['minus'],0);
-		echo '</td>';
-		echo '</tr>';
-
-		}
-		echo '</table>';
-
-	echo "</td>";
+echo '
+	<table class=tableitems width=100% cellspacing=0 cellpadding=1 style="font-variant:small-caps;">';
+echo '<tr valign=top>';
 	
-	
-	echo '<td align=middle width=80%><i>';
-
-	if ($affichage>0)
-		echo $myscript;
-	else
-		echo "pas de sources";	
-
-	echo "</i></td>";
-	echo '<td align=right width=10% style="'.$back_apres.'">';
-	
-	echo '<table class=commentitems align=center width=100% cellspacing=0  cellpadding=5 rules=rows style="font-variant:small-caps; size:small; font-style:italic;">';
-	foreach ($succ as $s) {
-		$label1=$s['label1'];
-		$label2=$s['label2'];
-		$futur = intval($s['fils']);
-		
-		echo '<tr>';
-		echo '<td>';
-		echo '<a href=cluster.php?id_cluster='.$s['id']."&periode=".arrange_periode($s['periode']).'&nav=cooc>';
-		echo '"<b>'.$dico_termes[$label1].'</b> - '.$dico_termes[$label2].'"';
-			if ($futur>0)
-			{
-				echo '&darr';
-			}
-		echo '</a><br>';
-		echo '</td>';
-		echo '</tr>';
-
-		}
+if ($nopred) $back_avant='background-color:'.$backdarker.';';
+echo '<td width=22% class=tableitems style="font-variant:small-caps; size:small; font-style:italic;'.$back_avant.'">';
+if ($nopred) echo '<div align=center style="font-style:normal;">(pas de prédécesseur)</div>';
+else {
+	if (count($pred)>1) $plural_string="s"; else $plural_string="";
+	echo '<span align=left style="font-weight:bold; font-style:normal;">&nbsp;champ'.$plural_string.' antérieur'.$plural_string.'</span><div style="height:4px;"></div>';
+	echo '<table width=100% cellspacing=0 cellpadding=0>';
+	echo '<tr width=100% class=commentitems style="font-variant:small-caps; background-color:'.$backdark.';"><td width=5px></td><td>période</td><td></td><td>champ</td></tr>';
+	$last_display_periode="";
+	foreach ($pred as $p) display_cluster_title($p,"pred");
 	echo '</table>';
+	}	
+echo '</td>';
+
+echo '<td align=center width=56%>';
 	
-	echo "</td>";
-	echo "</tr>";
-	echo "<tr>";
-	echo "<td>";
-	echo "</td>";
-	echo "<td>"
-	?>
+if ($affichage>0)
+	echo $myscript;
+else
+	echo "pas de sources";	
 
+echo '</td>';
 
-	<?
-	echo "</td>";
-	echo "<td>";
-	echo "</td>";
-	echo "</tr>";
-
-	echo '</table>';?>
+if ($nosucc) $back_apres='background-color:'.$backdarker.';';
+echo '<td width=22% class=tableitems style="font-variant:small-caps; size:small; font-style:italic;'.$back_apres.'">';	
+if ($nosucc) echo '<div align=center style="font-style:normal;">(pas de successeur)</div>'; 
+else {
+	if (count($succ)>1) $plural_string="s"; else $plural_string="";
+	echo '<span align=left style="font-weight:bold; font-style:normal;">&nbsp;champ'.$plural_string.' ultérieur'.$plural_string.'</span><div style="height:4px;"></div>';
+	echo '<table width=100% cellspacing=0 cellpadding=0>';
+	echo '<tr class=commentitems style="font-variant:small-caps; background-color:'.$backdark.';"><td width=5px></td><td>période</td><td></td><td>champ</td></tr>';
+	$last_display_periode="";
+	foreach ($succ as $s) 
+		display_cluster_title($s,"succ");
+	echo '</table>';
+	}
+echo '</td>';
 	
-	
-	
-	
-	<?
-		// echo '<table width=100%><tr valign=top>';
-		// 
-		// echo "<td width=10%></td>";
-		// echo "<td align=right class=tableitems><i>nombre de cooccurrences minimum: ".$pertinence."</i>";
-		// 
-		// $old_url  =$_SERVER['REQUEST_URI'];
-		// $old_urlv = explode($racine.'/',$old_url);
-		// if (count($old_urlv)>0)
-		// 	{$old_url = $old_urlv[1];}
-		// $old_urls = explode('&old_pertinence=',$old_url);
-		// $new_url=$old_urls[0].'&old_pertinence='.$pertinence;
-		// 
-		// $modifer='<input type="button" name="refresh" value="Modifier" onclick="location.replace(\''.$new_url.'\');">'; 
-		// 
+echo "</tr>";
 
-		?>
-			<!-- </td>
+echo '</table>';
+?>
 
-			<td align=left valign=top>
-
-			<DIV class=carpe_slider_group>
-			 <DIV class=carpe_horizontal_slider_display_combo>
-			  <DIV class=carpe_slider_display_holder>
-				!>
-			   <!-- Default value: 0 -->
-			   <!--
-				<input name="Input" class=carpe_slider_display id="display1" alue="<?=$row['slider_val']?>" />
-			  </DIV>
-			 <DIV class=carpe_horizontal_slider_track>
-			 <DIV class=carpe_slider_slit></DIV>
-			 <DIV class=carpe_slider id=slider1 display="display1" tyle="left:<?=$row['slider_val']?>px"></DIV>
-			</DIV>
-			</DIV>
-			<DIV class=carpe_horizontal_slider_display_combo></DIV>
-			<DIV class=carpe_horizontal_slider_display_combo></DIV>
-			<DIV class=carpe_horizontal_slider_display_combo></DIV>
-			</DIV> -->
-
-
-			<?
-			?>
-
-
-
-		<?
-		// echo $modifer;
-		// 
-		// $result=mysql_query($query);
-		// echo "</td>";
-		// echo "<td width=10%></td>";
-		// echo "</tr>";
-		// echo '</table>';
-		
-	
-		

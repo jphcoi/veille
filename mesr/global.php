@@ -5,7 +5,7 @@ include("library/fonctions_php.php");
 //connexion a la base de donnees
 
 include("parametre.php");
-$ink  =mysql_connect($server,$user,$password);
+$ink  =mysql_connect( $server,$user,$password);if ($encodage=="utf-8") mysql_query("SET NAMES utf8;");
 @mysql_select_db($database) or die( "Unable to select database");
 //à préciser lorsqu'on est sur sciencemapping.com
 if ($user!="root") mysql_query("SET NAMES utf8;");
@@ -241,8 +241,8 @@ if ($projection=="") echo 'générale des champs thématiques';
 if ($projection=="concept") echo 'projetée sur le terme "<i>'.$dico_termes[$id_concept].'</i>"';
 if ($projection=="source") echo 'projetée sur la source "<i>'.$dico_auteurs[$id_source].'</i>"';
 
-
-$jscriptmp=display_helper(
+$jscriptmp="";
+$jscriptmp.=display_helper(
 	'Raccourcis clavier (après avoir cliqué sur la carte)',
 	'<ul style="font-size:small;">
 		<li><i>déplacement haut, bas, gauche droite:</i><br>

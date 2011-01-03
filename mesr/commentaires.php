@@ -4,7 +4,7 @@ include("include/header.php");
 include("library/fonctions_php.php");
 include("banner.php");
 include("parametre.php");
-mysql_connect($server,$user,$password);
+mysql_connect( $server,$user,$password);if ($encodage=="utf-8") mysql_query("SET NAMES utf8;");
 @mysql_select_db($database) or die( "Unable to select database");
 //à préciser lorsqu'on est sur sciencemapping.com
 if ($user!="root") mysql_query("SET NAMES utf8;");
@@ -222,6 +222,7 @@ if ($check2 != 0) {
 				if ($vue=="entree_sources.php") $vue_txt='liste des sources';
 				if ($vue=="entree_clusters.php") $vue_txt='liste des clusters';
 				if ($vue=="entree_termes.php") $vue_txt='liste des termes';
+				if ($vue=="phylo.php") $vue_txt='liste des fils thématiques';
 				if ($vue=="global.php") $vue_txt='carte';
 				
 				echo '<i>'.$vue_txt.'</i>';
