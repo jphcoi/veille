@@ -144,9 +144,11 @@ echo '<tr valign=top>';
 // PANEL DE GAUCHE: PERIODES PRECEDENTES
 	
 if ($nopred) $back_avant='background-color:'.$backdarker.';';
-echo '<td width=22% align=center class=tableitems style="font-variant:small-caps; size:small; font-style:italic;'.$back_avant.'">';
-if ($nopred) echo "<b>(pas de prédécesseur)</b>";
+echo '<td width=22% class=tableitems style="font-variant:small-caps; size:small; font-style:italic;'.$back_avant.'">';
+if ($nopred) echo '<div align=center style="font-style:normal;">(pas de prédécesseur)</div>';
 else {
+	if (count($pred)>1) $plural_string="s"; else $plural_string="";
+	echo '<span align=left style="font-weight:bold; font-style:normal;">&nbsp;champ'.$plural_string.' antérieur'.$plural_string.'</span><div style="height:4px;"></div>';
 	echo '<table width=100% cellspacing=0 cellpadding=0>';
 	echo '<tr width=100% class=commentitems style="font-variant:small-caps; background-color:'.$backdark.';"><td width=5px></td><td>période</td><td></td><td>champ</td></tr>';
 	$last_display_periode="";
@@ -164,7 +166,7 @@ echo "<b><i>";
 if ($affichage>0)
 	echo $myscript;	
 else
-	echo "pas de sources";
+	echo "pas de sources associées<br>sur cette période";
 	
 echo "</i></b>";
 	
@@ -173,9 +175,11 @@ echo '</td>';
 // PANEL DE DROITE: PERIODES SUIVANTES
 
 if ($nosucc) $back_apres='background-color:'.$backdarker.';';
-echo '<td width=22% align=center class=tableitems style="font-variant:small-caps; size:small; font-style:italic;'.$back_apres.'">';	
-if ($nosucc) echo "<b>(pas de successeur)</b>"; 
+echo '<td width=22% class=tableitems style="font-variant:small-caps; size:small; font-style:italic;'.$back_apres.'">';	
+if ($nosucc) echo '<div align=center style="font-style:normal;">(pas de successeur)</div>'; 
 else {
+	if (count($succ)>1) $plural_string="s"; else $plural_string="";
+	echo '<span align=left style="font-weight:bold; font-style:normal;">&nbsp;champ'.$plural_string.' ultérieur'.$plural_string.'</span><div style="height:4px;"></div>';
 	echo '<table width=100% cellspacing=0 cellpadding=0>';
 	echo '<tr class=commentitems style="font-variant:small-caps; background-color:'.$backdark.';"><td width=5px></td><td>période</td><td></td><td>champ</td></tr>';
 	$last_display_periode="";
@@ -224,7 +228,7 @@ echo ' value="1" />
 echo '</td>';
 	
 	
-echo "<td align=right class=tableitems width=20%><i>seuil de pertinence:</i><br>";
+echo "<td align=right class=tableitems width=20%>seuil de pertinence du réseau:<br>";
 
 $old_url  =$_SERVER['REQUEST_URI'];
 $old_urlv = explode('MESR_bac/',$old_url);
@@ -265,7 +269,7 @@ echo '<input type="hidden" value="'.$nav.'" name="nav">';
 echo '<input type="hidden" value="'.$periode.'" name="periode">';
 
 
-echo '<input type="submit" value="Modifier le seuil de pertinence">';
+echo '<input type="submit" value="Recalculer le réseau social avec ce seuil de pertinence">';
 echo '</form>';
 
 
@@ -284,7 +288,7 @@ echo "</table>";
 echo '<table class=tableitems width=100% cellspacing=0 cellpadding=1 style="font-variant:small-caps;">';
 echo '<tr>';
 	
-echo "<td align=left width=40%><i>les 5 billets les plus pertinents</i></td>";
+echo "<td align=left width=40%><b>les 5 billets les plus pertinents</b></td>";
 
 echo "</tr>";
 echo '</table>';
@@ -295,35 +299,39 @@ echo '</table>';
 /////////////////////////////////////////////
 
 
-echo "<table class=tableitems rules=all width=100% cellspacing=0 cellpadding=0>";
-echo '<tr>';
-echo "<td align=left width=100%>";
+//echo "<table class=tableitems rules=all width=100% cellspacing=0 cellpadding=0>";
+//echo '<tr>';
+//echo "<td align=left width=100%>";
 		
 if ($affichage>0){
 
 	//COHERENT:
 	//				$commande_sql_pert = "SELECT id_billet,overlap_size,billet_size from biparti where cluster = '".$id_cluster."' AND periode = '".derange_periode($my_period)."' AND overlap_size/cluster_size/log10(10+billet_size-overlap_size)>=".$pertinence.' and overlap_size/cluster_size>0.1 LIMIT 5';
 	//TOP 5 tout le temps:
-	$commande_sql_pert = "SELECT id_billet,overlap_size,billet_size from biparti where cluster = '".$id_cluster."' AND periode = '".derange_periode($my_period)."' ORDER BY overlap_size/cluster_size/log10(10+billet_size-overlap_size) DESC LIMIT 5";//.$pertinence.' and overlap_size/cluster_size>0.1 LIMIT 5';
+	$commande_sql_pert = "SELECT id_billet,overlap_size,billet_size,cluster_size from biparti where cluster = '".$id_cluster."' AND periode = '".derange_periode($my_period)."' ORDER BY overlap_size/cluster_size/log10(10+billet_size-overlap_size) DESC LIMIT 5";//.$pertinence.' and overlap_size/cluster_size>0.1 LIMIT 5';
 	//ANCIEN
 	//			$commande_sql_pert = "SELECT id_billet,overlap_size,billet_size from biparti where cluster = '".$id_cluster."' AND periode = '".derange_periode($my_period)."'".' and overlap_size/cluster_size>0.15'.' ORDER BY overlap_size/cluster_size/log10(10+billet_size-overlap_size) DESC LIMIT 5';
 	
 	$res_temp = mysql_query($commande_sql_pert);
 	$liste_of_posts=array();
 	$liste_of_size=array();
-	while ($row = mysql_fetch_array ($res_temp))
-	{
-		$liste_of_posts[$row['id_billet']]=$row['overlap_size'];
-		$liste_of_size[$row['id_billet']]=$row['billet_size'];
-	}
+	while ($row = mysql_fetch_array ($res_temp)) {
+		$id=$row['id_billet'];
+		$overlap=$row['overlap_size'];
+		$billetsize=$row['billet_size'];
+		$clustersize=$row['cluster_size'];
+		
+		$liste_of_posts[$id]=$overlap;
+		$liste_of_size[$id]=$billetsize;
+		$liste_of_pertinences[$id]=$overlap/$clustersize/log10(10+$billetsize-$overlap);
+		}
 	
 	$nb_termes_list = $liste_of_posts;
 	$nb_size_list = $liste_of_size;
 	$resultat = extract_permalink(array_keys($liste_of_posts));
 	$i=0;
 	$info_sources=array();
-	while( $row = mysql_fetch_array ($resultat))
-	{
+	while( $row = mysql_fetch_array ($resultat)){
 		$perma=$row['permalink'];
 		$site=strip_www($row['site']);
 		$site =str_replace('***','; ',$site);
@@ -331,35 +339,39 @@ if ($affichage>0){
 		$nb_terme=$nb_termes_list[$id];
 		$nb_size=$nb_size_list[$id];
 		$idauteur=$row['auteur_id']; 
-		$content=$row['content'];
 		$concepts=$row['concepts_id'];
+		$content=str_replace('"','\'',$row['content']);
 		if (!array_key_exists($site,$info_sources)) {
-		$info_sources[$site]=array('site'=>$site,'idauteur'=>$idauteur,'permaliens'=>array(),'titres'=>array(),'dates'=>array(),'nbtermes'=>array(),'nbsize'=>array());
-		}
+			$info_sources[$site]=array('site'=>$site,'idauteur'=>$idauteur,'permaliens'=>array(),'ids'=>array(),'pertinences'=>array(),'titres'=>array(),'dates'=>array(),'nbtermes'=>array(),'nbsize'=>array());
+			}
 		$info_sources[$site]['permaliens'][]=$perma;
+		$info_sources[$site]['ids'][]=$id;
+		$info_sources[$site]['pertinences'][]=$liste_of_pertinences[$id];
+		$info_sources[$site]['content'][]=$content;
 		$info_sources[$site]['titres'][]=clean_text(str_replace('popostrophe',"'",$row['title']));
-		if (strlen($row['jours'])>3)
-		{$info_sources[$site]['dates'][]=$row['jours'];}
-		else
-		{$info_sources[$site]['dates'][]=adjust_date_jours($row['jours']);}
+		if (strlen($row['jours'])>3) {
+			$info_sources[$site]['dates'][]=$row['jours'];
+			}
+		else {
+			$info_sources[$site]['dates'][]=adjust_date_jours($row['jours']);
+			}
 		$info_sources[$site]['nbtermes'][]=$nb_terme;
 		$info_sources[$site]['nbsize'][]=$nb_size;
-		$info_sources[$site]['content'][]=$content;
 		$info_sources[$site]['concepts'][]=$concepts;
 
 		$i++;
 	}
 
 	uksort($info_sources,"strcasecmpcam");
-	
-	display_billets($info_sources,$list_of_concepts,$my_period,$type_notice);
-	
+	//print_r($info_sources);
+	display_billets_plus($info_sources,$list_of_concepts,$my_period,$type_notice,1);
+	echo '<script>PertinenceDisplay(0);</script>';
 	}
 else
 	{
 	echo "aucun billet pertinent";
 	}
 	
-echo "</td></tr></table>";
+//echo "</td></tr></table>";
 	
 ?>

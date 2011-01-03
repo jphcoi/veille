@@ -150,6 +150,7 @@ div.subbanner {
   border-bottom-width:1px;
 }
 
+
 tr.subbanner {
   color:SlateGray;
   font-size:large;
@@ -288,6 +289,15 @@ form {
 .JT_hidden {
   display:none;
 }
+
+
+.scrollPane
+{
+	width: 100%;
+	height: 200px;
+	overflow: auto;
+}
+
 
 /*.questionMark, .questionMark:link, .questionMark:visited, .questionMark:active{
   background-color:#369;

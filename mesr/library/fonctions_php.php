@@ -250,7 +250,7 @@ function adjust_date_jours($s){
 	$special_date_string="%e";
 	//version David / Windows: %#d remplace %e
 	if ($conf==3) { $special_date_string="%#d";}
-	$dt = strftime("%a ".$special_date_string." %b", strtotime($newd)); 
+	$dt = strtolower(strftime("%A ".$special_date_string." %B", strtotime($newd))); 
  }
 	else
 	{$dt=$s;}
@@ -968,7 +968,7 @@ function mise_en_forme_abstract($titre,$auteurs,$abstract,$concepts,$type_notice
 function display_box($titre,$auteurs,$abstract,$permalien,$concepts,$type_notice,$index,$insertedtext)
 {
 	$notice = mise_en_forme_abstract($titre,$auteurs,$abstract,$concepts,$type_notice);
-	echo '<div id="dialog'.$index.'" title="'.$titre.'" style="font-size:8pt;">'.$notice.'</div>';
+	echo '<div align=left id="dialog'.$index.'" title="'.$titre.'" style="font-size:8pt;">'.$notice.'</div>';
 	echo '<a ';
 	if (strpos($permalien,'http:')>-1) {
 		echo 'href="'.$permalien.'"';
@@ -979,7 +979,7 @@ function display_box($titre,$auteurs,$abstract,$permalien,$concepts,$type_notice
 	echo '>';
 	echo '<img alt="aller sur le site" src="images/externallink.png"  border="0" align=left height=16> ';
 	echo '</a>';
-	echo '</td><td>';
+	echo '</td><td width=86%>';
 	echo '<div id="opener'.$index.'"><a href=#>'.$titre.'</a>'.$insertedtext.'</div>
 	';
 }
@@ -1079,8 +1079,9 @@ function prone($chaine,$n)
 function display_billets($info_sources,$list_of_concepts,$my_period,$type_notice)
 {
 	global $jscriptmp;
-	$backdark="#DDDDDD";
-	$backdarker="#CCCCCC";
+	//$backdark="#DDDDDD"; $backdarker="#CCCCCC";
+	$backdark="#E8E8E8";
+	$backdarker="#E1E1E1";
 	
 	echo "<table class=tableitems width=100% cellspacing=0 cellpadding=0>";
 	$odd=0;
@@ -1105,10 +1106,13 @@ function display_billets($info_sources,$list_of_concepts,$my_period,$type_notice
 		echo '</td></tr></table>';
 		echo "<table class=commentitems width=100%>";
 		for ($i=0;$i<count($info_sources[$key]['titres']);$i++){
-			echo "<tr valign=top><td width=13% style=\"font-size:x-small;\">";
+			echo "<tr valign=top>";
+			echo "<td width=13% style=\"font-size:x-small;\">";
 			echo $info_sources[$key]['dates'][$i];
-			echo "</td><td width=2%>";
-			echo "</td><td width=18px>";
+			echo "</td>";
+			echo "<td width=2%>";
+			echo "</td>";
+			echo "<td width=18px>";
 			$chaine=$info_sources[$key]['content'][$i];
 			//coupe l'abstract aux 15 premières lignes
 			$chaine = prone($chaine,8);
@@ -1133,6 +1137,7 @@ function display_billets($info_sources,$list_of_concepts,$my_period,$type_notice
 				//echo 
 				///log10(10+$info_sources[$key]['nbsize'][$i]-$info_sources[$key]['nbtermes'][$i]
 				$insertedtext=" (".number_format(100*$info_sources[$key]['nbtermes'][$i]/count($list_of_concepts)/log10(10+max($info_sources[$key]['nbsize'][$i],$info_sources[$key]['nbtermes'][$i])-$info_sources[$key]['nbtermes'][$i]), 0, ',', ' ')."%)";
+				$insertedtext.=" [".number_format(100*$info_sources[$key]['pertinences'][$i]."%]", 0, ',', ' ')."%]";
 				//	echo $info_sources[$key]['nbtermes'][$i];
 				//	echo '<br>';
 				//	echo count($list_of_concepts);
@@ -1151,6 +1156,125 @@ function display_billets($info_sources,$list_of_concepts,$my_period,$type_notice
 }
 					
 ////////////
+
+
+
+function display_box_plus($titre,$auteurs,$abstract,$permalien,$concepts,$type_notice,$index,$insertedtext)
+{
+	$notice = mise_en_forme_abstract($titre,$auteurs,$abstract,$concepts,$type_notice);
+	echo '<span align=left id="dialog'.$index.'" title="'.$titre.'" style="font-size:8pt;">'.$notice.'</span>';
+	echo '<a ';
+	if (strpos($permalien,'http:')>-1) {
+		echo 'href="'.$permalien.'"';
+		}
+	else {
+		echo 'href="'.'http://scholar.google.com/scholar?hl=en&q='.str_replace(' ','+',$titre).'"';
+		}
+	echo '>';
+	echo '<img alt="aller sur le site" src="images/externallink.png"  border="0" align=left height=16> ';
+	echo '</a>';
+	echo '</td>';
+	echo '<td width=86%>';
+	echo '<span id="opener'.$index.'"><a href=#>'.$titre.'</a>'.$insertedtext.'</span>
+	';
+}
+
+// cette fonction affiche les billets pour les variables $info_sources équipées du champ "pertinences"
+function display_billets_plus($info_sources,$list_of_concepts,$my_period,$type_notice,$noscroll=0)
+{
+	function id_maker($x) {	$y=10*floor(round(100*$x)/10); if ($y>50) $y=50; return ($y);}
+	global $jscriptmp;
+	$backdark="#E8E8E8";
+	$backlight="#E1E1E1";
+	
+	// scrollbar?
+	if (!$noscroll){
+		$jscriptmp.="$('.scrollPane').scrollbar;";
+		echo '<div class="scrollPane">';
+		}
+		
+	foreach(array_keys($info_sources) as $key)
+	{
+		$max_pert=10;
+		for ($i=0;$i<count($info_sources[$key]['titres']);$i++){
+			$pertmp=$info_sources[$key]['pertinences'][$i];
+			if ($pertmp>$max_pert) $pertmp=$max_pert;
+			}
+		$sourcetagid=id_maker($pertmp);
+		$sourcetagidtext='value="pert'.$sourcetagid.'"';
+		
+		echo '<table width=100% id=tab"'.$info_sources[$key]['idauteur'].'" '.$sourcetagidtext.' cellspacing=0 cellpadding=0 style="display:none;">';
+		//>';
+
+		echo '<tr width=100% id="top'.$info_sources[$key]['idauteur'].'" '.$sourcetagidtext.' style="display:none;">';
+		echo '<td width=10%></td><td width=2%></td><td width=2%><td width=86%></td></tr>';
+		
+		echo '<tr width=100% id="tab'.$info_sources[$key]['idauteur'].'" '.$sourcetagidtext.' valign=top class=tableitems style="background-color:'.$backdark.'; display:none;">';
+		
+		echo '<td colspan=5 style="font-size:x-small;">';
+		$ids_auteur=recup_id_auteurs($info_sources[$key]['idauteur']);
+		$keys = recup_names_auteurs($key);
+
+		for ($j=0;$j<count($ids_auteur);$j++)
+		{
+			echo '&nbsp;<a href=source.php?id_source='.$ids_auteur[$j]."&periode=".$my_period.'><b>'.$keys[$j]."</b></a>";
+			if ($j<count($ids_auteur)-1)
+			{echo '; ';}
+		}
+		
+		echo '</td>';
+		echo '</tr>';
+
+		for ($i=0;$i<count($info_sources[$key]['titres']);$i++){
+			$idtext='value="pert'.id_maker($info_sources[$key]['pertinences'][$i]).'"';
+			
+			$chaine=$info_sources[$key]['content'][$i];
+			//coupe l'abstract aux 15 premières lignes
+			$chaine = prone($chaine,8);
+			//print_r(convert_forme_principale_id($info_sources[$key]['concepts'][$i]));
+			$conc = implode("; ", convert_forme_principale_id($info_sources[$key]['concepts'][$i]));
+			//echo $conc;
+			//il faut normaliser le nom de l'index pour que javascript ne soit pas perdu
+			$index=str_replace("/","",str_replace(".","",str_replace("-","",$key."-".$i)));
+			$jscriptmp.="
+				$('#dialog".$index."')
+					.dialog({ autoOpen: false, stack: true, modal:true, width:600, closeOnEscape:true})
+					.click(function () { $('#dialog".$index."').dialog('close'); });
+				$('#opener".$index."').click(function(e) {
+					if (!$('#dialog".$index."').dialog('isOpen')) 
+						$('#dialog".$index."').dialog('option','position', [$(this).position().left+50,'center']).dialog('open');
+					else
+						$('#dialog".$index."').dialog('close');
+					return false;
+					});";
+			$insertedtext="";
+			if (count($list_of_concepts)>1){ 
+				$insertedtext.=" (".number_format(round(100*$info_sources[$key]['pertinences'][$i]), 0, ',', ' ')."%)";
+				}
+			
+			echo '<tr id="bil'.$info_sources[$key]['idauteur'].$i.'" '.$idtext.' valign=top class=commentitems width=100% style="background-color:'.$backdark.';"  onMouseOver="this.style.backgroundColor=\''.$backlight.'\';" onMouseOut="this.style.backgroundColor=\''.$backdark.'\';">';
+			echo '<td width=13% style=\"font-size:x-small;\">';
+			echo '&nbsp;&nbsp;&nbsp;'.$info_sources[$key]['dates'][$i];
+			echo "</td>";
+			echo "<td width=2%>";
+			echo "</td>";
+			echo "<td width=2%>";
+			echo display_box_plus($info_sources[$key]['titres'][$i],$key,$chaine,$info_sources[$key]['permaliens'][$i],$conc,$type_notice,$index,$insertedtext);
+			echo "</td>";
+			echo "</tr>";
+			}
+		
+		echo '<tr id="'.$info_sources[$key]['idauteur'].'r" '.$sourcetagidtext.' style="height:2px;background-color:'.$backlight.';" style="display:none;">';
+		echo '<td colspan=6></td>';
+		echo '</tr>';
+
+		echo "</table>";		
+	}
+	if (!$noscroll) echo '</div>';
+}
+					
+////////////
+
 
 function streamgraph($tabTitle,$json_data){
 // fonction qui renvoie les éléments pour afficher un streamgraph

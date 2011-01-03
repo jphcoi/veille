@@ -380,9 +380,37 @@ function display_helper_environnementsocial() {
 		    Cette option affiche l\'ensemble des liens entre sources indépendamment de la période à laquelle la citation a été faite. Cette visualisation permet de visualiser la structure sociale d\'ensemble entre les sources indépendamment de la période et du champ considéré.
 	    	</li>
 			</ul>
-			',"helper");
+			',"socialhelper");
+	}
+	
+function display_helper_contenu() {
+	global $jscriptmp;
+	$jscriptmp.=display_helper('Contenu','L\'onglet "contenu" affiche les informations principales du champ thématique courant et permet de naviguer le plus efficacement dans la phylogénie environnante:
+		<ul style="font-size:small;"><li>
+	    	<b style="font-variant:small-caps;">dans la partie haute</b>, la boîte centrale affiche par défaut les termes contenus dans le champ courant. 
+	    	Elle est entourée, à gauche et à droite respectivement, des champs potentiellement antérieurs et postérieurs, lorsqu\'il en existe.
+	    	<br>Les champs voisins qui n\'appartiennent pas à la période <i>immédiatement</i> suivante ou précédente sont affichés sur <span style="background-color:white; border:1px solid gray;">fond blanc</span>, le décalage temporel est signalé par des points de suspension ("...") et est précisé entre crochets (par exemple, "<b style="font-size:xx-small;">[+5 sem.]</b>").
+	    	<br><br>En plaçant le curseur sur l\'intitulé d\'un champ voisin, la boîte centrale indique alors les termes ajoutés ou retranchés par rapport au champ courant; cliquer sur l\'intitulé permet de naviguer directement dans ce champ.
+	    	En outre, l\'icône loupe <img src=images/magnify.png> ouvre une fenêtre rappelant le contenu d\'un champ voisin.
+		    </li>
+	    	<li>
+		    <b style="font-variant:small-caps;">dans la partie basse</b>, la liste des billets rattachés au champ courant est affichée, suivant un seuil de pertinence qu\'il convient de fixer selon le niveau de détail souhaité; plus le seuil est élevé, plus l\'appariement des billets avec le champ thématique est fort.  
+		    <br>On peut faire apparaître un résumé de chaque billet en cliquant sur son titre, tandis que l\'icône <img src="images/externallink.png"> permet de visiter directement le site web correspondant.
+	    	</li>
+			</ul>
+			',"contenthelper");
 	}
 
+function display_helper_cooccurrences() {
+	global $jscriptmp;
+	$jscriptmp.=display_helper('Réseau de cooccurrence','
+		Le réseau de cooccurrence indique les relations entre termes <i>au sein du champ thématique</i>. Cette vue permet d\'aller
+		plus loin que l\'ensemble non-ordonné de termes, notamment en vue de voir si certaines paires de termes sont
+		plus significativement / fréquemment associées que d\'autres.
+		<br>Comme sur la plupart des autres vues, il est possible de naviguer directement dans la phylogénie en 
+		accédant aux champs antérieurs ou postérieurs, s\'il en existe, à gauche et à droite respectivement (voir l\'aide 
+		contextuelle du "Contenu" pour plus d\'informations à cet égard).',"coochelper");
+	}
 
 echo "<table width=100%><tr valign=top><td width=2.5%></td><td width=95%>";
 
@@ -398,11 +426,17 @@ echo "<table width=100%><tr valign=top><td width=2.5%></td><td width=95%>";
 	{
 		$href_string='<a href=cluster.php?id_cluster='.$id_cluster."&periode=".arrange_periode($my_period).'&nav=';
 	}
-	if ($nav=="phylo") echo $select_string."phylogénie</b>"; else echo $href_string."phylo>phylogénie</a>";
+	if ($nav=="phylo") 
+		{echo $select_string."contenu"; display_helper_contenu(); echo "</b>";} 
+	else 
+		{echo $href_string."phylo>contenu</a>"; display_helper_contenu();}
 	echo " - ";
-        if ($nav=="source") echo $select_string."billets</b>"; else echo $href_string."source>billets</a>";
-	echo " - ";
-        if ($nav=="cooc") echo $select_string."réseau de cooccurrence</b>"; else echo $href_string."cooc>réseau de cooccurrence</a>";
+    if ($nav=="cooc") {
+    	echo $select_string."réseau de cooccurrence"; display_helper_cooccurrences(); echo "</b>"; 
+    	}
+    else {
+    	echo $href_string."cooc>réseau de cooccurrence</a>"; display_helper_cooccurrences();
+    	}
 	echo " - ";
 	if ($nav=="soc") 
 		{echo $select_string."environnement social"; display_helper_environnementsocial(); echo"</b>";}
@@ -424,7 +458,7 @@ echo '</table>';
 
 //// CREATION PHYLOGENIE (UNIQUEMENT POUR "PHYLO" OU "SOC")
 
-if ($nav=="phylo" or $nav=="soc" or $nav == "cooc" or $nav=="source"){
+if ($nav=="phylo" or $nav=="soc" or $nav == "cooc"){
  	$pred=list_clusters($periode_avant,$predecesseur,$max_periode_avant);
  	$succ=list_clusters($periode_apres,$successeur,$min_periode_apres);
 	$arraytmp=array();
@@ -444,7 +478,8 @@ if ($nav=="phylo" or $nav=="soc" or $nav == "cooc" or $nav=="source"){
 
 echo '<table width=100%><tr valign=top><td width=2.5%></td><td width=95%>';
 
-//// BLOC NAVIGATION PHYLOGENETIQUE
+
+//// JAVASCRIPT SELECTIF
 
 if ($nav=="phylo"){
 
@@ -452,12 +487,45 @@ if ($nav=="phylo"){
 	
 	echo '<script type="text/javascript" language="JavaScript">
 			function HideContent(d) {
-			document.getElementById(d).style.display = "none";}
+				document.getElementById(d).style.display = "none";
+				}		
 			function ShowContent(d) {
-			var dd = document.getElementById(d);
-			dd.style.display = "block";
-			}</script>';
+				var dd = document.getElementById(d);
+				dd.style.display = "block";
+				}
+			</script>';
+	}
 	
+if ($nav=="phylo" or $nav=="soc") {
+
+	// routines de masquage/affichage des billets
+	
+	echo '<script type="text/javascript" language="JavaScript">
+			function HideContents(d) {
+				arr=document.getElementsByTagName("tr");
+				for (var i=0; i < arr.length; i++) { if (arr[i].getAttribute(\'value\')==d) arr[i].style.display="none"; }
+				arr=document.getElementsByTagName("table");
+				for (var i=0; i < arr.length; i++) { if (arr[i].getAttribute(\'value\')==d) arr[i].style.display="none"; }
+				}
+			function ShowContents(d) {
+				arr=document.getElementsByTagName("table");
+				for (var i=0; i < arr.length; i++) { if (arr[i].getAttribute(\'value\')==d) arr[i].style.display="";}
+				arr=document.getElementsByTagName("tr");
+				for (var i=0; i < arr.length; i++) { if (arr[i].getAttribute(\'value\')==d) arr[i].style.display="";}
+				}
+			function PertinenceDisplay(val) {
+				if (val<=10) {ShowContents(\'pert10\');} else {HideContents(\'pert10\');}
+				if (val<=20) {ShowContents(\'pert20\');} else {HideContents(\'pert20\');}
+				if (val<=30) {ShowContents(\'pert30\');} else {HideContents(\'pert30\');}
+				if (val<=40) {ShowContents(\'pert40\');} else {HideContents(\'pert40\');}
+				if (val<=50) {ShowContents(\'pert50\');} else {HideContents(\'pert50\');}
+				}
+			</script>';
+	}
+
+//// BLOC NAVIGATION PHYLOGENETIQUE	
+
+if ($nav=="phylo"){
 	// affichage du titre
 	
 	echo '<table width=100%>';
@@ -504,11 +572,15 @@ if ($nav=="phylo"){
 	echo '<tr valign=top>';
 	
 	if ($nopred) $back_avant='background-color:'.$backdarker.';';
-	echo '<td width=30% align=center class=tableitems style="font-variant:small-caps; size:small; font-style:italic;'.$back_avant.'">';
-	if ($nopred) echo "<b>(pas de prédécesseur)</b>";
+	echo '<td width=30% class=tableitems style="font-variant:small-caps; size:small; font-style:italic;'.$back_avant.'">';
+	if ($nopred) echo '<div align=center style="font-style:normal;">(pas de prédécesseur)</div>';
 	else {
+		if (count($pred)>1) $plural_string="s"; else $plural_string="";
+		echo '<span align=left style="font-weight:bold; font-style:normal;">&nbsp;champ'.$plural_string.' antérieur'.$plural_string.'</span><div style="height:4px;"></div>';
 		echo '<table width=100% cellspacing=0 cellpadding=0>';
-		echo '<tr class=commentitems style="font-variant:small-caps; background-color:'.$backdark.';"><td width=5px></td><td>période</td><td></td><td>champ</td></tr>';
+		echo '<tr class=commentitems style="font-variant:small-caps; background-color:'.$backdark.';">';
+		echo '<td width=5px></td><td>période</td><td></td><td>champ</td>';
+		echo '</tr>';
 		$last_display_periode="";
 		foreach ($pred as $p) display_cluster_title($p,"pred");
 		echo '</table>';
@@ -539,9 +611,11 @@ if ($nav=="phylo"){
 	echo '</td>';
 	
 	if ($nosucc) $back_apres='background-color:'.$backdarker.';';
-	echo '<td width=30% align=center class=tableitems style="font-variant:small-caps; size:small; font-style:italic;'.$back_apres.'">';	
-	if ($nosucc) echo "<b>(pas de successeur)</b>"; 
+	echo '<td width=30% class=tableitems style="font-variant:small-caps; size:small; font-style:italic;'.$back_apres.'">';	
+	if ($nosucc) echo '<div align=center style="font-style:normal;">(pas de successeur)</div>'; 
 	else {
+		if (count($succ)>1) $plural_string="s"; else $plural_string="";
+		echo '<span align=left style="font-weight:bold; font-style:normal;">&nbsp;champ'.$plural_string.' ultérieur'.$plural_string.'</span><div style="height:4px;"></div>';	
 		echo '<table width=100% cellspacing=0 cellpadding=0>';
 		echo '<tr class=commentitems style="font-variant:small-caps; background-color:'.$backdark.';"><td width=5px></td><td>période</td><td></td><td>champ</td></tr>';
 		$last_display_periode="";
@@ -553,19 +627,15 @@ if ($nav=="phylo"){
 	
 	echo '</tr>';
 	echo '</table>';
+	
+	
+	//echo '<hr>';
+	include("cluster_nav_billets.php");
 
 }
 
 
 //// BLOC NAVIGATION SEMANTIQUE
-
-
-if ($nav=="source"){
-	
-	include("cluster_nav_source.php");
-
-}
-
 
 if ($nav=="soc"){
 
@@ -586,9 +656,9 @@ if ($nav=="cooc"){
 //// BLOC NAVIGATION SOCIO-SEMANTIQUE / TREILLIS LOCAUX
 
 if ($nav=="socsem"){
-	//****************************************************************
+	//*********************************************************************
 	//* AFFICHAGE ACTIVITÉ TEMPORELLE DE L'ENSEMBLE DES TERMES DU CLUSTER *
-	//****************************************************************
+	//*********************************************************************
 	echo '<p>';
 
 	//print_r($list_of_concepts);
