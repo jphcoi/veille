@@ -115,7 +115,11 @@ while (count($current_partition)>0){
    $macrobranch['nb_terms']=count($macrobranch_terms);
    $macrobranch['terms']=implode("_", array_keys($macrobranch_terms));
    $macrobranch['terms_occ']=implode("_", $macrobranch_terms);
-   $label_infos=macrobranch_label($macrobranch_terms,$depth);
+   if ($macrobranch['nb_fields']<3){
+   $label_infos=macrobranch_label($macrobranch_terms,1);
+    }else{
+    $label_infos=macrobranch_label($macrobranch_terms,$depth);
+    }
    $macrobranch['label']=$label_infos['label'];
    $macrobranch['label_ids']=implode('_',$label_infos['label_ids']);
    $macrobranch['last_period_string']=($macrobranch['last_period']-$dT).' '.$macrobranch['last_period'];

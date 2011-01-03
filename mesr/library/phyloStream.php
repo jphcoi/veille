@@ -47,7 +47,7 @@ CREATE TABLE IF NOT EXISTS `data` (
 mysql_query($query);
 
 // Calcul des branches actives
-        $query="select * FROM partitions WHERE nb_period_covered >=".$phylo_min_nb_periods_covered." AND last_period=".$last_period;
+        $query="select * FROM partitions WHERE nb_period_covered >=".$phylo_min_nb_periods_covered." AND last_period>=".($last_period-3*$dT);
         echo $query;
         $json_data=query2streamgraphData($query,$first_period,$last_period,$dT,$time_steps);
         $cle='branches_actives_'.$phylo_min_nb_periods_covered;
