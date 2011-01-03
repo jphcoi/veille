@@ -16,7 +16,7 @@ include("banner.php");
 
 ///// PARAMETRES ///
 $depth=2;// rang dans le nombre d'occurences des termes acceptés pour labellisation des branches
-$min_similarity=0.001;// seuil de similarité pour clusteriser
+$min_similarity=0.005;// seuil de similarité pour clusteriser
 $phylo_min_nb_periods_covered=4;
 $phylo_recent_min_nb_periods_covered=4;
 
@@ -111,7 +111,9 @@ echo "</h2></tr>
 	<div id='tabs-1'>
 ";
 /// Première tab  ////
-$query="select * FROM partitions WHERE nb_period_covered >= $phylo_min_nb_periods_covered AND last_period=$last_period";
+$query="select * FROM partitions WHERE nb_period_covered >= $phylo_min_nb_periods_covered";
+//$query="select * FROM partitions WHERE nb_period_covered >= $phylo_min_nb_periods_covered AND last_period=$last_period";
+
 $resultat=mysql_query($query) or die ("<b>Requête non exécutée (récupération des principales thématiques)</b>.");
 $branch_list=branch_list_string($resultat,$depth,$min_similarity);
         echo "<h3>Fils thématiques actifs";
@@ -177,13 +179,11 @@ while ($ligne=mysql_fetch_array($mysql_branch_list)) {
        //array_push($branch_last_period_cluster_id,$cluster_ligne[id_cluster]);
        array_push($branch_list,$infos);
 }
- //print_r($branch_list);
-
+ 
 $nb_branches=count($branch_list);
 
 $grouped_labels=cluster_branches($branch_list,$depth,$min_similarity);
 
-//$grouped_labels=group_list($label_list,1,4);
 $grouped_indexes=$grouped_labels[grouped_indexes]; // groupes des index branches
 
 $Ngram_arrays=$grouped_labels[Ngram_arrays]; // array pour les labelliser
@@ -213,7 +213,7 @@ for ($i=0;$i<count($grouped_indexes);$i++){
             $dates='<span style="font-size: x-small;">('.$ligne[nb_fields].' champs / '.adjust_date_jours($ligne[first_period]).'-'.adjust_date_jours($ligne[last_period]).')</span>';
          }
 
-            $branch='<li><i><a href="cluster.php?id_cluster='.$branch_list[$index]['branch_last_period_cluster_id'].'&periode='.str_replace(' ','-',$branch_list[$index]['branch_last_period']).'">';
+            $branch='<li><i>'.'('.$branch_list[$index][id_partition].')'.'<a href="cluster.php?id_cluster='.$branch_list[$index]['branch_last_period_cluster_id'].'&periode='.str_replace(' ','-',$branch_list[$index]['branch_last_period']).'">';
             $branch=$branch.ucfirst($branch_list[$index]['label']).'</a></i>  '.$dates.'<br/>';
             $branch_string=$branch_string.$branch;
             next($index_grouped);
@@ -278,9 +278,6 @@ while (count($label_rows_remaining_to_process)>0){
             //similar_text ( $candidate_label,$target_branches[$j],$p );
             if ($p>$min_similarity){
                 $exit_here=1;
-                //echo 'similarity: '.$p.'<br/>';
-                //echo 'candidate labels'.$candidate_label.'<br/>';
-                //echo 'target labels'.$target_branches[$j].'<br/>';
             };
             $j++;
         };
@@ -297,12 +294,7 @@ while (count($label_rows_remaining_to_process)>0){
     for ($i=0;$i<count($target_branches);$i++){
         array_push($target_branches_label_ids,$target_branches[$i]['label_ids']);
     }
-   if (count($target_branches_label_ids)>1){
-   $a=groups_labels($target_branches_label_ids,$depth);
-
-}
-
-   array_push($label_groups,groups_labels($target_branches_label_ids,$depth));
+   array_push($label_groups,groups_labels($target_branches_label_ids,$depth,$target_label_raw,$branch_list));
 }
 
 /// on réordonne par nombre de sujets groupés
@@ -345,33 +337,61 @@ return $resultat;
 ////////////////
 
 
-function groups_labels($target_labels_ids,$depth){
+function groups_labels($target_labels_ids,$depth,$target_label_raw,$branch_list){
 // calcul les $depth Ngrammes les plus fréquents dans le corpus parmis d'un ensemble de labels_ids formés de Ngrammes
 $ngram_ids_array=array();
-    //creation du tableau contenant tous les ids de ,grammes intervenant dans un label
+$nb_max_fields=0; /// nombre maximum de champs d'une branche.  Sert à diminuer $depth pour les petites branches
+$ngram_array=array(); // array dont les clés sont les Ngrams et les valeurs leurs occurrences dans le cluster de banches
+    //creation du tableau contenant tous les ids de Ngrammes intervenant dans un label
     while (count($target_labels_ids)>0 ){
-        $ngrams_ids=explode('_',array_pop($target_labels_ids));
+        $ngrams_ids=explode('_',array_pop($target_labels_ids));      
         $ngram_ids_array=array_merge($ngram_ids_array,$ngrams_ids);
     }
      $ngram_ids_array=array_unique($ngram_ids_array);
-
-    // calcul des formes principales et des occurrences associées dans le corpus
-    $ngram_array=array();
-    while (count($ngram_ids_array)>0){
-        $ngram_id=array_pop($ngram_ids_array);
-        $sql = 'SELECT forme_principale from concepts WHERE id='.$ngram_id;
+     sort($ngram_ids_array);
+    // calcul des formes principales
+    $forme_principales=array();
+     for ($i=0;$i<count($ngram_ids_array);$i++){
+        $ngram_id=$ngram_ids_array[$i];
+        $sql = 'SELECT forme_principale from concepts WHERE id='.$ngram_id;      
 	$resultat = mysql_query($sql);
-        $ngram=mysql_fetch_array ( $resultat) ;
+        $ngram=mysql_fetch_array ($resultat) ;
         $ngram=$ngram[forme_principale];
-
-        $sql = 'SELECT occurrences_in_clusters from concepts WHERE id='.$ngram_id;
-	$resultat=mysql_query($sql) or die ("<b>Requête non exécutée (récupération des occurrences dans le corpus)</b>.");
-        $nb_occ=0;
-        while ($ligne=mysql_fetch_array($resultat)) {
-            $nb_occ=$ligne[occurrences_in_clusters];
-        }
-        $ngram_array[$ngram]=$nb_occ;
+        array_push($forme_principales,$ngram);
     }
+    for ($i=0;$i<count($target_label_raw);$i++){
+        if ($nb_max_fields<$branch_list[$target_label_raw[$i]][nb_fields]){
+            $nb_max_fields=$branch_list[$target_label_raw[$i]][nb_fields];
+        }
+        //echo $i.' branche';
+        //echo '<br/>';
+        $occurrences_in_branch=explode('_',$branch_list[$target_label_raw[$i]][terms_occ]);
+        //print_r($occurrences_in_branch);
+        //echo '<br/>';
+
+        $terms_in_branch=explode('_',$branch_list[$target_label_raw[$i]][terms]);
+        //print_r($terms_in_branch);
+        //echo '<br/>';
+
+        for ($j=0;$j<count($ngram_ids_array);$j++){
+            $term_pos_in_array=array_search($ngram_ids_array[$j],$terms_in_branch);
+            if ($term_pos_in_array!=''){
+                //echo  '<br/>'.$forme_principales[$j].'<br/>';
+                //echo $ngram_ids_array[$j].' en position' .$term_pos_in_array.' occ= '.$occurrences_in_branch[$term_pos_in_array].'<br/>';
+                if ($ngram_array[$forme_principales[$j]]!=null){
+                    $ngram_array[ $forme_principales[$j]]+=$occurrences_in_branch[$term_pos_in_array]/$branch_list[$target_label_raw[$i]][nb_fields];
+                }else{
+                    $ngram_array[ $forme_principales[$j]]=$occurrences_in_branch[$term_pos_in_array]/$branch_list[$target_label_raw[$i]][nb_fields];
+                }
+
+             }  
+        
+        }
+        
+    }
+   if ($nb_max_fields<4){
+        $depth=1;
+   }
     return get_keys_with_highest_values($ngram_array,$depth);
 }
 
