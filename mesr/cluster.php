@@ -138,7 +138,7 @@ function display_cluster_title ($s, $direction) {
 	echo '</td>';
 	echo '<td class=commentitems style="font-size:xx-small;">';
 	if ($last_display_periode!=$s['periode']) echo $speriode."&nbsp;";
-	if ($ecart>0 && $periodchange) echo "<b>&nbsp;[".($direction=="succ"?"+":"-").($ecart+1)."&nbsp;sem.]&nbsp;</b>";
+	if ($ecart>0 && $periodchange) echo "<br/><b>&nbsp;[".($direction=="succ"?"+":"-").($ecart+1)."&nbsp;sem.]&nbsp;</b>";
 	echo '</td>';
 	
 	$sbox=selective_column_tt($arraykey,$s['termes'],$s['plus'],$s['minus']);
