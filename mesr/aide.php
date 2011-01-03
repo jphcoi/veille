@@ -31,7 +31,7 @@ $source_ex=getValue(12,'auteurs','id','auteurs');
 $term_ex=getValue(1433,'concepts','id','forme_principale');
 
 echo '<p><table width=100%>';
-echo '<tr valign=top><td width=2.5%></td><td><h2 class=subtitle>Aide et ontologie</h2></td><td width=2.5%></td></tr>';
+echo '<tr valign=top><td width=2.5%></td><td><h2 class=subtitle>aide et ontologie</h2></td><td width=2.5%></td></tr>';
 echo "<tr valign=top><td width=2.5%></td><td>
 <h3>À propos de cette plateforme</h3>
 <p>Cette plateforme présente une reconstruction des discussions sur le thème <i>'Santé et Environnement'</i>
