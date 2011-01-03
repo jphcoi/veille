@@ -9,7 +9,7 @@ $liste_of_size=array();
 echo '
 	<table class=tableitems width=100% cellspacing=0 cellpadding=1 style="font-variant:small-caps;">';
 echo '<tr style="height:20px;"><td></td></tr>';
-echo '<tr><td width=100% style="height:1px; background-color:SlateGray;"></td></tr>';
+echo '<tr><td width=100% style="height:1px;background-color:SlateGray;"></td></tr>';
 echo '<tr style="height:10px;"><td></td></tr>';
 echo '<tr valign=top>';
 echo '<td align=left width=100%>';

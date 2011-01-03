@@ -380,7 +380,25 @@ function display_helper_environnementsocial() {
 		    Cette option affiche l\'ensemble des liens entre sources indépendamment de la période à laquelle la citation a été faite. Cette visualisation permet de visualiser la structure sociale d\'ensemble entre les sources indépendamment de la période et du champ considéré.
 	    	</li>
 			</ul>
-			',"helper");
+			',"socialhelper");
+	}
+	
+function display_helper_contenu() {
+	global $jscriptmp;
+	$jscriptmp.=display_helper('Contenu','L\'onglet "contenu" affiche les informations principales du champ thématique courant et permet de naviguer le plus efficacement dans la phylogénie environnante:
+		<ul style="font-size:small;"><li>
+	    	<b style="font-variant:small-caps;">dans la partie haute</b>, la boîte centrale affiche par défaut les termes contenus dans le champ courant. 
+	    	Elle est entourée, à gauche et à droite respectivement, des champs potentiellement antérieurs et postérieurs, lorsqu\'il en existe.
+	    	<br>Les champs voisins qui n\'appartiennent pas à la période <i>immédiatement</i> suivante ou précédente sont affichés sur <span style="background-color:white; border:1px solid gray;">fond blanc</span>, le décalage temporel est signalé par des points de suspension ("...") et est précisé entre crochets (par exemple, "<b style="font-size:xx-small;">[+5 sem.]</b>").
+	    	<br><br>En plaçant le curseur sur l\'intitulé d\'un champ voisin, la boîte centrale indique alors les termes ajoutés ou retranchés par rapport au champ courant; cliquer sur l\'intitulé permet de naviguer directement dans ce champ.
+	    	En outre, l\'icône loupe <img src=images/magnify.png> ouvre une fenêtre rappelant le contenu d\'un champ voisin.
+		    </li>
+	    	<li>
+		    <b style="font-variant:small-caps;">dans la partie basse</b>, la liste des billets rattachés au champ courant est affichée, suivant un seuil de pertinence qu\'il convient de fixer selon le niveau de détail souhaité; plus le seuil est élevé, plus l\'appariement des billets avec le champ thématique est fort.  
+		    <br>On peut faire apparaître un résumé de chaque billet en cliquant sur son titre, tandis que l\'icône <img src="images/externallink.png"> permet de visiter directement le site web correspondant.
+	    	</li>
+			</ul>
+			',"contenthelper");
 	}
 
 
@@ -398,7 +416,10 @@ echo "<table width=100%><tr valign=top><td width=2.5%></td><td width=95%>";
 	{
 		$href_string='<a href=cluster.php?id_cluster='.$id_cluster."&periode=".arrange_periode($my_period).'&nav=';
 	}
-	if ($nav=="phylo") echo $select_string."contenu</b>"; else echo $href_string."phylo>contenu</a>";
+	if ($nav=="phylo") 
+		{echo $select_string."contenu"; display_helper_contenu(); echo "</b>";} 
+	else 
+		{echo $href_string."phylo>contenu</a>"; display_helper_contenu();}
 	//echo " - ";
     //    if ($nav=="source") echo $select_string."billets</b>"; else echo $href_string."source>billets</a>";
 	echo " - ";
@@ -444,7 +465,8 @@ if ($nav=="phylo" or $nav=="soc" or $nav == "cooc" or $nav=="source"){
 
 echo '<table width=100%><tr valign=top><td width=2.5%></td><td width=95%>';
 
-//// BLOC NAVIGATION PHYLOGENETIQUE
+
+//// JAVASCRIPT SELECTIF
 
 if ($nav=="phylo"){
 
@@ -458,6 +480,14 @@ if ($nav=="phylo"){
 				var dd = document.getElementById(d);
 				dd.style.display = "block";
 				}
+			</script>';
+	}
+	
+if ($nav=="phylo" or $nav="soc"){
+
+	// routines de masquage/affichage des billets
+	
+	echo '<script type="text/javascript" language="JavaScript">
 			function HideContents(d) {
 				arr=document.getElementsByTagName("tr");
 				for (var i=0; i < arr.length; i++) { if (arr[i].getAttribute(\'value\')==d) arr[i].style.display="none"; }
@@ -478,7 +508,11 @@ if ($nav=="phylo"){
 				if (val<=50) {ShowContents(\'pert50\');} else {HideContents(\'pert50\');}
 				}
 			</script>';
-	
+	}
+
+//// BLOC NAVIGATION PHYLOGENETIQUE	
+
+if ($nav=="phylo"){
 	// affichage du titre
 	
 	echo '<table width=100%>';
