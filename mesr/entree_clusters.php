@@ -58,7 +58,14 @@ while ($ligne=mysql_fetch_array($resultat)){
 
 
 echo '<p><table width=100% class=tableitems>';
-echo '<tr valign=top><td width=2.5%></td><td><h2 class=subtitle>liste complète des champs thématiques</h2></td><td width=2.5%></td></tr></table>';
+echo '<tr valign=top><td width=2.5%></td><td><h2 class=subtitle>liste complète des champs thématiques';
+$jscriptmp.=display_helper('Champs thématiques',
+'Les champs thématiques (niveau <i>meso</i>), décrivent le contexte d\'une
+ discussion par un ensemble de termes.
+Cette liste donne l\'ensemble des champs thématiques sur la période '.
+get_short_string_periode($my_period).'. Les champs thématiques sont labellisés par leur deux
+expressions les plus représentatives.</p>',"");
+echo '</h2></td><td width=2.5%></td></tr></table>';
 
 
 //agrégats
@@ -163,6 +170,10 @@ echo '<td width=2.5%></td></tr></table><p>';
 
 echo '<table width=100% class=tableitems><tr valign=top><td width=2.5%></td><td width=97.5%><hr width=95% align=left><div style="font-variant:small-caps;">soit '.count($clusters_clean).' dénominations uniques "générique - spécifique" de champs thématiques sur un total de '.count($liste_termes_brute).' champs thématiques uniques pour cette période.</div></td><td width=2.5%></td></tr>';
 echo "</table>";
+
+echo '</div>';
+echo '
+	<script> $(function() { '.$jscriptmp.' });</script>';
 
 include("footer.php");
 ?>

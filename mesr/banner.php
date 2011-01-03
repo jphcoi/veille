@@ -48,6 +48,10 @@ switch ($page_current) {
         $page = 'termes';
         break;
 
+    case 'aide.php':
+        $page = 'aide';
+        break;
+
 	case 'commentaires.php';
 		$page = 'commentaires';
 		break;
@@ -64,7 +68,10 @@ echo '</a> - <a href=entree_sources.php'.$periodstr.'>';
 if ($page=="sources") echo "<b>sources</b>"; else echo "sources";
 echo '</a> - <a href=entree_termes.php'.$periodstr.'>';
 if ($page=="termes") echo "<b>termes</b>"; else echo "termes";
+echo '</a> - <a href=aide.php'.'><img src="images/question-mark-transparent.gif" border=0> ';
+if ($page=="aide") echo "<b>aide</b>"; else echo "aide";
 echo '</a> </td><td style="text-align: right"><a href=commentaires.php>';
+
 if ($page=="commentaires") echo "<b>commentaires</b>"; else echo "commentaires";
 echo '</a></td>
 	</tr>

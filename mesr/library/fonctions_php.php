@@ -68,16 +68,20 @@ while (count($string2)>0){
 return count(array_intersect($str1, $str2));
 }
 
-function getValue($cle){
+/////////////////////////////////
+/// obtenir des valeurs des tables
+/////////////////////////////////
+function getValue($cle_value,$table='data',$cle='cle',$valeur='valeur'){
 // renvoie la valeur correspondant à la clé $cle dans la table data
-$sql = 'SELECT valeur from data WHERE cle="'.$cle.'"';
-$resultat=mysql_query($sql) or die ("<b>get value failed for ".$cle."</b>");
+$sql = 'SELECT '.$valeur.' from '.$table.' WHERE '.$cle.'="'.$cle_value.'"';
+$resultat=mysql_query($sql) or die ("<b>get value failed for ".$cle_value."</b>");
     while ($ligne=mysql_fetch_array($resultat)) {
-        $out=$ligne[valeur];
+        $out=$ligne[$valeur];
         }
 return $out;
 }
 
+/////////////////////////////////
 
 function remove_popo($st)
 {
