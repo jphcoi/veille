@@ -63,7 +63,7 @@ echo '<td align=center width=54%>';
 //		echo "</td>";
 	//echo "<td width=5%></td>";
 	
-	echo '<td align=left style="font-variant:small-caps;"><i>ENSEMBLE DES SOURCES AU-DELA DU SEUIL DE PERTINENCE POUR LA PÉRIODE COURANTE</i></td>';
+	echo '<td align=left style="font-variant:small-caps;"><i><span style="font-size:x-small;">ENSEMBLE DES SOURCES AU-DELA DU SEUIL DE PERTINENCE POUR LA PÉRIODE COURANTE</span></i></td>';
 	echo '<td width=5%></td>';
 	echo '<td align=right class=tableitems style="font-size:x-small;">seuil de pertinence: ';//.strval(100*$pertinence)
 	
