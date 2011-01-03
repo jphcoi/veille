@@ -430,7 +430,7 @@ echo "<table width=100%><tr valign=top><td width=2.5%></td><td width=95%>";
 		{echo $select_string."contenu"; display_helper_contenu(); echo "</b>";} 
 	else 
 		{echo $href_string."phylo>contenu</a>"; display_helper_contenu();}
-	echo " - ";
+	echo "&nbsp;-&nbsp;";
     if ($nav=="cooc") {
     	echo $select_string."réseau de cooccurrence"; display_helper_cooccurrences(); echo "</b>"; 
     	}
@@ -447,8 +447,7 @@ echo "<table width=100%><tr valign=top><td width=2.5%></td><td width=95%>";
 	if ($nav=="socsem") echo $select_string."profil d'évolution</b>"; else echo $href_string."socsem>profil d'évolution</a>";
 
 	echo '</td>';
-	echo '<td align=right><a href='.$googletext.'><img src='.$hrefroot.$racine.'/images/googleGinv.png alt="(google)" valign=middle width=18 style="border-style:none;"></a></td>';
-	//echo '<td align=right><div style="font-size:8pt;">'.get_string_periode($my_period).'</div></td>';
+	echo '<td align=right><a href='.$googletext.'><img src='.$hrefroot.$racine.'/images/googleGinv.png alt="(google)" valign=middle width=18px style="border-style:none;"></a></td>';
 	echo '</tr>';
 	echo '</table>';
 
