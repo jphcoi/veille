@@ -79,7 +79,7 @@ Au sein d'un fil thématique, un champ thématique peut provenir d'une évolutio
 linéaire ou être le fruit de la rencontre de plusieurs
 thématiques antérieurs. Il peut également donner naisssance à une ou plusieurs champs thématiques
 sur les périodes ultérieures. L'ensemble des
-fils thématiques peut-être <a href='phylo.php'>cvisualisé de manière interactive</a> comme ci-dessous.</span>
+fils thématiques peut-être <a href='phylo.php'>visualisé de manière interactive</a> comme ci-dessous.</span>
 </center>
 <center><a name='phylo'>
 <img src='images/filsThematiques.jpg' ></a><br/>
