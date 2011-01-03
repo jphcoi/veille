@@ -530,6 +530,9 @@ include("reseau_semantique.php");}
 
 mysql_close();
 
+echo '
+		<script> $(function() { '.$jscriptmp.' });</script>';
+
 include("footer.php");
 ?>
 
