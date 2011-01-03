@@ -67,21 +67,32 @@ Ceux-ci sont accessibles via le menu de navigation:
 <center><a name='champs'>
 <img src='images/termes_carte.jpg' ></a><br/>
 <span style='font-size:small;'>Les <a href='entree_clusters.php'>champs thématiques</a> sont des groupes de termes. Ils s'articulent au sein de <a href='global.php'>cartes</a>
-et sont labellisés par leur deux termes les plus représentatifs.</span>
+et sont labellisés par les deux termes les plus représentatifs.</span>
 </center></p>
 <br/><p>
 <center><a name='phylo'>
 <img src='images/phylogenie.jpg' ></a><br/>
-<span style='font-size:small;'>Les <a href='phylo.php'>phylogénies</a> intègrent les <a href='entree_clusters.php'>champs thématiques</a> dans une structure
-temporelle qui permet de suivre leur evolutions et leurs mutations.
-Un champ thématique peut provenir d'une évolution linéaire ou être le fruit de le rencontre de plusieurs
-problématiques. Il peut également donner naisssance à une ou plusieurs discussions distinctes.</span>
+<span style='font-size:small;'>Les <a href='entree_clusters.php'>champs thématiques</a> sont
+intégrés au sein de fils thématiques qui permettent de suivre
+leurs evolutions et leurs mutations.
+Au sein d'un fil thématique, un champ thématique peut provenir d'une évolution
+linéaire ou être le fruit de la rencontre de plusieurs
+thématiques antérieurs. Il peut également donner naisssance à une ou plusieurs champs thématiques
+sur les périodes ultérieures. L'ensemble des
+fils thématiques peut-être <a href='phylo.php'>cvisualisé de manière interactive</a> comme ci-dessous.</span>
 </center>
+<center><a name='phylo'>
+<img src='images/filsThematiques.jpg' ></a><br/>
+<span style='font-size:small;'>Exemple de visualisation d'un ensemble de <a href='phylo.php'>fils thématiques</a>. Ceux-ci intègrent les <a href='entree_clusters.php'>champs thématiques</a> dans une structure
+temporelle qui permet de suivre l'évolution de leur popularité.</span>
+</center>
+
+
 </p>
 <p>Contrairement aux explorations s'appuyant sur des termes choisis <i>a priori</i>
 ayant pour entrée le niveau 'micro', les entrées par les niveaux 'meso' et 'macro' permettent
 de sélectionner des sujets à partir de leur profil d'évolution et donc de suggérer des
-parcours.
+parcours et des sujets à étudier.
   </p>
 
 ";
