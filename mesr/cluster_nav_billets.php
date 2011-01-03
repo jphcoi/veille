@@ -8,9 +8,9 @@ $liste_of_size=array();
 		
 echo '
 	<table class=tableitems width=100% cellspacing=0 cellpadding=1 style="font-variant:small-caps;">';
-echo '<tr style="height:15px;"><td></td></tr>';
-echo '<tr><td width=100% style="height:2px;background-color:SlateGray;"></td></tr>';
-echo '<tr style="height:5px;"><td></td></tr>';
+echo '<tr style="height:20px;"><td></td></tr>';
+echo '<tr><td width=100% style="height:1px; background-color:SlateGray;"></td></tr>';
+echo '<tr style="height:10px;"><td></td></tr>';
 echo '<tr valign=top>';
 echo '<td align=left width=100%>';
 
@@ -20,53 +20,41 @@ echo '<td align=left width=100%>';
 /////	/////	/////	/////	/////	/////
 /////////////////////////////////////////////
 
-echo '<table class=tableitems width=100% cellspacing=0 cellpadding=1>';
-echo '<tr>';
-	
-echo '<td align=left style="font-variant:small-caps;">ENSEMBLE DES SOURCES AU-DELA DU SEUIL DE PERTINENCE POUR LA PÉRIODE COURANTE</td>';
+echo '<table class=tableitems width=100% cellspacing=0 cellpadding=3>';
+echo '<tr>';	
+echo '<td align=left style="font-variant:small-caps; font-size:x-small; font-weight:bold;">ENSEMBLE DES SOURCES AU-DELA DU SEUIL DE PERTINENCE POUR LA PÉRIODE COURANTE</td>';
 echo '<td width=5%></td>';
-echo '<td align=right class=tableitems style="font-size:x-small;">seuil de pertinence: ';//.strval(100*$pertinence)
 
-$old_url  =$_SERVER['REQUEST_URI'];
-$old_urlv = explode($racine.'/',$old_url);
-if (count($old_urlv)>0)
-	{$old_url = $old_urlv[1];}
-$old_urls = explode('&pertinence=',$old_url);
-$new_url=$old_urls[0];//.'&pertinence=';
+$jscriptmp.='
+		var select = $( "#pertinence" );
+		var slider = $( "#slider" ).slider({
+			min: 1,
+			max: 5,
+			step: 1,
+			value: select[ 0 ].selectedIndex + 1,
+			slide: function( event, ui ) {
+				select[0].selectedIndex = ui.value - 1;
+				PertinenceDisplay(10*ui.value);
+			}
+		});
+		$( "#pertinence" ).change(function() {
+			slider.slider( "value", this.selectedIndex + 1);
+		});';
 
-echo '<form action="'.$new_url.'" method="get" style="display:inline;">';
-echo '<select name="pertinence" onchange="PertinenceDisplay(this.options[this.selectedIndex].value);">';
-	echo '<option value=10';
-	if ($pertinence==0.1) echo(" selected");
-	echo '>';
-	echo "minimal (>10%)";
-	echo '</option>';
-
-	echo '<option value=20';
-	if ($pertinence==0.2) echo(" selected");
-	echo '>';
-	echo "faible (>20%)";
-	echo '</option>';
-
-	echo '<option value=30';
-	if ($pertinence==0.3) echo(" selected");
-	echo '>';
-	echo "médian (>30%)";
-	echo '</option>';
-	
-	echo '<option value=40';
-	if ($pertinence==0.40) echo(" selected");
-	echo '>';
-	echo "fort (>40%)";
-	echo '</option>';
-
-echo '</select>';
-echo '<input type="hidden" value="'.$id_cluster.'" name="id_cluster">';
-echo '<input type="hidden" value="'.$nav.'" name="nav">';
-echo '<input type="hidden" value="'.$periode.'" name="periode">';
-
-//echo '<input type="submit" value="Modifier le seuil">';
-echo '</form>';
+echo '<td align=right class=tableitems style="font-size:x-small;">';
+echo '<form id="reservation">
+	<label for="pertinence">seuil de pertinence:</label>
+	<select name="pertinence" id="pertinence" onchange="PertinenceDisplay(this.options[this.selectedIndex].value);">
+		<option value=10>minimal (&ge;10%)</option>
+		<option value=20>faible (&ge;20%)</option>
+		<option value=30 selected>médian (&ge;30%)</option>
+		<option value=40>fort (&ge;40%)</option>
+		<option value=50>maximal (&ge;50%)</option>
+	</select>&nbsp;
+	</form>';
+echo '</td>';
+echo '<td width=100px><div id="slider"></div>';
+echo '</td>';
 
 
 $result=mysql_query($query);

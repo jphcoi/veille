@@ -1172,7 +1172,7 @@ function display_box_plus($titre,$auteurs,$abstract,$permalien,$concepts,$type_n
 // cette fonction affiche les billets pour les variables $info_sources équipées du champ "pertinences"
 function display_billets_plus($info_sources,$list_of_concepts,$my_period,$type_notice)
 {
-	function id_maker($x) {	$y=10*floor(round(100*$x)/10); if ($y>40) $y=40; return ($y);}
+	function id_maker($x) {	$y=10*floor(round(100*$x)/10); if ($y>50) $y=50; return ($y);}
 	global $jscriptmp;
 	$backdark="#E8E8E8";
 	$backlight="#E1E1E1";
@@ -1196,13 +1196,13 @@ function display_billets_plus($info_sources,$list_of_concepts,$my_period,$type_n
 		
 		echo '<tr width=100% id=tab"'.$info_sources[$key]['idauteur'].'" '.$sourcetagidtext.' valign=top class=tableitems style="background-color:'.$backdark.'; " style="display:none;">';
 		
-		echo '<td colspan=6 style="font-size:x-small;">';
+		echo '<td colspan=5 style="font-size:x-small;">';
 		$ids_auteur=recup_id_auteurs($info_sources[$key]['idauteur']);
 		$keys = recup_names_auteurs($key);
 
 		for ($j=0;$j<count($ids_auteur);$j++)
 		{
-			echo '<a href=source.php?id_source='.$ids_auteur[$j]."&periode=".$my_period.'><b>'.$keys[$j]."</b></a>";
+			echo '&nbsp;<a href=source.php?id_source='.$ids_auteur[$j]."&periode=".$my_period.'><b>'.$keys[$j]."</b></a>";
 			if ($j<count($ids_auteur)-1)
 			{echo '; ';}
 		}
@@ -1239,7 +1239,7 @@ function display_billets_plus($info_sources,$list_of_concepts,$my_period,$type_n
 			
 			echo '<tr id=bil"'.$info_sources[$key]['idauteur'].$i.'" '.$idtext.' valign=top class=commentitems width=100% style="background-color:'.$backdark.';">';
 			echo '<td width=13% style=\"font-size:x-small;\">';
-			echo $info_sources[$key]['dates'][$i];
+			echo '&nbsp;&nbsp;&nbsp;'.$info_sources[$key]['dates'][$i];
 			echo "</td>";
 			echo "<td width=2%>";
 			echo "</td>";

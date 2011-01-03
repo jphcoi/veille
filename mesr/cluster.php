@@ -475,6 +475,7 @@ if ($nav=="phylo"){
 				if (val<=20) {ShowContents(\'pert20\');} else {HideContents(\'pert20\');}
 				if (val<=30) {ShowContents(\'pert30\');} else {HideContents(\'pert30\');}
 				if (val<=40) {ShowContents(\'pert40\');} else {HideContents(\'pert40\');}
+				if (val<=50) {ShowContents(\'pert50\');} else {HideContents(\'pert50\');}
 				}
 			</script>';
 	
