@@ -1178,6 +1178,8 @@ function display_billets_plus($info_sources,$list_of_concepts,$my_period,$type_n
 	$backlight="#E1E1E1";
 	
 	//definitionnel
+	$jscriptmp.="$('.scrollPane').scrollbar;";
+	echo '<div class="scrollPane">';
 	foreach(array_keys($info_sources) as $key)
 	{
 		$max_pert=10;
@@ -1255,7 +1257,7 @@ function display_billets_plus($info_sources,$list_of_concepts,$my_period,$type_n
 
 		echo "</table>";		
 	}
-
+	echo '</div>';
 }
 					
 ////////////
