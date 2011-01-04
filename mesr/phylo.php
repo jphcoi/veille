@@ -224,10 +224,10 @@ function branch_list_string($mysql_branch_list,$depth,$min_similarity){
 				$branch='<tr onMouseOver="this.style.backgroundColor=\''.$whitedarker.'\';" onMouseOut="this.style.backgroundColor=\''.$whitedark.'\';">';
 
 				$branch.='<td width=50px style="font-size: x-small; text-align:right;">'.$ligne['nb_fields'].'&nbsp;champs</td>';
-				$branch.='<td width=50px style="font-size: x-small; text-align:right;">&nbsp;(';
-				$branch.=str_replace("(&nbsp;","(",str_replace(" ","&nbsp;",get_short_string_periode($ligne['first_period'].'-'.$ligne['last_period'])));
+				$branch.='<td width=50px style="font-size: x-small; text-align:right;">&nbsp;';
+				$branch.=str_replace("(&nbsp;","(",str_replace(" ","&nbsp;",'('.get_short_string_periode($ligne['first_period'].'-'.$ligne['last_period'])));
 				$branch.=')&nbsp;</td><td style="font-size:9pt;">';
-			
+				
 				$branch.='<a href="cluster.php?id_cluster='.$branch_list[$index]['branch_last_period_cluster_id'].'&periode='.str_replace(' ','-',$branch_list[$index]['branch_last_period']).'">';
 				$branch.=ucfirst($branch_list[$index]['label']).'</a>';
 				$branch.='</td></tr>';
@@ -255,8 +255,8 @@ function branch_list_string($mysql_branch_list,$depth,$min_similarity){
 			$branch='<tr onMouseOver="this.style.backgroundColor=\''.$whitedarker.'\';" onMouseOut="this.style.backgroundColor=\''.$whitedark.'\';">';
 			
 			$branch.='<td width=50px style="font-size: x-small; text-align:right;">'.$ligne['nb_fields'].'&nbsp;champs</td>';
-			$branch.='<td width=50px style="font-size: x-small; text-align:right;">&nbsp;(';
-			$branch.=str_replace("(&nbsp;","(",str_replace(" ","&nbsp;",get_short_string_periode($ligne['first_period'].'-'.$ligne['last_period'])));
+			$branch.='<td width=50px style="font-size: x-small; text-align:right;">&nbsp;';
+			$branch.=str_replace("(&nbsp;","(",str_replace(" ","&nbsp;",'('.get_short_string_periode($ligne['first_period'].'-'.$ligne['last_period'])));
 			$branch.=')&nbsp;</td><td style="font-size:9pt;">';
 			
 			$branch.='<a href="cluster.php?id_cluster='.$branch_list[$index_grouped[0]]['branch_last_period_cluster_id'].'&periode='.str_replace(' ','-',$branch_list[$index_grouped[0]]['branch_last_period']).'">';
