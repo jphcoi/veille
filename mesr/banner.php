@@ -59,7 +59,7 @@ echo '<div id="hd"  class="ui-widget">
 echo'<a href=aide.php?selectedTab=1>';
 if ($page=="aide") echo '<span class=bannerselected>'; else echo '<span>';
 echo '&nbsp;aide&nbsp;';
-echo '<img src="images/question-mark.gif" border=0 ></a></span> ';
+echo '<img src="images/question-mark.gif" border=0>&nbsp;</a></span> ';
 echo '<a href=deconnexion.php>&nbsp; <img src=images/logout.jpg width=12 border=0 alt="déconnexion"></a></td>
 	</tr>
 	</table>';
