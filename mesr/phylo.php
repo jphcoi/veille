@@ -196,13 +196,13 @@ function branch_list_string($mysql_branch_list,$depth,$min_similarity){
 		if (count($index_grouped)>1)
 		{ // c'est un groupe
 		
-			$group_title='<p>';
+			$group_title='';
 			while ((count($Ngrams)>0)&&($line = current($Ngrams))){
-				$group_title=$group_title.ucfirst(key($Ngrams)).', ';
+				$group_title.=ucfirst(key($Ngrams)).', ';
 				next($Ngrams);
 			}
 			$group_title=substr(trim($group_title), 0, -1);
-			$branch_string.='<table class=tableitems width=100%>';
+			$branch_string.='<table class=tableitems style="background-color:'.$backdark.'; width=100%>';
 			$branch_string.='<tr><td width=100%>';
 			$branch_string.='<b>'.ucfirst($group_title).'</b></td></tr>';
 
@@ -220,7 +220,7 @@ function branch_list_string($mysql_branch_list,$depth,$min_similarity){
 				$branch_string.=$branch;
 				next($index_grouped);
 			}
-			$branch_string.='</ul></p>';
+			$branch_string.='</table>';
 		}
 		else 
 		{ // c'est une branche perdue
