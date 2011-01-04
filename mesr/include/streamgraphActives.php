@@ -9,7 +9,7 @@ $out=display_helper_two_outputs('Graph d\'évolution des fils thématiques','<p>
                     ',"evolution");
 
 $jscriptmp.=$out[1];
-$myscriptActives='<hr>
+$myscriptActives='
 <table class=tableitems width="100%">
 <tr valign=bottom>
 <td align="left">Evolution Temporelle';

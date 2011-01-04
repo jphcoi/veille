@@ -112,11 +112,11 @@ echo "</h2></tr>
 $query="select * FROM partitions WHERE nb_period_covered >=".$phylo_min_nb_periods_covered." AND last_period>=".($last_period-3*$dT);
 $resultat=mysql_query($query) or die ("<b>Requête non exécutée (récupération des principales thématiques)</b>.");
 $branch_list=branch_list_string($resultat,$depth,$min_similarity);
-        echo "<h3>Fils thématiques actifs";
-        echo " <span style='font-size: x-small;'> (couvrant au moins 4 périodes) </span></h3>";
-        echo $myscriptActives;
-        echo '<br/>';
-	echo $branch_list;
+echo "<h3>Fils thématiques actifs";
+echo " <span style='font-size: x-small;'> (couvrant au moins 4 périodes) </span></h3>";
+echo $myscriptActives;
+echo '<br/>';
+echo $branch_list;
 echo "
 	</div>
 	<div id='tabs-2'>";
@@ -190,7 +190,7 @@ function branch_list_string($mysql_branch_list,$depth,$min_similarity){
 	$branch_string='<table class=tableitems cellspacing=0 cellpadding=3 style="background-color:'.$whitedark.';" width=100%>';
 	$branch_string.='<tr><td colspan=4 width=100%>';
 	// html avec la liste des branches
-	$branch_string.='<i>('.$nb_branches.' fils thématiques dans cette catégorie)'.'</i>'; 
+	$branch_string.='<i>'.$nb_branches.' fils thématiques dans cette catégorie'.'</i>'; 
 	$branch_string.='</td></tr>';
 	$branch_string.='<tr height=7px style="background-color:#E0E0E0;"><td colspan=4 width=100%></td></tr>';
 	$branch_string.='<tr height=7px><td colspan=4 width=100%></td></tr>';
@@ -225,10 +225,10 @@ function branch_list_string($mysql_branch_list,$depth,$min_similarity){
 				$branch.='<td width=50px style="font-size: x-small;">'.$ligne['nb_fields'].'&nbsp;champs</td>';
 				$branch.='<td width=50px style="font-size: x-small; text-align:right;">&nbsp;(';
 				$branch.=str_replace(" ","&nbsp;",get_short_string_periode($ligne['first_period'].'-'.$ligne['last_period']));
-				$branch.=')&nbsp;</td><td>';
+				$branch.=')&nbsp;</td><td style="font-size:x-small;">';
 			
-				$branch.='<i><a href="cluster.php?id_cluster='.$branch_list[$index]['branch_last_period_cluster_id'].'&periode='.str_replace(' ','-',$branch_list[$index]['branch_last_period']).'">';
-				$branch.=ucfirst($branch_list[$index]['label']).'</a></i>';
+				$branch.='<a href="cluster.php?id_cluster='.$branch_list[$index]['branch_last_period_cluster_id'].'&periode='.str_replace(' ','-',$branch_list[$index]['branch_last_period']).'">';
+				$branch.=ucfirst($branch_list[$index]['label']).'</a>';
 				$branch.='</td></tr>';
 				$branch_string.=$branch;
 				next($index_grouped);
@@ -256,7 +256,7 @@ function branch_list_string($mysql_branch_list,$depth,$min_similarity){
 			$branch.='<td width=50px style="font-size: x-small;">'.$ligne['nb_fields'].'&nbsp;champs</td>';
 			$branch.='<td width=50px style="font-size: x-small; text-align:right;">&nbsp;(';
 			$branch.=str_replace(" ","&nbsp;",get_short_string_periode($ligne['first_period'].'-'.$ligne['last_period']));
-			$branch.=')&nbsp;</td><td>';
+			$branch.=')&nbsp;</td><td style="font-size:9pt;">';
 			
 			$branch.='<a href="cluster.php?id_cluster='.$branch_list[$index_grouped[0]]['branch_last_period_cluster_id'].'&periode='.str_replace(' ','-',$branch_list[$index_grouped[0]]['branch_last_period']).'">';
 			$branch.=ucfirst($branch_list[$index_grouped[0]]['label']).'</a>';
