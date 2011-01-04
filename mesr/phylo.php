@@ -202,7 +202,7 @@ function branch_list_string($mysql_branch_list,$depth,$min_similarity){
 				next($Ngrams);
 			}
 			$group_title=substr(trim($group_title), 0, -1);
-			$branch_string.='<table class=tableitems style="background-color:'.$backdark.'; width=100%>';
+			$branch_string.='<table class=tableitems style="background-color:'.$backdark.';" width=100%>';
 			$branch_string.='<tr><td width=100%>';
 			$branch_string.='<b>'.ucfirst($group_title).'</b></td></tr>';
 
