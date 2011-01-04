@@ -59,8 +59,8 @@ echo '<div id="hd"  class="ui-widget">
 echo'<a href=aide.php?selectedTab=1>';
 if ($page=="aide") echo '<span class=bannerselected>'; else echo '<span>';
 echo '&nbsp;aide&nbsp;';
-echo '<img src="images/question-mark.gif" border=0 width=16 ></a></span> ';
-echo '<a href=deconnexion.php>&nbsp; <img src=images/logout.jpg width=15 border=0 alt="déconnection"></a></td>
+echo '<img src="images/question-mark.gif" border=0>&nbsp;</a></span> ';
+echo '<a href=deconnexion.php>&nbsp; <img src=images/logout.jpg width=12 border=0 alt="déconnexion"></a></td>
 	</tr>
 	</table>';
 

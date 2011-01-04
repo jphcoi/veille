@@ -1,0 +1,24 @@
+#holder {
+    -moz-border-radius: 10px;
+    -webkit-border-radius: 10px;
+    -webkit-box-shadow: 0 1px 3px #666;
+    background: #ddd url(http://raphaeljs.com/images/bg.png);
+    margin: 0 auto;
+	/*position: relative; width: 728px; margin: auto;*/
+	width: 700px;
+	position: relative;
+	background: #E1E1E1;
+	
+    font: 300 100.1% "Helvetica Neue", Helvetica, "Arial Unicode MS", Arial, sans-serif;
+
+}
+#copy {
+    bottom: 0;
+    font: 300 .7em "Helvetica Neue", Helvetica, "Arial Unicode MS", Arial, sans-serif;
+    position: absolute;
+    right: 1em;
+    text-align: right;
+}
+#copy a {
+    color: #fff;
+}
