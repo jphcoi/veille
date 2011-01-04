@@ -17,7 +17,7 @@ $periode_d = $step[0];
 $periode_f = $step[1];
 $nb_termes=0;
 $nb_termes = count($data);
-
+echo $nb_termes;
 //on prépare l'axe des x
 $xx = array();
 $dat = array();
