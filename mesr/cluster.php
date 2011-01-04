@@ -690,9 +690,10 @@ if ($nav=="socsem"){
 	//print_r($datalabels);
 	echo '<p>';
 	$maxdata*=1.05;
-	//print_r($data);
-	include('include/cluster-evol-helper.php');
-	echo $myscript;
+	//include('include/cluster-evol-helper.php');
+	//echo $myscript;
+	include('include/cluster_punch.php');
+	echo $ggraph;
 
 }
 
