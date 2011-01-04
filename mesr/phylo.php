@@ -188,7 +188,7 @@ function branch_list_string($mysql_branch_list,$depth,$min_similarity){
 	$Ngram_arrays=$grouped_labels[Ngram_arrays]; // array pour les labelliser
 	
 	$branch_string='<table class=tableitems style="background-color:'.$whitedark.';" width=100%>';
-	$branch_string.='<tr><td colspan=2 width=100%>';
+	$branch_string.='<tr><td colspan=4 width=100%>';
 	// html avec la liste des branches
 	$branch_string.='<i>('.$nb_branches.' thématiques dans cette catégorie)'.'</i>'; 
 	$branch_string.='</td></tr>';
@@ -207,7 +207,7 @@ function branch_list_string($mysql_branch_list,$depth,$min_similarity){
 				next($Ngrams);
 			}
 			$group_title=substr(trim($group_title), 0, -1);
-			$branch_string.='<tr><td colspan=2 width=100%>';
+			$branch_string.='<tr><td colspan=4 width=100%>';
 			$branch_string.='<b>'.ucfirst($group_title).'</b>';
 			$branch_string.='</td></tr>';
 
@@ -253,7 +253,7 @@ function branch_list_string($mysql_branch_list,$depth,$min_similarity){
 			$branch.=ucfirst($branch_list[$index_grouped[0]]['label']).'</a>  '.$dates;
 			$branch_string.=$branch.'</td></tr>';
 		}
-		$branch_string.='<tr height=4px><td colspan=2 style="background-color:'.$whitedarker.';"></td></tr>';
+		$branch_string.='<tr height=4px><td width=100% colspan=4 style="background-color:'.$whitedarker.';"></td></tr>';
 		//$branch_string=$branch_string.'</ul>'.'<br/>';
 
 	}
