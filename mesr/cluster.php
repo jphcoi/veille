@@ -385,13 +385,17 @@ function display_helper_environnementsocial() {
 	
 function display_helper_contenu() {
 	global $jscriptmp;
-	$jscriptmp.=display_helper('Contenu','L\'onglet "contenu" affiche les informations principales du champ thématique courant et permet de naviguer le plus efficacement dans la phylogénie environnante:
+	$jscriptmp.=display_helper('Contenu','L\'onglet "contenu" affiche les informations principales du <a href="aide.php?selectedTab=2"><font color=blue>champ thématique</font></a> courant et permet de naviguer le plus efficacement dans la phylogénie environnante:
 		<ul style="font-size:small;"><li>
 	    	<b style="font-variant:small-caps;">dans la partie haute</b>, la boîte centrale affiche par défaut les termes contenus dans le champ courant. 
-	    	Elle est entourée, à gauche et à droite respectivement, des champs potentiellement antérieurs et postérieurs, lorsqu\'il en existe.
+	    	Elle est entourée, à gauche et à droite respectivement, des champs antérieurs et ultérieurs, lorsqu\'il en existe.
 	    	<br>Les champs voisins qui n\'appartiennent pas à la période <i>immédiatement</i> suivante ou précédente sont affichés sur <span style="background-color:white; border:1px solid gray;">fond blanc</span>, le décalage temporel est signalé par des points de suspension ("...") et est précisé entre crochets (par exemple, "<b style="font-size:xx-small;">[+5 sem.]</b>").
 	    	<br><br>En plaçant le curseur sur l\'intitulé d\'un champ voisin, la boîte centrale indique alors les termes ajoutés ou retranchés par rapport au champ courant; cliquer sur l\'intitulé permet de naviguer directement dans ce champ.
+                <br/>
+                <br/><center><img src="images/ChampsOver.jpg"  border=1></a><br/></center><br/>
 	    	En outre, l\'icône loupe <img src=images/magnify.png> ouvre une fenêtre rappelant le contenu d\'un champ voisin.
+                <br/><center><img src="images/ChampPopUp.jpg"  border=1></a><br/></center><br/>
+
 		    </li>
 	    	<li>
 		    <b style="font-variant:small-caps;">dans la partie basse</b>, la liste des billets rattachés au champ courant est affichée, suivant un seuil de pertinence qu\'il convient de fixer selon le niveau de détail souhaité; plus le seuil est élevé, plus l\'appariement des billets avec le champ thématique est fort.  

@@ -638,7 +638,7 @@ function compute_periode($s) {$a=explode(" ",$s); return(intval($a[0])*1000000+i
 
 
 
-function get_date_since($jour)
+function get_date_since($jour,$format='us')
 	{ 
 		$univ_time_begin = 	"2009-12-31";
 		setlocale (LC_TIME, 'fr_FR.UTF8','fra');	
@@ -646,7 +646,11 @@ function get_date_since($jour)
 		$day=date('Y-m-d');
 		$date_depart = strtotime($day);
 		eval( '$newd = date(\'n/j/Y\', strtotime(\'-'.$jour.' days\',$date_depart));');
-		$dt = date("Y-m-d", strtotime($newd));  
+		$dt = date("Y-m-d", strtotime($newd));
+                if ($format=='fr'){
+                    $newdt=explode('-',$dt);
+                    $dt=$newdt[2].'/'.$newdt[1].'/'.$newdt[0];
+                }
 		return $dt;
 	}
 
@@ -994,7 +998,7 @@ function display_helper_two_outputs($title,$text,$indexsuffix,$img="question-mar
 	$arr=array();
 	$arr[]= "
 		<img src='images/".$img."' id='opener".$indexsuffix."'>
-		<div id='dialog".$indexsuffix."' title=".str_replace(" ","&nbsp;",$title).">".$text."
+		<div id='dialog".$indexsuffix."' style=\"display:none;\" title=".str_replace(" ","&nbsp;",$title).">".$text."
 		</div>
 		";
 
