@@ -225,7 +225,7 @@ function branch_list_string($mysql_branch_list,$depth,$min_similarity){
 		
 				$branch='<tr onMouseOver="this.style.backgroundColor=\''.$whitedarker.'\';" onMouseOut="this.style.backgroundColor=\''.$whitedark.'\';">';
 				$branch.='<td width=50px style="font-size: x-small;">'.$ligne['nb_fields'].'&nbsp;champs</td>';
-				$branch.='<td width=100px style="font-size: x-small;">'.str_replace(" ","&nbsp;",get_short_string_periode($ligne['first_period'].'-'.$ligne['last_period'])).'</td>';
+				$branch.='<td width=100px style="font-size: x-small;">'.str_replace(" ","&nbsp;","  ".get_short_string_periode($ligne['first_period'].'-'.$ligne['last_period'])." ").'</td>';
 				$branch.='<td>';
 				$branch.='<i><a href="cluster.php?id_cluster='.$branch_list[$index]['branch_last_period_cluster_id'].'&periode='.str_replace(' ','-',$branch_list[$index]['branch_last_period']).'">';
 				$branch.=ucfirst($branch_list[$index]['label']).'</a></i>';
@@ -238,7 +238,7 @@ function branch_list_string($mysql_branch_list,$depth,$min_similarity){
 		else 
 		{ // c'est une branche perdue
 			$branch_string.='<tr><td colspan=3 width=100%>';
-			$branch_string.='<b>[MISC]</b>';
+			$branch_string.='<b></b>';
 			$branch_string.='</td></tr>';
 			$branch_id=$branch_list[$index_grouped[0]]['id_partition'];
 			$sql='SELECT * from partitions WHERE id_partition='.$branch_id;
@@ -251,7 +251,7 @@ function branch_list_string($mysql_branch_list,$depth,$min_similarity){
 			
 			$branch='<tr onMouseOver="this.style.backgroundColor=\''.$whitedarker.'\';" onMouseOut="this.style.backgroundColor=\''.$whitedark.'\';">';
 			$branch.='<td width=50px style="font-size: x-small;">'.$ligne['nb_fields'].'&nbsp;champs</td>';
-			$branch.='<td width=100px style="font-size: x-small;">('.adjust_date_jours($ligne['first_period']).'-'.adjust_date_jours($ligne['last_period']).'</td>';
+			$branch.='<td width=100px style="font-size: x-small;">'.str_replace(" ","&nbsp;","  ".get_short_string_periode($ligne['first_period'].'-'.$ligne['last_period'])." ").'</td>';
 			$branch.='<td onMouseOver="this.style.backgroundColor=\''.$whitedarker.'\';" onMouseOut="this.style.backgroundColor=\''.$whitedark.'\';">';
 			$branch.='<a href="cluster.php?id_cluster='.$branch_list[$index_grouped[0]]['branch_last_period_cluster_id'].'&periode='.str_replace(' ','-',$branch_list[$index_grouped[0]]['branch_last_period']).'">';
 			$branch.=ucfirst($branch_list[$index_grouped[0]]['label']).'</a>';
