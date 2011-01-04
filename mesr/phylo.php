@@ -187,7 +187,7 @@ function branch_list_string($mysql_branch_list,$depth,$min_similarity){
 	
 	$Ngram_arrays=$grouped_labels[Ngram_arrays]; // array pour les labelliser
 	
-	$branch_string='<table class=tableitems style="background-color:'.$whitedark.';" width=100%>';
+	$branch_string='<table class=tableitems cellspacing=0 style="background-color:'.$whitedark.';" width=100%>';
 	$branch_string.='<tr><td colspan=3 width=100%>';
 	// html avec la liste des branches
 	$branch_string.='<i>('.$nb_branches.' thématiques dans cette catégorie)'.'</i>'; 
@@ -222,12 +222,13 @@ function branch_list_string($mysql_branch_list,$depth,$min_similarity){
 					$dates='<span style="font-size: x-small;">('.$ligne['nb_fields'].' champs / '.adjust_date_jours($ligne['first_period']).'-'.adjust_date_jours($ligne['last_period']).')</span>';
 				}
 		
-				$branch='<tr>';
-				$branch.='<td width=50px style="font-size: x-small;">('.$ligne['nb_fields'].'champs)</td>';
+				$branch='<tr onMouseOver="this.style.backgroundColor=\''.$whitedarker.'\';" onMouseOut="this.style.backgroundColor=\''.$whitedark.'\';">';
+				$branch.='<td width=50px style="font-size: x-small;">('.$ligne['nb_fields'].' champs)</td>';
 				$branch.='<td width=100px style="font-size: x-small;">('.adjust_date_jours($ligne['first_period']).'-'.adjust_date_jours($ligne['last_period']).'</td>';
-				$branch.='<td onMouseOver="this.style.backgroundColor=\''.$whitedarker.'\';" onMouseOut="this.style.backgroundColor=\''.$whitedark.'\';">';
+				$branch.='<td>';
 				$branch.='<i><a href="cluster.php?id_cluster='.$branch_list[$index]['branch_last_period_cluster_id'].'&periode='.str_replace(' ','-',$branch_list[$index]['branch_last_period']).'">';
-				$branch.=ucfirst($branch_list[$index]['label']).'</a></i>  '.$dates;
+				$branch.=ucfirst($branch_list[$index]['label']).'</a></i>';
+				//$branch.='  '.$dates;
 				$branch.='</td></tr>';
 				$branch_string.=$branch;
 				next($index_grouped);
@@ -248,11 +249,12 @@ function branch_list_string($mysql_branch_list,$depth,$min_similarity){
 			}
 			
 			$branch='<tr onMouseOver="this.style.backgroundColor=\''.$whitedarker.'\';" onMouseOut="this.style.backgroundColor=\''.$whitedark.'\';">';
-			$branch.='<td width=50px style="font-size: x-small;">('.$ligne['nb_fields'].'champs)</td>';
+			$branch.='<td width=50px style="font-size: x-small;">('.$ligne['nb_fields'].' champs)</td>';
 			$branch.='<td width=100px style="font-size: x-small;">('.adjust_date_jours($ligne['first_period']).'-'.adjust_date_jours($ligne['last_period']).'</td>';
 			$branch.='<td onMouseOver="this.style.backgroundColor=\''.$whitedarker.'\';" onMouseOut="this.style.backgroundColor=\''.$whitedark.'\';">';
 			$branch.='<a href="cluster.php?id_cluster='.$branch_list[$index_grouped[0]]['branch_last_period_cluster_id'].'&periode='.str_replace(' ','-',$branch_list[$index_grouped[0]]['branch_last_period']).'">';
-			$branch.=ucfirst($branch_list[$index_grouped[0]]['label']).'</a>  '.$dates;
+			$branch.=ucfirst($branch_list[$index_grouped[0]]['label']).'</a>';
+			//$branch.='  '.$dates;
 			$branch_string.=$branch.'</td></tr>';
 		}
 		$branch_string.='<tr height=4px><td width=100% colspan=3 style="background-color:'.$whitedarker.';"></td></tr>';
