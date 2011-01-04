@@ -223,7 +223,7 @@ function branch_list_string($mysql_branch_list,$depth,$min_similarity){
 				$ligne=mysql_fetch_array($resultat);		
 				$branch='<tr onMouseOver="this.style.backgroundColor=\''.$whitedarker.'\';" onMouseOut="this.style.backgroundColor=\''.$whitedark.'\';">';
 
-				$branch.='<td width=50px style="font-size: x-small; text-align:right;">'.$ligne['nb_fields'].'&nbsp;champs</td>';
+				$branch.='<td width=50px style="font-size: x-small; text-align:right;"><b>'.$ligne['nb_fields'].'</b>&nbsp;champs</td>';
 				$branch.='<td width=50px style="font-size: x-small; text-align:right;">&nbsp;';
 				$branch.=str_replace("(&nbsp;","(",str_replace(" ","&nbsp;",'('.get_short_string_periode($ligne['first_period'].'-'.$ligne['last_period'])));
 				$branch.=')&nbsp;</td><td style="font-size:9pt;">';
@@ -254,7 +254,7 @@ function branch_list_string($mysql_branch_list,$depth,$min_similarity){
 			
 			$branch='<tr onMouseOver="this.style.backgroundColor=\''.$whitedarker.'\';" onMouseOut="this.style.backgroundColor=\''.$whitedark.'\';">';
 			
-			$branch.='<td width=50px style="font-size: x-small; text-align:right;">'.$ligne['nb_fields'].'&nbsp;champs</td>';
+			$branch.='<td width=50px style="font-size: x-small; text-align:right;"><b>'.$ligne['nb_fields'].'</b>&nbsp;champs</td>';
 			$branch.='<td width=50px style="font-size: x-small; text-align:right;">&nbsp;';
 			$branch.=str_replace("(&nbsp;","(",str_replace(" ","&nbsp;",'('.get_short_string_periode($ligne['first_period'].'-'.$ligne['last_period'])));
 			$branch.=')&nbsp;</td><td style="font-size:9pt;">';
