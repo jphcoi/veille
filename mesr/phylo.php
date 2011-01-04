@@ -202,8 +202,8 @@ function branch_list_string($mysql_branch_list,$depth,$min_similarity){
 				next($Ngrams);
 			}
 			$group_title=substr(trim($group_title), 0, -1);
-			$branch_string.='<table class=tableitems style="background-color:'.$backdark.';" width=100%>';
-			$branch_string.='<tr><td width=100%>';
+			$branch_string.='<table class=tableitems style="background-color:#DDDDDD;" width=100%>';
+			$branch_string.='<tr><td colspan=2 width=100%>';
 			$branch_string.='<b>'.ucfirst($group_title).'</b></td></tr>';
 
 			for ($j=0;$j<count($index_grouped);$j++){
@@ -215,7 +215,7 @@ function branch_list_string($mysql_branch_list,$depth,$min_similarity){
 					$dates='<span style="font-size: x-small;">('.$ligne[nb_fields].' champs / '.adjust_date_jours($ligne[first_period]).'-'.adjust_date_jours($ligne[last_period]).')</span>';
 				}
 		
-				$branch='<tr><td><i><a href="cluster.php?id_cluster='.$branch_list[$index]['branch_last_period_cluster_id'].'&periode='.str_replace(' ','-',$branch_list[$index]['branch_last_period']).'">';
+				$branch='<tr><td width=50px></td><td><i><a href="cluster.php?id_cluster='.$branch_list[$index]['branch_last_period_cluster_id'].'&periode='.str_replace(' ','-',$branch_list[$index]['branch_last_period']).'">';
 				$branch.=ucfirst($branch_list[$index]['label']).'</a></i>  '.$dates.'</td></tr>';
 				$branch_string.=$branch;
 				next($index_grouped);
