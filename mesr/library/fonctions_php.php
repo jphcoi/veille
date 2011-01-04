@@ -988,53 +988,37 @@ function display_box($titre,$auteurs,$abstract,$permalien,$concepts,$type_notice
 	';
 }
 
-function display_helper($title,$text,$indexsuffix,$img="question-mark.gif",$options="resizable: false, modal:true, width:600") {
-// cette fonction affiche un point d'interrogation correspondant au dialogue d'id "dialog$indexsuffix"
-// et renvoie le bout de script JS-Jquery qui doit être ajouté à la commande d'affichage de script JQuery à la fin
-	echo " <img src='images/".$img."' id='opener".$indexsuffix."'><span id='dialog".$indexsuffix."' title=".str_replace(" ","&nbsp;",$title).">".$text."</span>";
-	
-	return("
-		$('#dialog".$indexsuffix."')
-		  .dialog({ autoOpen: false, stack: true, ".$options.", closeOnEscape:true})
-		  .click(function () { $('#dialog".$indexsuffix."').dialog('close'); });
-
-		$('#opener".$indexsuffix."').click(function(e) {
-			if (!$('#dialog".$indexsuffix."').dialog('isOpen')) 
-				$('#dialog".$indexsuffix."').dialog('option','position', [$(this).position().left+25,25]).dialog('open');
-			else
-				$('#dialog".$indexsuffix."').dialog('close');
-			return false;
-			});");
-}
-
 function display_helper_two_outputs($title,$text,$indexsuffix,$img="question-mark.gif",$options="resizable: false, modal:true, width:600") {
-// Comme display_helper sauf qu'elle renvoie un array avec les deux strings au lieu de faire un echo
-// cette fonction affiche un point d'interrogation correspondant au dialogue d'id "dialog$indexsuffix"
+// cette fonction renvoie un texte permettant d'afficher un point d'interrogation correspondant au dialogue d'id "dialog$indexsuffix"
 // et renvoie le bout de script JS-Jquery qui doit être ajouté à la commande d'affichage de script JQuery à la fin
-$question_mark= "
-<img src='images/".$img."' id='opener".$indexsuffix."'>
-<div id='dialog".$indexsuffix."' title=".str_replace(" ","&nbsp;",$title).">".$text."
-</div>
-";
+	$arr=array();
+	$arr[]= "
+		<img src='images/".$img."' id='opener".$indexsuffix."'>
+		<div id='dialog".$indexsuffix."' style=\"display:none;\" title=".str_replace(" ","&nbsp;",$title).">".$text."
+		</div>
+		";
 
-        $script="
-$('#dialog".$indexsuffix."')
-.dialog({ autoOpen: false, stack: true, ".$options.", closeOnEscape:true})
-.click(function () { $('#dialog".$indexsuffix."').dialog('close'); });
+	$arr[]="
+		$('#dialog".$indexsuffix."')
+		.dialog({ autoOpen: false, stack: true, ".$options.", closeOnEscape:true})
+		.click(function () { $('#dialog".$indexsuffix."').dialog('close'); });
+		
+		$('#opener".$indexsuffix."').click(function(e) {
+		if (!$('#dialog".$indexsuffix."').dialog('isOpen'))
+		$('#dialog".$indexsuffix."').dialog('option','position', [$(this).position().left+25,25]).dialog('open');
+		else
+		$('#dialog".$indexsuffix."').dialog('close');
+		return false;
+		});";
 
-$('#opener".$indexsuffix."').click(function(e) {
-if (!$('#dialog".$indexsuffix."').dialog('isOpen'))
-$('#dialog".$indexsuffix."').dialog('option','position', [$(this).position().left+25,25]).dialog('open');
-else
-$('#dialog".$indexsuffix."').dialog('close');
-return false;
-});";
-       $out=array();
-       $out[]=$question_mark;
-       $out[]=$script;
-       return $out;
+	return($arr);
 }
 
+function display_helper($title,$text,$indexsuffix,$img="question-mark.gif",$options="resizable: false, modal:true, width:600") {
+	$arr=display_helper_two_outputs($title,$text,$indexsuffix,$img,$options);
+	echo($arr[0]);
+	return($arr[1]);
+}
 
 
 function recup_id_auteurs($chaine)
@@ -1164,7 +1148,7 @@ function display_billets($info_sources,$list_of_concepts,$my_period,$type_notice
 function display_box_plus($titre,$auteurs,$abstract,$permalien,$concepts,$type_notice,$index,$insertedtext)
 {
 	$notice = mise_en_forme_abstract($titre,$auteurs,$abstract,$concepts,$type_notice);
-	echo '<span align=left id="dialog'.$index.'" title="'.$titre.'" style="font-size:8pt;">'.$notice.'</span>';
+	echo '<span align=left id="dialog'.$index.'" title="'.$titre.'" style="font-size:8pt;display:none;">'.$notice.'</span>';
 	echo '<a ';
 	if (strpos($permalien,'http:')>-1) {
 		echo 'href="'.$permalien.'"';
