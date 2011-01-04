@@ -80,10 +80,11 @@ $ggraph = '
         </script>
 
         <div id="holder" width="600px"></div>
+        
         <script>
-d = document.getElementById(\'holder\');
-// set the width
-d.style.height="'.$ysize.'px";
+		d = document.getElementById(\'holder\');
+		// set the width
+		d.style.height="'.$ysize.'px";
         </script>
 ';
 ?>
