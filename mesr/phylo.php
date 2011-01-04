@@ -207,7 +207,8 @@ function branch_list_string($mysql_branch_list,$depth,$min_similarity){
 			}
 			$group_title=substr(trim($group_title), 0, -1);
 			$branch_string.='<tr><td colspan=2 width=100%>';
-			$branch_string.='<b>'.ucfirst($group_title).'</b></td></tr>';
+			$branch_string.='<b>'.ucfirst($group_title).'</b>';
+			$branch_string.='</td></tr>';
 
 			for ($j=0;$j<count($index_grouped);$j++){
 				$index = $index_grouped[$j];
@@ -218,8 +219,10 @@ function branch_list_string($mysql_branch_list,$depth,$min_similarity){
 					$dates='<span style="font-size: x-small;">('.$ligne[nb_fields].' champs / '.adjust_date_jours($ligne[first_period]).'-'.adjust_date_jours($ligne[last_period]).')</span>';
 				}
 		
-				$branch='<tr><td width=50px></td><td><i><a href="cluster.php?id_cluster='.$branch_list[$index]['branch_last_period_cluster_id'].'&periode='.str_replace(' ','-',$branch_list[$index]['branch_last_period']).'">';
-				$branch.=ucfirst($branch_list[$index]['label']).'</a></i>  '.$dates.'</td></tr>';
+				$branch='<tr><td width=50px></td>';
+				$branch.='<td><i><a href="cluster.php?id_cluster='.$branch_list[$index]['branch_last_period_cluster_id'].'&periode='.str_replace(' ','-',$branch_list[$index]['branch_last_period']).'">';
+				$branch.=ucfirst($branch_list[$index]['label']).'</a></i>  '.$dates;
+				$branch.='</td></tr>';
 				$branch_string.=$branch;
 				next($index_grouped);
 			}
@@ -235,11 +238,11 @@ function branch_list_string($mysql_branch_list,$depth,$min_similarity){
 			
 			$branch='<tr><td></td><td>';
 			$branch.='<a href="cluster.php?id_cluster='.$branch_list[$index_grouped[0]]['branch_last_period_cluster_id'].'&periode='.str_replace(' ','-',$branch_list[$index_grouped[0]]['branch_last_period']).'">';
-			$branch.=ucfirst($branch_list[$index_grouped[0]]['label']).'</a>  '.$dates.'<br/>';
+			$branch.=ucfirst($branch_list[$index_grouped[0]]['label']).'</a>  '.$dates;
 			$branch_string.=$branch.'</td></tr>';
 		}
 		
-		$branch_string=$branch_string.'</ul>'.'<br/>';
+		//$branch_string=$branch_string.'</ul>'.'<br/>';
 
 	}
 
