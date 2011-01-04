@@ -148,7 +148,8 @@ echo "       	</div>
 
 function branch_list_string($mysql_branch_list,$depth,$min_similarity){
 //donne la liste des macro-branches qui couvrent au moins $phylo_min_nb_periods_covered
-
+	$whitedark='#F8F8F8';
+	$whitedark='#F0F0F0';
 	//$label_list=array(); // liste des branches
 	//$branch_last_period=array(); // liste des périodes associées
 	//$branch_last_period_cluster_id=array(); // liste de clusters des branches
@@ -186,7 +187,7 @@ function branch_list_string($mysql_branch_list,$depth,$min_similarity){
 	
 	$Ngram_arrays=$grouped_labels[Ngram_arrays]; // array pour les labelliser
 	
-	$branch_string='<table class=tableitems style="background-color:#EEEEEE;" width=100%>';
+	$branch_string='<table class=tableitems style="background-color:'.$whitedark.';" width=100%>';
 	$branch_string.='<tr><td colspan=2 width=100%>';
 	// html avec la liste des branches
 	$branch_string.='<i>('.$nb_branches.' thématiques dans cette catégorie)'.'</i>'; 
@@ -236,12 +237,12 @@ function branch_list_string($mysql_branch_list,$depth,$min_similarity){
 				$dates='<span style="font-size: x-small;">('.$ligne[nb_fields].' champs / '.adjust_date_jours($ligne[first_period]).'-'.adjust_date_jours($ligne[last_period]).')</span>';
 			 }
 			
-			$branch='<tr><td></td><td>';
+			$branch='<tr><td colspan=2>';
 			$branch.='<a href="cluster.php?id_cluster='.$branch_list[$index_grouped[0]]['branch_last_period_cluster_id'].'&periode='.str_replace(' ','-',$branch_list[$index_grouped[0]]['branch_last_period']).'">';
 			$branch.=ucfirst($branch_list[$index_grouped[0]]['label']).'</a>  '.$dates;
 			$branch_string.=$branch.'</td></tr>';
 		}
-		
+		$branch_string.='<tr height=4px><td colspan=2 style="background-color:'.$whitedarker.';"></td></tr>';
 		//$branch_string=$branch_string.'</ul>'.'<br/>';
 
 	}
