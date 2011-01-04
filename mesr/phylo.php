@@ -240,7 +240,8 @@ function branch_list_string($mysql_branch_list,$depth,$min_similarity){
 		else 
 		{ // c'est une branche perdue
 			if ($first_withoutgroup) {
-				$branch_string.='<tr style="background-color:white; font-variant:small-caps;" height=20px><td colspan 4 width=100%><i>sans groupe]</i>';
+				$branch_string.='<tr style="background-color:white; font-variant:small-caps;" height=20px>';
+				$branch_string.='<td colspan=4 width=100%><i>sans groupe</i>';
 				$first_withoutgroup=0;
 				}
 			else {
