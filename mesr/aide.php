@@ -8,7 +8,7 @@ $ink  =mysql_connect( $server,$user,$password);if ($encodage=="utf-8") mysql_que
 //à préciser lorsqu'on est sur sciencemapping.com
 if ($user!="root") mysql_query("SET NAMES utf8;");
 
-$titleheader="Aide et ontologie";
+$titleheader="aide et ontologie";
 include("include/header.php");
 include("banner.php");
 
@@ -31,9 +31,9 @@ $source_ex=getValue(12,'auteurs','id','auteurs');
 $term_ex=getValue(1433,'concepts','id','forme_principale');
 
 echo '<p><table width=100%>';
-echo '<tr valign=top><td width=2.5%></td><td><h2 class=subtitle>Aide et ontologie</h2></td><td width=2.5%></td></tr>';
-echo "<tr valign=top><td width=2.5%></td><td>
-<h3>A propos de cette plateforme</h3>
+echo '<tr valign=top><td width=2.5%></td><td><h2 class=subtitle>aide et ontologie</h2></td><td width=2.5%></td></tr>';
+echo "<tr valign=top><td width=2.5%></td><td style=\"font-size:small;\">
+<h3>À propos de cette plateforme</h3>
 <p>Cette plateforme présente une reconstruction des discussions sur le thème <i>'Santé et Environnement'</i>
 à partir d'un échantillon représentatif de contenus dynamiques du web français sur la période du ";
 echo adjust_date_jours($dated-2*$dT)." 2010 au ".adjust_date_jours($datef)." 2010. </p><p> Par reconstruction, il faut entendre l'extraction, à partir d'une analyse des productions de la blogosphère,
@@ -66,24 +66,24 @@ Ceux-ci sont accessibles via le menu de navigation:
 <p>
 <center><a name='champs'>
 <img src='images/termes_carte.jpg' ></a><br/>
-<span style='font-size:small;'>Les <a href='entree_clusters.php'>champs thématiques</a> sont des groupes de termes. Ils s'articulent au sein de <a href='global.php'>cartes</a>
+<span style='font-size:x-small;'>Les <a href='entree_clusters.php'>champs thématiques</a> sont des groupes de termes. Ils s'articulent au sein de <a href='global.php'>cartes</a>
 et sont labellisés par les deux termes les plus représentatifs.</span>
 </center></p>
 <br/><p>
 <center><a name='phylo'>
 <img src='images/phylogenie.jpg' ></a><br/>
-<span style='font-size:small;'>Les <a href='entree_clusters.php'>champs thématiques</a> sont
+<span style='font-size:x-small;'>Les <a href='entree_clusters.php'>champs thématiques</a> sont
 intégrés au sein de fils thématiques qui permettent de suivre
 leurs evolutions et leurs mutations.
 Au sein d'un fil thématique, un champ thématique peut provenir d'une évolution
 linéaire ou être le fruit de la rencontre de plusieurs
 thématiques antérieurs. Il peut également donner naisssance à une ou plusieurs champs thématiques
 sur les périodes ultérieures. L'ensemble des
-fils thématiques peut-être <a href='phylo.php'>cvisualisé de manière interactive</a> comme ci-dessous.</span>
+fils thématiques peut-être <a href='phylo.php'>visualisé de manière interactive</a> comme ci-dessous.</span>
 </center>
 <center><a name='phylo'>
 <img src='images/filsThematiques.jpg' ></a><br/>
-<span style='font-size:small;'>Exemple de visualisation d'un ensemble de <a href='phylo.php'>fils thématiques</a>. Ceux-ci intègrent les <a href='entree_clusters.php'>champs thématiques</a> dans une structure
+<span style='font-size:x-small;'>Exemple de visualisation d'un ensemble de <a href='phylo.php'>fils thématiques</a>. Ceux-ci intègrent les <a href='entree_clusters.php'>champs thématiques</a> dans une structure
 temporelle qui permet de suivre l'évolution de leur popularité.</span>
 </center>
 
