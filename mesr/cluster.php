@@ -659,10 +659,10 @@ if ($nav=="cooc"){
 //// BLOC NAVIGATION SOCIO-SEMANTIQUE / TREILLIS LOCAUX
 
 if ($nav=="socsem"){
+
 	//*********************************************************************
 	//* AFFICHAGE ACTIVITÉ TEMPORELLE DE L'ENSEMBLE DES TERMES DU CLUSTER *
 	//*********************************************************************
-	echo '<p>';
 
 	//print_r($list_of_concepts);
 	
@@ -692,7 +692,8 @@ if ($nav=="socsem"){
 	}
 	//print_r($data);
 	//print_r($datalabels);
-	echo '<p>';
+	//echo '<p>';
+	//echo '<p>';
 	$maxdata*=1.05;
 	include('include/cluster-evol-helper.php');
 	echo $myscript;
