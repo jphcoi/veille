@@ -241,7 +241,7 @@ function branch_list_string($mysql_branch_list,$depth,$min_similarity){
 		{ // c'est une branche perdue
 			if ($first_withoutgroup) {
 				$branch_string.='<tr style="background-color:white; font-variant:small-caps; font-size:large; font-weight:bold;" height=40px>';
-				$branch_string.='<td colspan=4 width=100%><i>sans groupe</i>';
+				$branch_string.='<td colspan=4 width=100%>fils thématiques "isolés"';
 				$first_withoutgroup=0;
 				}
 			else {
