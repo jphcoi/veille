@@ -187,7 +187,7 @@ function branch_list_string($mysql_branch_list,$depth,$min_similarity){
 	
 	$Ngram_arrays=$grouped_labels[Ngram_arrays]; // array pour les labelliser
 	
-	$branch_string='<table class=tableitems cellspacing=0 cellpadding=2 style="background-color:'.$whitedark.';" width=100%>';
+	$branch_string='<table class=tableitems cellspacing=0 cellpadding=3 style="background-color:'.$whitedark.';" width=100%>';
 	$branch_string.='<tr><td colspan=4 width=100%>';
 	// html avec la liste des branches
 	$branch_string.='<i>('.$nb_branches.' fils thématiques dans cette catégorie)'.'</i>'; 
@@ -240,7 +240,7 @@ function branch_list_string($mysql_branch_list,$depth,$min_similarity){
 		else 
 		{ // c'est une branche perdue
 			if ($first_withoutgroup) {
-				$branch_string.='<tr style="background-color:white; font-variant:small-caps;" height=20px>';
+				$branch_string.='<tr style="background-color:white; font-variant:small-caps; font-size:large; font-weight:bold;" height=40px>';
 				$branch_string.='<td colspan=4 width=100%><i>sans groupe</i>';
 				$first_withoutgroup=0;
 				}
@@ -259,15 +259,15 @@ function branch_list_string($mysql_branch_list,$depth,$min_similarity){
 			
 			$branch='<tr onMouseOver="this.style.backgroundColor=\''.$whitedarker.'\';" onMouseOut="this.style.backgroundColor=\''.$whitedark.'\';">';
 			$branch.='<td width=50px style="font-size: x-small;">'.$ligne['nb_fields'].'&nbsp;champs</td>';
-			$branch.='<td width=50px style="font-size: x-small; text-align:right;">';
+			$branch.='<td width=50px style="font-size: x-small; text-align:right;">&nbsp;(';
 			$branch.=str_replace(" ","&nbsp;",get_short_string_periode($ligne['first_period'].'-'.$ligne['last_period']));
-			$branch.='&nbsp;</td><td>';
+			$branch.=')&nbsp;</td><td>';
 			$branch.='<a href="cluster.php?id_cluster='.$branch_list[$index_grouped[0]]['branch_last_period_cluster_id'].'&periode='.str_replace(' ','-',$branch_list[$index_grouped[0]]['branch_last_period']).'">';
 			$branch.=ucfirst($branch_list[$index_grouped[0]]['label']).'</a>';
 			//$branch.='  '.$dates;
 			$branch_string.=$branch.'</td></tr>';
 		}
-		$branch_string.='<tr height=4px><td width=100% colspan=4 style="background-color:'.$whitedarker.';"></td></tr>';
+		$branch_string.='<tr height=3px><td width=100% colspan=4 style="background-color:'.$whitedarker.';"></td></tr>';
 		//$branch_string=$branch_string.'</ul>'.'<br/>';
 
 	}
