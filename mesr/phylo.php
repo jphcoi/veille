@@ -195,6 +195,7 @@ function branch_list_string($mysql_branch_list,$depth,$min_similarity){
 	$branch_string.='<tr height=7px style="background-color:#E0E0E0;"><td colspan=3 width=100%></td></tr>';
 	$branch_string.='<tr height=7px><td colspan=3 width=100%></td></tr>';
 	
+	$first_withoutgroup=1;
 	for ($i=0;$i<count($grouped_indexes);$i++){
 	
 		$index_grouped=$grouped_indexes[$i];
@@ -208,7 +209,7 @@ function branch_list_string($mysql_branch_list,$depth,$min_similarity){
 				next($Ngrams);
 			}
 			$group_title=substr(trim($group_title), 0, -1);
-			$branch_string.='<tr><td colspan=3 width=100%>';
+			$branch_string.='<tr><td colspan=4 width=100%>';
 			$branch_string.='<b>'.ucfirst($group_title).'</b>';
 			$branch_string.='</td></tr>';
 
@@ -224,8 +225,8 @@ function branch_list_string($mysql_branch_list,$depth,$min_similarity){
 				}
 		
 				$branch='<tr onMouseOver="this.style.backgroundColor=\''.$whitedarker.'\';" onMouseOut="this.style.backgroundColor=\''.$whitedark.'\';">';
-				$branch.='<td width=50px style="font-size: x-small;">'.$ligne['nb_fields'].'&nbsp;champs</td>';
-				$branch.='<td width=100px style="font-size: x-small;">'.str_replace(" ","&nbsp;","  ".get_short_string_periode($ligne['first_period'].'-'.$ligne['last_period'])." ").'</td>';
+				$branch.='<td width=50px style="text-align:right;font-size: x-small;">'.$ligne['nb_fields'].'&nbsp;champs</td>';
+				$branch.='<td width=100px style="font-size: x-small;">'.str_replace("-","</td><td>",str_replace(" ","&nbsp;","  ".get_short_string_periode($ligne['first_period'].'-'.$ligne['last_period'])." ")).'</td>';
 				$branch.='<td>';
 				$branch.='<i><a href="cluster.php?id_cluster='.$branch_list[$index]['branch_last_period_cluster_id'].'&periode='.str_replace(' ','-',$branch_list[$index]['branch_last_period']).'">';
 				$branch.=ucfirst($branch_list[$index]['label']).'</a></i>';
@@ -237,8 +238,9 @@ function branch_list_string($mysql_branch_list,$depth,$min_similarity){
 		}
 		else 
 		{ // c'est une branche perdue
-			$branch_string.='<tr><td colspan=3 width=100%>';
-			$branch_string.='<b></b>';
+			$branch_string.='<tr><td colspan=4 width=100%>';
+			if ($first_withoutgroup) $branch_string.='<b>[sans groupe]</b>';
+			$first_withoutgroup=0;
 			$branch_string.='</td></tr>';
 			$branch_id=$branch_list[$index_grouped[0]]['id_partition'];
 			$sql='SELECT * from partitions WHERE id_partition='.$branch_id;
@@ -251,14 +253,14 @@ function branch_list_string($mysql_branch_list,$depth,$min_similarity){
 			
 			$branch='<tr onMouseOver="this.style.backgroundColor=\''.$whitedarker.'\';" onMouseOut="this.style.backgroundColor=\''.$whitedark.'\';">';
 			$branch.='<td width=50px style="font-size: x-small;">'.$ligne['nb_fields'].'&nbsp;champs</td>';
-			$branch.='<td width=100px style="font-size: x-small;">'.str_replace(" ","&nbsp;","  ".get_short_string_periode($ligne['first_period'].'-'.$ligne['last_period'])." ").'</td>';
+			$branch.='<td width=100px style="font-size: x-small;">'.str_replace("-","</td><td>",str_replace(" ","&nbsp;","  ".get_short_string_periode($ligne['first_period'].'-'.$ligne['last_period'])." ")).'</td>';
 			$branch.='<td onMouseOver="this.style.backgroundColor=\''.$whitedarker.'\';" onMouseOut="this.style.backgroundColor=\''.$whitedark.'\';">';
 			$branch.='<a href="cluster.php?id_cluster='.$branch_list[$index_grouped[0]]['branch_last_period_cluster_id'].'&periode='.str_replace(' ','-',$branch_list[$index_grouped[0]]['branch_last_period']).'">';
 			$branch.=ucfirst($branch_list[$index_grouped[0]]['label']).'</a>';
 			//$branch.='  '.$dates;
 			$branch_string.=$branch.'</td></tr>';
 		}
-		$branch_string.='<tr height=4px><td width=100% colspan=3 style="background-color:'.$whitedarker.';"></td></tr>';
+		$branch_string.='<tr height=4px><td width=100% colspan=4 style="background-color:'.$whitedarker.';"></td></tr>';
 		//$branch_string=$branch_string.'</ul>'.'<br/>';
 
 	}
