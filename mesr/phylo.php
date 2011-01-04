@@ -187,13 +187,13 @@ function branch_list_string($mysql_branch_list,$depth,$min_similarity){
 	
 	$Ngram_arrays=$grouped_labels[Ngram_arrays]; // array pour les labelliser
 	
-	$branch_string='<table class=tableitems cellspacing=0 style="background-color:'.$whitedark.';" width=100%>';
-	$branch_string.='<tr><td colspan=3 width=100%>';
+	$branch_string='<table class=tableitems cellspacing=0 cellpadding=0 style="background-color:'.$whitedark.';" width=100%>';
+	$branch_string.='<tr><td colspan=4 width=100%>';
 	// html avec la liste des branches
 	$branch_string.='<i>('.$nb_branches.' fils thématiques dans cette catégorie)'.'</i>'; 
 	$branch_string.='</td></tr>';
-	$branch_string.='<tr height=7px style="background-color:#E0E0E0;"><td colspan=3 width=100%></td></tr>';
-	$branch_string.='<tr height=7px><td colspan=3 width=100%></td></tr>';
+	$branch_string.='<tr height=7px style="background-color:#E0E0E0;"><td colspan=4 width=100%></td></tr>';
+	$branch_string.='<tr height=7px><td colspan=4 width=100%></td></tr>';
 	
 	$first_withoutgroup=1;
 	for ($i=0;$i<count($grouped_indexes);$i++){
