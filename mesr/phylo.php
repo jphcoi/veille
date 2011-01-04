@@ -149,7 +149,7 @@ echo "       	</div>
 function branch_list_string($mysql_branch_list,$depth,$min_similarity){
 //donne la liste des macro-branches qui couvrent au moins $phylo_min_nb_periods_covered
 	$whitedark='#F8F8F8';
-	$whitedark='#F0F0F0';
+	$whitedarker='#F0F0F0';
 	//$label_list=array(); // liste des branches
 	//$branch_last_period=array(); // liste des périodes associées
 	//$branch_last_period_cluster_id=array(); // liste de clusters des branches
