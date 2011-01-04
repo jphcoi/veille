@@ -47,9 +47,6 @@ while ($ligne=mysql_fetch_array($resultat)) {
 //        $json_dataSuspens=$ligne[valeur];
 //}
 
-
-
-
 $jscriptmp="	$( '#tabs' ).tabs();
                    event: 'mouseover'";
 
@@ -145,101 +142,113 @@ echo "       	</div>
 
 
 
+//////////////////////////////
+///////// Fonctions //////////
+//////////////////////////////
 
-///////// Fonctions /////
 function branch_list_string($mysql_branch_list,$depth,$min_similarity){
 //donne la liste des macro-branches qui couvrent au moins $phylo_min_nb_periods_covered
 
-//$label_list=array(); // liste des branches
-//$branch_last_period=array(); // liste des périodes associées
-//$branch_last_period_cluster_id=array(); // liste de clusters des branches
-$branch_list=array(); // infos sur les macro-branches (a vocation a intégrer toutes les variable ci-dessus)
-while ($ligne=mysql_fetch_array($mysql_branch_list)) {
-       $last_period_for_branch=$ligne[last_period_string];
-       // on récupère un cluster de la dernière période
-       $clusterQuery="select id_cluster FROM cluster WHERE periode='$last_period_for_branch' AND pseudo=$ligne[id_partition]";
-       $clusters_from_last_period=mysql_query($clusterQuery) or die ("<b>Requête non exécutée (récupération des clusters de la dernière période)</b>.");
-       $cluster_ligne=mysql_fetch_array($clusters_from_last_period);
-       $infos=array();
-       $infos['id_partition']=$ligne[id_partition];
-       $infos['nb_fields']=$ligne[nb_fields];
-       $infos['terms']=$ligne[terms];
-       $infos['terms_occ']=$ligne[terms_occ];
-       $infos['branch_last_period']=str_replace(' ','-',$last_period_for_branch);
-       $lab=$ligne[label];
-       if (strcmp(substr($lab,-1),',')==0){
-            $lab=substr($lab,0,-1);
-       }
-       $infos['label']=$lab;
-       $infos['label_ids']=$ligne[label_ids];
-       $infos['branch_last_period_cluster_id']=$cluster_ligne[id_cluster];
-       //array_push($branch_last_period,str_replace(' ','-',$last_period_for_branch));
-       //array_push($label_list,$branch.$ligne[label]);
-       //array_push($branch_last_period_cluster_id,$cluster_ligne[id_cluster]);
-       array_push($branch_list,$infos);
-}
- 
-$nb_branches=count($branch_list);
+	//$label_list=array(); // liste des branches
+	//$branch_last_period=array(); // liste des périodes associées
+	//$branch_last_period_cluster_id=array(); // liste de clusters des branches
+	$branch_list=array(); // infos sur les macro-branches (a vocation a intégrer toutes les variable ci-dessus)
+	while ($ligne=mysql_fetch_array($mysql_branch_list)) {
+	   $last_period_for_branch=$ligne[last_period_string];
+	   // on récupère un cluster de la dernière période
+	   $clusterQuery="select id_cluster FROM cluster WHERE periode='$last_period_for_branch' AND pseudo=$ligne[id_partition]";
+	   $clusters_from_last_period=mysql_query($clusterQuery) or die ("<b>Requête non exécutée (récupération des clusters de la dernière période)</b>.");
+	   $cluster_ligne=mysql_fetch_array($clusters_from_last_period);
+	   $infos=array();
+	   $infos['id_partition']=$ligne[id_partition];
+	   $infos['nb_fields']=$ligne[nb_fields];
+	   $infos['terms']=$ligne[terms];
+	   $infos['terms_occ']=$ligne[terms_occ];
+	   $infos['branch_last_period']=str_replace(' ','-',$last_period_for_branch);
+	   $lab=$ligne[label];
+	   if (strcmp(substr($lab,-1),',')==0){
+			$lab=substr($lab,0,-1);
+	   }
+	   $infos['label']=$lab;
+	   $infos['label_ids']=$ligne[label_ids];
+	   $infos['branch_last_period_cluster_id']=$cluster_ligne[id_cluster];
+	   //array_push($branch_last_period,str_replace(' ','-',$last_period_for_branch));
+	   //array_push($label_list,$branch.$ligne[label]);
+	   //array_push($branch_last_period_cluster_id,$cluster_ligne[id_cluster]);
+	   array_push($branch_list,$infos);
+	}
+	 
+	$nb_branches=count($branch_list);
+	
+	$grouped_labels=cluster_branches($branch_list,$depth,$min_similarity);
+	
+	$grouped_indexes=$grouped_labels[grouped_indexes]; // groupes des index branches
+	
+	$Ngram_arrays=$grouped_labels[Ngram_arrays]; // array pour les labelliser
+	
+	$branch_string='<i>('.$nb_branches.' thématiques dans cette catégorie)'.'</i><br/><p></p>'; // html avec la liste des branches
+	
+	
+	for ($i=0;$i<count($grouped_indexes);$i++){
+	
+		$index_grouped=$grouped_indexes[$i];
+		$Ngrams=$Ngram_arrays[$i];
+		if (count($index_grouped)>1)
+		{ // c'est un groupe
+		
+			$group_title='<p>';
+			while ((count($Ngrams)>0)&&($line = current($Ngrams))){
+				$group_title=$group_title.ucfirst(key($Ngrams)).', ';
+				next($Ngrams);
+			}
+			$group_title=substr(trim($group_title), 0, -1);
+			$branch_string.='<table class=tableitems width=100%>';
+			$branch_string.='<tr><td width=100%>';
+			$branch_string.='<b>'.ucfirst($group_title).'</b></td></tr>';
 
-$grouped_labels=cluster_branches($branch_list,$depth,$min_similarity);
+			for ($j=0;$j<count($index_grouped);$j++){
+				$index = $index_grouped[$j];
+				$branch_id=$branch_list[$index]['id_partition'];
+				$sql='SELECT * from partitions WHERE id_partition='.$branch_id;
+				$resultat=mysql_query($sql) or die ("<b>Requête non exécutée (récupération des infos de partition)</b>.");
+				while ($ligne=mysql_fetch_array($resultat)) {
+					$dates='<span style="font-size: x-small;">('.$ligne[nb_fields].' champs / '.adjust_date_jours($ligne[first_period]).'-'.adjust_date_jours($ligne[last_period]).')</span>';
+				}
+		
+				$branch='<tr><td><i><a href="cluster.php?id_cluster='.$branch_list[$index]['branch_last_period_cluster_id'].'&periode='.str_replace(' ','-',$branch_list[$index]['branch_last_period']).'">';
+				$branch.=ucfirst($branch_list[$index]['label']).'</a></i>  '.$dates.'</td></tr>';
+				$branch_string.=$branch;
+				next($index_grouped);
+			}
+			$branch_string.='</ul></p>';
+		}
+		else 
+		{ // c'est une branche perdue
+		   // print_r($branch_list);
+		   //  echo $index_grouped[0].'<br/>';
+		   //  echo 'list:'.$branch_list['branch_last_period_cluster_id'].'<br/>';
+		   // echo $branch_list['branch_last_period_cluster_id'][$index_grouped[0]].'<br/>';
+	
+		   //  echo $branch_list['branch_last_period'][$index_grouped[0]].'<br/>';
+		   //  echo $branch_list['label'][$index_grouped[0]].'<br/>';
+			 $branch_id=$branch_list[$index_grouped[0]]['id_partition'];
+			 $sql='SELECT * from partitions WHERE id_partition='.$branch_id;
+			 $resultat=mysql_query($sql) or die ("<b>Requête non exécutée (récupération des infos de partition)</b>.");
+			 while ($ligne=mysql_fetch_array($resultat)) {
+				$dates='<span style="font-size: x-small;">('.$ligne[nb_fields].' champs / '.adjust_date_jours($ligne[first_period]).'-'.adjust_date_jours($ligne[last_period]).')</span>';
+			 }
+	
+			 $branch='<a href="cluster.php?id_cluster='.$branch_list[$index_grouped[0]]['branch_last_period_cluster_id'].'&periode='.str_replace(' ','-',$branch_list[$index_grouped[0]]['branch_last_period']).'">';
+			 $branch=$branch.ucfirst($branch_list[$index_grouped[0]]['label']).'</a>  '.$dates.'<br/>';
+			 $branch_string=$branch_string.$branch;
+		}
+		
+		$branch_string=$branch_string.'</ul>'.'<br/>';
 
-$grouped_indexes=$grouped_labels[grouped_indexes]; // groupes des index branches
+	}
 
-$Ngram_arrays=$grouped_labels[Ngram_arrays]; // array pour les labelliser
+	return remove_popo($branch_string);
 
-$branch_string='<i>('.$nb_branches.' thématiques dans cette catégorie)'.'</i><br/><p></p>'; // html avec la liste des branches
-
-
-for ($i=0;$i<count($grouped_indexes);$i++){
-
-    $index_grouped=$grouped_indexes[$i];
-    $Ngrams=$Ngram_arrays[$i];
-    if (count($index_grouped)>1){
-        $group_title='<p>';
-        while ((count($Ngrams)>0)&&($line = current($Ngrams))){
-            $group_title=$group_title.ucfirst(key($Ngrams)).', ';
-            next($Ngrams);
-        }
-        $group_title=substr(trim($group_title), 0, -1);
-        $branch_string=$branch_string.'<b>'.ucfirst($group_title).' :</b>'.'<br/><ul>';
-
-        for ($j=0;$j<count($index_grouped);$j++){
-        $index = $index_grouped[$j];
-         $branch_id=$branch_list[$index]['id_partition'];
-         $sql='SELECT * from partitions WHERE id_partition='.$branch_id;
-         $resultat=mysql_query($sql) or die ("<b>Requête non exécutée (récupération des infos de partition)</b>.");
-         while ($ligne=mysql_fetch_array($resultat)) {
-            $dates='<span style="font-size: x-small;">('.$ligne[nb_fields].' champs / '.adjust_date_jours($ligne[first_period]).'-'.adjust_date_jours($ligne[last_period]).')</span>';
-         }
-
-            $branch='<li><i><a href="cluster.php?id_cluster='.$branch_list[$index]['branch_last_period_cluster_id'].'&periode='.str_replace(' ','-',$branch_list[$index]['branch_last_period']).'">';
-            $branch=$branch.ucfirst($branch_list[$index]['label']).'</a></i>  '.$dates.'<br/>';
-            $branch_string=$branch_string.$branch;
-            next($index_grouped);
-        }
-        $branch_string=$branch_string.'</ul></p>';
-    }else{
-       // print_r($branch_list);
-       //  echo $index_grouped[0].'<br/>';
-       //  echo 'list:'.$branch_list['branch_last_period_cluster_id'].'<br/>';
-       // echo $branch_list['branch_last_period_cluster_id'][$index_grouped[0]].'<br/>';
-
-       //  echo $branch_list['branch_last_period'][$index_grouped[0]].'<br/>';
-       //  echo $branch_list['label'][$index_grouped[0]].'<br/>';
-         $branch_id=$branch_list[$index_grouped[0]]['id_partition'];
-         $sql='SELECT * from partitions WHERE id_partition='.$branch_id;
-         $resultat=mysql_query($sql) or die ("<b>Requête non exécutée (récupération des infos de partition)</b>.");
-         while ($ligne=mysql_fetch_array($resultat)) {
-            $dates='<span style="font-size: x-small;">('.$ligne[nb_fields].' champs / '.adjust_date_jours($ligne[first_period]).'-'.adjust_date_jours($ligne[last_period]).')</span>';
-         }
-
-         $branch='<a href="cluster.php?id_cluster='.$branch_list[$index_grouped[0]]['branch_last_period_cluster_id'].'&periode='.str_replace(' ','-',$branch_list[$index_grouped[0]]['branch_last_period']).'">';
-         $branch=$branch.ucfirst($branch_list[$index_grouped[0]]['label']).'</a>  '.$dates.'<br/>';
-         $branch_string=$branch_string.$branch;
-    }
-    $branch_string=$branch_string.'</ul>'.'<br/>';
-}
-return remove_popo($branch_string);
 }
 
 ////////////
