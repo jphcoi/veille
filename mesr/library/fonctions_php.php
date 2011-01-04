@@ -994,7 +994,7 @@ function display_helper_two_outputs($title,$text,$indexsuffix,$img="question-mar
 	$arr=array();
 	$arr[]= "
 		<img src='images/".$img."' id='opener".$indexsuffix."'>
-		<div id='dialog".$indexsuffix."' title=".str_replace(" ","&nbsp;",$title).">".$text."
+		<div id='dialog".$indexsuffix."' style=\"display:none;\" title=".str_replace(" ","&nbsp;",$title).">".$text."
 		</div>
 		";
 
