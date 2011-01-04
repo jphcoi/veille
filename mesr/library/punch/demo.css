@@ -1,11 +1,14 @@
 #holder {
+    -moz-border-radius: 10px;
+    -webkit-border-radius: 10px;
+    -webkit-box-shadow: 0 1px 3px #666;
+    background: #ddd url(http://raphaeljs.com/images/bg.png);
+    margin: 0 auto;
 	/*position: relative; width: 728px; margin: auto;*/
-	width: 600px;
-    /*margin: -240px 0 0 -320px;*/
-    position: relative;
-    color: #fff;
-	margin: auto;
-	background: #333;
+	width: 700px;
+	position: relative;
+	background: DarkGray;
+	
     font: 300 100.1% "Helvetica Neue", Helvetica, "Arial Unicode MS", Arial, sans-serif;
 
 }
