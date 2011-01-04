@@ -61,11 +61,14 @@ permettent de suivre leur évolution. </p>
 <p> Cet échantillon
 comporte ".$nbBillets." documents (billets de blogs, articles de journaux électroniques, flux RSS d'institutions)
 provenant de <a href=entree_sources.php><font color=blue>".$nbAuteurs." sources</font></a> sélectionnées pour leur coloration thématique. La liste de ces sources
-est accessible à partir du lien <a href=entree_sources.php><font color=blue>SOURCE</font></a> qui figure dans le menu de navigation.</p>";
+est accessible à partir du lien <a href=entree_sources.php><font color=blue>SOURCE</font></a> qui figure dans le menu de navigation.
+Plusieurs pages du site proposent d'étendre la recherche de contenu à l'ensemble du web
+via l'icône Google <img src='images/googleG.png' >.
+</p>";
 
 echo "<p>Le périmètre thématique associé à <i>'Santé et Environnement'</i> a été défini
-à partir d'une analyse des documents. Il est constitué de <a href=entree_termes.php><font color=blue>".$nbNGram." expressions</font></a>. Cette liste est
-mise à jour régulièrement pour suivre l'actualité. La liste de ces expressions
+à partir d'une analyse des documents. Il est constitué de <a href=entree_termes.php><font color=blue>".$nbNGram." termes</font></a>. Cette liste est
+mise à jour régulièrement pour suivre l'actualité. La liste de ces termes
 est accessible à partir du lien <a href=entree_termes.php><font color=blue>TERMES</font></a> qui figure dans le menu de navigation.</p>
 </td><td width=2.5%></td></tr></table></div>
 
@@ -77,15 +80,19 @@ echo "<tr valign=top><td width=2.5%></td><td style=\'font-size:small;\'>";
 echo "<h3>Ontologie</h3>";
 echo "<p>Comme sur la plupart des plateformes de ce type, il est possible d'obtenir le profil et les productions
 d'une source donnée (par exemple <a href='source.php?id_source=12&periode=-1'><font color=blue>".$source_ex."</font></a>) ; ainsi que le profil
-d'une expression (evolution, billets associés, etc.), comme par exemple <a href='chart.php?id_concept=1433&periode=-1'><font color=blue>".$term_ex."</font></a>.</p>
+d'un terme (evolution, billets associés, etc.), comme par exemple <a href='chart.php?id_concept=1433&periode=-1'><font color=blue>".$term_ex."</font></a>.</p>
 
 <p><b>Niveaux micro, meso et macro.</b> A côté de ces entrées au niveau 'micro', cette plateforme propose des entrées à des niveaux de structuration
 plus élevés permettant d'avoir une vue synthétique des problématiques autour de <i>'Santé et Environnement'</i>.
 Ceux-ci sont accessibles via le menu de navigation:
 <ul>
-<li> <a href='entree_clusters.php'>Les champs thématiques</a> (niveau <i>'meso'</i>), décrivent le contexte d'une discussion par un ensemble de termes,
-<li> <a href='global.php'>Les cartes</a> (niveau <i>'macro'</i>) montrent l'articulation des champs thématiques à une période donnée, la proximité des problématiques abordées,
-<li> <a href='phylo.php'>Les fils thématiques</a> (niveau <i>'macro-temporel'</i>) permettent d'appréhender le déroulement temporel
+<li> <a href='entree_clusters.php'><font color=blue>Les champs thématiques</font></a> (niveau <i>'meso'</i>),
+sont des ensembles de termes qui décrivent le contexte d'une discussion. Ils sont liés à un ensemble
+de contenus provenant <a href='aide.php?selectecTab=1'><font color=blue>des sources</font></a>.
+Cette recherche de contenu peut-être étendue
+à tous le web depuis la page de profil d'un champ thématique via l'icône Google <img src='images/googleG.png' >
+<li> <a href='global.php'><font color=blue>Les cartes</font></a> (niveau <i>'macro'</i>) montrent l'articulation des champs thématiques à une période donnée, la proximité des problématiques abordées,
+<li> <a href='phylo.php'><font color=blue>Les fils thématiques</font></a> (niveau <i>'macro-temporel'</i>) permettent d'appréhender le déroulement temporel
  des discussions, l'émergence de problématiques et l'évolution de leur popularité.
 </ul>
 </p>
@@ -103,7 +110,7 @@ intégrés au sein de fils thématiques qui permettent de suivre
 leurs evolutions et leurs mutations.
 Au sein d'un fil thématique, un champ thématique peut provenir d'une évolution
 linéaire ou être le fruit de la rencontre de plusieurs
-thématiques antérieurs. Il peut également donner naisssance à une ou plusieurs champs thématiques
+thématiques antérieures. Il peut également donner naisssance à une ou plusieurs champs thématiques
 sur les périodes ultérieures. L'ensemble des
 fils thématiques peut-être <a href='phylo.php'><font color=blue>visualisé de manière interactive</font></a> comme ci-dessous.</span>
 </p><p>

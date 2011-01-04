@@ -56,7 +56,7 @@ echo '<div id="hd"  class="ui-widget">
 	<tr>
 	<td align=left>étude MESR</td>
 	<td align=right style="font-size:medium;">';
-echo'<a href=aide.php>';
+echo'<a href=aide.php?selectedTab=1>';
 if ($page=="aide") echo '<span class=bannerselected>'; else echo '<span>';
 echo '&nbsp;aide&nbsp;';
 echo '<img src="images/question-mark.gif" border=0 width=16 ></a></span> ';
