@@ -221,7 +221,7 @@ function branch_list_string($mysql_branch_list,$depth,$min_similarity){
 				}
 		
 				$branch='<tr>';
-				$branch.='<td width=50px>('.$ligne['nb_fields'].'champs)</td>';
+				$branch.='<td width=50px>('.$dates.$ligne['nb_fields'].'champs)</td>';
 				$branch.='<td onMouseOver="this.style.backgroundColor=\''.$whitedarker.'\';" onMouseOut="this.style.backgroundColor=\''.$whitedark.'\';">';
 				$branch.='<i><a href="cluster.php?id_cluster='.$branch_list[$index]['branch_last_period_cluster_id'].'&periode='.str_replace(' ','-',$branch_list[$index]['branch_last_period']).'">';
 				$branch.=ucfirst($branch_list[$index]['label']).'</a></i>  '.$dates;
@@ -232,12 +232,12 @@ function branch_list_string($mysql_branch_list,$depth,$min_similarity){
 		}
 		else 
 		{ // c'est une branche perdue
-			 $branch_id=$branch_list[$index_grouped[0]]['id_partition'];
-			 $sql='SELECT * from partitions WHERE id_partition='.$branch_id;
-			 $resultat=mysql_query($sql) or die ("<b>Requête non exécutée (récupération des infos de partition)</b>.");
-			 while ($ligne=mysql_fetch_array($resultat)) {
+			$branch_id=$branch_list[$index_grouped[0]]['id_partition'];
+			$sql='SELECT * from partitions WHERE id_partition='.$branch_id;
+			$resultat=mysql_query($sql) or die ("<b>Requête non exécutée (récupération des infos de partition)</b>.");
+			while ($ligne=mysql_fetch_array($resultat)) {
 				$dates='<span style="font-size: x-small;">('.$ligne['nb_fields'].' champs / '.adjust_date_jours($ligne['first_period']).'-'.adjust_date_jours($ligne['last_period']).')</span>';
-			 }
+			}
 			
 			$branch='<tr onMouseOver="this.style.backgroundColor=\''.$whitedarker.'\';" onMouseOut="this.style.backgroundColor=\''.$whitedark.'\';">';
 			$branch.='<td colspan=2>';
