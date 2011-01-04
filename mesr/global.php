@@ -244,7 +244,7 @@ if ($projection=="source") echo 'projetée sur la source "<i>'.$dico_auteurs[$id
 $jscriptmp="";
 display_helper(
 	'Vue globale des champs thématiques',
-	'Tous les  <a href="aide.php#champs"><font color=blue>champs thématiques</font></a> de la période sélectionnée sont représentés sur cette carte par des cercles.
+	'Tous les  <a href="aide.php?selectedTab=2"><font color=blue>champs thématiques</font></a> de la période sélectionnée sont représentés sur cette carte par des cercles.
         La proximité thématique entre champs est représentée par des liens et est reflétée par
         une proximité spatiale.',
 	'');

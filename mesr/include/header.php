@@ -6,8 +6,10 @@ if (!isset($titleheader)) $titleheader="v1.3";
 if (isset($jsprotovis)) $jsheader='<script type="text/javascript" src="protovis-r3.2.js"></script>'; else $jsheader="";
 //if (isset($jsjquery)) $jsheader2='<script type="text/javascript" src="js/jquery/jquery-1.4.4.js"></script>'; else $jsheader2="";
 $jsheader2='
-	<script charset="utf-8" type="text/javascript" src="js/jquery/jquery-1.4.2.min.js" language="javascript"></script>
-	<script charset="utf-8" type="text/javascript" src="js/jquery-ui/jquery-ui-1.8.min.js" language="javascript"></script>';
+<script charset="utf-8" type="text/javascript" src="js/jquery/jquery-1.4.2.min.js" language="javascript"></script>
+<script charset="utf-8" type="text/javascript" src="js/jquery-ui/jquery-ui-1.8.min.js" language="javascript"></script>
+<script charset="utf-8" type="text/javascript" src="js/getUrlParam.js" language="javascript"></script>
+';
 
 echo "<title>".$titleheader." [MESR/VD]</title>";
 echo ' '.$jsheader;

@@ -82,7 +82,7 @@ echo "
 <table width=100% class=tableitems>
 <tr valign=top></td><td><h2 class=subtitle>fils thématiques (branches phylogénétiques)";
 
-    $jscriptmp.=display_helper('Fils thématiques','Les <a href="aide.php#phylo"><font color=blue>fils thématiques</font></a> sont des ensembles de champs thématiques sur des sujets similaires répartis sur plusieurs périodes. Ils sont classés ici en trois catégories:
+    $jscriptmp.=display_helper('Fils thématiques','Les <a href="aide.php?selectedTab=2"><font color=blue>fils thématiques</font></a> sont des ensembles de champs thématiques sur des sujets similaires répartis sur plusieurs périodes. Ils sont classés ici en trois catégories:
             <ul style="font-size:small;"><li>
             "<b style="font-variant:small-caps;">Actifs</b>": Fils thématiques couvrant au moins quatre périodes et qui sont toujours actifs sur les trois dernières périodes.
                 </li>
@@ -95,7 +95,7 @@ echo "
             Fils thématiques couvrant au moins quatre périodes mais qui ne sont pas présents sur les trois dernières périodes. Cette rupture du fil thématique peut être temporaire, témoignant d\'une baisse d\'intérêt pour le sujet concerné, ou définitive.
                 </li>
                     </ul>
-            <p>Dans chaque catégorie, les fils thématiques sont labélisés par leur composantes les plus représentatives puis regroupés par grands thèmes.
+            <p>Dans chaque catégorie, les fils thématiques sont labélisés par leur composantes les plus représentatives puis, lorsque cela est possible, regroupés par grands thèmes.
               Un click sur le nom d\'un fil thématique permet d\'accéder aux champs thématiques les plus récents de ce fil.</p><p>Pour chaque fil, sont par
             ailleurs indiqués la fenêtre temporelle couverte par ce fil thématique ainsi que le nombre de champs qu\'il comporte.</p>
                     ',"helper");
