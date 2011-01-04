@@ -216,7 +216,9 @@ function branch_list_string($mysql_branch_list,$depth,$min_similarity){
 				$branch_id=$branch_list[$index]['id_partition'];
 				$sql='SELECT * from partitions WHERE id_partition='.$branch_id;
 				$resultat=mysql_query($sql) or die ("<b>Requête non exécutée (récupération des infos de partition)</b>.");
-				while ($ligne=mysql_fetch_array($resultat)) {
+				//while ($ligne=mysql_fetch_array($resultat)) 
+				$ligne=mysql_fetch_array($resultat);
+				{
 					$dates='<span style="font-size: x-small;">('.$ligne['nb_fields'].' champs / '.adjust_date_jours($ligne['first_period']).'-'.adjust_date_jours($ligne['last_period']).')</span>';
 				}
 		
