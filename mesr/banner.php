@@ -1,14 +1,4 @@
 <?
-echo '<div id="hd"  class="ui-widget">
-	<div id="hdb">
-	<div id="htoolbar" class="toolbardiv fg-toolbar ui-widget-header ui-corner-all ui-helper-clearfix">
-	<div id="title" class="noSelect" style="margin-left:5px; margin-right:5px;">
-	<table width="100%" style="font-size:x-large; font-weight:bold; color:DarkSlateGray; font-variant:small-caps;">
-	<tr>
-	<td align=left>étude MESR</td>
-	<td align=right style="font-size:medium;"><a href=deconnexion.php><i>déconnexion</i></a></td>
-	</tr>
-	</table>';
 
 if (isset($_GET['periode'])) {
 	$periode=$_GET['periode'];
@@ -57,24 +47,45 @@ switch ($page_current) {
 		break;
 
 }
+
+echo '<div id="hd"  class="ui-widget">
+	<div id="hdb">
+	<div id="htoolbar" class="toolbardiv fg-toolbar ui-widget-header ui-corner-all ui-helper-clearfix">
+	<div id="title" class="noSelect" style="margin-left:5px; margin-right:5px;">
+	<table width="100%" style="font-size:x-large; font-weight:bold; color:DarkSlateGray; font-variant:small-caps;">
+	<tr>
+	<td align=left>étude MESR</td>
+	<td align=right style="font-size:medium;">';
+echo'<a href=aide.php>';
+if ($page=="aide") echo '<span class=bannerselected>'; else echo '<span>';
+echo '&nbsp;aide&nbsp;';
+echo '<img src="images/question-mark.gif" border=0>&nbsp;</a></span> ';
+echo '<a href=deconnexion.php>&nbsp;déconnexion <img src=images/logout.png width=8></a></td>
+	</tr>
+	</table>';
+
 echo '<table class=tableitems style="font-variant:small-caps;" width="100%"><tr><td>';
-echo '<a href=phylo.php>';
-if ($page=="fils") echo "<b>fils thématiques</b>"; else echo "fils thématiques";
-echo '</a> - <a href=global.php'.$periodstr.'>';
- if ($page=="carte") echo "<b>cartes</b>"; else echo "cartes";
-echo '</a> - <a href=entree_clusters.php'.$periodstr.'>';
-if ($page=="champs") echo "<b>champs thématiques</b>"; else echo "champs thématiques";
-echo '</a> - <a href=entree_sources.php'.$periodstr.'>';
-if ($page=="sources") echo "<b>sources</b>"; else echo "sources";
-echo '</a> - <a href=entree_termes.php'.$periodstr.'>';
-if ($page=="termes") echo "<b>termes</b>"; else echo "termes";
-echo '</a>';
+echo '<a href=phylo.php><span';
+if ($page=="fils") echo ' style="background-color:white;border:1px solid;"';
+echo '>&nbsp;fils thématiques&nbsp;</span>';
+echo '</a> &nbsp; ';
+echo '<a href=global.php'.$periodstr.'><span';
+if ($page=="carte") echo ' style="background-color:white;border:1px solid;"';
+echo ">&nbsp;cartes&nbsp;";
+echo '</span></a> &nbsp; ';
+echo '<a href=entree_clusters.php'.$periodstr.'><span';
+if ($page=="champs") echo ' style="background-color:white;border:1px solid;"';
+echo '>&nbsp;champs thématiques&nbsp;</span></a> &nbsp; ';
+echo '<a href=entree_sources.php'.$periodstr.'><span';
+if ($page=="sources") echo ' style="background-color:white;border:1px solid;"';
+echo '>&nbsp;sources&nbsp;</span></a> &nbsp; ';
+echo '<a href=entree_termes.php'.$periodstr.'><span';
+if ($page=="termes") echo ' style="background-color:white;border:1px solid;"';
+echo '>&nbsp;termes&nbsp;</span></a>';
 echo '</td><td style="text-align: right;">';
-echo '<a href=commentaires.php>';
-if ($page=="commentaires") echo "<b>commentaires</b>"; else echo "commentaires";
-echo '</a> - <a href=aide.php'.'>';
-if ($page=="aide") echo "<b>aide</b>"; else echo "aide";
-echo ' <img src="images/question-mark-transparent.gif" border=0></a>';
+echo '<a href=commentaires.php><span';
+if ($page=="commentaires") echo ' style="background-color:white;border:1px solid;"';
+echo '>&nbsp;commentaires&nbsp;</span></a>';
 echo '</td>
 	</tr>
 	</table>';
