@@ -62,9 +62,9 @@ function delete_comm($comm_unique)
 		
     if (isset($_POST["commentaire"]))
     {
-		$commentaire = $_POST["commentaire"];
+		$commentaire = insert_popo($_POST["commentaire"]);
 			
-        $comm_unique = ' '.$username.' '.insert_popo($commentaire).' '.$vue.' '.$day.' '.$id_periode.' '.$id_concept.' '.$id_source.' '.$id_cluster;
+        $comm_unique = ' '.$username.' '.$commentaire.' '.$vue.' '.$day.' '.$id_periode.' '.$id_concept.' '.$id_source.' '.$id_cluster;
 		
 		// on insère le commentaire courant dans la table commentaire.
 		$sql = "INSERT IGNORE INTO commentaires(id, username, commentaire,jour,periode, concept,blog,vue,comm_unique,cluster) VALUES('','$username','$commentaire','$day' ,'$periode','$id_concept','$id_source','$vue','$comm_unique','$id_cluster')";
