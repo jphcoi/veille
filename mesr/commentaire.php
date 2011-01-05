@@ -64,7 +64,7 @@ function delete_comm($comm_unique)
     {
 		$commentaire = $_POST["commentaire"];
 			
-        $comm_unique = ' '.$username.' '.$commentaire.' '.$vue.' '.$day.' '.$id_periode.' '.$id_concept.' '.$id_source.' '.$id_cluster;
+        $comm_unique = ' '.$username.' '.insert_popo($commentaire).' '.$vue.' '.$day.' '.$id_periode.' '.$id_concept.' '.$id_source.' '.$id_cluster;
 		
 		// on insère le commentaire courant dans la table commentaire.
 		$sql = "INSERT IGNORE INTO commentaires(id, username, commentaire,jour,periode, concept,blog,vue,comm_unique,cluster) VALUES('','$username','$commentaire','$day' ,'$periode','$id_concept','$id_source','$vue','$comm_unique','$id_cluster')";
@@ -107,7 +107,7 @@ function delete_comm($comm_unique)
 
 
 			echo  '<tr class=commentitems valign=top
-			 width=10%><td><b>'.$row['username']."</b> (".$row['jour']."):</td><td width=80%>".'"<i>'.$row['commentaire'].'</i>"</td><td width=10%>'.$suppression.'</td>';
+			 width=10%><td><b>'.$row['username']."</b> (".$row['jour']."):</td><td width=80%>".'"<i>'.remove_popo($row['commentaire']).'</i>"</td><td width=10%>'.$suppression.'</td>';
  			echo  '</tr>' . "\n" ;
 		}
 			
