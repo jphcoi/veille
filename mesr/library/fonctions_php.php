@@ -995,11 +995,7 @@ function display_helper_two_outputs($title,$text,$indexsuffix,$img="question-mar
 // cette fonction renvoie un texte permettant d'afficher un point d'interrogation correspondant au dialogue d'id "dialog$indexsuffix"
 // et renvoie le bout de script JS-Jquery qui doit être ajouté à la commande d'affichage de script JQuery à la fin
 	$arr=array();
-	$arr[]= "
-		<img src='images/".$img."' id='opener".$indexsuffix."'>
-		<div id='dialog".$indexsuffix."' style=\"display:none;\" title=".str_replace(" ","&nbsp;",$title).">".$text."
-		</div>
-		";
+	$arr[]= "&nbsp;<img src='images/".$img."' id='opener".$indexsuffix."'><span id='dialog".$indexsuffix."' style=\"display:none;\" title=".str_replace(" ","&nbsp;",$title).">".$text."</span>";
 
 	$arr[]="
 		$('#dialog".$indexsuffix."')
