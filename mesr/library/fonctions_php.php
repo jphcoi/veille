@@ -83,10 +83,9 @@ return $out;
 
 /////////////////////////////////
 
-function remove_popo($st)
-{
-	return str_replace('popostrophe ',"’",$st);
-}
+function remove_popo($st) { return str_replace('popostrophe ',"’",$st); }
+
+function insert_popo($st) { return str_replace("'",'popostrophe ',str_replace("’",'popostrophe ',$st)); }
 
 function connexion_base($server,$user,$password,$database)
 {
