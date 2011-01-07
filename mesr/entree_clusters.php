@@ -150,6 +150,7 @@ $clusters_clean=array();
 foreach ($groupes_clusters as $value) $clusters_clean[]=$value["href"];
 
 $clean_liste_termes=array();
+$initiales='';
 foreach ($clusters_clean as $value) {
 	$premierelettre=mb_strtoupper(mb_substr(strip_tags($value),0,1,"utf-8"),"utf-8");
 	if ($premierelettre=="É") $premierelettre="E";
@@ -157,12 +158,18 @@ foreach ($clusters_clean as $value) {
 	if($premierelettre!=$initiale){
 		$initiale=$premierelettre;
 		$clean_liste_termes[]="";
-		$clean_liste_termes[]='<b class=listtitle>'.$initiale.'</b>';
+		$clean_liste_termes[]='<a name="init'.$initiale.'"></a><b class=listtitle>'.$initiale.'</b>';
 		$clean_liste_termes[]="";
+		$initiales.='<b><a href="#init'.$initiale.'">'.$initiale.'</a></b> - ';
 		}
 	$clean_liste_termes[]=$value;
 }
+$initiales=substr($initiales, 0, -2);
 
+echo '<table width=100% class=tableitems>';
+echo '<tr><td width=2.5%></td><td width=95%>';
+echo '<b style="font-variant:small-caps;">accès direct aux champs commençant par&nbsp;:&nbsp;</b> '.$initiales.'<br>';
+echo '</td><td width=2.5%></td></tr></table>';
 echo '<p><table width=100% class=tableitems>';
 echo '<tr valign=top><td width=2.5%></td>';
 display_columns(3,$clean_liste_termes);
