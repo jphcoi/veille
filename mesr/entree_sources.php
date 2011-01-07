@@ -82,7 +82,7 @@ echo '<p><table width=100% class=tableitems>';
 echo '<tr valign=top><td width=2.5%></td><td><h2 class=subtitle>liste complète des sources</h2></td><td width=2.5%></td></tr></table>';
 echo '<table width=100% class=tableitems>';
 echo '<tr><td width=2.5%></td><td width=95%>';
-echo '<b style="font-variant:small-caps;">accès direct aux sources dont le nom commence par&nbsp;:&nbsp;</b> '.$initiales.'<br>';
+echo '<b style="font-variant:small-caps;">accès direct aux sources dont le nom commence par&nbsp;:&nbsp;</b> <span style="font-size:x-small;">'.$initiales.'</span><br>';
 echo '</td><td width=2.5%></td></tr></table>';
 echo '<p><table width=100% class=tableitems>';
 echo '<tr valign=top><td width=2.5%></td><td width='.$widthcolumn.'%>';
