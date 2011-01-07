@@ -65,6 +65,7 @@ while ($ligne=mysql_fetch_array($resultat)){
 $liste_termes=array();
 $id_termes=array();
 $initiale="";
+$initiales='';
 for($i=0;$i<count($liste_termes_brute);$i++){
 	$terme=$liste_termes_brute[$i];
 	$premierelettre=mb_strtoupper(mb_substr($terme,0,1,"utf-8"),"utf-8");
@@ -73,12 +74,14 @@ for($i=0;$i<count($liste_termes_brute);$i++){
 	if($premierelettre!=$initiale){
 		$initiale=$premierelettre;
 		$liste_termes[]="";$id_termes[]=-1;
-		$liste_termes[]='<b class=listtitle>'.$initiale.'</b>';$id_termes[]=-1;
+		$liste_termes[]='<a name="init'.$initiale.'"></a><b class=listtitle>'.$initiale.'</b>';$id_termes[]=-1;
 		$liste_termes[]="";$id_termes[]=-1;
+		$initiales.='<b><a href="#init'.$initiale.'">'.$initiale.'</a></b> - ';
 		}
 	$liste_termes[]=''.$terme.'';
 	$id_termes[]=$id_termes_brute[$i];
 	}
+$initiales=substr($initiales, 0, -2);
 
 $count=count($liste_termes);
 $ncolumns=5;
@@ -103,7 +106,6 @@ echo '<td width=2.5%></td>';
 echo '<td width=95%>';
 echo '<table width=100% class=specialsubbanner cellspacing=0><tr>';
 echo '<td width=100% style="color:black;font-weight:bold;">période sélectionnée: ';
-//echo '['.$my_period.']';
 
 //on extrait d'abord la liste totale des périodes: $total_list_periods
 $commande_sql = "SELECT periode from cluster GROUP BY periode";
@@ -112,7 +114,7 @@ while ($total_periode_sql_i=mysql_fetch_array($total_periode_sql))
 {
 	$total_periods_raw[]=$total_periode_sql_i['periode'];
 }
-	$total_list_periods=sort_periods($total_periods_raw);
+$total_list_periods=sort_periods($total_periods_raw);
 	
 //on affiche les flèches pour se ballader dans les périodes
 display_arrow_periodes($my_period,$total_list_periods);
@@ -143,7 +145,7 @@ if ($list_of_periods[count($list_of_periods)-1]==$my_period) $clause_fils_pere =
 else {
 	$clause_fils_pere = 'nb_sons+nb_fathers>='.$orphan_filter;
 	echo '
-		<table class=commentitems width=100%><tr><td width=2.5%></td><td>
+		<table class=commentitems width=100%><tr><td width=2.5%></td><td><b style="font-variant:small-caps;">accès direct aux termes commençant par&nbsp;:</b> '.$initiales.'<br>
 		<i>(nb: les termes grisés ne sont associés à aucun champ thématique)</i>
 		</td><td width=2.5%></td></tr></table>';
 	}
@@ -176,8 +178,6 @@ for($i=1;$i<=$ncolumns;$i++){
 	for($j=$columns[$i][0];$j<=$columns[$i][1];$j++){
 		$id=$id_termes[$j];
 		
-		//$dontlink=0;
-		//if ($my_period==-1) {if (!array_key_exists($id,$periode_concepts)) $dontlink=1;}
 		if ($id!=-1) 
 			{
 				$par=0;
@@ -200,7 +200,6 @@ for($i=1;$i<=$ncolumns;$i++){
 		
 		if ($id!=-1) 
 			{
-				//if ($dontlink==0)
 				echo('</a>');
 			}
 		echo("<br>");
