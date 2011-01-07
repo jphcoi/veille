@@ -1,7 +1,7 @@
 <?
 
 //$commande_sql_pert = "SELECT id_billet,overlap_size,billet_size,cluster_size from biparti where cluster = '".$id_cluster."' AND periode = '".derange_periode($my_period)."' AND overlap_size/cluster_size/log10(10+billet_size-overlap_size)>=".$pertinence.' and overlap_size/cluster_size>0.1 '.' ORDER BY overlap_size/cluster_size/log10(10+billet_size-overlap_size) DESC';
-$commande_sql_pert = "SELECT id_billet,overlap_size,billet_size,cluster_size from biparti where cluster = '".$id_cluster."' AND periode = '".derange_periode($my_period)."' AND overlap_size/cluster_size>0.1 ORDER BY overlap_size/cluster_size/log10(10+billet_size-overlap_size) DESC";
+$commande_sql_pert = "SELECT id_billet,overlap_size,billet_size,cluster_size from biparti where cluster = '".$id_cluster."' AND periode = '".derange_periode($my_period)."' AND overlap_size/cluster_size/log10(10+billet_size-overlap_size)>=0.1 AND overlap_size/cluster_size>0.1 ORDER BY overlap_size/cluster_size/log10(10+billet_size-overlap_size) DESC";
 $res_temp = mysql_query($commande_sql_pert);
 $liste_of_posts=array();
 $liste_of_size=array();
