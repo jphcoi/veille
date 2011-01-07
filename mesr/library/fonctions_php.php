@@ -975,7 +975,7 @@ function mise_en_forme_abstract($titre,$auteurs,$abstract,$concepts,$type_notice
 function display_box($titre,$auteurs,$abstract,$permalien,$concepts,$type_notice,$index,$insertedtext)
 {
 	$notice = mise_en_forme_abstract($titre,$auteurs,$abstract,$concepts,$type_notice);
-	echo '<div align=left id="dialog'.$index.'" title="'.$titre.'" style="font-size:8pt;">'.$notice.'</div>';
+	echo '<div align=left id="dialog'.$index.'" title="'.$titre.'" style="font-size:8pt;display:none;">'.$notice.'</div>';
 	echo '<a ';
 	if (strpos($permalien,'http:')>-1) {
 		echo 'href="'.$permalien.'"';
