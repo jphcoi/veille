@@ -61,7 +61,7 @@ permettent de suivre leur évolution. </p>
 <p> Cet échantillon
 comporte ".$nbBillets." documents (billets de blogs, articles de journaux électroniques, flux RSS d'institutions)
 provenant de <a href=entree_sources.php><font color=blue>".$nbAuteurs." sources</font></a> sélectionnées pour leur coloration thématique. La liste de ces sources
-est accessible à partir du lien <a href=entree_sources.php><font color=blue>SOURCE</font></a> qui figure dans le menu de navigation.
+est accessible à partir du lien <a href=entree_sources.php><font color=blue>SOURCES</font></a> qui figure dans le menu de navigation.
 Plusieurs pages du site proposent d'étendre la recherche de contenu à l'ensemble du web
 via l'icône Google <img src='images/googleG.png' >.
 </p>";
