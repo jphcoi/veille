@@ -47,6 +47,7 @@ mysql_close();
 $liste_termes=array();
 $id_termes=array();
 $initiale="";
+$initiales='';
 for($i=0;$i<count($liste_termes_brute);$i++){
 	$terme=$liste_termes_brute[$i];
 	$premierelettre=mb_strtoupper(mb_substr($terme,0,1,"utf-8"),"utf-8");
@@ -55,12 +56,14 @@ for($i=0;$i<count($liste_termes_brute);$i++){
 	if($premierelettre!=$initiale){
 		$initiale=$premierelettre;
 		$liste_termes[]="";$id_termes[]=-1;
-		$liste_termes[]='<b class=listtitle>'.$initiale.'</b>';$id_termes[]=-1;
+		$liste_termes[]='<a name="init'.$initiale.'"></a><b class=listtitle>'.$initiale.'</b>';$id_termes[]=-1;
 		$liste_termes[]="";$id_termes[]=-1;
+		$initiales.='<b><a href="#init'.$initiale.'">'.$initiale.'</a></b> - ';
 		}
 	$liste_termes[]=''.$terme.'';
 	$id_termes[]=$id_termes_brute[$i];
 	}
+$initiales=substr($initiales, 0, -2);
 
 $count=count($liste_termes);
 $ncolumns=3;
@@ -77,6 +80,10 @@ $flipped_haystack = array_flip($liste_source_cluster);
 //pour eviter ça ://in_array($id,$liste_source_cluster)
 echo '<p><table width=100% class=tableitems>';
 echo '<tr valign=top><td width=2.5%></td><td><h2 class=subtitle>liste complète des sources</h2></td><td width=2.5%></td></tr></table>';
+echo '<table width=100% class=tableitems>';
+echo '<tr><td width=2.5%></td><td width=95%>';
+echo '<b style="font-variant:small-caps;">accès direct aux sources dont le nom commence par&nbsp;:&nbsp;</b> <span style="font-size:x-small;">'.$initiales.'</span><br>';
+echo '</td><td width=2.5%></td></tr></table>';
 echo '<p><table width=100% class=tableitems>';
 echo '<tr valign=top><td width=2.5%></td><td width='.$widthcolumn.'%>';
 //print_r($liste_source_cluster);
