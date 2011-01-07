@@ -3,11 +3,12 @@
    if ($norm==1) $helpernormstring='(2)+" fois/1000 billets'; else $helpernormstring='(0)+" fois';
 	
    $mydata2=json_encode($data);
+   //print_r($mydata2);
    $mydata='pv.range('.$dated.', '.$datef.').map(function(x) {
    			return { x: parseInt(x), y: x in data2 ? data2[x] : 0 }
    		})';
-	  
-	$step = strval(($datef-$dated) /7);
+
+    $step = strval(($datef-$dated) /7);
     $step=  20;
 
    $myscript='<script type="text/javascript+protovis">
