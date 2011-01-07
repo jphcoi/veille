@@ -42,7 +42,7 @@ echo "<div class='demo'>
 
 	<ul>
 <table width=100% class=tableitems>
-<tr valign=top></td><td><h2 class=subtitle>Aide et Ontologie</h2></tr>
+<tr valign=top></td><td><h2 class=subtitle>".$titleheader."</h2></tr>
 </table >
 		<li><a href='#tabs-1'>À propos de cette plateforme</a></li>
 		<li><a href='#tabs-2'>Ontologie </a></li>
@@ -63,7 +63,7 @@ comporte ".$nbBillets." documents (billets de blogs, articles de journaux élect
 provenant de <a href=entree_sources.php><font color=blue>".$nbAuteurs." sources</font></a> sélectionnées pour leur coloration thématique. La liste de ces sources
 est accessible à partir du lien <a href=entree_sources.php><font color=blue>SOURCES</font></a> qui figure dans le menu de navigation.
 Plusieurs pages du site proposent d'étendre la recherche de contenu à l'ensemble du web
-via l'icône Google <img src='images/googleG.png' >.
+via l'icône Google <img src='images/googleGinv.png' width=18px>.
 </p>";
 
 echo "<p>Le périmètre thématique associé à <i>'Santé et Environnement'</i> a été défini
@@ -76,9 +76,9 @@ est accessible à partir du lien <a href=entree_termes.php><font color=blue>TERM
 
 <div id='tabs-2'>";
 echo '<p><table width=100%>';
-echo "<tr valign=top><td width=2.5%></td><td style=\'font-size:small;\'>";
+echo "<tr valign=top><td width=2.5%></td><td style=\"font-size:small;\">";
 echo "<h3>Ontologie</h3>";
-echo "<p>Comme sur la plupart des plateformes de ce type, il est possible d'obtenir le profil et les productions
+echo "Comme sur la plupart des plateformes de ce type, il est possible d'obtenir le profil et les productions
 d'une source donnée (par exemple <a href='source.php?id_source=12&periode=-1'><font color=blue>".$source_ex."</font></a>) ; ainsi que le profil
 d'un terme (evolution, billets associés, etc.), comme par exemple <a href='chart.php?id_concept=1433&periode=-1'><font color=blue>".$term_ex."</font></a>.</p>
 
@@ -90,7 +90,7 @@ Ceux-ci sont accessibles via le menu de navigation:
 sont des ensembles de termes qui décrivent le contexte d'une discussion. Ils sont liés à un ensemble
 de contenus provenant <a href='aide.php?selectecTab=1'><font color=blue>des sources</font></a>.
 Cette recherche de contenu peut-être étendue
-à tous le web depuis la page de profil d'un champ thématique via l'icône Google <img src='images/googleG.png' >
+à tous le web depuis la page de profil d'un champ thématique via l'icône Google <img src='images/googleGinv.png' width=18px>
 <li> <a href='global.php'><font color=blue>Les cartes</font></a> (niveau <i>'macro'</i>) montrent l'articulation des champs thématiques à une période donnée, la proximité des problématiques abordées,
 <li> <a href='phylo.php'><font color=blue>Les fils thématiques</font></a> (niveau <i>'macro-temporel'</i>) permettent d'appréhender le déroulement temporel
  des discussions, l'émergence de problématiques et l'évolution de leur popularité.
@@ -99,7 +99,7 @@ Cette recherche de contenu peut-être étendue
 <p>
 <center><a name='champs'>
 <img src='images/termes_carte.jpg' ></a><br/>
-<span style='font-size:x-small;'>Les <a href='entree_clusters.php'><font color=blue>champs thématiques</font></a> sont des groupes de termes. Ils s'articulent au sein de <a href='global.php'><font color=blue>cartes</font></a>
+<span style=\"font-size:x-small;\">Les <a href='entree_clusters.php'><font color=blue>champs thématiques</font></a> sont des groupes de termes. Ils s'articulent au sein de <a href='global.php'><font color=blue>cartes</font></a>
 et sont labellisés par les deux termes les plus représentatifs.</span>
 </center></p>
 <br/><p>
@@ -125,7 +125,7 @@ temporelle qui permet de suivre l'évolution de leur popularité.</span>
 </td><td width=2.5%></td></tr></table></div>
 <div id='tabs-3'>";
 echo '<p><table width=100%>';
-echo "<tr valign=top><td width=2.5%></td><td style=\'font-size:small;\'>";
+echo "<tr valign=top><td width=2.5%></td><td style=\"font-size:small;\">";
 echo "
 <h3>Exploration à l'aide des fils thématiques</h3>
 <p>Contrairement aux explorations s'appuyant sur des termes choisis <i>a priori</i>
