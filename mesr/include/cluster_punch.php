@@ -99,17 +99,10 @@ $ggraph = '
         <div id="holder" width="600px"></div>
         
         <script>
-<<<<<<< HEAD
 		d = document.getElementById(\'holder\');
 		// set the width
-		d.style.height="'.$ysize.'px";
-        </script>
-=======
-d = document.getElementById(\'holder\');
-// set the width
-
-d.style.height="'.$ysize_mine2.'px";
+	
+		d.style.height="'.$ysize_mine2.'px";
        </script>
->>>>>>> d9ce5b4efdc4a5bff6f10ca535d7e3f09cba562c
-';
+		';
 ?>
