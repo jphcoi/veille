@@ -442,19 +442,19 @@ echo "<table width=100%><tr valign=top><td width=2.5%></td><td width=95%>";
 	if ($nav=="phylo") 
 		{echo $select_string."contenu"; display_helper_contenu(); echo "</b>";} 
 	else 
-		{echo $href_string."phylo>contenu</a>"; display_helper_contenu();}
+		{echo $href_string."phylo>contenu</a>"; }
 	echo "&nbsp;-&nbsp;";
     if ($nav=="cooc") {
     	echo $select_string."réseau de cooccurrence"; display_helper_cooccurrences(); echo "</b>"; 
     	}
     else {
-    	echo $href_string."cooc>réseau de cooccurrence</a>"; display_helper_cooccurrences();
+    	echo $href_string."cooc>réseau de cooccurrence</a>";
     	}
 	echo " - ";
 	if ($nav=="soc") 
 		{echo $select_string."environnement social"; display_helper_environnementsocial(); echo"</b>";}
 	else 
-		{echo $href_string."soc>environnement social</a>"; display_helper_environnementsocial();}
+		{echo $href_string."soc>environnement social</a>";}
 	echo " - ";
 	
 	if ($nav=="socsem") 
@@ -473,7 +473,7 @@ echo '</table>';
 
 //// CREATION PHYLOGENIE (UNIQUEMENT POUR "PHYLO" OU "SOC")
 
-if ($nav=="phylo" or $nav=="soc" or $nav == "cooc"){
+if ($nav=="phylo" or $nav=="soc" or $nav == "cooc" or $nav =="socsem"){
  	$pred=list_clusters($periode_avant,$predecesseur,$max_periode_avant);
  	$succ=list_clusters($periode_apres,$successeur,$min_periode_apres);
 	$arraytmp=array();
