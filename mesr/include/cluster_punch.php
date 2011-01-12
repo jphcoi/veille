@@ -1,5 +1,5 @@
 <?
-include("../library/fonctions_php.php");
+//include("../library/fonctions_php.php");
 
  function concat() {
     $vars=func_get_args();
