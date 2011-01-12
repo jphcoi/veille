@@ -368,6 +368,15 @@ echo '</tr></table>';
 echo '</td><td width=2.5%></td></tr>';
 echo '</table>';
 
+function display_helper_profil_evolution() {
+	global $jscriptmp;
+	$jscriptmp.=display_helper('Profil d\'évolution','Le profil d\'évolution donne un apperçu
+            du nombre d\'occurrences des termes du champ thématique, jour par jour,
+            sur la période considérée. On peut voir ainsi les moments où ces termes ont
+            été le plus employés. Le nombre d\'occurrences est reflété par la taille
+            des disques et leur couleur',"profevochelper");
+	}
+
 
 function display_helper_environnementsocial() {
 	global $jscriptmp;
@@ -448,7 +457,10 @@ echo "<table width=100%><tr valign=top><td width=2.5%></td><td width=95%>";
 		{echo $href_string."soc>environnement social</a>"; display_helper_environnementsocial();}
 	echo " - ";
 	
-	if ($nav=="socsem") echo $select_string."profil d'évolution</b>"; else echo $href_string."socsem>profil d'évolution</a>";
+	if ($nav=="socsem") 
+            {echo $select_string."profil d'évolution"; display_helper_profil_evolution(); echo"</b>";}
+        else
+            echo $href_string."socsem>profil d'évolution</a>";
 
 	echo '</td>';
 	echo '<td align=right><a href='.$googletext.'><img src='.$hrefroot.$racine.'/images/googleGinv.png alt="(google)" valign=middle width=18px style="border-style:none;"></a></td>';

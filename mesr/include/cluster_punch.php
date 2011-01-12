@@ -1,4 +1,4 @@
-<?
+<?          
 //include("../library/fonctions_php.php");
 
  function concat() {
