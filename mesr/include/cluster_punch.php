@@ -93,7 +93,7 @@ echo '</td>';
 
 
 // PANEL CENTRAL
-echo '<td align=center width=56%>';
+echo '<td align=top width=56%>';
 $ggraph = '
 		<script src="library/punch/raphael.js" type="text/javascript" charset="utf-8"></script>
         <script src="library/punch/g.raphael.js" type="text/javascript" charset="utf-8"></script>
