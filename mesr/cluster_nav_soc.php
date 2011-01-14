@@ -209,7 +209,7 @@ echo '
 	<table>
 	<tr>
 	<td align=left>
-	<form method="post" action="<?$_SERVER[\'PHP_SELF\']?>" >	 
+	<form method="post" action="'.$_SERVER['PHP_SELF'].'" >	 
 		<input type="checkbox" name="reduced" ';
 		
 if ($reduced=='1') echo ' checked="checked" '; 
@@ -217,7 +217,7 @@ echo ' value="1" />
 	 <input type="submit" name="formSubmit" value="N\'afficher que les liens entre billets pertinents" />
 	</form>
 
-	<form method="post" action="<?$_SERVER[\'PHP_SELF\']?>" >	 
+	<form method="post" action="'.$_SERVER['PHP_SELF'].'" >	 
 		<input type="checkbox" name="all_periode" ';
 
 if ($all_periode=='1') echo ' checked="checked" '; 
