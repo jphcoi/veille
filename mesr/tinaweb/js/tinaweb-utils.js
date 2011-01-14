@@ -516,7 +516,7 @@ function linksToMaps(node){
             //}
         });
         b.click(function(){
-            window.location.href = "../chart.php?id_concept=" + termId;
+            window.location.href = "../chart.php?id_concept=" + termId; 
         })
     }
      linkList.append(b);
