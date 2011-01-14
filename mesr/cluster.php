@@ -346,7 +346,7 @@ else
     
 }
 
-echo '<span id="dialogfilThematique" title="Liens vers l\'extrémité du fil thématique ('.get_short_string_periode(arrange_periode($last_period_clusters[0][periode])).')">';
+echo '<span id="dialogfilThematique" style="display:none;" title="Liens vers l\'extrémité du fil thématique ('.get_short_string_periode(arrange_periode($last_period_clusters[0][periode])).')">';
 echo 'Ce fil thématique a plusieurs champs en dernière période :'.$cluster_Link_html;
 echo '</span>';
 
