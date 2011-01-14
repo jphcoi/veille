@@ -972,7 +972,7 @@ function mise_en_forme_abstract($titre,$auteurs,$abstract,$concepts,$type_notice
 }
 
 
-function display_box($titre,$auteurs,$abstract,$permalien,$concepts,$type_notice,$index,$insertedtext)
+function display_box($titre,$auteurs,$abstract,$permalien,$concepts,$type_notice,$index,$insertedtext="")
 {
 	$notice = mise_en_forme_abstract($titre,$auteurs,$abstract,$concepts,$type_notice);
 	echo '<div align=left id="dialog'.$index.'" title="'.$titre.'" style="font-size:8pt;display:none;">'.$notice.'</div>';
