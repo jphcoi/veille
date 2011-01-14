@@ -368,6 +368,15 @@ echo '</tr></table>';
 echo '</td><td width=2.5%></td></tr>';
 echo '</table>';
 
+function display_helper_profil_evolution() {
+	global $jscriptmp;
+	$jscriptmp.=display_helper('Profil d\'évolution','Le profil d\'évolution donne un apperçu
+            du nombre d\'occurrences des termes du champ thématique, jour par jour,
+            sur la période considérée. On peut voir ainsi les moments où ces termes ont
+            été le plus employés. Le nombre d\'occurrences est reflété par la taille
+            des disques et leur couleur',"profevochelper");
+	}
+
 
 function display_helper_environnementsocial() {
 	global $jscriptmp;
@@ -433,22 +442,25 @@ echo "<table width=100%><tr valign=top><td width=2.5%></td><td width=95%>";
 	if ($nav=="phylo") 
 		{echo $select_string."contenu"; display_helper_contenu(); echo "</b>";} 
 	else 
-		{echo $href_string."phylo>contenu</a>"; display_helper_contenu();}
+		{echo $href_string."phylo>contenu</a>"; }
 	echo "&nbsp;-&nbsp;";
     if ($nav=="cooc") {
     	echo $select_string."réseau de cooccurrence"; display_helper_cooccurrences(); echo "</b>"; 
     	}
     else {
-    	echo $href_string."cooc>réseau de cooccurrence</a>"; display_helper_cooccurrences();
+    	echo $href_string."cooc>réseau de cooccurrence</a>";
     	}
 	echo " - ";
 	if ($nav=="soc") 
 		{echo $select_string."environnement social"; display_helper_environnementsocial(); echo"</b>";}
 	else 
-		{echo $href_string."soc>environnement social</a>"; display_helper_environnementsocial();}
+		{echo $href_string."soc>environnement social</a>";}
 	echo " - ";
 	
-	if ($nav=="socsem") echo $select_string."profil d'évolution</b>"; else echo $href_string."socsem>profil d'évolution</a>";
+	if ($nav=="socsem") 
+            {echo $select_string."profil d'évolution"; display_helper_profil_evolution(); echo"</b>";}
+        else
+            echo $href_string."socsem>profil d'évolution</a>";
 
 	echo '</td>';
 	echo '<td align=right><a href='.$googletext.'><img src='.$hrefroot.$racine.'/images/googleGinv.png alt="(google)" valign=middle width=18px style="border-style:none;"></a></td>';
@@ -461,7 +473,7 @@ echo '</table>';
 
 //// CREATION PHYLOGENIE (UNIQUEMENT POUR "PHYLO" OU "SOC")
 
-if ($nav=="phylo" or $nav=="soc" or $nav == "cooc"){
+if ($nav=="phylo" or $nav=="soc" or $nav == "cooc" or $nav =="socsem"){
  	$pred=list_clusters($periode_avant,$predecesseur,$max_periode_avant);
  	$succ=list_clusters($periode_apres,$successeur,$min_periode_apres);
 	$arraytmp=array();
