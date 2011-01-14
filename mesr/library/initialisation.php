@@ -17,14 +17,12 @@ Cliquer successivement sur les liens suivants pour regénérer la base
 <br>
 <a href="../entree_clusters_generate_lettres.php?first=0" target="_blank">et enfin pour apprendre l'alphabet (sélectionner toutes les périodes!!!)</a>
 <br>
-<h2>En beta</h2>
-<a href="bipartite_generator.php" target="_blank">Calcul le graph bipartite des branches actives pour tinaweb</a>
-<br>
-
-
 <a href="gexf_cutter.php" target="_blank">découper le gexf 3d en périodes)</a>
 <br>
 
 <a href="import_stream.php" target="_blank">importe les voisinages dynamiques</a>
 
+<h2>En beta</h2>
+<a href="bipartite_generator.php" target="_blank">Calcul le graph bipartite des branches actives pour tinaweb</a>
+<br>
 
