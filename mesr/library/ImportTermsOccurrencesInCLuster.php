@@ -9,6 +9,16 @@ $ink  =mysql_connect( $server,$user,$password);if ($encodage=="utf-8") mysql_que
 //à préciser lorsqu'on est sur sciencemapping.com
 if ($user!="root") mysql_query("SET NAMES utf8;");
 
+/// creation de la table data
+$query="
+CREATE TABLE IF NOT EXISTS `data` (
+  `cle` varchar(50) DEFAULT NULL,
+  `valeur` text,
+  UNIQUE KEY `cle` (`cle`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1
+";
+mysql_query($query) or die ("<b>Requête non exécutée (creation de la table partition)</b>.");
+
 
 ///  nombre de clusters
 //// Occurrences de termes dans les clusters
