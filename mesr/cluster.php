@@ -214,9 +214,6 @@ while ($partit=mysql_fetch_array($resultat)) {
     $id_partition=$partit[pseudo];
 }
 
-// Infos de la partitions concernée
-$last_period_clusters=getPartitionLastPeriodClusters($id_partition);
-
 ////////////////////////////////////////////////////////
 //bloc recuperation infos termes
 ////////////////////////////////////////////////////////
@@ -304,40 +301,10 @@ include("banner.php");
 ////////////////////////////
 /// MODULE DE NAVIGATION ///
 ////////////////////////////
-
-//// préparation des liens de fils thématiques
-$jscriptmp.="
-               $('#dialogfilThematique')
-		  .dialog({ autoOpen: false, stack: true, resizable: false, modal:true, width:600, closeOnEscape:true})
-		  .click(function () { $('#dialogfilThematique').dialog('close'); });
-
-		$('#openerfilThematique').click(function(e) {
-			if (!$('#dialogfilThematique').dialog('isOpen'))
-				$('#dialogfilThematique').dialog('option','position', [$(this).position().left+25,25]).dialog('open');
-			else
-				$('#dialogfilThematique').dialog('close');
-			return false;
-			});";
-
-if (count($last_period_clusters)==1){
-    $last_period_clusters=$last_period_clusters[0];
-    $fils_thematique_html='<a href="'.$last_period_clusters[attribut].'"><font color='.$backdarker.'>'.remove_popo(substr($partition_infos[label],0,-1)).'</font></a></span>';
-	}
-else
-	{
-    $cluster_Link_html='<ul><font color=blue>';
-    for ($i=0;$i<count($last_period_clusters);$i++){
-        $cluster_Link_html.='<li><a href="'.$last_period_clusters[$i][attribut].'"><font color=blue>'.str_replace('---','/',remove_popo($last_period_clusters[$i][label])).'</a></li>';
-    }
-    $cluster_Link_html.='</ul>';
-    $fils_thematique_html='<a href scr=# id="openerfilThematique"'.'><font color='.$backdarker.'>'.remove_popo(substr($partition_infos[label],0,-1)).'</font></a>';
-    
-}
-
-echo '<span id="dialogfilThematique" style="display:none;" title="Liens vers l\'extrémité du fil thématique ('.get_short_string_periode(arrange_periode($last_period_clusters[0][periode])).')">';
-echo 'Ce fil thématique a plusieurs champs en dernière période :'.$cluster_Link_html;
-echo '</span>';
-
+$query="select * FROM partitions WHERE id_partition=".$id_partition;
+$resultat=mysql_query($query) or die ("<b>Requête non exécutée (récupération de info de partition)</b>.");
+$partition_infos=mysql_fetch_array($resultat);
+list($jscriptmp,$linkFilThematique)=linkFilThematique($jscriptmp,$id_partition,$partition_infos,$backdarker);
 
 
 //////////////
@@ -350,7 +317,7 @@ echo '<table width=100% class=subtitle><tr><td align=left>champ thématique "<i>
 if ($lettre_current!="") echo '('.$lettre_current.')';
 echo '</i>';
 echo '<br/><span style="font-size: x-small;">fil thématique: ';
-echo $fils_thematique_html;
+echo $linkFilThematique.'</span>';
 echo '<td align=right><span style="font-size:8pt;">'.str_replace(" ","&nbsp;",get_string_periode($my_period)).'</span>&nbsp;&nbsp;</td>';
 echo '</tr></table>';
 echo '</td><td width=2.5%></td></tr>';
