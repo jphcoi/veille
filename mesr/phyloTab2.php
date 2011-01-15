@@ -8,17 +8,12 @@ include("phyloheader.php");
 
 //// Branches émergentes
 $cle='branches_emergentes_'.$phylo_recent_min_nb_periods_covered;
-$sql="SELECT * FROM data WHERE cle='".$cle."';";
-$resultat=mysql_query($sql) or die ("<b>Requête non exécutée (données streamgraph actives)</b>.");
-while ($ligne=mysql_fetch_array($resultat)) {
-        $json_dataEmergentes=$ligne[valeur];
-}
-
+$json_dataEmergentes=getValue($cle);
 
 //////////
 include('include/streamgraphEmergentes.php');
 echo $myaboveEmergentes;
-$phyloquery="select * FROM partitions WHERE nb_period_covered >=".$phylo_min_nb_periods_covered." AND last_period>=".($last_period-3*$dT);
+$phyloquery="select * FROM partitions WHERE nb_period_covered > 1 AND nb_period_covered <=".$phylo_min_nb_periods_covered."  AND  last_period>=".($last_period-($phylo_recent_min_nb_periods_covered-1)*$dT);
 $phyloresultat=mysql_query($phyloquery) or die ("<b>Requête non exécutée (récupération des principales thématiques)</b>.");
 
 
@@ -42,9 +37,7 @@ echo "</h2></tr>
 	<div id='tabs-1'>
 	</div>
 	<div id='tabs-2'>";
-            $query="select * FROM partitions WHERE nb_period_covered > 1 AND nb_period_covered < 4 AND  last_period>($last_period-2*$dT)";
-            $resultat=mysql_query($query) or die ("<b>Requête non exécutée (récupération des principales thématiques)</b>.");
-            $branch_list=branch_list_string($resultat,$depth,$min_similarity);
+            $branch_list=branch_list_string($phyloresultat,$depth,$min_similarity);
             echo "<h3>Thématiques potentiellement émergentes <span style='font-size: x-small;'> (couvrant au plus 3 périodes)</span></h3>";
             echo $myscriptEmergentes;
             echo '<br/>';

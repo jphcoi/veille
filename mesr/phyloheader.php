@@ -5,6 +5,8 @@ $jsprotovis="TRUE";
 
 //connexion a la base de donnees
 include("parametre.php");
+include("parametres/parametresPhylo.php");
+
 $ink  =mysql_connect( $server,$user,$password);if ($encodage=="utf-8") mysql_query("SET NAMES utf8;");
 @mysql_select_db($database) or die( "Unable to select database");
 //à préciser lorsqu'on est sur sciencemapping.com
@@ -12,13 +14,6 @@ if ($user!="root") mysql_query("SET NAMES utf8;");
 
 include("include/header.php");
 include("banner.php");
-
-
-///// PARAMETRES ///
-$depth=2;// rang dans le nombre d'occurences des termes acceptés pour labellisation des branches
-$min_similarity=.06;// seuil de similarité pour clusteriser
-$phylo_min_nb_periods_covered=4;
-$phylo_recent_min_nb_periods_covered=4;
 
 /////////// On regarde quel est la dernière période afin de pouvoir afficher les thématiques actives
 $last_period_list=array();

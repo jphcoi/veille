@@ -1,10 +1,10 @@
 <?php
 include("fonctions_php.php");
+include("../parametres/parametresPhylo.php");
+
 $jsprotovis="TRUE";
 
 echo 'PARAMETRES<br/>';
-$phylo_min_nb_periods_covered=4;
-$phylo_recent_min_nb_periods_covered=4;
 echo 'taille minimum des branches (hors émergentes) :'.$phylo_min_nb_periods_covered.'<br/>';
 echo 'taille maximum des branches émergentes  :'.$phylo_recent_min_nb_periods_covered.'<br/>';
 
@@ -55,14 +55,14 @@ mysql_query($query);
         echo '<br/>'.$sql.'<br/>';        
         mysql_query($sql) or die("<bInserts non effectués)</b>.");
 
-        $query="select * FROM partitions WHERE nb_period_covered > 1 AND nb_period_covered <".$phylo_recent_min_nb_periods_covered." AND  last_period=".$last_period;
+        $query="select * FROM partitions WHERE nb_period_covered > 1 AND nb_period_covered <=".$phylo_min_nb_periods_covered." AND  last_period=".$last_period;
         $json_data=query2streamgraphData($query,$first_period,$last_period,$dT,$time_steps);
         $cle='branches_emergentes_'.$phylo_recent_min_nb_periods_covered;
         $sql="INSERT INTO data (cle,valeur) VALUES ('".$cle."','$json_data') ON DUPLICATE KEY UPDATE cle='".$cle."',valeur='$json_data';";
         echo '<br/>'.$sql.'<br/>';
         mysql_query($sql) or die("<bInserts non effectués)</b>.");
             
-        $query="select * FROM partitions WHERE nb_period_covered >=".$phylo_min_nb_periods_covered." AND last_period<".$last_period;
+        $query="select * FROM partitions WHERE nb_period_covered >=".$phylo_min_nb_periods_covered." AND last_period<".($last_period-3*$dT);
         $json_data=query2streamgraphData($query,$first_period,$last_period,$dT,$time_steps);
         $cle='branches_suspens_'.$phylo_min_nb_periods_covered;
         $sql="INSERT INTO data (cle,valeur) VALUES ('".$cle."','$json_data') ON DUPLICATE KEY UPDATE cle='".$cle."',valeur='$json_data';";
