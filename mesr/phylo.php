@@ -16,7 +16,7 @@ include("banner.php");
 
 ///// PARAMETRES ///
 $depth=2;// rang dans le nombre d'occurences des termes acceptés pour labellisation des branches
-$min_similarity=5000000;// seuil de similarité pour clusteriser
+$min_similarity=.05;// seuil de similarité pour clusteriser
 $phylo_min_nb_periods_covered=4;
 $phylo_recent_min_nb_periods_covered=4;
 
@@ -434,12 +434,14 @@ function branch_similarity($branch1,$branch2){
 // calcul une similarité entre branches en fonctions des termes quelles contiennent et de leurs occurrences
 // utilise le cos des vecteurs des occ de termes normalisées
 $branch1_terms_ids=explode('_',$branch1['terms']);
+
 $branch1_terms=explode('_',$branch1['label']);
 $branch2_terms_ids=explode('_',$branch2['terms']);
+
 $nb_fields1=$branch1['nb_fields'];
 $squared_nb_fields1=$nb_fields1*$nb_fields1;
-$nb_fields2=$branch2['nb_fields'];
 
+$nb_fields2=$branch2['nb_fields'];
 $squared_nb_fields2=$nb_fields2*$nb_fields2;
 
 $total_number_of_clusters=getValue('total_number_of_clusters');
@@ -449,33 +451,44 @@ $branch2_terms_occ=explode('_',$branch2['terms_occ']);
 
 
 $common_terms=array_intersect($branch1_terms_ids,$branch2_terms_ids);
+$allterms=array_values(array_merge($branch1_terms_ids,$branch2_terms_ids));
+$ratio_common_terms=count($common_terms)/count($allterms);
+
 $similarity=0;
-while (count($common_terms)>0){
-    $term=array_pop($common_terms);
-    $sql = 'SELECT occurrences_in_clusters from concepts WHERE id='.$term;
+$branch1_sq_norm=0;
+$branch2_sq_norm=0;
 
-    $resultat=mysql_query($sql) or die ("<b>Requête non exécutée (récupération des occurrences dans le corpus)</b>.");
-    while ($ligne=mysql_fetch_array($resultat)) {
-        $nb_occ=$ligne[occurrences_in_clusters];
-        }
-    $rank_in_branch1=search($term, $branch1_terms_ids);
-    $rank_in_branch2=search($term, $branch2_terms_ids);
-    $similarity=$similarity+($branch1_terms_occ[$rank_in_branch1]/$nb_fields1/$nb_occ*$total_number_of_clusters*$branch2_terms_occ[$rank_in_branch2]/$nb_fields2/$nb_occ*$total_number_of_clusters);
+while (count($allterms)>0){
+    $term=array_pop($allterms);
+    $nb_occ=getValue($term,'concepts','id','occurrences_in_clusters');
+    $rank_in_branch1=array_search($term, $branch1_terms_ids);
+    $rank_in_branch2=array_search($term, $branch2_terms_ids);
+
+    if ($rank_in_branch1!=FALSE) {
+        $var1=$branch1_terms_occ[$rank_in_branch1]/$nb_fields1/$nb_occ*$total_number_of_clusters;
+        $branch1_sq_norm+=$var1*$var1;
+    }else{
+        $var1=0;
+    }
+
+    if ($rank_in_branch2!=FALSE) {
+        $var2=$branch2_terms_occ[$rank_in_branch2]/$nb_fields2/$nb_occ*$total_number_of_clusters;
+        $branch2_sq_norm+=$var2*$var2;
+
+    }{
+        $var2=0;
+    }
+    $similarity=$similarity+$var1*$var2;  
 }
 
-$branch1_squares=0;
-while (count($branch1_terms_occ)>0){
-    $occ=array_pop($branch1_terms_occ);
-    $branch1_squares=$branch1_squares+$occ*$occ/$squared_nb_fields1;
+if ($branch1_sq_norm*$branch2_sq_norm==0){
+    $similarity=0;
+}else{
+    $similarity=$similarity/sqrt($branch1_sq_norm)/sqrt($branch2_sq_norm);
+    //$similarity=$ratio_common_terms*$similarity/sqrt($branch1_sq_norm)/sqrt($branch2_sq_norm);
 }
-
-$branch2_squares=0;
-while (count($branch2_terms_occ)>0){
-    $occ=array_pop($branch2_terms_occ);
-    $branch2_squares=$branch2_squares+$occ*$occ/$squared_nb_fields2;
-}
-
-return ($similarity*$similarity/$branch1_squares/$branch2_squares);
+echo $similarity.'<br/>';
+return $similarity;
 }
 
 /////////////////////////////////

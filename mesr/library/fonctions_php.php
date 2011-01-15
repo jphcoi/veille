@@ -79,7 +79,7 @@ return count(array_intersect($str1, $str2));
 /// obtenir des valeurs des tables
 /////////////////////////////////
 function getValue($cle_value,$table='data',$cle='cle',$valeur='valeur'){
-// renvoie la valeur correspondant à la clé $cle dans la table data
+// renvoie dans la ligne de la table $table correspondant à $cle=$cle_value la valeur correspondant l'entree valeur
 $sql = 'SELECT '.$valeur.' from '.$table.' WHERE '.$cle.'="'.$cle_value.'"';
 $resultat=mysql_query($sql) or die ("<b>get value failed for ".$cle_value."</b>");
     while ($ligne=mysql_fetch_array($resultat)) {
@@ -869,6 +869,7 @@ return $website_description;
 
 
 function search($searchValue, $ar)
+//utiliser de préférence array_search à la place
 	{
 		for($i=0; $i< count($ar); $i++) {
 	   if($ar[$i] == $searchValue) return $i;}
