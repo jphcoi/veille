@@ -215,19 +215,7 @@ while ($partit=mysql_fetch_array($resultat)) {
 }
 
 // Infos de la partitions concernée
-$sql="SELECT * FROM partitions WHERE id_partition=".$id_partition;
-$partQuery=mysql_query($sql);
-while ($part=mysql_fetch_array($partQuery)){
-    $partition_infos=$part;
-}
-
-// Récupère tous les clusters de la dernière période
-$last_period_clusters=array();
-$sql="SELECT * FROM cluster WHERE periode='".$partition_infos[last_period_string]."' AND pseudo=".$partition_infos['id_partition']." GROUP BY id_cluster";
-$resultat=mysql_query($sql) or die ("Champ thématique de la dernière période non récupérés");
-while ($partit=mysql_fetch_array($resultat)) {
-    array_push($last_period_clusters,$partit);
-}
+$last_period_clusters=getPartitionLastPeriodClusters($id_partition);
 
 ////////////////////////////////////////////////////////
 //bloc recuperation infos termes

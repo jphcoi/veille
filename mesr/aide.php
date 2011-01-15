@@ -86,14 +86,17 @@ d'un terme (evolution, billets associés, etc.), comme par exemple <a href='char
 plus élevés permettant d'avoir une vue synthétique des problématiques autour de <i>'Santé et Environnement'</i>.
 Ceux-ci sont accessibles via le menu de navigation:
 <ul>
-<li> <a href='entree_clusters.php'><font color=blue>Les champs thématiques</font></a> (niveau <i>'meso'</i>),
+<li> <b>Les champs thématiques</b> (niveau <i>'meso'</i>),
 sont des ensembles de termes qui décrivent le contexte d'une discussion. Ils sont liés à un ensemble
 de contenus provenant <a href='aide.php?selectecTab=1'><font color=blue>des sources</font></a>.
 Cette recherche de contenu peut-être étendue
-à tous le web depuis la page de profil d'un champ thématique via l'icône Google <img src='images/googleGinv.png' width=18px>
-<li> <a href='global.php'><font color=blue>Les cartes</font></a> (niveau <i>'macro'</i>) montrent l'articulation des champs thématiques à une période donnée, la proximité des problématiques abordées,
-<li> <a href='phylo.php'><font color=blue>Les fils thématiques</font></a> (niveau <i>'macro-temporel'</i>) permettent d'appréhender le déroulement temporel
- des discussions, l'émergence de problématiques et l'évolution de leur popularité.
+à tous le web depuis la page de profil d'un champ thématique via l'icône Google <img src='images/googleGinv.png' width=18px>. La
+liste des champs thématiques est accéssible via le lien <a href='entree_clusters.php'><font color=blue>CHAMPS THEMATIQUES</font></a> dans le menu de navigation.
+<li> <b>Les cartes</b> (niveau <i>'macro'</i>) montrent l'articulation des champs thématiques à une période donnée, la proximité des problématiques abordées. Elles sont
+accessibles via le lien <a href='global.php'><font color=blue>CARTES</font></a> dans le menu de navigation.
+<li> <b>Les fils thématiques</b> (niveau <i>'macro-temporel'</i>) permettent d'appréhender le déroulement temporel
+ des discussions, l'émergence de problématiques et l'évolution de leur popularité. La liste des fils thématiques est accessible via le
+ lien <a href='phylo.php'><font color=blue>FILS THEMATIQUES</font></a> dans le menu de navigation.
 </ul>
 </p>
 <p>

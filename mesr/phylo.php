@@ -237,7 +237,7 @@ function branch_list_string($mysql_branch_list,$depth,$min_similarity){
 			}
 		}
 		else 
-		{ // c'est une branche perdue
+		{ // c'est une branche isolée
 			if ($first_withoutgroup) {
 				$branch_string.='<tr style="background-color:white; font-variant:small-caps; font-size:large; font-weight:bold;" height=50px>';
 				$branch_string.='<td colspan=4 width=100%>fils thématiques "isolés"';
@@ -484,7 +484,43 @@ while (count($branch2_terms_occ)>0){
 return ($similarity*$similarity/$branch1_squares/$branch2_squares);
 }
 
+function linkFilThematique($jscriptmp,$id_partition) {
+// Construit le lien vers les champs thématiques de l'extrémité du FT en proposant
+// si besoin plusieurs choix via un helper
+// retourne le $jscriptmp actualisé et le html à injecter pour faire le lien
 
+    $last_period_clusters=getPartitionLastPeriodClusters($id_partition);
+//// préparation des liens de fils thématiques
+    $jscriptmp.="
+               $('#dialogfilThematique".$id_partition."')
+		  .dialog({ autoOpen: false, stack: true, resizable: false, modal:true, width:600, closeOnEscape:true})
+		  .click(function () { $('#dialogfilThematique".$id_partition."').dialog('close'); });
+
+		$('#openerfilThematique".$id_partition."').click(function(e) {
+			if (!$('#dialogfilThematique".$id_partition."').dialog('isOpen'))
+				$('#dialogfilThematique".$id_partition."').dialog('option','position', [$(this).position().left+25,25]).dialog('open');
+			else
+				$('#dialogfilThematique".$id_partition."').dialog('close');
+			return false;
+			});";
+    if (count($last_period_clusters)==1) {
+        $last_period_clusters=$last_period_clusters[0];
+        $fils_thematique_html='<a href="'.$last_period_clusters[attribut].'"><font color='.$backdarker.'>'.remove_popo(substr($partition_infos[label],0,-1)).'</font></a></span>';
+    }
+    else {
+        $cluster_Link_html='<ul><font color=blue>';
+        for ($i=0;$i<count($last_period_clusters);$i++) {
+            $cluster_Link_html.='<li><a href="'.$last_period_clusters[$i][attribut].'"><font color=blue>'.str_replace('---','/',remove_popo($last_period_clusters[$i][label])).'</a></li>';
+        }
+        $cluster_Link_html.='</ul>';
+        $fils_thematique_html='<a href scr=# id="openerfilThematique'.$id_partition.'"><font color='.$backdarker.'>'.remove_popo(substr($partition_infos[label],0,-1)).'</font></a>';
+
+    }
+    echo '<span id="dialogfilThematique'.$id_partition.'" style="display:none;" title="Liens vers l\'extrémité du fil thématique ('.get_short_string_periode(arrange_periode($last_period_clusters[0][periode])).')">';
+    echo 'Ce fil thématique a plusieurs champs en dernière période :'.$cluster_Link_html;
+    echo '</span>';
+    return array($jscriptmp,$fils_thematique_html);
+}
 /////////////////////////////////
 //////// veilles fonctions //////
 /////////////////////////////////

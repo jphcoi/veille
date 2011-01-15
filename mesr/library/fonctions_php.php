@@ -14,6 +14,26 @@ $resultat=mysql_query($query) or die ("<b>planned error succesful ! </b>.");
 
 }
 
+function getPartitionLastPeriodClusters($id_partition) {
+//renvoie un array contenant les infos des clusters de la dernière période de la
+//partition concernée
+// Infos de la partitions concernée
+    $sql="SELECT * FROM partitions WHERE id_partition=".$id_partition;
+    $partQuery=mysql_query($sql);
+    while ($part=mysql_fetch_array($partQuery)) {
+        $partition_infos=$part;
+    }
+
+// Récupère tous les clusters de la dernière période
+    $last_period_clusters=array();
+    $sql="SELECT * FROM cluster WHERE periode='".$partition_infos[last_period_string]."' AND pseudo=".$partition_infos['id_partition']." GROUP BY id_cluster";
+    $resultat=mysql_query($sql) or die ("Champ thématique de la dernière période non récupérés");
+    while ($partit=mysql_fetch_array($resultat)) {
+        array_push($last_period_clusters,$partit);
+    }
+    return $last_period_clusters;
+}
+
 function retrieve_periods()
 {
 	//on recupere la liste des periodes
