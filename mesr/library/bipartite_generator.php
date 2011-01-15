@@ -145,7 +145,7 @@ for ($j=0;$j<count($conceptIds);$j++) {
 
     fputs($gexfFile,'<node id="N::'.$nodeId.'" label="'.remove_popo($nodeLabel).'">'."\n");
     fputs($gexfFile,'<viz:color b="0" g="0"  r="255"/>'."\n");
-    fputs($gexfFile,'<viz:position x="0"    y="0"  z="0" />'."\n");
+    fputs($gexfFile,'<viz:position x="'.rand(0,3).'"    y="'.rand(0,3).'"  z="0" />'."\n");
     fputs($gexfFile,'<attvalues> <attvalue for="0" value="NGram"/>'."\n");
     fputs($gexfFile,'<attvalue for="1" value="'.$termsList[$nodeId][occ].'"/>'."\n");
     fputs($gexfFile,'<attvalue for="4" value="'.$termsList[$nodeId][occ].'"/>'."\n");
