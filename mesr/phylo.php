@@ -16,7 +16,7 @@ include("banner.php");
 
 ///// PARAMETRES ///
 $depth=2;// rang dans le nombre d'occurences des termes acceptés pour labellisation des branches
-$min_similarity=.05;// seuil de similarité pour clusteriser
+$min_similarity=.06;// seuil de similarité pour clusteriser
 $phylo_min_nb_periods_covered=4;
 $phylo_recent_min_nb_periods_covered=4;
 
@@ -315,6 +315,8 @@ while (count($label_rows_remaining_to_process)>0){
             $label_rows_remaining_to_process=array_diff($label_rows_remaining_to_process,$target_label_raw);
          }
     }
+    
+
     array_push($label_rows_groups,$target_label_raw);
     // on reconstruit l'array des labels_id de branche
     $target_branches_label_ids=array();
@@ -452,42 +454,30 @@ $branch2_terms_occ=explode('_',$branch2['terms_occ']);
 
 $common_terms=array_intersect($branch1_terms_ids,$branch2_terms_ids);
 $allterms=array_values(array_merge($branch1_terms_ids,$branch2_terms_ids));
-$ratio_common_terms=count($common_terms)/count($allterms);
+$ratio_common_terms=min(count($common_terms)/count($branch1_terms_ids),count($common_terms)/count($branch2_terms_ids));
 
 $similarity=0;
 $branch1_sq_norm=0;
 $branch2_sq_norm=0;
 
-while (count($allterms)>0){
-    $term=array_pop($allterms);
+while (count($common_terms)>0){
+    $term=array_pop($common_terms);
     $nb_occ=getValue($term,'concepts','id','occurrences_in_clusters');
-    $rank_in_branch1=array_search($term, $branch1_terms_ids);
-    $rank_in_branch2=array_search($term, $branch2_terms_ids);
-
-    if ($rank_in_branch1!=FALSE) {
-        $var1=$branch1_terms_occ[$rank_in_branch1]/$nb_fields1/$nb_occ*$total_number_of_clusters;
-        $branch1_sq_norm+=$var1*$var1;
-    }else{
-        $var1=0;
-    }
-
-    if ($rank_in_branch2!=FALSE) {
-        $var2=$branch2_terms_occ[$rank_in_branch2]/$nb_fields2/$nb_occ*$total_number_of_clusters;
-        $branch2_sq_norm+=$var2*$var2;
-
-    }{
-        $var2=0;
-    }
-    $similarity=$similarity+$var1*$var2;  
+    $rank_in_branch1=search($term, $branch1_terms_ids);
+    $rank_in_branch2=search($term, $branch2_terms_ids);
+    $var1=$branch1_terms_occ[$rank_in_branch1]/$nb_fields1/$nb_occ*$total_number_of_clusters;
+    $var2=$branch2_terms_occ[$rank_in_branch2]/$nb_fields2/$nb_occ*$total_number_of_clusters;
+    $similarity=$similarity+$var1*$var2;
+    $branch1_sq_norm+=$var1*$var1;
+    $branch2_sq_norm+=$var2*$var2;
 }
 
 if ($branch1_sq_norm*$branch2_sq_norm==0){
     $similarity=0;
 }else{
-    $similarity=$similarity/sqrt($branch1_sq_norm)/sqrt($branch2_sq_norm);
-    //$similarity=$ratio_common_terms*$similarity/sqrt($branch1_sq_norm)/sqrt($branch2_sq_norm);
+    $similarity=$ratio_common_terms*$similarity/sqrt($branch1_sq_norm)/sqrt($branch2_sq_norm);
 }
-echo $similarity.'<br/>';
+//echo $similarity.'<br/>';
 return $similarity;
 }
 
