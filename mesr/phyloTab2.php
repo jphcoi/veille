@@ -9,7 +9,6 @@ include("phyloheader.php");
 //// Branches émergentes
 $cle='branches_emergentes_'.$phylo_recent_min_nb_periods_covered;
 $json_dataEmergentes=getValue($cle);
-
 //////////
 include('include/streamgraphEmergentes.php');
 echo $myaboveEmergentes;
