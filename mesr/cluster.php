@@ -318,8 +318,10 @@ echo '<tr valign=top><td width=2.5%></td><td>';
 echo '<table width=100% class=subtitle><tr><td align=left>champ thématique "<i>'.remove_popo($label1_current).'</i><i style="font-weight:normal;"> - '.remove_popo($label2_current).'" ';
 if ($lettre_current!="") echo '('.$lettre_current.')';
 echo '</i>';
-echo '<br/><span style="font-size: x-small;">fil thématique: ';
-echo $linkstar.'&nbsp;'.$linkFilThematique.'</span>';
+echo '<br/><table width=100% ><tr><td width=75 valign=top>
+    <span align=left style="font-variant:small-caps; font-size: x-small;color:#ffffff">
+    fil thématique :</span><br/> ';
+echo $linkstar.'</td><td valign=top><span style="font-size: x-small;">'.$linkFilThematique.'</span></td></table>';
 echo '<td align=right><span style="font-size:8pt;">'.str_replace(" ","&nbsp;",get_string_periode($my_period)).'<br/>'.$linkcluster.'</span>&nbsp;&nbsp;</td>';
 echo '</tr></table>';
 echo '</td><td width=2.5%></td></tr>';
