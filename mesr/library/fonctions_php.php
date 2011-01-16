@@ -10,6 +10,8 @@ setlocale (LC_TIME, 'fr_FR','fra');
 
 // sous libraries
 include('phylo_library.php');
+include('cluster_library.php');
+
 /////////////////////////
 
 

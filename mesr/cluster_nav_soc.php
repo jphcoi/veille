@@ -141,53 +141,20 @@ echo '
 	<table class=tableitems width=100% cellspacing=0 cellpadding=1 style="font-variant:small-caps;">';
 echo '<tr valign=top>';
 	
-// PANEL DE GAUCHE: PERIODES PRECEDENTES
-	
-if ($nopred) $back_avant='background-color:'.$backdarker.';';
-echo '<td width=22% class=tableitems style="font-variant:small-caps; size:small; font-style:italic;'.$back_avant.'">';
-if ($nopred) echo '<div align=center style="font-style:normal;">(pas de prédécesseur)</div>';
-else {
-	if (count($pred)>1) $plural_string="s"; else $plural_string="";
-	echo '<span align=left style="font-weight:bold; font-style:normal;">&nbsp;champ'.$plural_string.' antérieur'.$plural_string.'</span><div style="height:4px;"></div>';
-	echo '<table width=100% cellspacing=0 cellpadding=0>';
-	echo '<tr width=100% class=commentitems style="font-variant:small-caps; background-color:'.$backdark.';"><td width=5px></td><td>période</td><td></td><td>champ</td></tr>';
-	$last_display_periode="";
-	foreach ($pred as $p) display_cluster_title($p,"pred");
-	echo '</table>';
-	}	
-echo '</td>';
-
+left_panel($p,$pred,$nopred,$backdarker,$backdark);
 
 // PANEL CENTRAL
-
 echo '<td align=center width=56%>';
-
 echo "<b><i>";	
 if ($affichage>0)
 	echo $myscript;	
 else
-	echo "pas de sources associées<br>sur cette période";
-	
-echo "</i></b>";
-	
+	echo "pas de sources associées<br>sur cette période";	
+echo "</i></b>";	
 echo '</td>';
+///////////
 
-// PANEL DE DROITE: PERIODES SUIVANTES
-
-if ($nosucc) $back_apres='background-color:'.$backdarker.';';
-echo '<td width=22% class=tableitems style="font-variant:small-caps; size:small; font-style:italic;'.$back_apres.'">';	
-if ($nosucc) echo '<div align=center style="font-style:normal;">(pas de successeur)</div>'; 
-else {
-	if (count($succ)>1) $plural_string="s"; else $plural_string="";
-	echo '<span align=left style="font-weight:bold; font-style:normal;">&nbsp;champ'.$plural_string.' ultérieur'.$plural_string.'</span><div style="height:4px;"></div>';
-	echo '<table width=100% cellspacing=0 cellpadding=0>';
-	echo '<tr class=commentitems style="font-variant:small-caps; background-color:'.$backdark.';"><td width=5px></td><td>période</td><td></td><td>champ</td></tr>';
-	$last_display_periode="";
-	foreach ($succ as $s) 
-		display_cluster_title($s,"succ");
-	echo '</table>';
-	}
-echo '</td>';
+right_panel($s,$succ,$nosucc,$backdarker,$backdark);
 	
 echo "</tr>";
 
