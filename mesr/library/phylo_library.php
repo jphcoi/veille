@@ -66,15 +66,15 @@ if ($score>.5) {
 
 //// préparation des liens de fils thématiques
     $jscriptmp.="
-               $('#dialogfilThematique".$id_partition."')
+               $('#dialoglinkstar".$id_partition."')
 		  .dialog({ autoOpen: false, stack: true, resizable: false, modal:true, width:600, closeOnEscape:true})
-		  .click(function () { $('#dialogfilThematique".$id_partition."').dialog('close'); });
+		  .click(function () { $('#dialoglinkstar".$id_partition."').dialog('close'); });
 
-		$('#openerfilThematique".$id_partition."').click(function(e) {
-			if (!$('#dialogfilThematique".$id_partition."').dialog('isOpen'))
-				$('#dialogfilThematique".$id_partition."').dialog('option','position', [$(this).position().left+25,25]).dialog('open');
+		$('#openerlinkstar".$id_partition."').click(function(e) {
+			if (!$('#dialoglinkstar".$id_partition."').dialog('isOpen'))
+				$('#dialoglinkstar".$id_partition."').dialog('option','position', [$(this).position().left+25,25]).dialog('open');
 			else
-				$('#dialogfilThematique".$id_partition."').dialog('close');
+				$('#dialoglinkstar".$id_partition."').dialog('close');
 			return false;
 			});";
     if (count($clusters)==1) {
@@ -87,10 +87,10 @@ if ($score>.5) {
             $cluster_Link_html.='<li><a href="'.$clusters[$i][attribut].'"><font color=blue>'.str_replace('---','/',remove_popo($clusters[$i][label])).'</font></a></li>';
         }
         $cluster_Link_html.='</ul>';
-        $linkstar='<a href scr=# id="openerfilThematique'.$id_partition.'">'.$score_html.'</a>';
+        $linkstar='<a href scr=# id="openerlinkstar'.$id_partition.'">'.$score_html.'</a>';
 
     }
-    echo '<span id="dialogfilThematique'.$id_partition.'" style="display:none;" title="Liens vers l\'extrémité du fil thématique ('.get_short_string_periode(arrange_periode($last_period_clusters[0][periode])).')">';
+    echo '<span id="dialoglinkstar'.$id_partition.'" style="display:none;" title="Liens vers l\'extrémité du fil thématique ('.get_short_string_periode(arrange_periode($last_period_clusters[0][periode])).')">';
     echo 'Ce fil thématique a plusieurs champs en dernière période :'.$cluster_Link_html;
     echo '</span>';
     return array($jscriptmp,$linkstar);
