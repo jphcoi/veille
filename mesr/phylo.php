@@ -6,7 +6,7 @@ include("phyloheader.php");
 //// Branches actives
 $cle='branches_actives_'.$phylo_min_nb_periods_covered;
 $json_dataActives=getValue($cle);
-
+//echo $json_dataActives;
 //////////
 include('include/streamgraphActives.php');
 
