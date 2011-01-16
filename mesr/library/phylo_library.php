@@ -83,8 +83,8 @@ if ($score>.5) {
     }
     else {
         $cluster_Link_html='<ul>';
-        for ($i=0;$i<count($last_period_clusters);$i++) {
-            $cluster_Link_html.='<li><a href="'.$last_period_clusters[$i][attribut].'"><font color=blue>'.str_replace('---','/',remove_popo($last_period_clusters[$i][label])).'</font></a></li>';
+        for ($i=0;$i<count($clusters);$i++) {
+            $cluster_Link_html.='<li><a href="'.$clusters[$i][attribut].'"><font color=blue>'.str_replace('---','/',remove_popo($clusters[$i][label])).'</font></a></li>';
         }
         $cluster_Link_html.='</ul>';
         $linkstar='<a href scr=# id="openerfilThematique'.$id_partition.'">'.$score_html.'</a>';
