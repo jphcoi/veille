@@ -90,8 +90,8 @@ if ($score>.5) {
         $linkstar='<a href scr=# id="openerlinkstar'.$id_partition.'">'.$score_html.'</a>';
 
     }
-    echo '<span id="dialoglinkstar'.$id_partition.'" style="display:none;" title="Liens vers l\'extrémité du fil thématique ('.get_short_string_periode(arrange_periode($last_period_clusters[0][periode])).')">';
-    echo 'Ce fil thématique a plusieurs champs en dernière période :'.$cluster_Link_html;
+    echo '<span id="dialoglinkstar'.$id_partition.'" style="display:none;" title="Liens vers la période de popularité maximale ('.get_short_string_periode(arrange_periode($last_period_clusters[0][periode])).')">';
+    echo 'La période de popularité maximale de ce fil thématique correspond à plusieurs champs thématiques :'.$cluster_Link_html;
     echo '</span>';
     return array($jscriptmp,$linkstar);
 }
@@ -197,7 +197,7 @@ function branch_list_string($mysql_branch_list,$depth,$min_similarity){
 			for ($j=0;$j<count($index_grouped);$j++){
 				$index = $index_grouped[$j];
 				$branch_id=$branch_list[$index]['id_partition'];
-                                list($jscriptmp,$linkFilThematique)=linkFilThematique($jscriptmp,$branch_id,$branch_list[$index],$backdarker);
+                                    list($jscriptmp,$linkFilThematique)=linkFilThematique($jscriptmp,$branch_id,$branch_list[$index],$backdarker);
 
 				$sql='SELECT * from partitions WHERE id_partition='.$branch_id;
 				$resultat=mysql_query($sql) or die ("<b>Requête non exécutée (récupération des infos de partition)</b>.");
