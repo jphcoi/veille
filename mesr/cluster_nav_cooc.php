@@ -97,6 +97,7 @@ else
 		$liens_to=array();
 		$liens_weight=array();
 		$liens_weight_noeud=array();
+		$liens_weight_noeud_list=array();
 		while ($rwos=mysql_fetch_array($sql_cooc))
 		{
 			$from = $rwos['concept1'];
@@ -105,18 +106,28 @@ else
 			{
 			$force_lien=floatval($rwos['distance0'])+floatval($rwos['distance1']);
 			if (array_key_exists($from,$liens_weight_noeud))
-			{$liens_weight_noeud[$from] = max($liens_weight_noeud[$from],$force_lien);}
+			{$liens_weight_noeud[$from] = max($liens_weight_noeud[$from],$force_lien);
+			$liens_weight_noeud_list[$from][] =$force_lien; }
 			else
-			{$liens_weight_noeud[$from] = $force_lien;}
+			{$liens_weight_noeud[$from] = $force_lien;
+			$liens_weight_noeud_list[$from] =array();
+			$liens_weight_noeud_list[$from][] =$force_lien;}
 			if (array_key_exists($to,$liens_weight_noeud))
-			{$liens_weight_noeud[$to] = max($liens_weight_noeud[$to],$force_lien);}
+			{$liens_weight_noeud[$to] = max($liens_weight_noeud[$to],$force_lien);
+			$liens_weight_noeud_list[$to][] =$force_lien;}
 			else
-			{$liens_weight_noeud[$to] = $force_lien;}	
+			{$liens_weight_noeud[$to] = $force_lien;
+			$liens_weight_noeud_list[$to] =array();
+			$liens_weight_noeud_list[$to][] =$force_lien;}	
 			}
 		}
 		$thres = min(array_values($liens_weight_noeud));
 		$thres = $thres;
-		//on seuille de façon à ce que le degré minimal du réseau de distance vale 1
+		$noeud_deg1= array_search($thres,$liens_weight_noeud);
+		$lien_noeud_deg1 = $liens_weight_noeud_list[$noeud_deg1];
+		rsort($lien_noeud_deg1);
+		$thres =$lien_noeud_deg1[1];
+		//on seuille de façon à ce que le degré minimal du réseau de distance vale 1, et que le seuil soit néanmoins minimal
 		mysql_data_seek($sql_cooc, 0);
 		while ($rwos=mysql_fetch_array($sql_cooc))
 		{
@@ -126,18 +137,12 @@ else
 			$to = $rwos['concept2'];
 			if (intval($from)!=intval($to))
 			{
-			if (floatval($force_lien)>=floatval($thres))
+			if (floatval($force_lien)>floatval($thres))
 			{$liens_weight[] = intval($force_lien*2.);
 			$liens_from[] = $from;
 			$liens_to[] = $to;}
-//			$liens_from[] = $rwos['concept2'];
-//			$liens_to[] = $rwos['concept1'];
-//			$liens_weight[] = intval(floatval($rwos['distance1'])*5.);
 			}
 		}
-		//print_r($liens_from);
-		//print_r($liens_to);
-		//print_r($liens_weight);
 }
 		
 
