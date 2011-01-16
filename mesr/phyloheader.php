@@ -1,6 +1,7 @@
 <?php
 include("login_check.php");
 include("library/fonctions_php.php");
+
 $jsprotovis="TRUE";
 
 //connexion a la base de donnees

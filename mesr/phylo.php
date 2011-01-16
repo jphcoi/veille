@@ -1,6 +1,5 @@
 <?php
 include("phyloheader.php");
-
 ///////////////////
 
 /// on récupère pour chaque catégorie les données similapré-calculées pour les streamgraph

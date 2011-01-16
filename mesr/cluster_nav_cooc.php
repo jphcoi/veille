@@ -64,6 +64,7 @@ if ($type_lien=='cooc')
 		$sql = $sql." and periode = ".$periode_index;
 		
 		$sql_cooc = mysql_query($sql);
+                echo $sql;
 		//$concepts_b = array();
 		$liens_from=array();
 		$liens_to=array();
@@ -91,6 +92,7 @@ else
 		$sql = $sql." and periode = ".$periode_index;
 
 		$sql_cooc = mysql_query($sql);
+                
 		//$concepts_b = array();
 		$liens_from=array();
 		$liens_to=array();

@@ -101,8 +101,9 @@ return $streamgraphString;
 }
 /////////////////////////////////////////////
 function partition2JSON($id_partition,$first_period,$last_period,$dT,$time_steps){
-// transforme un ensemble de champs en un JSon pour streagraph
+// transforme un ensemble de champs d'un partition en un JSon pour streagraph
 // { activity: [ value1, ..., valueN]}
+$partitionScore=0;
 $JSON_string="{ activity: [";
 
 // pour chaque période, pour chaque champ, on considère l'ensemble des auteurs associé à un
@@ -141,10 +142,16 @@ for ($i=$first_period;$i<=$last_period;$i+=$time_steps) {
     echo $count.' billets<br/>';
     echo ' ------------------------<br/>';
     $JSON_string.=round($period_score,4).', ';
+    if ($partitionScore<$period_score){
+        $partitionScore=$period_score;
+    }
 }
 $JSON_string=substr($JSON_string,0,-2);
 $JSON_string.='] },';
-echo $JSON_string;
+$sqlScore="INSERT INTO partitions (id_partition,score) VALUES ('".$id_partition."','".$partitionScore."') ON DUPLICATE KEY UPDATE id_partition='".$id_partition."',score=$partitionScore;";
+echo $sqlScore;
+mysql_query($sqlScore) or die ("<b>Insert of total_number_of_cluster failed</b>.");;
+
 return $JSON_string;
 }
 ////////////////
