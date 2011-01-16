@@ -90,7 +90,7 @@ if ($score>.5) {
         $linkstar='<a href scr=# id="openerlinkstar'.$id_partition.'">'.$score_html.'</a>';
 
     }
-    echo '<span id="dialoglinkstar'.$id_partition.'" style="display:none;" title="Liens vers la période de popularité maximale <span style=\'font-size: x-small\'>('.get_string_periode($period).')</span>">';
+    echo '<span id="dialoglinkstar'.$id_partition.'" style="display:none;" title="Liens vers la période de popularité maximale <span style=\'font-size: x-small\'>('.get_string_periode(str_replace('-',' ',$period)).')</span>">';
     echo 'La période de popularité maximale de ce fil thématique correspond a plusieurs champs thématiques :'.$cluster_Link_html;
     echo '</span>';
     return array($jscriptmp,$linkstar);
