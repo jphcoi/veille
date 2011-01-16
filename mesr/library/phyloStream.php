@@ -35,6 +35,10 @@ $dT=$period_string[1]-$period_string[0];// fenêtre temporelle utilisée  pour l
 $time_steps=$last_period_list[1]-$last_period_list[0]; // pas de la fenêtre glissante
 
 
+//// Occurrences de termes dans les clusters
+$query="ALTER TABLE partitions ADD periodWithMaxScore varchar(50);";
+mysql_query($query);// or die ("<b>Requête non exécutée (creation du champ occurrences_in_cluster dans la table concepts)</b>.");
+
 //////////
 /// creation de la table
 $query="
@@ -104,6 +108,7 @@ function partition2JSON($id_partition,$first_period,$last_period,$dT,$time_steps
 // transforme un ensemble de champs d'un partition en un JSon pour streagraph
 // { activity: [ value1, ..., valueN]}
 $partitionScore=0;
+$periodWithMaxScore=0;
 $JSON_string="{ activity: [";
 
 // pour chaque période, pour chaque champ, on considère l'ensemble des auteurs associé à un
@@ -112,6 +117,7 @@ $JSON_string="{ activity: [";
 // l'épaisseur du fil thématique, proportionnelle au nombre d'acteurs concernés et à leur proximité sémantique
 $seuil_pertinence=0.3;//overlap_size/cluster_size/log10(10+billet_size-overlap_size)
 $penetration_thematique=0.4;//overlap_size/cluster_size
+
 for ($i=$first_period;$i<=$last_period;$i+=$time_steps) {
     $period_string=($i-$dT).' '.$i;
     echo $period_string.'<br/>';
@@ -144,11 +150,14 @@ for ($i=$first_period;$i<=$last_period;$i+=$time_steps) {
     $JSON_string.=round($period_score,4).', ';
     if ($partitionScore<$period_score){
         $partitionScore=$period_score;
+        $periodWithMaxScore=$period_string;
     }
 }
 $JSON_string=substr($JSON_string,0,-2);
 $JSON_string.='] },';
-$sqlScore="INSERT INTO partitions (id_partition,score) VALUES ('".$id_partition."','".$partitionScore."') ON DUPLICATE KEY UPDATE id_partition='".$id_partition."',score=$partitionScore;";
+
+$sqlScore="INSERT INTO partitions (id_partition,score,periodWithMaxScore) VALUES ('".$id_partition."','".$partitionScore."','".$periodWithMaxScore."') ON DUPLICATE KEY UPDATE id_partition='".$id_partition."',
+    score='".$partitionScore."', periodWithMaxScore='".$periodWithMaxScore."'";
 echo $sqlScore;
 mysql_query($sqlScore) or die ("<b>Insert of total_number_of_cluster failed</b>.");;
 

@@ -21,7 +21,8 @@
             ailleurs indiqués la fenêtre temporelle couverte par ce fil thématique ainsi que le nombre de champs qu\'il comporte.</p>
             <p>Les fils thématiques connaissent une popularité variable au cours du temps. Le
             nombre d\'étoiles devant un fils thématique (<img src="images/star.gif"><img src="images/star.gif">)
-            indiquent la popularité maximal qu\'a pu atteindre le fils thématique.<p>
+            indiquent la popularité maximal qu\'a pu atteindre le fils thématique. Pour atteindre cette
+            période de popularité maximale, cliquez sur les étoiles.<p>
                     ',"helper");
 
 ?>
