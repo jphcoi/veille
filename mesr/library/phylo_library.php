@@ -58,7 +58,7 @@ if ($score>.5) {
     $score=round(($score+1)/2) ;
     $score_html='';
     for ($s=0;$s<$score;$s++) {
-        $score_html.='<img src="images/star.gif" border="0">';
+        $score_html.='<img src="images/star.gif" border="0" >';
     }
 }else {
     $score_html.='<img src="images/stargrey.gif" border="0">';
@@ -79,7 +79,7 @@ if ($score>.5) {
 			});";
     if (count($clusters)==1) {
         $clusters=$clusters[0];
-        $linkstar='<a href="'.$clusters[attribut].'">'.$score_html.'</a></span>';
+        $linkstar='<a href="'.$clusters[attribut].'">'.$score_html.'</a>';
     }
     else {
         $cluster_Link_html='<ul>';
@@ -95,6 +95,50 @@ if ($score>.5) {
     echo '</span>';
     return array($jscriptmp,$linkstar);
 }
+
+function link2clusters($jscriptmp,$id_partition,$partition_infos,$period) {
+// génère des petits carrés pour faire un lien vers les
+//autres clusters de la même période sur le fil thématique
+global $jscriptmp;
+$clusters=getClutersFromThisPeriod($id_partition,$period);
+$nbcluster='';
+ for ($i=0;$i<count($clusters);$i++) {
+     $nbcluster.='<img src="images/cluster.gif" border="0" >';
+ }
+
+//// préparation des liens vers les clusters de la même période et du même fil thématique
+    $jscriptmp.="
+               $('#dialoglinkCluster".$id_partition."')
+		  .dialog({ autoOpen: false, stack: true, resizable: false, modal:true, width:600, closeOnEscape:true})
+		  .click(function () { $('#dialoglinkCluster".$id_partition."').dialog('close'); });
+
+		$('#openerlinkCluster".$id_partition."').click(function(e) {
+			if (!$('#dialoglinkCluster".$id_partition."').dialog('isOpen'))
+				$('#dialoglinkCluster".$id_partition."').dialog('option','position', [$(this).position().left+25,25]).dialog('open');
+			else
+				$('#dialoglinkCluster".$id_partition."').dialog('close');
+			return false;
+			});";
+    if (count($clusters)==1) {
+        $clusters=$clusters[0];
+        $linkcluster='';
+    }
+    else {
+        $cluster_Link_html='<ul>';
+        for ($i=0;$i<count($clusters);$i++) {
+            $cluster_Link_html.='<li><a href="'.$clusters[$i][attribut].'"><font color=blue>'.str_replace('---','/',remove_popo($clusters[$i][label])).'</font></a></li>';
+        }
+        $cluster_Link_html.='</ul>';
+        $linkcluster='<a href scr=# id="openerlinkCluster'.$id_partition.'">'.$nbcluster.'</a>';
+
+    }
+    echo '<span id="dialoglinkCluster'.$id_partition.'" style="display:none;" title="Période du '.get_string_periode($period).'">';
+    echo 'Autres clusters pour ce fil thématique : '.$cluster_Link_html;
+    echo '</span>';
+    return array($jscriptmp,$linkcluster);
+}
+
+
 
 function getPartitionLastPeriodClusters($id_partition) {
 //renvoie un array contenant les infos des clusters de la dernière période de la

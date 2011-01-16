@@ -305,7 +305,9 @@ $query="select * FROM partitions WHERE id_partition=".$id_partition;
 $resultat=mysql_query($query) or die ("<b>Requête non exécutée (récupération de info de partition)</b>.");
 $partition_infos=mysql_fetch_array($resultat);
 list($jscriptmp,$linkFilThematique)=linkFilThematique($jscriptmp,$id_partition,$partition_infos,$backdarker);
-
+list($jscriptmp,$linkstar)=linkstar($jscriptmp,$partition_infos[id_partition],$partition_infos,$periode);
+list($jscriptmp,$linkcluster)=link2clusters($jscriptmp,$partition_infos[id_partition],
+        $partition_infos,str_replace('-',' ', $periode));
 
 //////////////
 
@@ -317,8 +319,8 @@ echo '<table width=100% class=subtitle><tr><td align=left>champ thématique "<i>
 if ($lettre_current!="") echo '('.$lettre_current.')';
 echo '</i>';
 echo '<br/><span style="font-size: x-small;">fil thématique: ';
-echo $linkFilThematique.'</span>';
-echo '<td align=right><span style="font-size:8pt;">'.str_replace(" ","&nbsp;",get_string_periode($my_period)).'</span>&nbsp;&nbsp;</td>';
+echo $linkstar.'&nbsp;'.$linkFilThematique.'</span>';
+echo '<td align=right><span style="font-size:8pt;">'.str_replace(" ","&nbsp;",get_string_periode($my_period)).'<br/>'.$linkcluster.'</span>&nbsp;&nbsp;</td>';
 echo '</tr></table>';
 echo '</td><td width=2.5%></td></tr>';
 echo '</table>';
