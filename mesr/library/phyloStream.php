@@ -1,10 +1,10 @@
 <?php
 include("fonctions_php.php");
+include("../parametres/parametresPhylo.php");
+
 $jsprotovis="TRUE";
 
 echo 'PARAMETRES<br/>';
-$phylo_min_nb_periods_covered=4;
-$phylo_recent_min_nb_periods_covered=4;
 echo 'taille minimum des branches (hors émergentes) :'.$phylo_min_nb_periods_covered.'<br/>';
 echo 'taille maximum des branches émergentes  :'.$phylo_recent_min_nb_periods_covered.'<br/>';
 
@@ -35,6 +35,10 @@ $dT=$period_string[1]-$period_string[0];// fenêtre temporelle utilisée  pour l
 $time_steps=$last_period_list[1]-$last_period_list[0]; // pas de la fenêtre glissante
 
 
+//// Occurrences de termes dans les clusters
+$query="ALTER TABLE partitions ADD periodWithMaxScore varchar(50);";
+mysql_query($query);// or die ("<b>Requête non exécutée (creation du champ occurrences_in_cluster dans la table concepts)</b>.");
+
 //////////
 /// creation de la table
 $query="
@@ -55,14 +59,14 @@ mysql_query($query);
         echo '<br/>'.$sql.'<br/>';        
         mysql_query($sql) or die("<bInserts non effectués)</b>.");
 
-        $query="select * FROM partitions WHERE nb_period_covered > 1 AND nb_period_covered <".$phylo_recent_min_nb_periods_covered." AND  last_period=".$last_period;
+        $query="select * FROM partitions WHERE nb_period_covered > 1 AND nb_period_covered <=".$phylo_min_nb_periods_covered." AND  last_period=".$last_period;
         $json_data=query2streamgraphData($query,$first_period,$last_period,$dT,$time_steps);
         $cle='branches_emergentes_'.$phylo_recent_min_nb_periods_covered;
         $sql="INSERT INTO data (cle,valeur) VALUES ('".$cle."','$json_data') ON DUPLICATE KEY UPDATE cle='".$cle."',valeur='$json_data';";
         echo '<br/>'.$sql.'<br/>';
         mysql_query($sql) or die("<bInserts non effectués)</b>.");
             
-        $query="select * FROM partitions WHERE nb_period_covered >=".$phylo_min_nb_periods_covered." AND last_period<".$last_period;
+        $query="select * FROM partitions WHERE nb_period_covered >=".$phylo_min_nb_periods_covered." AND last_period<".($last_period-3*$dT);
         $json_data=query2streamgraphData($query,$first_period,$last_period,$dT,$time_steps);
         $cle='branches_suspens_'.$phylo_min_nb_periods_covered;
         $sql="INSERT INTO data (cle,valeur) VALUES ('".$cle."','$json_data') ON DUPLICATE KEY UPDATE cle='".$cle."',valeur='$json_data';";
@@ -101,8 +105,10 @@ return $streamgraphString;
 }
 /////////////////////////////////////////////
 function partition2JSON($id_partition,$first_period,$last_period,$dT,$time_steps){
-// transforme un ensemble de champs en un JSon pour streagraph
+// transforme un ensemble de champs d'un partition en un JSon pour streagraph
 // { activity: [ value1, ..., valueN]}
+$partitionScore=0;
+$periodWithMaxScore=0;
 $JSON_string="{ activity: [";
 
 // pour chaque période, pour chaque champ, on considère l'ensemble des auteurs associé à un
@@ -111,6 +117,7 @@ $JSON_string="{ activity: [";
 // l'épaisseur du fil thématique, proportionnelle au nombre d'acteurs concernés et à leur proximité sémantique
 $seuil_pertinence=0.3;//overlap_size/cluster_size/log10(10+billet_size-overlap_size)
 $penetration_thematique=0.4;//overlap_size/cluster_size
+
 for ($i=$first_period;$i<=$last_period;$i+=$time_steps) {
     $period_string=($i-$dT).' '.$i;
     echo $period_string.'<br/>';
@@ -141,10 +148,19 @@ for ($i=$first_period;$i<=$last_period;$i+=$time_steps) {
     echo $count.' billets<br/>';
     echo ' ------------------------<br/>';
     $JSON_string.=round($period_score,4).', ';
+    if ($partitionScore<$period_score){
+        $partitionScore=$period_score;
+        $periodWithMaxScore=$period_string;
+    }
 }
 $JSON_string=substr($JSON_string,0,-2);
 $JSON_string.='] },';
-echo $JSON_string;
+
+$sqlScore="INSERT INTO partitions (id_partition,score,periodWithMaxScore) VALUES ('".$id_partition."','".$partitionScore."','".$periodWithMaxScore."') ON DUPLICATE KEY UPDATE id_partition='".$id_partition."',
+    score='".$partitionScore."', periodWithMaxScore='".$periodWithMaxScore."'";
+echo $sqlScore;
+mysql_query($sqlScore) or die ("<b>Insert of total_number_of_cluster failed</b>.");;
+
 return $JSON_string;
 }
 ////////////////

@@ -25,4 +25,7 @@ Cliquer successivement sur les liens suivants pour regénérer la base
 <h2>En beta</h2>
 <a href="bipartite_generator.php" target="_blank">Calcul le graph bipartite des branches actives pour tinaweb</a>
 <br>
+<h2>Optionel</h2>
+<a href="BDDoptimisation.php" target="_blank">Optimisation des bdd</a>
+<br>
 

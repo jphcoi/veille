@@ -55,7 +55,7 @@ echo "<tr valign=top><td width=2.5%></td><td style=\"font-size:small;\">
 <h3>À propos de cette plateforme</h3>
 <p>Cette plateforme présente une reconstruction des discussions sur le thème <i>'Santé et Environnement'</i>
 à partir d'un échantillon représentatif de contenus dynamiques du web français sur la période du ";
-echo get_date_since($datef-2*$dT,'fr')." au ".get_date_since($datef,'fr').". </p><p> Par reconstruction, il faut entendre l'extraction, à partir d'une analyse des productions de la blogosphère,
+echo get_date_since($dated-2*$dT,'fr')." au ".get_date_since($datef,'fr').". </p><p> Par reconstruction, il faut entendre l'extraction, à partir d'une analyse des productions de la blogosphère,
 de motifs temporels qui mettent en saillance certains sujets, en explicitent les modalités de production et
 permettent de suivre leur évolution. </p>
 <p> Cet échantillon

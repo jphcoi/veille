@@ -2,6 +2,7 @@
 include("../login_check.php");
 include("fonctions_php.php");
 include("../parametre.php");
+include("../parametres/parametresPhylo.php");
 
 //connexion a la base de donnees
 mysql_connect( $server,$user,$password);if ($encodage=="utf-8") mysql_query("SET NAMES utf8;");
@@ -20,10 +21,6 @@ echo 'opening'.$gexfFileName;
 $gexfFile = fopen('../tinaweb/' .$gexfFileName,'w');
 
 
-//selection du sous ensemble de clusters à tracer
-$phylo_min_nb_periods_covered=4;
-$phylo_recent_min_nb_periods_covered=4;
-
 /////////// On regarde quel est la dernière période afin de pouvoir afficher les thématiques actives
 $last_period_list=array();
 $resultat=mysql_query("select last_period FROM partitions GROUP BY last_period") or die ("<b>Requête non exécutée (récupération des principales thématiques)</b>.");
@@ -37,7 +34,7 @@ $dated=min($last_period_list);
 $datef=max($last_period_list);
 
 // on sélectionne tous les clusters appartenant aux partitions sélectionnées
-$query="select * FROM partitions WHERE nb_period_covered >=".$phylo_min_nb_periods_covered." AND last_period>=".($last_period-3*$dT);
+$query="select * FROM partitions WHERE nb_period_covered >=".$phylo_min_nb_periods_covered;
 $resultat=mysql_query($query) or die ("<b>Requête non exécutée (récupération des principales thématiques)</b>.");
 $fieldsList=array();// list des champs de la partition
 $termsList=array();// liste des termes présents dans les champs avec leurs cooc avec les autres termes
@@ -145,7 +142,7 @@ for ($j=0;$j<count($conceptIds);$j++) {
 
     fputs($gexfFile,'<node id="N::'.$nodeId.'" label="'.remove_popo($nodeLabel).'">'."\n");
     fputs($gexfFile,'<viz:color b="0" g="0"  r="255"/>'."\n");
-    fputs($gexfFile,'<viz:position x="0"    y="0"  z="0" />'."\n");
+    fputs($gexfFile,'<viz:position x="'.rand(0,3).'"    y="'.rand(0,3).'"  z="0" />'."\n");
     fputs($gexfFile,'<attvalues> <attvalue for="0" value="NGram"/>'."\n");
     fputs($gexfFile,'<attvalue for="1" value="'.$termsList[$nodeId][occ].'"/>'."\n");
     fputs($gexfFile,'<attvalue for="4" value="'.$termsList[$nodeId][occ].'"/>'."\n");

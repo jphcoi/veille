@@ -19,6 +19,7 @@ CREATE TABLE IF NOT EXISTS `partitions` (
   `nb_period_covered` smallint(6) DEFAULT NULL,
   `nb_fields` smallint(6) DEFAULT NULL,
   `score` float(7,4) DEFAULT NULL,
+  `periodWithMaxScore` varchar(50) DEFAULT NULL,
   `terms` varchar(20000) DEFAULT NULL,
   `terms_occ` varchar(20000) NOT NULL,
   `nb_terms` smallint(6) DEFAULT NULL,
