@@ -9,7 +9,7 @@ $out=display_helper_two_outputs('Graph d\'évolution des fils thématiques','<p>
 $jscriptmp.=$out[1];
 $myscriptSuspens='<table class=tableitems width="100%">
 <tr valign=bottom>
-<td align="left">Evolution temporelle</td>';
+<td align="left">Evolution temporelle';
 $myscriptSuspens.=$out[0];
 $myscriptSuspens.='</td><td align="right" style="font-variant:small-caps;">
 <label for="query">rechercher: </label>

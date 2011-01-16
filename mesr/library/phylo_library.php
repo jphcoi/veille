@@ -140,9 +140,14 @@ function branch_list_string($mysql_branch_list,$depth,$min_similarity){
 
 				$ligne=mysql_fetch_array($resultat);
 				$nchamps=$ligne['nb_fields'];
+                                $score=round(($ligne['score']+1)/2);
+                                 $score_html='';
+                                 for ($s=0;$s<$score;$s++) {
+                                    $score_html.='<img src="images/star.gif">';
+                                 }
 				$branch='<tr value='.$nchamps.' onMouseOver="this.style.backgroundColor=\''.$whitedarker.'\';" onMouseOut="this.style.backgroundColor=\''.$whitedark.'\';">';
 
-				$branch.='<td width=50px style="font-size: x-small; text-align:right;"><b>'.$nchamps.'</b>&nbsp;champs</td>';
+				$branch.='<td width=50px style="font-size: x-small; text-align:right;"><b>'.$nchamps.'</b>&nbsp;champs<br/>'.$score_html.'</td>';
 				$branch.='<td width=50px style="font-size: x-small; text-align:right;">&nbsp;';
 				$branch.=str_replace("(&nbsp;","(",str_replace(" ","&nbsp;",get_short_string_periode($ligne['first_period'].'-'.$ligne['last_period'])));
 				$branch.='&nbsp;</td><td style="font-size:9pt;">';
@@ -171,10 +176,15 @@ function branch_list_string($mysql_branch_list,$depth,$min_similarity){
 			$resultat=mysql_query($sql) or die ("<b>Requête non exécutée (récupération des infos de partition)</b>.");
 			$ligne=mysql_fetch_array($resultat);
 			$nchamps=$ligne['nb_fields'];
+                        $score=round(($ligne['score']+1)/2);
+                        $score_html='';
+                        for ($s=0;$s<$score;$s++) {
+                            $score_html.='<img src="images/star.gif">';
+                        }
+                        
+                        $branch='<tr value='.$nchamps.' onMouseOver="this.style.backgroundColor=\''.$whitedarker.'\';" onMouseOut="this.style.backgroundColor=\''.$whitedark.'\';">';
 
-			$branch='<tr value='.$nchamps.' onMouseOver="this.style.backgroundColor=\''.$whitedarker.'\';" onMouseOut="this.style.backgroundColor=\''.$whitedark.'\';">';
-
-			$branch.='<td width=50px style="font-size: x-small; text-align:right;"><b>'.$ligne['nb_fields'].'</b>&nbsp;champs</td>';
+			$branch.='<td width=50px style="font-size: x-small; text-align:right;"><b>'.$ligne['nb_fields'].'</b>&nbsp;champs'.$score_html.'</td>';
 			$branch.='<td width=50px style="font-size: x-small; text-align:right;">&nbsp;';
 			$branch.=str_replace("(&nbsp;","(",str_replace(" ","&nbsp;",get_short_string_periode($ligne['first_period'].'-'.$ligne['last_period'])));
 			$branch.='&nbsp;</td><td style="font-size:9pt;">';

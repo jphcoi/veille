@@ -991,7 +991,7 @@ function display_box($titre,$auteurs,$abstract,$permalien,$concepts,$type_notice
 	else {
 		echo 'href="'.'http://scholar.google.com/scholar?hl=en&q='.str_replace(' ','+',$titre).'"';
 		}
-	echo '>';
+	echo 'target="blank">';
 	echo '<img alt="aller sur le site" src="images/externallink.png"  border="0" align=left height=16> ';
 	echo '</a>';
 	echo '</td><td width=86%>';

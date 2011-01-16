@@ -1,16 +1,11 @@
 <?php
 include("phyloheader.php");
-
 ///////////////////
 
 /// on récupère pour chaque catégorie les données similapré-calculées pour les streamgraph
 //// Branches actives
 $cle='branches_actives_'.$phylo_min_nb_periods_covered;
-$sql="SELECT * FROM data WHERE cle='".$cle."';";
-$resultat=mysql_query($sql) or die ("<b>Requête non exécutée (données streamgraph actives)</b>.");
-while ($ligne=mysql_fetch_array($resultat)) {
-        $json_dataActives=$ligne[valeur];
-}
+$json_dataActives=getValue($cle);
 
 //////////
 include('include/streamgraphActives.php');
