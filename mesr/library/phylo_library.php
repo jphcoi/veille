@@ -140,11 +140,17 @@ function branch_list_string($mysql_branch_list,$depth,$min_similarity){
 
 				$ligne=mysql_fetch_array($resultat);
 				$nchamps=$ligne['nb_fields'];
-                                $score=round(($ligne['score']+1)/2);
-                                 $score_html='';
-                                 for ($s=0;$s<$score;$s++) {
-                                    $score_html.='<img src="images/star.gif">';
-                                 }
+                                $score=$ligne['score'];
+                                $score_html='';
+                                if ($score>.5) {
+                                    $score=round(($score+1)/2) ;
+                                    $score_html='';
+                                    for ($s=0;$s<$score;$s++) {
+                                        $score_html.='<img src="images/star.gif">';
+                                    }
+                                }else{
+                                     $score_html.='<img src="images/stargrey.gif">';
+                                }
 				$branch='<tr value='.$nchamps.' onMouseOver="this.style.backgroundColor=\''.$whitedarker.'\';" onMouseOut="this.style.backgroundColor=\''.$whitedark.'\';">';
 
 				$branch.='<td width=50px style="font-size: x-small; text-align:right;"><b>'.$nchamps.'</b>&nbsp;champs<br/>'.$score_html.'</td>';
@@ -176,12 +182,18 @@ function branch_list_string($mysql_branch_list,$depth,$min_similarity){
 			$resultat=mysql_query($sql) or die ("<b>Requête non exécutée (récupération des infos de partition)</b>.");
 			$ligne=mysql_fetch_array($resultat);
 			$nchamps=$ligne['nb_fields'];
-                        $score=round(($ligne['score']+1)/2);
+                        $score=$ligne['score'];
                         $score_html='';
-                        for ($s=0;$s<$score;$s++) {
-                            $score_html.='<img src="images/star.gif">';
+                        if ($score>.5) {
+                            $score=round(($score+1)/2) ;
+                            $score_html='';
+                            for ($s=0;$s<$score;$s++) {
+                                $score_html.='<img src="images/star.gif">';
+                            }
+                        }else {
+                            $score_html.='<img src="images/stargrey.gif">';
                         }
-                        
+
                         $branch='<tr value='.$nchamps.' onMouseOver="this.style.backgroundColor=\''.$whitedarker.'\';" onMouseOut="this.style.backgroundColor=\''.$whitedark.'\';">';
 
 			$branch.='<td width=50px style="font-size: x-small; text-align:right;"><b>'.$ligne['nb_fields'].'</b>&nbsp;champs'.$score_html.'</td>';

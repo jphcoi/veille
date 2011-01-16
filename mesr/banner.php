@@ -12,6 +12,12 @@ switch ($page_current) {
     case 'phylo.php':
 		$page = 'fils';
         break;
+     case 'phyloTab2.php':
+		$page = 'fils';
+        break;
+     case 'phyloTab3.php':
+		$page = 'fils';
+        break;
 
     case 'global.php':
         $page = 'carte';
