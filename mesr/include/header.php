@@ -20,8 +20,6 @@ echo '<script type="text/javascript" src="js/jquery.scrollbar.js"></script>';
 
 echo '<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">';
 
-echo '<link rel="stylesheet" title="Default" type="text/css" href="library/star/jquery.rating.css" media="screen"/>';
-
 echo '<link rel="stylesheet" title="Default" type="text/css" href="style.css" media="screen"/>';
 echo '<link rel="stylesheet" title="Default" type="text/css" href="style.css" media="print"/>';
 echo '<link rel="stylesheet" type="text/css" href="css/custom-theme/jquery-ui-1.7.3.custom.css"/>';

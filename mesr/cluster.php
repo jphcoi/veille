@@ -71,7 +71,7 @@ function selective_column_tt($arraykey,$list,$plus,$minus,$main=0){
 	$fz.='<table class="commentitems" ';
 	$fz.='style="background-color:'.$backcolor.';"';
 	$fz.=' rules=groups border=1 cellpadding=5>';
-	$fz.='<tr align=left valign=top>';
+	$fz.='<tr align=left valign=top class="ui-widget-cluster">';
 	for ($i=0;$i<$ncolumns;$i++) {
 		$fz.="<td>";
 		for ($j=$columns[$i][0];$j<=$columns[$i][1];$j++) {
@@ -512,7 +512,7 @@ if ($nav=="phylo"){
 		$label1=$s['label1'];$label2=$s['label2'];$lettre=$s['lettre'];
 		$sid=$s['id']."_".str_replace(" ","_",$s['periode']);
 		echo '
-			<span style="display:none;" id="title'.$sid.'">';
+			<span ui-widget-cluster  style="display:none;" id="title'.$sid.'">';
 		echo '<a href=cluster.php?id_cluster='.$s['id']."&periode=".arrange_periode($s['periode']).'&nav=phylo>';
 		if (intval($s['fils'])>0) echo '&darr;&nbsp;';
 		echo '"<b>'.remove_popo($dico_termes[$label1]).'</b> - '.remove_popo($dico_termes[$label2]).'"';
@@ -543,22 +543,9 @@ if ($nav=="phylo"){
 
 	echo '<tr valign=top>';
 	
-	if ($nopred) $back_avant='background-color:'.$backdarker.';';
-	echo '<td width=30% class=tableitems style="font-variant:small-caps; size:small; font-style:italic;'.$back_avant.'">';
-	if ($nopred) echo '<div align=center style="font-style:normal;">(pas de prédécesseur)</div>';
-	else {
-		if (count($pred)>1) $plural_string="s"; else $plural_string="";
-		echo '<span align=left style="font-weight:bold; font-style:normal;">&nbsp;champ'.$plural_string.' antérieur'.$plural_string.'</span><div style="height:4px;"></div>';
-		echo '<table width=100% cellspacing=0 cellpadding=0>';
-		echo '<tr class=commentitems style="font-variant:small-caps; background-color:'.$backdark.';">';
-		echo '<td width=5px></td><td>période</td><td></td><td>champ</td>';
-		echo '</tr>';
-		$last_display_periode="";
-		foreach ($pred as $p) display_cluster_title($p,"pred");
-		echo '</table>';
-		}	
-	echo '</td>';
-	
+	left_panel($p,$pred,$nopred,$backdarker,$backdark);
+
+
 	echo '<td width=40% align=center style="font-size:medium; font-variant:small-caps; font-style:italic;">';
 	
 	echo '<span id="mainbox">';
@@ -581,21 +568,8 @@ if ($nav=="phylo"){
 	}
 	
 	echo '</td>';
-	
-	if ($nosucc) $back_apres='background-color:'.$backdarker.';';
-	echo '<td width=30% class=tableitems style="font-variant:small-caps; size:small; font-style:italic;'.$back_apres.'">';	
-	if ($nosucc) echo '<div align=center style="font-style:normal;">(pas de successeur)</div>'; 
-	else {
-		if (count($succ)>1) $plural_string="s"; else $plural_string="";
-		echo '<span align=left style="font-weight:bold; font-style:normal;">&nbsp;champ'.$plural_string.' ultérieur'.$plural_string.'</span><div style="height:4px;"></div>';	
-		echo '<table width=100% cellspacing=0 cellpadding=0>';
-		echo '<tr class=commentitems style="font-variant:small-caps; background-color:'.$backdark.';"><td width=5px></td><td>période</td><td></td><td>champ</td></tr>';
-		$last_display_periode="";
-		foreach ($succ as $s) 
-			display_cluster_title($s,"succ");
-		echo '</table>';
-		}
-	echo '</td>';
+	right_panel($s,$succ,$nosucc,$backdarker,$backdark);
+
 	
 	echo '</tr>';
 	echo '</table>';
