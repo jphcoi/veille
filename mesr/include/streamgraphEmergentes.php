@@ -53,7 +53,7 @@ dynamics.forEach(function(d) d.coarse = d.people);
 var sw = .88*document.body.clientWidth,
 sh = 270,
 sx = pv.Scale.linear('.$dated.', '.$datef.').range(0, sw),
-sy = pv.Scale.linear(0, 40).range(0, sh),
+sy = pv.Scale.linear(0, 10).range(0, sh),
 color = pv.Scale.ordinal(1, 2).range("#33f", "#f33"),
 alpha = pv.Scale.linear(pv.values(sumByJob)).range(.4, .8),
 startyear='.$dated.',
@@ -129,7 +129,7 @@ svis.add(pv.Panel)
 .anchor("center").add(pv.Label)
 .def("max", function(d) pv.max.index(d.values, function(d) d.coarse))
 .visible(function() this.index == this.max())
-.font(function(d) 0 + "px sans-serif")
+.font(function(d) 7 + "px sans-serif")
 .textMargin(6)
 //.textStyle("#fff")
 .textStyle(function(d) "rgba(0, 0, 0, " + (Math.sqrt(sy(d.percent))) + ")")

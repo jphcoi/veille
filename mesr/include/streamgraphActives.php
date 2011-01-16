@@ -1,12 +1,13 @@
 <?
 $myaboveActives='<script type="text/javascript">'.$json_dataActives.'</script>';
 
-$out=display_helper_two_outputs('Graph d\'évolution des fils thématiques','<p>Ce graphique représente l\'évolution de la popularité des <a href="aide.php?selectedTab=2"><font color=blue>fils thématiques</font></a> actifs.
+$out=display_helper_two_outputs('Graph d\'évolution des fils thématiques','<p>Ce graphique représente l\'évolution de la popularité des fils thématiques actifs.
             Chaque couleur représente un fil thématique, l\'épaisseur des tubes étant proportionnelle à la popularité de la thématique concernée
             sur la période correspondante. Pour afficher le nom d\'un fil thématique, laisser la souris au dessus quelques secondes.</p>
 
             <p>Le champ de recherche permet de retrouver le profil d\'évolution d\'un des fils thématiques listés ci-dessous.</p>
-                    ',"evolution");             
+                    ',"evolution");
+
 $jscriptmp.=$out[1];
 $myscriptActives='<table class=tableitems width="100%">
 <tr valign=bottom>
@@ -52,7 +53,7 @@ dynamics.forEach(function(d) d.coarse = d.people);
 var sw = .88*document.body.clientWidth,
 sh = 270,
 sx = pv.Scale.linear('.$dated.', '.$datef.').range(0, sw),
-sy = pv.Scale.linear(0, 50).range(0, sh),
+sy = pv.Scale.linear(0, 30).range(0, sh),
 color = pv.Scale.ordinal(1, 2).range("#33f", "#f33"),
 alpha = pv.Scale.linear(pv.values(sumByJob)).range(.4, .8),
 startyear='.$dated.',
@@ -128,7 +129,7 @@ svis.add(pv.Panel)
 .anchor("center").add(pv.Label)
 .def("max", function(d) pv.max.index(d.values, function(d) d.coarse))
 .visible(function() this.index == this.max())
-.font(function(d) 0 + "px sans-serif")
+.font(function(d) 5 + "px sans-serif")
 .textMargin(6)
 //.textStyle("#fff")
 .textStyle(function(d) "rgba(0, 0, 0, " + (Math.sqrt(sy(d.percent))) + ")")
