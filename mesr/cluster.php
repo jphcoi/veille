@@ -371,8 +371,8 @@ function display_helper_contenu() {
 
 function display_helper_cooccurrences() {
 	global $jscriptmp;
-	$jscriptmp.=display_helper('Réseau de cooccurrence','
-		Le réseau de cooccurrence indique les relations entre termes <i>au sein du champ thématique</i>. Cette vue permet d\'aller
+	$jscriptmp.=display_helper('Structure sémantique','
+		La structure sémantique indique les relations entre termes <i>au sein du champ thématique</i>. Cette vue permet d\'aller
 		plus loin que l\'ensemble non-ordonné de termes, notamment en vue de voir si certaines paires de termes sont
 		plus significativement / fréquemment associées que d\'autres.
 		<br>Comme sur la plupart des autres vues, il est possible de naviguer directement dans la phylogénie en 
@@ -400,10 +400,10 @@ echo "<table width=100%><tr valign=top><td width=2.5%></td><td width=95%>";
 		{echo $href_string."phylo>contenu</a>"; }
 	echo "&nbsp;-&nbsp;";
     if ($nav=="cooc") {
-    	echo $select_string."réseau de cooccurrence"; display_helper_cooccurrences(); echo "</b>"; 
+    	echo $select_string."structure sémantique"; display_helper_cooccurrences(); echo "</b>"; 
     	}
     else {
-    	echo $href_string."cooc>réseau de cooccurrence</a>";
+    	echo $href_string."cooc>structure sémantique</a>";
     	}
 	echo " - ";
 	if ($nav=="soc") 
