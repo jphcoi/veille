@@ -105,7 +105,13 @@ function partition2JSON($id_partition,$first_period,$last_period,$dT,$time_steps
 // { activity: [ value1, ..., valueN]}
 $JSON_string="{ activity: [";
 
-for ($i=$first_period;$i<=$last_period;$i+=$time_steps){
+// pour chaque période, pour chaque champ, on considère l'ensemble des auteurs associé à un
+// champ. On fait alors la somme, pour tous les auteurs dont au moins un billet dépasse le seuil
+// de pertinence, des scores des billets les plus pertinents pour chaque auteur. Cela donne
+// l'épaisseur du fil thématique, proportionnelle au nombre d'acteurs concernés et à leur proximité sémantique
+$seuil_pertinence=0.3;//overlap_size/cluster_size/log10(10+billet_size-overlap_size)
+$penetration_thematique=0.4;//overlap_size/cluster_size
+for ($i=$first_period;$i<=$last_period;$i+=$time_steps) {
     $period_string=($i-$dT).' '.$i;
     echo $period_string.'<br/>';
     $period_score=0;
@@ -114,17 +120,27 @@ for ($i=$first_period;$i<=$last_period;$i+=$time_steps){
     echo $sql.'<br/>';
     $count=0;
     while ($ligne=mysql_fetch_array($resultat)) {
-        $commande_sql_pert = "SELECT id_billet,overlap_size,billet_size,cluster_size from biparti where cluster = '".$ligne[id_cluster]."' AND periode = '".$ligne[periode]."' AND overlap_size/cluster_size/log10(10+billet_size-overlap_size)>="."0.3"."and overlap_size/cluster_size>0.4" ;
+        $commande_sql_pert = "SELECT id_billet,id_auteur,overlap_size,billet_size,cluster_size from biparti where cluster = '".$ligne[id_cluster]."' AND periode = '".$ligne[periode]."' AND overlap_size/cluster_size/log10(10+billet_size-overlap_size)>=".$seuil_pertinence." and overlap_size/cluster_size>".$penetration_thematique;
+        echo $commande_sql_pert.'<br/>';
         $billet_list=mysql_query($commande_sql_pert) or die ("<b>Requête non exécutée (récupération des billets associés à un cluster)</b>.");
+        $auteur_score=array(); //
         while ($billet=mysql_fetch_array($billet_list)) {
-            $period_score+=$billet[overlap_size]/$billet[cluster_size]/log10(10+$billet[billet_size]-$billet[overlap_size])/10;
-        $count++;
+            $score=$billet[overlap_size]/$billet[cluster_size]/log10(10+$billet[billet_size]-$billet[overlap_size]);
+            //echo $billet[id_auteur].'<br/>';
+            if ($auteur_score[$billet[id_auteur]]!=null) {
+                if ($score>$auteur_score[$billet[id_auteur]]) {
+                    $auteur_score[$billet[id_auteur]]=$score;
+                }
+            }else {
+                $auteur_score[$billet[id_auteur]]=$score;
+                $count++;
+            }            
         }
+        $period_score+=array_sum($auteur_score)/10;
     }
     echo $count.' billets<br/>';
     echo ' ------------------------<br/>';
     $JSON_string.=round($period_score,4).', ';
-    
 }
 $JSON_string=substr($JSON_string,0,-2);
 $JSON_string.='] },';

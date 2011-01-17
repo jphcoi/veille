@@ -1,5 +1,5 @@
-<?
-include("../library/fonctions_php.php");
+<?          
+//include("../library/fonctions_php.php");
 
  function concat() {
     $vars=func_get_args();
@@ -70,7 +70,30 @@ foreach (range($periode_d, $periode_f) as $jour)
 }
 $axisx=json_encode($xlabels);
 
+echo '<p>';
 
+echo '
+	<table class=tableitems width=100% cellspacing=0 cellpadding=1 style="font-variant:small-caps;">';
+echo '<tr valign=top>';
+// PANEL DE GAUCHE: PERIODES PRECEDENTES
+
+if ($nopred) $back_avant='background-color:'.$backdarker.';';
+echo '<td width=22% class=tableitems style="font-variant:small-caps; size:small; font-style:italic;'.$back_avant.'">';
+if ($nopred) echo '<div align=center style="font-style:normal;">(pas de prédécesseur)</div>';
+else {
+	if (count($pred)>1) $plural_string="s"; else $plural_string="";
+	echo '<span align=left style="font-weight:bold; font-style:normal;">&nbsp;champ'.$plural_string.' antérieur'.$plural_string.'</span><div style="height:4px;"></div>';
+	echo '<table width=100% cellspacing=0 cellpadding=0>';
+	echo '<tr width=100% class=commentitems style="font-variant:small-caps; background-color:'.$backdark.';"><td width=5px></td><td>période</td><td></td><td>champ</td></tr>';
+	$last_display_periode="";
+	foreach ($pred as $p) display_cluster_title($p,"pred");
+	echo '</table>';
+	}
+echo '</td>';
+
+
+// PANEL CENTRAL
+echo '<td align=top width=56%>';
 $ggraph = '
 		<script src="library/punch/raphael.js" type="text/javascript" charset="utf-8"></script>
         <script src="library/punch/g.raphael.js" type="text/javascript" charset="utf-8"></script>
@@ -105,4 +128,28 @@ $ggraph = '
 		d.style.height="'.$ysize_mine2.'px";
        </script>
 		';
+echo '</td>';
+// PANEL DE DROITE: PERIODES SUIVANTES
+
+if ($nosucc) $back_apres='background-color:'.$backdarker.';';
+echo '<td width=22% class=tableitems style="font-variant:small-caps; size:small; font-style:italic;'.$back_apres.'">';
+if ($nosucc) echo '<div align=center style="font-style:normal;">(pas de successeur)</div>';
+else {
+	if (count($succ)>1) $plural_string="s"; else $plural_string="";
+	echo '<span align=left style="font-weight:bold; font-style:normal;">&nbsp;champ'.$plural_string.' ultérieur'.$plural_string.'</span><div style="height:4px;"></div>';
+	echo '<table width=100% cellspacing=0 cellpadding=0>';
+	echo '<tr class=commentitems style="font-variant:small-caps; background-color:'.$backdark.';"><td width=5px></td><td>période</td><td></td><td>champ</td></tr>';
+	$last_display_periode="";
+	foreach ($succ as $s)
+		display_cluster_title($s,"succ");
+	echo '</table>';
+	}
+echo '</td>';
+
+echo "</tr>";
+
+echo '</table>';
+
+
+
 ?>

@@ -214,21 +214,6 @@ while ($partit=mysql_fetch_array($resultat)) {
     $id_partition=$partit[pseudo];
 }
 
-// Infos de la partitions concernée
-$sql="SELECT * FROM partitions WHERE id_partition=".$id_partition;
-$partQuery=mysql_query($sql);
-while ($part=mysql_fetch_array($partQuery)){
-    $partition_infos=$part;
-}
-
-// Récupère tous les clusters de la dernière période
-$last_period_clusters=array();
-$sql="SELECT * FROM cluster WHERE periode='".$partition_infos[last_period_string]."' AND pseudo=".$partition_infos['id_partition']." GROUP BY id_cluster";
-$resultat=mysql_query($sql) or die ("Champ thématique de la dernière période non récupérés");
-while ($partit=mysql_fetch_array($resultat)) {
-    array_push($last_period_clusters,$partit);
-}
-
 ////////////////////////////////////////////////////////
 //bloc recuperation infos termes
 ////////////////////////////////////////////////////////
@@ -316,40 +301,10 @@ include("banner.php");
 ////////////////////////////
 /// MODULE DE NAVIGATION ///
 ////////////////////////////
-
-//// préparation des liens de fils thématiques
-$jscriptmp.="
-               $('#dialogfilThematique')
-		  .dialog({ autoOpen: false, stack: true, resizable: false, modal:true, width:600, closeOnEscape:true})
-		  .click(function () { $('#dialogfilThematique').dialog('close'); });
-
-		$('#openerfilThematique').click(function(e) {
-			if (!$('#dialogfilThematique').dialog('isOpen'))
-				$('#dialogfilThematique').dialog('option','position', [$(this).position().left+25,25]).dialog('open');
-			else
-				$('#dialogfilThematique').dialog('close');
-			return false;
-			});";
-
-if (count($last_period_clusters)==1){
-    $last_period_clusters=$last_period_clusters[0];
-    $fils_thematique_html='<a href="'.$last_period_clusters[attribut].'"><font color='.$backdarker.'>'.remove_popo(substr($partition_infos[label],0,-1)).'</font></a></span>';
-	}
-else
-	{
-    $cluster_Link_html='<ul><font color=blue>';
-    for ($i=0;$i<count($last_period_clusters);$i++){
-        $cluster_Link_html.='<li><a href="'.$last_period_clusters[$i][attribut].'"><font color=blue>'.str_replace('---','/',remove_popo($last_period_clusters[$i][label])).'</a></li>';
-    }
-    $cluster_Link_html.='</ul>';
-    $fils_thematique_html='<a href scr=# id="openerfilThematique"'.'><font color='.$backdarker.'>'.remove_popo(substr($partition_infos[label],0,-1)).'</font></a>';
-    
-}
-
-echo '<span id="dialogfilThematique" title="Liens vers l\'extrémité du fil thématique ('.get_short_string_periode(arrange_periode($last_period_clusters[0][periode])).')">';
-echo 'Ce fil thématique a plusieurs champs en dernière période :'.$cluster_Link_html;
-echo '</span>';
-
+$query="select * FROM partitions WHERE id_partition=".$id_partition;
+$resultat=mysql_query($query) or die ("<b>Requête non exécutée (récupération de info de partition)</b>.");
+$partition_infos=mysql_fetch_array($resultat);
+list($jscriptmp,$linkFilThematique)=linkFilThematique($jscriptmp,$id_partition,$partition_infos,$backdarker);
 
 
 //////////////
@@ -362,11 +317,20 @@ echo '<table width=100% class=subtitle><tr><td align=left>champ thématique "<i>
 if ($lettre_current!="") echo '('.$lettre_current.')';
 echo '</i>';
 echo '<br/><span style="font-size: x-small;">fil thématique: ';
-echo $fils_thematique_html;
+echo $linkFilThematique.'</span>';
 echo '<td align=right><span style="font-size:8pt;">'.str_replace(" ","&nbsp;",get_string_periode($my_period)).'</span>&nbsp;&nbsp;</td>';
 echo '</tr></table>';
 echo '</td><td width=2.5%></td></tr>';
 echo '</table>';
+
+function display_helper_profil_evolution() {
+	global $jscriptmp;
+	$jscriptmp.=display_helper('Profil d\'évolution','Le profil d\'évolution donne un apperçu
+            du nombre d\'occurrences des termes du champ thématique, jour par jour,
+            sur la période considérée. On peut voir ainsi les moments où ces termes ont
+            été le plus employés. Le nombre d\'occurrences est reflété par la taille
+            des disques et leur couleur',"profevochelper");
+	}
 
 
 function display_helper_environnementsocial() {
@@ -433,22 +397,25 @@ echo "<table width=100%><tr valign=top><td width=2.5%></td><td width=95%>";
 	if ($nav=="phylo") 
 		{echo $select_string."contenu"; display_helper_contenu(); echo "</b>";} 
 	else 
-		{echo $href_string."phylo>contenu</a>"; display_helper_contenu();}
+		{echo $href_string."phylo>contenu</a>"; }
 	echo "&nbsp;-&nbsp;";
     if ($nav=="cooc") {
     	echo $select_string."réseau de cooccurrence"; display_helper_cooccurrences(); echo "</b>"; 
     	}
     else {
-    	echo $href_string."cooc>réseau de cooccurrence</a>"; display_helper_cooccurrences();
+    	echo $href_string."cooc>réseau de cooccurrence</a>";
     	}
 	echo " - ";
 	if ($nav=="soc") 
 		{echo $select_string."environnement social"; display_helper_environnementsocial(); echo"</b>";}
 	else 
-		{echo $href_string."soc>environnement social</a>"; display_helper_environnementsocial();}
+		{echo $href_string."soc>environnement social</a>";}
 	echo " - ";
 	
-	if ($nav=="socsem") echo $select_string."profil d'évolution</b>"; else echo $href_string."socsem>profil d'évolution</a>";
+	if ($nav=="socsem") 
+            {echo $select_string."profil d'évolution"; display_helper_profil_evolution(); echo"</b>";}
+        else
+            echo $href_string."socsem>profil d'évolution</a>";
 
 	echo '</td>';
 	echo '<td align=right><a href='.$googletext.'><img src='.$hrefroot.$racine.'/images/googleGinv.png alt="(google)" valign=middle width=18px style="border-style:none;"></a></td>';
@@ -461,7 +428,7 @@ echo '</table>';
 
 //// CREATION PHYLOGENIE (UNIQUEMENT POUR "PHYLO" OU "SOC")
 
-if ($nav=="phylo" or $nav=="soc" or $nav == "cooc"){
+if ($nav=="phylo" or $nav=="soc" or $nav == "cooc" or $nav =="socsem"){
  	$pred=list_clusters($periode_avant,$predecesseur,$max_periode_avant);
  	$succ=list_clusters($periode_apres,$successeur,$min_periode_apres);
 	$arraytmp=array();

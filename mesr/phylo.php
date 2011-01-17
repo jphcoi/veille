@@ -16,7 +16,7 @@ include("banner.php");
 
 ///// PARAMETRES ///
 $depth=2;// rang dans le nombre d'occurences des termes acceptés pour labellisation des branches
-$min_similarity=5000000;// seuil de similarité pour clusteriser
+$min_similarity=.05;// seuil de similarité pour clusteriser
 $phylo_min_nb_periods_covered=4;
 $phylo_recent_min_nb_periods_covered=4;
 
@@ -148,6 +148,7 @@ echo "       	</div>
 
 function branch_list_string($mysql_branch_list,$depth,$min_similarity){
 //donne la liste des macro-branches qui couvrent au moins $phylo_min_nb_periods_covered
+    global $jscriptmp;
 	$whitedark='#F8F8F8';
 	$whitedarker='#E8E8E8';
 	//$label_list=array(); // liste des branches
@@ -155,12 +156,8 @@ function branch_list_string($mysql_branch_list,$depth,$min_similarity){
 	//$branch_last_period_cluster_id=array(); // liste de clusters des branches
 	$branch_list=array(); // infos sur les macro-branches (a vocation a intégrer toutes les variable ci-dessus)
 	while ($ligne=mysql_fetch_array($mysql_branch_list)) {
-	   $last_period_for_branch=$ligne[last_period_string];
-	   // on récupère un cluster de la dernière période
-	   $clusterQuery="select id_cluster FROM cluster WHERE periode='$last_period_for_branch' AND pseudo=$ligne[id_partition]";
-	   $clusters_from_last_period=mysql_query($clusterQuery) or die ("<b>Requête non exécutée (récupération des clusters de la dernière période)</b>.");
-	   $cluster_ligne=mysql_fetch_array($clusters_from_last_period);
-	   $infos=array();
+	   $last_period_for_branch=$ligne[last_period_string];	   
+	   $infos=array();// information sur la partition traitée
 	   $infos['id_partition']=$ligne[id_partition];
 	   $infos['nb_fields']=$ligne[nb_fields];
 	   $infos['terms']=$ligne[terms];
@@ -171,11 +168,7 @@ function branch_list_string($mysql_branch_list,$depth,$min_similarity){
 			$lab=substr($lab,0,-1);
 	   }
 	   $infos['label']=$lab;
-	   $infos['label_ids']=$ligne[label_ids];
-	   $infos['branch_last_period_cluster_id']=$cluster_ligne[id_cluster];
-	   //array_push($branch_last_period,str_replace(' ','-',$last_period_for_branch));
-	   //array_push($label_list,$branch.$ligne[label]);
-	   //array_push($branch_last_period_cluster_id,$cluster_ligne[id_cluster]);
+	   $infos['label_ids']=$ligne[label_ids];	  
 	   array_push($branch_list,$infos);
 	}
 	 
@@ -192,31 +185,33 @@ function branch_list_string($mysql_branch_list,$depth,$min_similarity){
 	// html avec la liste des branches
 	$branch_string.='<i>('.$nb_branches.' fils thématiques dans cette catégorie)</i>'; 
 	$branch_string.='</td></tr>';
-	$branch_string.='<tr height=27px style="background-color:white;"><td colspan=4 width=100%></td></tr>';
-	$branch_string.='<tr height=7px style="background-color:#E0E0E0;"><td colspan=4 width=100%></td></tr>';
 	$branch_string.='<tr height=7px><td colspan=4 width=100%></td></tr>';
 	
 	$first_withoutgroup=1;
-	for ($i=0;$i<count($grouped_indexes);$i++){
-	
+        if (count($grouped_indexes)>0){
+            $branch_string.='<tr style="background-color:white; font-variant:small-caps; font-size:large; font-weight:bold;" height=50px>';
+            $branch_string.='<td colspan=4 width=100%>Regroupements de fils thématiques</td></tr>';
+            $branch_string.='<tr height=7px style="background-color:#E0E0E0;"><td colspan=4 width=100%></td></tr>';
+        }
+	for ($i=0;$i<count($grouped_indexes);$i++){	
 		$index_grouped=$grouped_indexes[$i];
 		$Ngrams=$Ngram_arrays[$i];
 		if (count($index_grouped)>1)
-		{ // c'est un groupe
-		
+		{ // c'est un groupe		
 			$group_title='';
 			while ((count($Ngrams)>0)&&($line = current($Ngrams))){
 				$group_title.=ucfirst(key($Ngrams)).', ';
 				next($Ngrams);
 			}
 			$group_title=substr(trim($group_title), 0, -1);
-			$branch_string.='<tr><td colspan=4 width=100%>';
+                        $branch_string.='<tr><td colspan=4 width=100%>';
 			$branch_string.='<b>'.ucfirst($group_title).'</b>';
 			$branch_string.='</td></tr>';
 
 			for ($j=0;$j<count($index_grouped);$j++){
 				$index = $index_grouped[$j];
-				$branch_id=$branch_list[$index]['id_partition'];
+				$branch_id=$branch_list[$index]['id_partition'];                                
+                                list($jscriptmp,$linkFilThematique)=linkFilThematique($jscriptmp,$branch_id,$branch_list[$index],$backdarker);
 				$sql='SELECT * from partitions WHERE id_partition='.$branch_id;
 				$resultat=mysql_query($sql) or die ("<b>Requête non exécutée (récupération des infos de partition)</b>.");
 	
@@ -226,21 +221,20 @@ function branch_list_string($mysql_branch_list,$depth,$min_similarity){
 
 				$branch.='<td width=50px style="font-size: x-small; text-align:right;"><b>'.$nchamps.'</b>&nbsp;champs</td>';
 				$branch.='<td width=50px style="font-size: x-small; text-align:right;">&nbsp;';
-				$branch.=str_replace("(&nbsp;","(",str_replace(" ","&nbsp;",'('.get_short_string_periode($ligne['first_period'].'-'.$ligne['last_period'])));
-				$branch.=')&nbsp;</td><td style="font-size:9pt;">';
+				$branch.=str_replace("(&nbsp;","(",str_replace(" ","&nbsp;",get_short_string_periode($ligne['first_period'].'-'.$ligne['last_period'])));
+				$branch.='&nbsp;</td><td style="font-size:9pt;">';
 				
-				$branch.='<a href="cluster.php?id_cluster='.$branch_list[$index]['branch_last_period_cluster_id'].'&periode='.str_replace(' ','-',$branch_list[$index]['branch_last_period']).'">';
-				$branch.=ucfirst($branch_list[$index]['label']).'</a>';
+				$branch.=$linkFilThematique;
 				$branch.='</td></tr>';
 				$branch_string.=$branch;
 				next($index_grouped);
 			}
 		}
 		else 
-		{ // c'est une branche perdue
+		{ // c'est une branche isolée
 			if ($first_withoutgroup) {
 				$branch_string.='<tr style="background-color:white; font-variant:small-caps; font-size:large; font-weight:bold;" height=50px>';
-				$branch_string.='<td colspan=4 width=100%>fils thématiques "isolés"';
+				$branch_string.='<td colspan=4 width=100%>fils thématiques hors regroupement';
 				$first_withoutgroup=0;
 				}
 			else {
@@ -248,9 +242,10 @@ function branch_list_string($mysql_branch_list,$depth,$min_similarity){
 				}
 			$branch_string.='</td></tr>';
 			$branch_id=$branch_list[$index_grouped[0]]['id_partition'];
+                        list($jscriptmp,$linkFilThematique)=linkFilThematique($jscriptmp,$branch_id,$branch_list[$index_grouped[0]],$backdarker);
+
 			$sql='SELECT * from partitions WHERE id_partition='.$branch_id;
-			$resultat=mysql_query($sql) or die ("<b>Requête non exécutée (récupération des infos de partition)</b>.");
-			
+			$resultat=mysql_query($sql) or die ("<b>Requête non exécutée (récupération des infos de partition)</b>.");			
 			$ligne=mysql_fetch_array($resultat);
 			$nchamps=$ligne['nb_fields'];
 			
@@ -258,11 +253,10 @@ function branch_list_string($mysql_branch_list,$depth,$min_similarity){
 			
 			$branch.='<td width=50px style="font-size: x-small; text-align:right;"><b>'.$ligne['nb_fields'].'</b>&nbsp;champs</td>';
 			$branch.='<td width=50px style="font-size: x-small; text-align:right;">&nbsp;';
-			$branch.=str_replace("(&nbsp;","(",str_replace(" ","&nbsp;",'('.get_short_string_periode($ligne['first_period'].'-'.$ligne['last_period'])));
-			$branch.=')&nbsp;</td><td style="font-size:9pt;">';
+			$branch.=str_replace("(&nbsp;","(",str_replace(" ","&nbsp;",get_short_string_periode($ligne['first_period'].'-'.$ligne['last_period'])));
+			$branch.='&nbsp;</td><td style="font-size:9pt;">';
 			
-			$branch.='<a href="cluster.php?id_cluster='.$branch_list[$index_grouped[0]]['branch_last_period_cluster_id'].'&periode='.str_replace(' ','-',$branch_list[$index_grouped[0]]['branch_last_period']).'">';
-			$branch.=ucfirst($branch_list[$index_grouped[0]]['label']).'</a>';
+			$branch.=$linkFilThematique;
 			$branch_string.=$branch.'</td></tr>';
 		}
 		$branch_string.='<tr height=3px><td width=100% colspan=4 style="background-color:'.$whitedarker.';"></td></tr>';
@@ -440,12 +434,14 @@ function branch_similarity($branch1,$branch2){
 // calcul une similarité entre branches en fonctions des termes quelles contiennent et de leurs occurrences
 // utilise le cos des vecteurs des occ de termes normalisées
 $branch1_terms_ids=explode('_',$branch1['terms']);
+
 $branch1_terms=explode('_',$branch1['label']);
 $branch2_terms_ids=explode('_',$branch2['terms']);
+
 $nb_fields1=$branch1['nb_fields'];
 $squared_nb_fields1=$nb_fields1*$nb_fields1;
-$nb_fields2=$branch2['nb_fields'];
 
+$nb_fields2=$branch2['nb_fields'];
 $squared_nb_fields2=$nb_fields2*$nb_fields2;
 
 $total_number_of_clusters=getValue('total_number_of_clusters');
@@ -455,35 +451,45 @@ $branch2_terms_occ=explode('_',$branch2['terms_occ']);
 
 
 $common_terms=array_intersect($branch1_terms_ids,$branch2_terms_ids);
+$allterms=array_values(array_merge($branch1_terms_ids,$branch2_terms_ids));
+$ratio_common_terms=count($common_terms)/count($allterms);
+
 $similarity=0;
-while (count($common_terms)>0){
-    $term=array_pop($common_terms);
-    $sql = 'SELECT occurrences_in_clusters from concepts WHERE id='.$term;
+$branch1_sq_norm=0;
+$branch2_sq_norm=0;
 
-    $resultat=mysql_query($sql) or die ("<b>Requête non exécutée (récupération des occurrences dans le corpus)</b>.");
-    while ($ligne=mysql_fetch_array($resultat)) {
-        $nb_occ=$ligne[occurrences_in_clusters];
-        }
-    $rank_in_branch1=search($term, $branch1_terms_ids);
-    $rank_in_branch2=search($term, $branch2_terms_ids);
-    $similarity=$similarity+($branch1_terms_occ[$rank_in_branch1]/$nb_fields1/$nb_occ*$total_number_of_clusters*$branch2_terms_occ[$rank_in_branch2]/$nb_fields2/$nb_occ*$total_number_of_clusters);
+while (count($allterms)>0){
+    $term=array_pop($allterms);
+    $nb_occ=getValue($term,'concepts','id','occurrences_in_clusters');
+    $rank_in_branch1=array_search($term, $branch1_terms_ids);
+    $rank_in_branch2=array_search($term, $branch2_terms_ids);
+
+    if ($rank_in_branch1!=FALSE) {
+        $var1=$branch1_terms_occ[$rank_in_branch1]/$nb_fields1/$nb_occ*$total_number_of_clusters;
+        $branch1_sq_norm+=$var1*$var1;
+    }else{
+        $var1=0;
+    }
+
+    if ($rank_in_branch2!=FALSE) {
+        $var2=$branch2_terms_occ[$rank_in_branch2]/$nb_fields2/$nb_occ*$total_number_of_clusters;
+        $branch2_sq_norm+=$var2*$var2;
+
+    }{
+        $var2=0;
+    }
+    $similarity=$similarity+$var1*$var2;  
 }
 
-$branch1_squares=0;
-while (count($branch1_terms_occ)>0){
-    $occ=array_pop($branch1_terms_occ);
-    $branch1_squares=$branch1_squares+$occ*$occ/$squared_nb_fields1;
+if ($branch1_sq_norm*$branch2_sq_norm==0){
+    $similarity=0;
+}else{
+    $similarity=$similarity/sqrt($branch1_sq_norm)/sqrt($branch2_sq_norm);
+    //$similarity=$ratio_common_terms*$similarity/sqrt($branch1_sq_norm)/sqrt($branch2_sq_norm);
 }
-
-$branch2_squares=0;
-while (count($branch2_terms_occ)>0){
-    $occ=array_pop($branch2_terms_occ);
-    $branch2_squares=$branch2_squares+$occ*$occ/$squared_nb_fields2;
+echo $similarity.'<br/>';
+return $similarity;
 }
-
-return ($similarity*$similarity/$branch1_squares/$branch2_squares);
-}
-
 
 /////////////////////////////////
 //////// veilles fonctions //////
@@ -492,7 +498,6 @@ function label_label_group($target_labels,$depth){
 // calcul les Ngrammes les plus fréquent d'un ensemble de labels formés de Ngrammes
 echo 'entering label_label_group<br/>';
 echo '$target_labels : <br/>';
-    print_r($target_labels);
     echo '<br/>';
 $ngram_array=array();
 echo 'nb labels:'.count($target_labels);
