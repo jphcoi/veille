@@ -3,23 +3,6 @@ include("login_check.php");
 include("library/fonctions_php.php");
 include("parametre.php");
 
-// style pour l'auto complete
-echo "<style>
-	.ui-autocomplete {
-		max-height: 100px;
-		overflow-y: auto;
-		/* prevent horizontal scrollbar */
-		overflow-x: hidden;
-		/* add padding to account for vertical scrollbar */
-		padding-right: 20px;
-	}
-	/* IE 6 doesn't support max-height
-	 * we use height instead, but this forces the menu to always be this tall
-	 */
-	* html .ui-autocomplete {
-		height: 100px;
-	}
-	</style>";
 
 
 mysql_connect( $server,$user,$password);if ($encodage=="utf-8") mysql_query("SET NAMES utf8;");
@@ -54,6 +37,25 @@ if(isset( $_GET['periode'])) $my_period=$_GET['periode']; else $my_period=-1;
 $titleheader="liste des termes (".get_short_string_periode($my_period).")";
 include("include/header.php");
 include("banner.php");
+
+
+// style pour l'auto complete
+echo "<style>
+	.ui-autocomplete {
+		max-height: 100px;
+		overflow-y: auto;
+		/* prevent horizontal scrollbar */
+		overflow-x: hidden;
+		/* add padding to account for vertical scrollbar */
+		padding-right: 20px;
+	}
+	/* IE 6 doesn't support max-height
+	 * we use height instead, but this forces the menu to always be this tall
+	 */
+	* html .ui-autocomplete {
+		height: 100px;
+	}
+	</style>";
 
 
 //*******************************************
@@ -242,23 +244,26 @@ echo '<table width=100% class=tableitems><tr valign=top><td width=2.5%></td><td 
 echo "</table>";
 
 // script autocomplete
+
+echo $tableauTermsJS;
+
 echo '<script>
 	$(function() {
 		var availableTerms = '.$liste_termes_autocomplete.';
 		$( "#terms" ).autocomplete({
 			source: availableTerms,                       
 		});            
-                $( ".selector" ).autocomplete({
-                   minLength: 3,
-                   select: function(event, ui) {
-                   alert("test");
-                   var DicoTerms = new Array();';
-                echo $tableauTermsJS.';';
-                echo   'var url="chart.php?id_concept="+$.DicoTerms[ui.item.label];
-                   alert(url);
-                    if( url ) {
-                        location.href = url;
-                         return false;
+        $( ".selector" ).autocomplete({
+               minLength: 3,
+               select: function(event, ui) {
+               alert("test");
+               var DicoTerms = new Array();';
+echo $tableauTermsJS.';';
+echo '	       var url="chart.php?id_concept="+$.DicoTerms[ui.item.label];
+               alert(url);
+                 if(url) {
+                   location.href = url;
+                   return false;
                     }
                    return true;
                     }
