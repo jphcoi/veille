@@ -231,7 +231,7 @@ if ($nav=="sem"){
 	echo '<tr valign=top>';
 	// PARTIE INFORMATION CHAMPS THEMATIQUES
 
-	echo '<td width=60%>';
+	echo '<td width=55%>';
 
 	$periode_a_faire=array();
 	if ($my_period==-1) {
@@ -274,7 +274,9 @@ if ($nav=="sem"){
 		echo '<td width=45pt></td>';
 		echo '<td>&uarr;/&darr;</td>';
 		echo '<td width=5%></td>';
-		echo '<td>numéros des billets<br>(voir aussi l\'onglet "billets")</td>';
+		echo '<td>numéros des billets';
+		//echo '<br>(voir aussi l\'onglet "billets")';
+		echo '</td>';
 		echo '</tr>';
 
 	foreach ($periode_a_faire as $pp) {
@@ -346,14 +348,14 @@ echo '</td>';
 echo '<td width=2%></td>';
 //PARTIE INFORMATION TAG CLOUD
 
-echo '<td width=38%>';
+echo '<td width=43%>';
 
 
 ///////////////////////////////////////
 //bloc pour générer le nuage de termes
 ///////////////////////////////////////
 $limite_termes= 30;
-echo '<div class=small style="font-size:small;">Principaux termes employés par la source';
+echo '<div class=small style="font-size:small;">principaux termes employés par la source';
 //if ($my_period!=-1) echo " durant la période";
 echo " <i>(max ".strval($limite_termes)." termes)</i></div>";
 
@@ -379,8 +381,8 @@ function generate_cloud_2d($occ_termes,$dico_termes,$my_period,$limite_termes)
 		}
 	usort($tags,"strcasecmpcam");
 	$te=end($tags);
-	echo '<table width=100% style="background-color:'.$backdark.';border-style:solid;
-border-width:1px;border-color:SlateGray;" cellpadding=5 cellspacing=0><tr><td>';
+	echo '<table width=100% style="background-color:'.$backdark.';border-style:solid; border-width:1px;border-color:SlateGray;" cellpadding=5 cellspacing=0>';
+	echo '<tr class="ui-widget-cluster"><td>';
 	foreach ($tags as $t) 
 		{
 		echo $t;
