@@ -43,7 +43,7 @@ sh = 350,
 sx = pv.Scale.linear('.$dated.', '.$datef.').range(0, sw),
 sy = pv.Scale.linear(0, 10).range(0, sh),
 color = pv.Scale.ordinal(1, 2).range("#33f", "#f33"),
-alpha = pv.Scale.linear(pv.values(sumByJob)).range(.2, .9),
+alpha = pv.Scale.linear(pv.values(sumByJob)).range(.3, 0.9),
 startyear='.$dated.',
 endyear='.$datef.',
 sp = pv.Scale.linear(0,1).range(0,sh);
@@ -105,6 +105,9 @@ var area = svis.add(pv.Layout.Stack)
 .fillStyle(function(d) color(d.gender).alpha(this.alpha()))
 //.fillStyle(pv.Colors.category20().by(function() this.parent.index))
 //.fillStyle(pv.ramp( "#afd", "#a0a").by(Math.random))
+//.anchor("top").add(pv.Line)
+//.strokeStyle("#cccccc")
+
 .cursor("pointer")
 .event("mouseover", function(d) this.alpha(1).title(d.job))
 .event("mouseout", function(d) this.alpha(null))
@@ -130,6 +133,7 @@ svis.add(pv.Rule)
 .left(sx)
 .bottom(-6)
 .height(5)
+
 .anchor("bottom").add(pv.Label)
 .text(function(d) sDateArray[this.index]);
 /* Update the query regular expression when text is entered. */
@@ -137,15 +141,15 @@ svis.add(pv.Rule)
 function shorten_label(label) {
 
 // Use space character to delimit array elements
-var arlene = label.split(",",2);
+var arlene = label.split(",",1);
 
-return arlene.join(",") + "--->"; }
+return arlene.join(",") + "... →"; }
 
 function get_font(d)
 {
-	if (Math.sqrt(sy(d.percent))>10) 
-	{return Math.min(15,2+Math.round( Math.sqrt(sy(d.percent)/3))) + "px sans-serif";}
-	 else 
+	if (Math.sqrt(sy(d.percent))>10.) 
+	{return (Math.min(15,2+Math.round( Math.sqrt(sy(d.percent)/3)))).toString() + "px sans-serif";}
+	else 
 	{return "0 px sans-serif"; }
 }
 
