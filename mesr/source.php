@@ -400,15 +400,23 @@ generate_cloud_2d($occ_termes,$dico_termes,$my_period,$limite_termes);
 
 echo '<br>';
 
-echo "<div class=subbanner>billets</div><br>";
+$jscriptmp.="$('.scrollPane').scrollbar;";
 
-
+echo '<span class=tableitems style="font-variant:small-caps; font-size:medium;"><b>billets</b></span><br>';
 
 	echo '<table class=tableitems width=100% rules=groups>';
 	echo '<tr style="font-variant:small-caps; size:small; margin-top:2px; margin-bottom:-2px;">';
-	echo '<td>numéro</td><td width=1%></td><td align=left>date</td><td width=16px></td><td width=1%></td><td>titre</td>';
+	echo '<td>no.</td><td width=1%></td><td align=left>';
+	//echo 'date';
+	echo '</td><td width=16px></td><td width=1%></td><td>';
+	//echo 'titre';
+	echo '</td>';
 	echo '</tr>';
-
+	echo '</table>';
+	
+	echo '<div class="scrollPane">';
+	echo '<table class=tableitems width=100% rules=groups>';
+	
 		
 	$odd=0;
 	$jscriptmp.="
@@ -460,6 +468,7 @@ echo "<div class=subbanner>billets</div><br>";
 		}
 	}
 	echo '</table>';		
+	echo '</div>';
 //	echo "<div class=grayb><i>(les billets de la période en cours sont signalés par un fond grisé alternant; ceux qui ne sont associés à aucun terme de l'étude sont barrés)</i></div><br>";
 
 echo '</td>';
