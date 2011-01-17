@@ -178,8 +178,8 @@ if (count($list_id_post)>0) {
 	if ($nav=="sem") echo $select_string.$sem."</b>"; else echo $href_string."sem>".$sem."</a>";
 	echo " - ";
 	if ($nav=="soc") echo $select_string.$soc."</b>"; else echo $href_string."soc>".$soc."</a>";
-	echo " - ";
-	if ($nav=="post") echo $select_string.$post."</b>"; else echo $href_string."post>".$post."</a>";
+	//echo " - ";
+	//if ($nav=="post") echo $select_string.$post."</b>"; else echo $href_string."post>".$post."</a>";
 	echo "</td>";
 	
 	echo"<td align=right>";
@@ -231,7 +231,7 @@ if ($nav=="sem"){
 	echo '<tr valign=top>';
 	// PARTIE INFORMATION CHAMPS THEMATIQUES
 
-	echo '<td width=60%>';
+	echo '<td width=55%>';
 
 	$periode_a_faire=array();
 	if ($my_period==-1) {
@@ -274,7 +274,9 @@ if ($nav=="sem"){
 		echo '<td width=45pt></td>';
 		echo '<td>&uarr;/&darr;</td>';
 		echo '<td width=5%></td>';
-		echo '<td>numéros des billets<br>(voir aussi l\'onglet "billets")</td>';
+		echo '<td>numéros des billets';
+		//echo '<br>(voir aussi l\'onglet "billets")';
+		echo '</td>';
 		echo '</tr>';
 
 	foreach ($periode_a_faire as $pp) {
@@ -346,14 +348,14 @@ echo '</td>';
 echo '<td width=2%></td>';
 //PARTIE INFORMATION TAG CLOUD
 
-echo '<td width=38%>';
+echo '<td width=43%>';
 
 
 ///////////////////////////////////////
 //bloc pour générer le nuage de termes
 ///////////////////////////////////////
 $limite_termes= 30;
-echo '<div class=small style="font-size:small;">Principaux termes employés par la source';
+echo '<div class=small style="font-size:small;">principaux termes employés par la source';
 //if ($my_period!=-1) echo " durant la période";
 echo " <i>(max ".strval($limite_termes)." termes)</i></div>";
 
@@ -379,8 +381,8 @@ function generate_cloud_2d($occ_termes,$dico_termes,$my_period,$limite_termes)
 		}
 	usort($tags,"strcasecmpcam");
 	$te=end($tags);
-	echo '<table width=100% style="background-color:'.$backdark.';border-style:solid;
-border-width:1px;border-color:SlateGray;" cellpadding=5 cellspacing=0><tr><td>';
+	echo '<table width=100% style="background-color:'.$backdark.';border-style:solid; border-width:1px;border-color:SlateGray;" cellpadding=5 cellspacing=0>';
+	echo '<tr class="ui-widget-cluster"><td>';
 	foreach ($tags as $t) 
 		{
 		echo $t;
@@ -396,12 +398,88 @@ generate_cloud_2d($occ_termes,$dico_termes,$my_period,$limite_termes);
 //fin du bloc pour générer le nuage de termes
 ///////////////////////////////////////////////
 
+echo '<br>';
+
+$jscriptmp.="$('.scrollPane').scrollbar;";
+
+echo '<span class=tableitems style="font-variant:small-caps; font-size:medium;"><b>billets</b></span><br>';
+
+	echo '<table class=tableitems width=100% rules=groups>';
+	echo '<tr style="font-variant:small-caps; size:small; margin-top:2px; margin-bottom:-2px;">';
+	echo '<td>no.</td><td width=1%></td><td align=left>';
+	//echo 'date';
+	echo '</td><td width=16px></td><td width=1%></td><td>';
+	//echo 'titre';
+	echo '</td>';
+	echo '</tr>';
+	echo '</table>';
+	
+	echo '<div class="scrollPane">';
+	echo '<table class=tableitems width=100% rules=groups>';
+	
+		
+	$odd=0;
+	$jscriptmp.="
+	";
+	foreach ($billets as $b) {
+		if ($odd%2==0) $bckclr=$backdark; else $bckclr=$backdarker;
+		$addtr="";
+		//billet qui est aussi associé à la période
+		if (in_array($b['id'],$billets_id)) $addtr.='background-color:'.$bckclr.';';
+		//billet qui est aussi dans socsem, ie au moins associé à un terme de l'étude
+		//if (!in_array($b['id'],$all_billets_id)) $addtr.="text-decoration: line-through; ";
+		if ($addtr!="") $addtr=' style="'.$addtr.'"';
+		//if ((count($periode_a_faire)==0) AND ($my_period==-1)) echo '<tr valign=top>'; else 
+		
+		if (in_array($b['id'],$billets_id)) {
+			$odd+=1;
+			echo '<tr valign=top'.$addtr.'>';
+			echo '<td><a name=\'b'.$b['index'].'\'></a><b>'.$b['index'].'</b></td>';
+			echo '<td>';
+			echo '</td>';
+			if ($type_date=='jour')
+			{echo "<td style=\"font-size:x-small;\">".adjust_date_jours($b['date'])."</td>";}
+			else
+			{echo "<td style=\"font-size:x-small;\">".$b['date']."</td>";}
+			echo '<td></td>';
+			$chaine=prone($b['content'],$size_abstract);
+			echo "<td>";
+
+			$concepts = implode("; ", convert_forme_principale_id($b['concepts']));
+			$permalien = $b['permalien'];
+			$chaine = prone($chaine,8);
+
+			$index=$b['index'];
+			$jscriptmp.="
+				$('#dialog".$index."')
+					.dialog({ autoOpen: false, stack: true, modal:true, width:600, closeOnEscape:true})
+					.click(function () { $('#dialog".$index."').dialog('close'); });
+				$('#opener".$index."').click(function(e) {
+					if (!$('#dialog".$index."').dialog('isOpen')) 
+						$('#dialog".$index."').dialog('option','position', [$(this).position().left+50,'center']).dialog('open');
+					else
+						$('#dialog".$index."').dialog('close');
+					return false;
+					});";
+			echo display_box(clean_text(str_replace("popostrophe","'",$b['title'])),str_replace(' *** ','; ',$b['site']),str_replace('"',' ',$chaine),$permalien,$concepts,$type_notice,$b['index']);
+			echo "</a>";
+			echo "</td>";
+			echo "</tr>";
+		}
+	}
+	echo '</table>';		
+	echo '</div>';
+//	echo "<div class=grayb><i>(les billets de la période en cours sont signalés par un fond grisé alternant; ceux qui ne sont associés à aucun terme de l'étude sont barrés)</i></div><br>";
+
 echo '</td>';
 
 echo '</tr>';
 echo '</table>';
 	
 /////////////////////////////////////////	
+
+
+	
 
 echo "</td>";
 
@@ -626,7 +704,9 @@ if ($nav=="soc"){
 ///////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////
 
-if ($nav=="post"){
+if ($nav=="post")
+
+{
 	echo "<table width=100% class=tableitems>";
 	echo "<tr><td width=2.5%></td><td width=95%>";
 	echo "<div class=subbanner>billets</div><br>";

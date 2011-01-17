@@ -11,7 +11,7 @@ if ($nopred&&($partition_infos[nb_period_covered]>1)){
 <br/>
 <br/>
 <br/>
-<b>Pas de champ antérieur</b><br/>
+<b>pas de champ antérieur</b><br/>
 <br/>
 <br/>
 <br/>
@@ -55,7 +55,7 @@ if ($nosucc&&($partition_infos[nb_period_covered]>1)) echo '<div align=center  c
 <br/>
 <br/>
 <br/>
-<b>Pas de champ ultérieur</b><br/>
+<b>pas de champ ultérieur</b><br/>
 <br/>
 <br/>
 <br/>

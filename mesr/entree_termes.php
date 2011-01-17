@@ -173,7 +173,7 @@ else {
 	echo '
 		<table class=commentitems width=100%><tr><td width=2.5%></td>';
         echo '<td><td class="ui-widget" float=right>
-	<label for="terms">rechercher: </label>
+	<label for="terms" style="font-variant:small-caps; font-weight:bold;">rechercher: </label>
 	<input id="terms" /></td></td>';
         echo '<td><b style="font-variant:small-caps;">accès direct aux termes commençant par&nbsp;:</b> '.$initiales.'<br>
 		<i>(nb: les termes grisés ne sont associés à aucun champ thématique)</i>
@@ -264,14 +264,13 @@ echo '
 	$(function() {
 		'.$myvar.';
 		$( "#terms" ).autocomplete({
-
 			minLength: 0,
 			source: projects,
-			focus: function( event, ui ) {
-				$( "#terms" ).val( ui.item.label);
+			focus: function(event, ui) {
+				$( "#terms" ).val(ui.item.label);
 				return false;
 				},
-			select: function( event, ui ) {
+			select: function(event, ui) {
 				location.href="chart.php?id_concept="+ui.item.value'.$myjsperiod.';
 				return false;
 				}
