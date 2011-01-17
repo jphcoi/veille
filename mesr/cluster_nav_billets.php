@@ -2,7 +2,11 @@
 
 //$commande_sql_pert = "SELECT id_billet,overlap_size,billet_size,cluster_size from biparti where cluster = '".$id_cluster."' AND periode = '".derange_periode($my_period)."' AND overlap_size/cluster_size/log10(10+billet_size-overlap_size)>=".$pertinence.' and overlap_size/cluster_size>0.1 '.' ORDER BY overlap_size/cluster_size/log10(10+billet_size-overlap_size) DESC';
 //$commande_sql_pert = "SELECT id_billet,overlap_size,billet_size,cluster_size from biparti where cluster = '".$id_cluster."' AND periode = '".derange_periode($my_period)."' AND overlap_size/cluster_size/log10(10+billet_size-overlap_size)>=0.1 AND overlap_size/cluster_size>0.1 ORDER BY overlap_size/cluster_size/log10(10+billet_size-overlap_size) DESC";
-		
+$commande_sql_pert = "SELECT id_billet,overlap_size,billet_size,cluster_size from biparti where cluster = '".$id_cluster."' AND periode = '".derange_periode($my_period)."' AND overlap_size/cluster_size/log10(10+billet_size-overlap_size)>=0.1";
+$res_temp = mysql_query($commande_sql_pert);
+$liste_of_posts=array();
+$liste_of_size=array();
+	
 echo '
 	<table class=tableitems width=100% cellspacing=0 cellpadding=1 style="font-variant:small-caps;">';
 echo '<tr style="height:20px;"><td></td></tr>';
@@ -58,10 +62,6 @@ $result=mysql_query($query);
 echo "</td>";
 echo "</tr>";
 echo '</table>';
-$commande_sql_pert = "SELECT id_billet,overlap_size,billet_size,cluster_size from biparti where cluster = '".$id_cluster."' AND periode = '".derange_periode($my_period)."' AND overlap_size/cluster_size/log10(10+billet_size-overlap_size)>=0.1";
-$res_temp = mysql_query($commande_sql_pert);
-$liste_of_posts=array();
-$liste_of_size=array();
 
 while ($row = mysql_fetch_array ($res_temp)) {
 	$id=$row['id_billet'];
