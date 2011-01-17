@@ -401,10 +401,10 @@ generate_cloud_2d($occ_termes,$dico_termes,$my_period,$limite_termes);
 echo '<br>';
 
 $jscriptmp.="$('.scrollPane').scrollbar;";
+
+echo '<span style="font-variant:small-caps;"><b>billets</b></span><br>';
+
 echo '<div class="scrollPane">';
-
-echo "<div class=subbanner>billets</div><br>";
-
 
 	echo '<table class=tableitems width=100% rules=groups>';
 	echo '<tr style="font-variant:small-caps; size:small; margin-top:2px; margin-bottom:-2px;">';
