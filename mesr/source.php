@@ -402,11 +402,15 @@ echo '<br>';
 
 $jscriptmp.="$('.scrollPane').scrollbar;";
 
-echo '<span class=tableitems style="font-variant:small-caps; font-size:normal;"><b>billets</b></span><br>';
+echo '<span class=tableitems style="font-variant:small-caps; font-size:medium;"><b>billets</b></span><br>';
 
 	echo '<table class=tableitems width=100% rules=groups>';
 	echo '<tr style="font-variant:small-caps; size:small; margin-top:2px; margin-bottom:-2px;">';
-	echo '<td>numéro</td><td width=1%></td><td align=left>date</td><td width=16px></td><td width=1%></td><td>titre</td>';
+	echo '<td>no.</td><td width=1%></td><td align=left>';
+	//echo 'date';
+	echo '</td><td width=16px></td><td width=1%></td><td>';
+	//echo 'titre';
+	echo '</td>';
 	echo '</tr>';
 	echo '</table>';
 	
