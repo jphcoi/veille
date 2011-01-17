@@ -646,8 +646,6 @@ if ($nav=="socsem"){
 	//echo '<p>';
 	//echo '<p>';
 	$maxdata*=1.05;
-	//include('include/cluster-evol-helper.php');
-	//echo $myscript;
 	include('include/cluster_punch.php');
 	echo $ggraph;
 
@@ -670,7 +668,6 @@ echo '
 
 
 include("footer.php");
-//unlink("json_data.txt");
 
 ?>
 
