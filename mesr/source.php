@@ -402,15 +402,13 @@ echo '<br>';
 
 $jscriptmp.="$('.scrollPane').scrollbar;";
 
-echo '<span style="font-variant:small-caps;"><b>billets</b></span><br>';
-
-echo '<div class="scrollPane">';
+echo '<span class=tableitems style="font-variant:small-caps; font-size:normal;"><b>billets</b></span><br>';
 
 	echo '<table class=tableitems width=100% rules=groups>';
 	echo '<tr style="font-variant:small-caps; size:small; margin-top:2px; margin-bottom:-2px;">';
 	echo '<td>numéro</td><td width=1%></td><td align=left>date</td><td width=16px></td><td width=1%></td><td>titre</td>';
 	echo '</tr>';
-
+	echo '<span class="scrollPane">';
 		
 	$odd=0;
 	$jscriptmp.="
@@ -460,10 +458,10 @@ echo '<div class="scrollPane">';
 			echo "</td>";
 			echo "</tr>";
 		}
+		echo '</span>';
 	}
 	echo '</table>';		
 //	echo "<div class=grayb><i>(les billets de la période en cours sont signalés par un fond grisé alternant; ceux qui ne sont associés à aucun terme de l'étude sont barrés)</i></div><br>";
-echo '</div>';
 
 echo '</td>';
 
