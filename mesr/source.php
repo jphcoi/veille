@@ -408,7 +408,7 @@ echo '<span class=tableitems style="font-variant:small-caps; font-size:normal;">
 	echo '<tr style="font-variant:small-caps; size:small; margin-top:2px; margin-bottom:-2px;">';
 	echo '<td>numéro</td><td width=1%></td><td align=left>date</td><td width=16px></td><td width=1%></td><td>titre</td>';
 	echo '</tr>';
-	echo '<span class="scrollPane">';
+	echo '<div class="scrollPane">';
 		
 	$odd=0;
 	$jscriptmp.="
@@ -458,7 +458,7 @@ echo '<span class=tableitems style="font-variant:small-caps; font-size:normal;">
 			echo "</td>";
 			echo "</tr>";
 		}
-		echo '</span>';
+		echo '</div>';
 	}
 	echo '</table>';		
 //	echo "<div class=grayb><i>(les billets de la période en cours sont signalés par un fond grisé alternant; ceux qui ne sont associés à aucun terme de l'étude sont barrés)</i></div><br>";
