@@ -176,7 +176,8 @@ $imagestar=imagestar($id_partition);
             <font color='.$color_link.'>'.substr(remove_popo($partition_infos[label]),0,-1).'</font></a>';
 
 
-    echo '<span id="dialogfilThematique'.$id_partition.'" style="display:none;" title="'.$partition_infos[label].'">';
+    echo '<span id="dialogfilThematique'.$id_partition.'" style="display:none;" title="'.
+    str_replace('lpopostrophe ', "l'", $partition_infos[label]).'">';
     echo '<p>'.$linkstarString.'</p>';
     echo '<p>'.$cluster_Link_html.'</p>';
     echo '<br/><b>Caractéristiques de ce fil thématique :</b>';
