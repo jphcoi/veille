@@ -164,7 +164,7 @@ echo "</td><td align=right width=25%>";
 echo '</td>';
 echo '</tr></table>';
 echo '<td width=2.5%></td>';
-echo "</tr></table>";
+echo "</tr></table>"; 
 
 
 if ($list_of_periods[count($list_of_periods)-1]==$my_period) $clause_fils_pere = '';
