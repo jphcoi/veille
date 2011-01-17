@@ -400,8 +400,10 @@ generate_cloud_2d($occ_termes,$dico_termes,$my_period,$limite_termes);
 
 echo '<br>';
 
-echo "<div class=subbanner>billets</div><br>";
+$jscriptmp.="$('.scrollPane').scrollbar;";
+echo '<div class="scrollPane">';
 
+echo "<div class=subbanner>billets</div><br>";
 
 
 	echo '<table class=tableitems width=100% rules=groups>';
@@ -461,6 +463,7 @@ echo "<div class=subbanner>billets</div><br>";
 	}
 	echo '</table>';		
 //	echo "<div class=grayb><i>(les billets de la période en cours sont signalés par un fond grisé alternant; ceux qui ne sont associés à aucun terme de l'étude sont barrés)</i></div><br>";
+echo '</div>';
 
 echo '</td>';
 
