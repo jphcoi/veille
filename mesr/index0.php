@@ -57,7 +57,7 @@ $title='<html>
 	<div id="htoolbar" class="toolbardiv fg-toolbar ui-widget-header ui-corner-all ui-helper-clearfix">
 	<div id="title" class="noSelect">
 	<table width="100%" style="font-size:x-large; font-weight:bold; color:DarkSlateGray; font-variant:small-caps;"><tr><td align=left>
-	&nbsp;étude MESR</td><td align=right style="font-size:large;">site optimisé pour <a href=http://www.mozilla-europe.org/fr/><i>firefox</a></i>&nbsp;</td></tr></table>
+	&nbsp;étude MESR</td><td align=right style="font-size:large;">site optimisé pour <a href=http://www.mozilla-europe.org/fr/><i>firefox</i>&nbsp;<img src="images/firefox_logo.png" height=20 align=absmiddle></a></i>&nbsp;</td></tr></table>
 	</div>
 	<div class=subbanner><table width=100% class=subbanner><tr><td align=left>page de connexion</td></tr></table></div>
 	</div>

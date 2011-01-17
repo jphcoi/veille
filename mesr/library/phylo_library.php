@@ -38,7 +38,7 @@ function linkFilThematique($jscriptmp,$id_partition,$partition_infos,$color_link
         }
         $cluster_Link_html.='</ul>';
         $fils_thematique_html='<a href scr=# id="openerfilThematique'.$id_partition.'">
-            <font color='.$color_link.'>'.remove_popo($partition_infos[label]).'</font></a>';
+            <font color='.$color_link.'>'.substr(remove_popo($partition_infos[label]),0,-1).'</font></a>';
 
     }
     echo '<span id="dialogfilThematique'.$id_partition.'" style="display:none;" title="Liens vers l\'extrémité du fil thématique ('.get_short_string_periode(arrange_periode($last_period_clusters[0][periode])).')">';
