@@ -16,7 +16,7 @@ LI {
 B.listtitle {
   color: black; 
   font-size:11pt;
-  background-color: DarkGray;
+  background-image: url(css/custom-theme/images/listetitle.png);
   padding-right:75%;
   padding-top:2%;
   padding-bottom:2%;
