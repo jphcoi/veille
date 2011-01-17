@@ -50,8 +50,9 @@ CREATE TABLE IF NOT EXISTS `data` (
 ";
 mysql_query($query);
 
-// Calcul des branches actives
-        $query="select * FROM partitions WHERE nb_period_covered >=".$phylo_min_nb_periods_covered." AND last_period>=".($last_period-3*$dT);
+        echo ' Calcul des branches actives<br/>';
+        $query="select * FROM partitions WHERE nb_period_covered >=".$phylo_min_nb_periods_covered.
+            " AND last_period>=".($last_period-2*$dT);
         echo $query;
         $json_data=query2streamgraphData($query,$first_period,$last_period,$dT,$time_steps);
         $cle='branches_actives_'.$phylo_min_nb_periods_covered;
@@ -59,19 +60,28 @@ mysql_query($query);
         echo '<br/>'.$sql.'<br/>';        
         mysql_query($sql) or die("<bInserts non effectués)</b>.");
 
-        $query="select * FROM partitions WHERE nb_period_covered > 1 AND nb_period_covered <=".$phylo_min_nb_periods_covered." AND  last_period=".$last_period;
+        echo ' Calcul des branches émergente<br/>';
+        $query="select * FROM partitions WHERE nb_period_covered > 1 AND nb_fields>2 AND nb_period_covered <=".$phylo_min_nb_periods_covered.
+            " AND  last_period>=".($last_period-2*$dT);
         $json_data=query2streamgraphData($query,$first_period,$last_period,$dT,$time_steps);
         $cle='branches_emergentes_'.$phylo_recent_min_nb_periods_covered;
         $sql="INSERT INTO data (cle,valeur) VALUES ('".$cle."','$json_data') ON DUPLICATE KEY UPDATE cle='".$cle."',valeur='$json_data';";
         echo '<br/>'.$sql.'<br/>';
         mysql_query($sql) or die("<bInserts non effectués)</b>.");
-            
-        $query="select * FROM partitions WHERE nb_period_covered >=".$phylo_min_nb_periods_covered." AND last_period<".($last_period-3*$dT);
+
+        echo ' Calcul des branches en suspens<br/>';
+        $query="select * FROM partitions WHERE nb_period_covered >=".$phylo_min_nb_periods_covered.
+               " AND last_period<".($last_period-2*$dT);
         $json_data=query2streamgraphData($query,$first_period,$last_period,$dT,$time_steps);
         $cle='branches_suspens_'.$phylo_min_nb_periods_covered;
         $sql="INSERT INTO data (cle,valeur) VALUES ('".$cle."','$json_data') ON DUPLICATE KEY UPDATE cle='".$cle."',valeur='$json_data';";
         echo '<br/>'.$sql.'<br/>';
         mysql_query($sql) or die("<bInserts non effectués)</b>.");
+
+        echo ' Calcul des score pour les autres branches<br/>';
+        $query="select * FROM partitions WHERE nb_period_covered >=2 AND nb_period_covered<".$phylo_min_nb_periods_covered;
+        partitionScore($query,$first_period,$last_period,$dT,$time_steps);
+        
 
 ////////////////////////////////
 ///////Fonction locales /////////
@@ -164,6 +174,61 @@ mysql_query($sqlScore) or die ("<b>Insert of total_number_of_cluster failed</b>.
 return $JSON_string;
 }
 ////////////////
+function partitionScore($id_partition,$first_period,$last_period,$dT,$time_steps){
+// calcul le score d'une partition
+$partitionScore=0;
+$periodWithMaxScore=0;
+$JSON_string="{ activity: [";
+
+// pour chaque période, pour chaque champ, on considère l'ensemble des auteurs associé à un
+// champ. On fait alors la somme, pour tous les auteurs dont au moins un billet dépasse le seuil
+// de pertinence, des scores des billets les plus pertinents pour chaque auteur. Cela donne
+// l'épaisseur du fil thématique, proportionnelle au nombre d'acteurs concernés et à leur proximité sémantique
+$seuil_pertinence=0.3;//overlap_size/cluster_size/log10(10+billet_size-overlap_size)
+$penetration_thematique=0.4;//overlap_size/cluster_size
+
+for ($i=$first_period;$i<=$last_period;$i+=$time_steps) {
+    $period_string=($i-$dT).' '.$i;
+    echo $period_string.'<br/>';
+    $period_score=0;
+    $sql="SELECT id_cluster,periode FROM cluster WHERE pseudo=$id_partition AND periode='".$period_string."' GROUP BY id_cluster";
+    $resultat=mysql_query($sql) or die ("<b>Requête non exécutée (récupération des clusters d'une période pour une partition)</b>.");
+    echo $sql.'<br/>';
+    $count=0;
+    while ($ligne=mysql_fetch_array($resultat)) {
+        $commande_sql_pert = "SELECT id_billet,id_auteur,overlap_size,billet_size,cluster_size from biparti where cluster = '".$ligne[id_cluster]."' AND periode = '".$ligne[periode]."' AND overlap_size/cluster_size/log10(10+billet_size-overlap_size)>=".$seuil_pertinence." and overlap_size/cluster_size>".$penetration_thematique;
+        echo $commande_sql_pert.'<br/>';
+        $billet_list=mysql_query($commande_sql_pert) or die ("<b>Requête non exécutée (récupération des billets associés à un cluster)</b>.");
+        $auteur_score=array(); //
+        while ($billet=mysql_fetch_array($billet_list)) {
+            $score=$billet[overlap_size]/$billet[cluster_size]/log10(10+$billet[billet_size]-$billet[overlap_size]);
+            //echo $billet[id_auteur].'<br/>';
+            if ($auteur_score[$billet[id_auteur]]!=null) {
+                if ($score>$auteur_score[$billet[id_auteur]]) {
+                    $auteur_score[$billet[id_auteur]]=$score;
+                }
+            }else {
+                $auteur_score[$billet[id_auteur]]=$score;
+                $count++;
+            }
+        }
+        $period_score+=array_sum($auteur_score)/10;
+    }
+    echo $count.' billets<br/>';
+    echo ' ------------------------<br/>';
+    $JSON_string.=round($period_score,4).', ';
+    if ($partitionScore<$period_score){
+        $partitionScore=$period_score;
+        $periodWithMaxScore=$period_string;
+    }
+}
+
+$sqlScore="INSERT INTO partitions (id_partition,score,periodWithMaxScore) VALUES ('".$id_partition."','".$partitionScore."','".$periodWithMaxScore."') ON DUPLICATE KEY UPDATE id_partition='".$id_partition."',
+    score='".$partitionScore."', periodWithMaxScore='".$periodWithMaxScore."'";
+echo $sqlScore;
+mysql_query($sqlScore) or die ("<b>Insert of total_number_of_cluster failed</b>.");;
+
+}
 
 //on ferme l'acces à la base de donnees
 mysql_close($ink);
