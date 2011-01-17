@@ -5,6 +5,7 @@
 		$node_font_size_function='Math.sqrt';
 		$double_click_url_prefix='chart.php?id_concept';
 		$double_click_url_postfix='';
+		$springLength=100;
 		}
 	else {
 		// réseau social?
@@ -12,6 +13,7 @@
 		$node_font_size_function='1.5*';
 		$double_click_url_prefix='source.php?id_source';
 		$double_click_url_postfix='&nav=soc';
+		$springLength=60;
 		}
 	$myscript='
 	
@@ -60,7 +62,7 @@
 				force.bound(true);
 				//force.springConstant(0.0001);
 				//force.springDamping(0.1);
-				force.springLength(50);
+				force.springLength('.$springLength.');
 				
 				force.link.add(pv.Line);
 				
