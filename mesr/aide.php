@@ -140,7 +140,7 @@ qui indiquent de degré d'attention maximal que la blogosphère leur a accordé.
 <p>La liste des fils thématiques permet d'accéder aux champ thématiques.
 <ul>
 <li type=circle>Un clic sur le score d'un fil thématique permet de se rendre directement à la période où
-celui-ci suscitait le plus d'activité,
+celui-ci a suscité le plus d'activité,
 <li type=circle> Un clic sur le nom d'un fil thématique permet de se rendre
 sur son champ thématique le plus récent.
 </ul></p>

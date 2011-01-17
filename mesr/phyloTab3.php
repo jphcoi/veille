@@ -11,7 +11,7 @@ $json_dataSuspens=getValue($cle);
 //////////
 include('include/streamgraphSuspens.php');
 echo $myaboveSuspens;
-$phyloquery="select * FROM partitions WHERE nb_period_covered >= $phylo_min_nb_periods_covered AND last_period<".($last_period-3*$dT);
+$phyloquery="select * FROM partitions WHERE nb_period_covered >= $phylo_min_nb_periods_covered AND last_period<".($last_period-2*$dT);
 $phyloresultat=mysql_query($phyloquery) or die ("<b>Requête non exécutée (récupération des principales thématiques)</b>.");
 
 

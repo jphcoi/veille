@@ -16,13 +16,17 @@
                 soient cependant traitée sur les périodes récentes au sein d\'un autre fil thématique.
                 </li>
                     </ul>
-            <p>Dans chaque catégorie, les fils thématiques sont labélisés par leur composantes les plus représentatives puis, lorsque cela est possible, regroupés par grands thèmes.
-              Un click sur le nom d\'un fil thématique permet d\'accéder aux champs thématiques les plus récents de ce fil.</p><p>Pour chaque fil, sont par
-            ailleurs indiqués la fenêtre temporelle couverte par ce fil thématique ainsi que le nombre de champs qu\'il comporte.</p>
+            <p>Dans chaque catégorie, les fils thématiques sont labélisés par leur deux
+            composantes les plus représentatives puis, lorsque cela est possible,
+            regroupés par grands thèmes.
+              Un click sur le nom d\'un fil thématique permet d\'accéder aux champs
+              thématiques les plus récents de ce fil.</p><p>Pour chaque fil, sont par
+            ailleurs indiqués la fenêtre temporelle couverte par ce fil thématique
+            ainsi que le nombre de champs qu\'il comporte.</p>
             <p>Les fils thématiques connaissent une popularité variable au cours du temps. Le
             nombre d\'étoiles devant un fils thématique (<img src="images/star.gif"><img src="images/star.gif">)
-            indiquent la popularité maximal qu\'a pu atteindre le fils thématique. Pour atteindre cette
-            période de popularité maximale, cliquez sur les étoiles.<p>
+            indique le maximum de popularité qu\'il a pu atteindre. Pour atteindre
+            la période correspondante, cliquez sur les étoiles.<p>
                     ',"helper");
 
 ?>

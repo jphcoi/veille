@@ -12,7 +12,7 @@ $json_dataEmergentes=getValue($cle);
 //////////
 include('include/streamgraphEmergentes.php');
 echo $myaboveEmergentes;
-$phyloquery="select * FROM partitions WHERE nb_period_covered > 1 AND nb_period_covered <=".$phylo_min_nb_periods_covered."  AND  last_period>=".($last_period-($phylo_recent_min_nb_periods_covered-1)*$dT);
+$phyloquery="select * FROM partitions WHERE nb_period_covered > 1 AND nb_fields>2 AND nb_period_covered <=".$phylo_min_nb_periods_covered."  AND  last_period>=".($last_period-2*$dT);
 $phyloresultat=mysql_query($phyloquery) or die ("<b>Requête non exécutée (récupération des principales thématiques)</b>.");
 
 
