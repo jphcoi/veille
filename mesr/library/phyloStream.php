@@ -6,7 +6,7 @@ $jsprotovis="TRUE";
 
 echo 'PARAMETRES<br/>';
 echo 'taille minimum des branches (hors émergentes) :'.$phylo_min_nb_periods_covered.'<br/>';
-echo 'taille maximum des branches émergentes  :'.$phylo_recent_min_nb_periods_covered.'<br/>';
+echo 'taille maximum des branches émergentes :'.$phylo_recent_min_nb_periods_covered.'<br/>';
 
 //connexion a la base de donnees
 
@@ -22,7 +22,7 @@ include("../include/header.php");
 
 /////////// On regarde quel est la dernière période afin de pouvoir afficher les thématiques actives
 $last_period_list=array();
-$resultat=mysql_query("select last_period,last_period_string  FROM partitions GROUP BY last_period") or die ("<b>Requête non exécutée (récupération des principales thématiques)</b>.");
+$resultat=mysql_query("select last_period,last_period_string FROM partitions GROUP BY last_period") or die ("<b>Requête non exécutée (récupération des principales thématiques)</b>.");
 while ($ligne=mysql_fetch_array($resultat)) {
         array_push($last_period_list,$ligne[last_period]);
         $period_string=$ligne[last_period_string];
@@ -31,7 +31,7 @@ while ($ligne=mysql_fetch_array($resultat)) {
 $last_period=max($last_period_list);
 $first_period=min($last_period_list);
 $period_string=explode(' ',$period_string);
-$dT=$period_string[1]-$period_string[0];// fenêtre temporelle utilisée  pour le calcul des clusters
+$dT=$period_string[1]-$period_string[0];// fenêtre temporelle utilisée pour le calcul des clusters
 $time_steps=$last_period_list[1]-$last_period_list[0]; // pas de la fenêtre glissante
 
 
@@ -43,9 +43,9 @@ mysql_query($query);// or die ("<b>Requête non exécutée (creation du champ oc
 /// creation de la table
 $query="
 CREATE TABLE IF NOT EXISTS `data` (
-  `cle` varchar(50) DEFAULT NULL,
-  `valeur` text DEFAULT NULL,
-  UNIQUE KEY `cle` (`cle`)
+`cle` varchar(50) DEFAULT NULL,
+`valeur` text DEFAULT NULL,
+UNIQUE KEY `cle` (`cle`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 ";
 mysql_query($query);
@@ -62,12 +62,12 @@ mysql_query($query);
         $json_data=query2streamgraphData($query,$first_period,$last_period,$dT,$time_steps);
         $cle='branches_actives_'.$phylo_min_nb_periods_covered;
         $sql="INSERT INTO data (cle,valeur) VALUES ('".$cle."','$json_data') ON DUPLICATE KEY UPDATE cle='".$cle."',valeur='$json_data';";
-        echo '<br/>'.$sql.'<br/>';        
+        echo '<br/>'.$sql.'<br/>';
         mysql_query($sql) or die("<bInserts non effectués)</b>.");
 
         echo ' Calcul des branches émergente<br/>';
         $query="select * FROM partitions WHERE nb_period_covered > 1 AND nb_fields>2 AND nb_period_covered <=".$phylo_min_nb_periods_covered.
-            " AND  last_period>=".($last_period-2*$dT);
+            " AND last_period>=".($last_period-2*$dT);
         $json_data=query2streamgraphData($query,$first_period,$last_period,$dT,$time_steps);
         $cle='branches_emergentes_'.$phylo_recent_min_nb_periods_covered;
         $sql="INSERT INTO data (cle,valeur) VALUES ('".$cle."','$json_data') ON DUPLICATE KEY UPDATE cle='".$cle."',valeur='$json_data';";
@@ -82,8 +82,6 @@ mysql_query($query);
         $sql="INSERT INTO data (cle,valeur) VALUES ('".$cle."','$json_data') ON DUPLICATE KEY UPDATE cle='".$cle."',valeur='$json_data';";
         echo '<br/>'.$sql.'<br/>';
         mysql_query($sql) or die("<bInserts non effectués)</b>.");
-
-       
 
 ////////////////////////////////
 ///////Fonction locales /////////
@@ -153,7 +151,7 @@ for ($i=$first_period;$i<=$last_period;$i+=$time_steps) {
             }else {
                 $auteur_score[$billet[id_auteur]]=$score;
                 $count++;
-            }            
+            }
         }
         $period_score+=array_sum($auteur_score)/10;
     }
@@ -169,7 +167,7 @@ $JSON_string=substr($JSON_string,0,-2);
 $JSON_string.='] },';
 
 $sqlScore="INSERT INTO partitions (id_partition,score,periodWithMaxScore) VALUES ('".$id_partition."','".$partitionScore."','".$periodWithMaxScore."') ON DUPLICATE KEY UPDATE id_partition='".$id_partition."',
-    score='".$partitionScore."', periodWithMaxScore='".$periodWithMaxScore."'";
+score='".$partitionScore."', periodWithMaxScore='".$periodWithMaxScore."'";
 echo $sqlScore;
 mysql_query($sqlScore) or die ("<b>Insert of total_number_of_cluster failed</b>.");;
 
@@ -241,7 +239,7 @@ for ($i=$first_period;$i<=$last_period;$i+=$time_steps) {
 }
 
 $sqlScore="INSERT INTO partitions (id_partition,score,periodWithMaxScore) VALUES ('".$id_partition."','".$partitionScore."','".$periodWithMaxScore."') ON DUPLICATE KEY UPDATE id_partition='".$id_partition."',
-    score='".$partitionScore."', periodWithMaxScore='".$periodWithMaxScore."'";
+score='".$partitionScore."', periodWithMaxScore='".$periodWithMaxScore."'";
 echo $sqlScore;
 mysql_query($sqlScore) or die ("<b>Insert of total_number_of_cluster failed</b>.");;
 
@@ -252,5 +250,5 @@ mysql_close($ink);
 
 echo '</div>';
 echo '
-	<script> $(function() { '.$jscriptmp.' });</script>';
+<script> $(function() { '.$jscriptmp.' });</script>';
 ?>
