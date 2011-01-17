@@ -50,6 +50,11 @@ CREATE TABLE IF NOT EXISTS `data` (
 ";
 mysql_query($query);
 
+        echo ' Calcul des score pour les autres branches<br/>';
+        $query="select * FROM partitions WHERE nb_period_covered >=2 AND nb_period_covered<".$phylo_min_nb_periods_covered;
+        batchPartitionScore($query,$first_period,$last_period,$dT,$time_steps);
+
+
         echo ' Calcul des branches actives<br/>';
         $query="select * FROM partitions WHERE nb_period_covered >=".$phylo_min_nb_periods_covered.
             " AND last_period>=".($last_period-2*$dT);
@@ -78,10 +83,7 @@ mysql_query($query);
         echo '<br/>'.$sql.'<br/>';
         mysql_query($sql) or die("<bInserts non effectués)</b>.");
 
-        echo ' Calcul des score pour les autres branches<br/>';
-        $query="select * FROM partitions WHERE nb_period_covered >=2 AND nb_period_covered<".$phylo_min_nb_periods_covered;
-        partitionScore($query,$first_period,$last_period,$dT,$time_steps);
-        
+       
 
 ////////////////////////////////
 ///////Fonction locales /////////
@@ -173,12 +175,26 @@ mysql_query($sqlScore) or die ("<b>Insert of total_number_of_cluster failed</b>.
 
 return $JSON_string;
 }
+
+function batchPartitionScore($query,$first_period,$last_period,$dT,$time_steps) {
+// calcul les scores pour un ensemble de données de partition d'une requête sur la table partition
+    $resultat=mysql_query($query) or die ("<b>Requête non exécutée (récupération des principales thématiques)</b>.");
+    while ($partition_resultat=mysql_fetch_array($resultat)) {
+        //infos sur la partition
+        $id_partition=$partition_resultat[id_partition];
+        $partition_label=$partition_resultat[label];
+        partitionScore($id_partition,$first_period,$last_period,$dT,$time_steps);
+        return '';
+    }
+}
+
+
 ////////////////
 function partitionScore($id_partition,$first_period,$last_period,$dT,$time_steps){
 // calcul le score d'une partition
 $partitionScore=0;
 $periodWithMaxScore=0;
-$JSON_string="{ activity: [";
+echo 'id part '.$id_partition.'<br/>';
 
 // pour chaque période, pour chaque champ, on considère l'ensemble des auteurs associé à un
 // champ. On fait alors la somme, pour tous les auteurs dont au moins un billet dépasse le seuil
@@ -192,6 +208,7 @@ for ($i=$first_period;$i<=$last_period;$i+=$time_steps) {
     echo $period_string.'<br/>';
     $period_score=0;
     $sql="SELECT id_cluster,periode FROM cluster WHERE pseudo=$id_partition AND periode='".$period_string."' GROUP BY id_cluster";
+    echo '<br/>'.$sql;
     $resultat=mysql_query($sql) or die ("<b>Requête non exécutée (récupération des clusters d'une période pour une partition)</b>.");
     echo $sql.'<br/>';
     $count=0;
