@@ -262,14 +262,13 @@ echo '
 	$(function() {
 		'.$myvar.';
 		$( "#terms" ).autocomplete({
-
 			minLength: 0,
 			source: projects,
-			focus: function( event, ui ) {
-				$( "#terms" ).val( ui.item.label);
+			focus: function(event, ui) {
+				$( "#terms" ).val(ui.item.label);
 				return false;
 				},
-			select: function( event, ui ) {
+			select: function(event, ui) {
 				location.href="chart.php?id_concept="+ui.item.value'.$myjsperiod.';
 				return false;
 				}
