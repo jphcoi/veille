@@ -50,11 +50,12 @@ function linkFilThematique($jscriptmp,$id_partition,$partition_infos,$color_link
 function linkstar($jscriptmp,$id_partition,$partition_infos,$period) {
 // génère les étoiles avec le lien vers les clusters de la période la plus populaire
 global $jscriptmp;
-$clusters=getClutersFromThisPeriod($id_partition,$period);
+
 
 $sql='SELECT * from partitions WHERE id_partition='.$id_partition;
 $resultat=mysql_query($sql) or die ("<b>Requête non exécutée (récupération des infos de partition)</b>.");
 $ligne=mysql_fetch_array($resultat);
+$clusters=getClutersFromThisPeriod($id_partition,$ligne['periodWithMaxScore']);
 $score=$ligne['score'];
 $score_html='';
 if ($score>.5) {
@@ -95,7 +96,7 @@ if ($score>.5) {
     }
     echo '<span id="dialoglinkstar'.$id_partition.'" style="display:none;"
         title="Liens vers la période de popularité maximale <span style=\'font-size: x-small\'>
-        ('.get_short_string_periode(arrange_periode($period)).')</span>">';
+        ('.get_short_string_periode(arrange_periode($ligne['periodWithMaxScore'])).')</span>">';
     echo 'La période de popularité maximale de ce fil thématique correspond a plusieurs champs thématiques :'.$cluster_Link_html;
     echo '</span>';
     return array($jscriptmp,$linkstar);
