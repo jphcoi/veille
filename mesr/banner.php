@@ -1,16 +1,22 @@
 <?
 
 if (isset($_GET['periode'])) {
-	$periode=$_GET['periode'];
-	if (intval($periode)!=-1) $periodstr="?periode=".$periode;
-	else $periodestr="";
-	}
+$periode=$_GET['periode'];
+if (intval($periode)!=-1) $periodstr="?periode=".$periode;
+else $periodestr="";
+}
 else $periodstr="";
-$page_current_v =  explode('/',$_SERVER['PHP_SELF']);
-$page_current =  $page_current_v[count($page_current_v)-1];
+$page_current_v = explode('/',$_SERVER['PHP_SELF']);
+$page_current = $page_current_v[count($page_current_v)-1];
 switch ($page_current) {
     case 'phylo.php':
-		$page = 'fils';
+$page = 'fils';
+        break;
+     case 'phyloTab2.php':
+$page = 'fils';
+        break;
+     case 'phyloTab3.php':
+$page = 'fils';
         break;
 
     case 'global.php':
@@ -18,21 +24,21 @@ switch ($page_current) {
         break;
 
     case 'entree_clusters.php':
-		$page = 'champs';
+$page = 'champs';
         break;
     case 'cluster.php':
-		$page = 'champs';
+$page = 'champs';
         break;
 
     case 'entree_sources.php':
-		$page = 'sources';
+$page = 'sources';
         break;
     case 'source.php':
-		$page = 'sources';
+$page = 'sources';
         break;
 
     case 'entree_termes.php':
-		$page = 'termes';
+$page = 'termes';
         break;
     case 'chart.php':
         $page = 'termes';
@@ -42,27 +48,27 @@ switch ($page_current) {
         $page = 'aide';
         break;
 
-	case 'commentaires.php';
-		$page = 'commentaires';
-		break;
+case 'commentaires.php';
+$page = 'commentaires';
+break;
 
 }
 
-echo '<div id="hd"  class="ui-widget">
-	<div id="hdb">
-	<div id="htoolbar" class="toolbardiv fg-toolbar ui-widget-header ui-corner-all ui-helper-clearfix">
-	<div id="title" class="noSelect" style="margin-left:5px; margin-right:5px;">
-	<table width="100%" style="font-size:x-large; font-weight:bold; color:DarkSlateGray; font-variant:small-caps;">
-	<tr>
-	<td align=left>étude MESR</td>
-	<td align=right style="font-size:medium;">';
+echo '<div id="hd" class="ui-widget">
+<div id="hdb">
+<div id="htoolbar" class="toolbardiv fg-toolbar ui-widget-header ui-corner-all ui-helper-clearfix">
+<div id="title" class="noSelect" style="margin-left:5px; margin-right:5px;">
+<table width="100%" style="font-size:x-large; font-weight:bold; color:DarkSlateGray; font-variant:small-caps;">
+<tr>
+<td align=left>étude MESR</td>
+<td align=right style="font-size:medium;">';
 echo'<a href=aide.php?selectedTab=1>';
 if ($page=="aide") echo '<span class=bannerselected>'; else echo '<span>';
 echo '&nbsp;aide&nbsp;';
 echo '<img src="images/question-mark.gif" border=0>&nbsp;</a></span> ';
 echo '<a href=deconnexion.php>&nbsp; <img src=images/logout.jpg width=12 border=0 alt="déconnexion"></a></td>
-	</tr>
-	</table>';
+</tr>
+</table>';
 
 echo '<table class=tableitems style="font-variant:small-caps;" width="100%"><tr><td>';
 echo '<a href=phylo.php><span';
@@ -87,11 +93,12 @@ echo '<a href=commentaires.php><span';
 if ($page=="commentaires") echo ' style="background-color:white;border:1px solid;"';
 echo '>&nbsp;commentaires&nbsp;</span></a>';
 echo '</td>
-	</tr>
-	</table>';
+</tr>
+</table>';
 echo '</div>';
 echo '</div>';
 echo '</div><!-- End of htoolbar -->';
 echo '</div><!-- End of hdb -->';
 echo '</div><!-- End of hd -->';
 ?>
+

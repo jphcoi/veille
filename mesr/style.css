@@ -14,9 +14,9 @@ LI {
 }
 
 B.listtitle {
-  color: black; 
+  color: black;
   font-size:11pt;
-  background-color: DarkGray;
+  background-image: url(css/custom-theme/images/listetitle.png);
   padding-right:75%;
   padding-top:2%;
   padding-bottom:2%;
@@ -184,7 +184,30 @@ table.subbanner {
   font-variant:small-caps;
 }
 
-.specialsubbanner {
+
+.specialsubbanner {  
+ border-style:solid;
+border-color: #336666; 
+background: #cccccc;
+background-image: url(css/custom-theme/images/ui-bg_gloss-wave_75_cccccc_500x50.png);
+background-repeat: repeat-x; 
+color: #050506; 
+font-weight: bold;
+ font-size:11pt;
+  font-variant:small-caps;
+  margin-bottom: 0px;
+  margin-top: 0px;
+  padding-top: 3px;
+  padding-bottom: 7px;
+  padding-left: 15px;
+  padding-right: 15px;
+  border-top:0px;
+  border-left:0px;
+  border-right:0px;
+  border-bottom-width:1px;
+}
+
+.specialsubbanner_old_style {
   color:SlateGray;
   font-size:11pt;
   font-variant:small-caps;
@@ -201,6 +224,7 @@ table.subbanner {
   border-right:0px;
   border-bottom-width:1px;
 }
+
 
 A:hover {
   font: verdana, sans-serif;

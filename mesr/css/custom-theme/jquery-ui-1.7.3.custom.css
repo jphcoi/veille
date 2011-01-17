@@ -52,6 +52,9 @@
 .ui-widget-content a { color: #222222; }
 .ui-widget-header { border: 2px solid #336666; background: #cccccc url(images/ui-bg_gloss-wave_75_cccccc_500x100.png) 50% 50% repeat-x; color: #050506; font-weight: bold; }
 .ui-widget-header a { color: #050506; }
+.ui-widget-last { border: 1px solid #C6CDC5; background: #cccccc url(images/ui-bg_glass_55_custom_1x400.png) 50% 50% repeat-x; color: #050506; }
+.ui-widget-cluster { border: 1px solid #C6CDC5; background: #cccccc url(images/ui-bg_glass_clusterx400.png) 50% 50% repeat-x; color: #050506; }
+.ui-widget-period-header { border: 0px solid #336666; background: #cccccc url(images/ui-bg_gloss-wave_75_cccccc_500x100.png) 50% 50% repeat-x; color: #033610; font-variant:small-caps; font-size:xx-small; }
 
 /* Interaction states
 ----------------------------------*/

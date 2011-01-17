@@ -24,17 +24,8 @@ echo '<tr valign=top>';
 	
 // PANEL DE GAUCHE: PERIODES PRECEDENTES
 	
-if ($nopred) $back_avant='background-color:'.$backdarker.';';
-echo '<td width=22% align=center class=tableitems style="font-variant:small-caps; size:small; font-style:italic;'.$back_avant.'">';
-if ($nopred) echo "<b>(pas de prédécesseur)</b>";
-else {
-	echo '<table width=100% cellspacing=0 cellpadding=0>';
-	echo '<tr width=100% class=commentitems style="font-variant:small-caps; background-color:'.$backdark.';"><td width=5px></td><td>période</td><td></td><td>champ</td></tr>';
-	$last_display_periode="";
-	foreach ($pred as $p) display_cluster_title($p,"pred");
-	echo '</table>';
-	}	
-echo '</td>';
+left_panel($p,$pred,$nopred,$backdarker,$backdark);
+
 
 
 echo '<td width=1%></td>';
@@ -198,19 +189,7 @@ echo '</td>';
 echo '<td width=1%></td>';
 
 // PANEL DE DROITE: PERIODES SUIVANTES
-
-if ($nosucc) $back_apres='background-color:'.$backdarker.';';
-echo '<td width=22% align=center class=tableitems style="font-variant:small-caps; size:small; font-style:italic;'.$back_apres.'">';	
-if ($nosucc) echo "<b>(pas de successeur)</b>"; 
-else {
-	echo '<table width=100% cellspacing=0 cellpadding=0>';
-	echo '<tr class=commentitems style="font-variant:small-caps; background-color:'.$backdark.';"><td width=5px></td><td>période</td><td></td><td>champ</td></tr>';
-	$last_display_periode="";
-	foreach ($succ as $s) 
-		display_cluster_title($s,"succ");
-	echo '</table>';
-	}
-echo '</td>';
+right_panel($s,$succ,$nosucc,$backdarker,$backdark);
 	
 echo "</tr>";
 

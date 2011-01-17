@@ -3,6 +3,8 @@ include("login_check.php");
 include("library/fonctions_php.php");
 include("parametre.php");
 
+
+
 mysql_connect( $server,$user,$password);if ($encodage=="utf-8") mysql_query("SET NAMES utf8;");
 //if ($encodage=='utf-8') mysql_query("SET NAMES utf8;");
 @mysql_select_db($database) or die( "Unable to select database");
@@ -37,11 +39,31 @@ include("include/header.php");
 include("banner.php");
 
 
+// style pour l'auto complete
+echo "<style>
+	.ui-autocomplete {
+		max-height: 100px;
+		overflow-y: auto;
+		/* prevent horizontal scrollbar */
+		overflow-x: hidden;
+		/* add padding to account for vertical scrollbar */
+		padding-right: 20px;
+	}
+	/* IE 6 doesn't support max-height
+	 * we use height instead, but this forces the menu to always be this tall
+	 */
+	* html .ui-autocomplete {
+		height: 100px;
+	}
+	</style>";
+
+
 //*******************************************
 //bloc choix du terme
 //*******************************************
 
-
+$liste_termes_autocomplete='['; // liste pour l'autocomplete
+$vraidicotermesjs=array(); //vrai dico.
 $resultat=mysql_query("select id,forme_principale FROM concepts ORDER by forme_principale") or die ("Requête non executée.");
 while ($ligne=mysql_fetch_array($resultat)){
 	$id=$ligne['id'];
@@ -53,11 +75,14 @@ while ($ligne=mysql_fetch_array($resultat)){
 	if ($my_period==-1) $add_concept_now=1;
 	if ($add_concept_now) {
 		$liste_termes_brute[] = $terme;
+        $liste_termes_autocomplete.='"'.$terme.'",';
 		$id_termes_brute[] = $id;
+        $vraidicotermesjs[$terme]=$id;
 		}
 	$dico_termes[$id]=$terme;
 }
-
+$liste_termes_autocomplete=substr($liste_termes_autocomplete,0,-1);
+$liste_termes_autocomplete.=']';
 
 
 
@@ -105,7 +130,7 @@ echo '<table width=100% class=tableitems><tr>';
 echo '<td width=2.5%></td>';
 echo '<td width=95%>';
 echo '<table width=100% class=specialsubbanner cellspacing=0><tr>';
-echo '<td width=100% style="color:black;font-weight:bold;">période sélectionnée: ';
+echo '<td width=70% style="color:black;font-weight:bold;">période sélectionnée : ';
 
 //on extrait d'abord la liste totale des périodes: $total_list_periods
 $commande_sql = "SELECT periode from cluster GROUP BY periode";
@@ -135,7 +160,8 @@ for ($i=0;$i<count($list_of_periods);$i++) {
 echo '</select>';
 echo '<input type="submit" value="Changer">';
 echo '</form>';
-echo "</td>";
+echo "</td><td align=right width=25%>";
+echo '</td>';
 echo '</tr></table>';
 echo '<td width=2.5%></td>';
 echo "</tr></table>";
@@ -147,7 +173,12 @@ else {
 	echo '
 		<table class=commentitems width=100%><tr><td width=2.5%></td><td><b style="font-variant:small-caps;">accès direct aux termes commençant par&nbsp;:</b> '.$initiales.'<br>
 		<i>(nb: les termes grisés ne sont associés à aucun champ thématique)</i>
-		</td><td width=2.5%></td></tr></table>';
+		</td><td>';
+        echo '<td class="ui-widget" float=right>
+	<label for="terms">rechercher: </label>
+	<input id="terms" /></td>';
+
+        echo '</td><td width=2.5%></td></tr></table>';
 	}
 
 echo '<p><table width=100% class=tableitems>';
@@ -211,6 +242,41 @@ echo "</td><td width=2.5%></td></tr></table>";
 
 echo '<table width=100% class=tableitems><tr valign=top><td width=2.5%></td><td width=97.5%><hr width=95% align=left><div style="font-variant:small-caps;">total: '.count($liste_termes_brute).' termes.</div></td><td width=2.5%></td></tr>';
 echo "</table>";
+
+// script autocomplete
+
+$myvar='';
+foreach (array_keys($vraidicotermesjs) as $k)
+{
+	$myvar.='
+	{ label: "'.$k.'", value: "'.$vraidicotermesjs[$k].'" },';
+}
+
+$myvar=str_replace(',]','
+		]','var projects = ['.$myvar.']');
+		
+if ($my_period!=-1) $myjsperiod='+"&periode='.$my_period.'"'; else $myjsperiod='';
+
+echo '
+	<script>
+	$(function() {
+		'.$myvar.';
+		$( "#terms" ).autocomplete({
+			minLength: 0,
+			source: projects,
+			focus: function( event, ui ) {
+				$( "#terms" ).val( ui.item.label);
+				return false;
+				},
+			select: function( event, ui ) {
+				location.href="chart.php?id_concept="+ui.item.value'.$myjsperiod.';
+				return false;
+				}
+			});
+	});
+	</script>';
+
+
 //on ferme l'acces à la base de donnees
 mysql_close();
 include("footer.php");
