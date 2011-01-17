@@ -63,7 +63,6 @@ echo "<style>
 //*******************************************
 
 $liste_termes_autocomplete='['; // liste pour l'autocomplete
-$tableauTermsJS=''; //dico pour construire l'url après l'auto complete
 $vraidicotermesjs=array(); //vrai dico.
 $resultat=mysql_query("select id,forme_principale FROM concepts ORDER by forme_principale") or die ("Requête non executée.");
 while ($ligne=mysql_fetch_array($resultat)){
@@ -78,7 +77,6 @@ while ($ligne=mysql_fetch_array($resultat)){
 		$liste_termes_brute[] = $terme;
         $liste_termes_autocomplete.='"'.$terme.'",';
 		$id_termes_brute[] = $id;
-        $tableauTermsJS.='DicoTerms["'.$terme.'"]='.$id.';';
         $vraidicotermesjs[$terme]=$id;
 		}
 	$dico_termes[$id]=$terme;
@@ -256,6 +254,8 @@ foreach (array_keys($vraidicotermesjs) as $k)
 
 $myvar=str_replace(',]','
 		]','var projects = ['.$myvar.']');
+		
+if ($my_period!=-1) $myjsperiod='+"&periode='.$my_period.'"'; else $myjsperiod='';
 
 echo '
 	<script>
@@ -269,7 +269,7 @@ echo '
 				return false;
 				},
 			select: function( event, ui ) {
-				location.href="chart.php?id_concept="+ui.item.value;
+				location.href="chart.php?id_concept="+ui.item.value'.$myjsperiod.';
 				return false;
 				}
 			});
