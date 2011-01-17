@@ -31,11 +31,17 @@ function linkFilThematique($jscriptmp,$id_partition,$partition_infos,$color_link
                 <font color=blue>'.str_replace('---','/',remove_popo($last_period_clusters[$i][label])).'</font></a></li>';
     }
     $cluster_Link_html.='</ul>';
-    $fils_thematique_html='<a href scr=# id="openerfilThematique'.$id_partition.'">
-            <font color='.$color_link.'>'.substr(remove_popo($partition_infos[label]),0,-1).'</font></a>';
-    echo '<span id="dialogfilThematique'.$id_partition.'" style="display:none;" title="Caractéristiques du fil thématique ('.get_short_string_periode(arrange_periode($last_period_clusters[0][periode])).')">';
-    echo 'Ce fil thématique a plusieurs champs en dernière période :'.$cluster_Link_html;
-    echo '</span>';
+    if (count($last_period_clusters)>1) {
+        $fils_thematique_html='<a href scr=# id="openerfilThematique'.$id_partition.'">
+            <font color='.$color_link.'>'.remove_popo($partition_infos[label]).'</font></a>';
+        echo '<span id="dialogfilThematique'.$id_partition.'" style="display:none;" title="Caractéristiques du fil thématique ('.get_short_string_periode(arrange_periode($last_period_clusters[0][periode])).')">';
+        echo 'Ce fil thématique a plusieurs champs en dernière période :'.$cluster_Link_html;
+        echo '</span>';
+    }else {
+        $fils_thematique_html= '<a href="'.$last_period_clusters[0][attribut].'">
+            <font color='.$color_link.'>'.remove_popo($partition_infos[label]).'</font></a>';
+    }
+
     return array($jscriptmp,$fils_thematique_html);
 }
 
@@ -112,7 +118,7 @@ $clusters=getClutersFromThisPeriod($id_partition,$ligne['periodWithMaxScore']);
     if (count($clusters)==1) {
         $clusters=$clusters[0];
         $linkstarString='Ce fil thématique atteint sa popularité maximale ('.$imagestar.') sur la
-            période'.get_short_string_periode(arrange_periode($ligne['periodWithMaxScore'])).'
+            période '.get_short_string_periode(arrange_periode($ligne['periodWithMaxScore'])).'
             avec le champ '.'<a href="'.$clusters[attribut].'"><font color=blue>'.
         str_replace('---','/',remove_popo($clusters[label])).'</font></a>';
     }
@@ -123,7 +129,7 @@ $clusters=getClutersFromThisPeriod($id_partition,$ligne['periodWithMaxScore']);
         }
         $cluster_Link_html.='</ul>';
         $linkstarString='Ce fil thématique atteint sa popularité maximale ('.$imagestar.') sur la
-            période'.get_short_string_periode(arrange_periode($ligne['periodWithMaxScore'])).'
+            période '.get_short_string_periode(arrange_periode($ligne['periodWithMaxScore'])).'
             avec les champs suivants :<br/>'.$cluster_Link_html;
     }
     return $linkstarString  ;
@@ -173,10 +179,10 @@ $imagestar=imagestar($id_partition);
     echo '<p>'.$cluster_Link_html.'</p>';
     echo '<b>Statistiques</b>';
     echo '<ul>
-           <li type=circle>Extention : du <span style="font-size: x-small;" >'.get_date_since($partition_infos['first_period']).'</span> au <span style="font-size: x-small;" >'.get_date_since($partition_infos['last_period']).'</span>'.
+           <li type=circle>Extention : du <span style="font-size: small;" >'.get_date_since($partition_infos['first_period']).'</span> au <span style="font-size: small;" >'.get_date_since($partition_infos['last_period']).'</span>'.
             '<li type=circle>'.$partition_infos['nb_period_covered'].' périodes couvertes,'.
             '<li type=circle>'.$partition_infos['nb_fields'].'  champs thématiques au total, '.
-            '<li type=circle>'.$partition_infos['nb_terms'].' termes utilisés.'.
+            '<li type=circle>'.$partition_infos['nb_terms'].' termes employés.'.
             '</ul>';
     echo '</span>';
     return array($jscriptmp,$fils_thematique_html);
@@ -326,7 +332,7 @@ function branch_list_string($mysql_branch_list,$depth,$min_similarity){
 			for ($j=0;$j<count($index_grouped);$j++){
 				$index = $index_grouped[$j];
 				$branch_id=$branch_list[$index]['id_partition'];
-                                    list($jscriptmp,$linkFilThematique)=linkFilThematique($jscriptmp,$branch_id,$branch_list[$index],$backdarker);
+                                list($jscriptmp,$linkFilThematique)=linkFilThematique($jscriptmp,$branch_id,$branch_list[$index],$backdarker);
 
 				$sql='SELECT * from partitions WHERE id_partition='.$branch_id;
 				$resultat=mysql_query($sql) or die ("<b>Requête non exécutée (récupération des infos de partition)</b>.");
@@ -367,12 +373,13 @@ function branch_list_string($mysql_branch_list,$depth,$min_similarity){
 			$resultat=mysql_query($sql) or die ("<b>Requête non exécutée (récupération des infos de partition)</b>.");
 			$ligne=mysql_fetch_array($resultat);
 			$nchamps=$ligne['nb_fields'];
-                       list($jscriptmp,$linkstar)=linkstar($jscriptmp,$branch_id,$branch_list[$index],$ligne['periodWithMaxScore']);
+                        list($jscriptmp,$linkstar)=linkstar($jscriptmp,$branch_id,$branch_list[$index],$ligne['periodWithMaxScore']);
+                        $imagestar=imagestar($branch_id);
 
 
                         $branch='<tr value='.$nchamps.' onMouseOver="this.style.backgroundColor=\''.$whitedarker.'\';" onMouseOut="this.style.backgroundColor=\''.$whitedark.'\';">';
 
-			$branch.='<td width=50px style="font-size: x-small; text-align:right;"><b>'.$ligne['nb_fields'].'</b>&nbsp;champs'.$linkstar.'</td>';
+			$branch.='<td width=50px style="font-size: x-small; text-align:right;"><b>'.$ligne['nb_fields'].'</b>&nbsp;champs<br/>'.$linkstar.$imagestar.'</a></td>';
 			$branch.='<td width=50px style="font-size: x-small; text-align:right;">&nbsp;';
 			$branch.=str_replace("(&nbsp;","(",str_replace(" ","&nbsp;",get_short_string_periode($ligne['first_period'].'-'.$ligne['last_period'])));
 			$branch.='&nbsp;</td><td style="font-size:9pt;">';
