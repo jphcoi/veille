@@ -1010,13 +1010,14 @@ function display_helper_two_outputs($title,$text,$indexsuffix,$img="question-mar
 	$arr[]="
 		$('#dialog".$indexsuffix."')
 		.dialog({ autoOpen: false, stack: true, ".$options.", closeOnEscape:true})
-		.click(function () { $('#dialog".$indexsuffix."').dialog('close'); });
+		// decommenter la ligne suivante pour fermer le helper en le cliquant
+		//.click(function () { $('#dialog".$indexsuffix."').dialog('close'); });
 		
 		$('#opener".$indexsuffix."').click(function(e) {
 		if (!$('#dialog".$indexsuffix."').dialog('isOpen'))
 		$('#dialog".$indexsuffix."').dialog('option','position', [$(this).position().left+25,25]).dialog('open');
-		else
-		$('#dialog".$indexsuffix."').dialog('close');
+		//else
+		//$('#dialog".$indexsuffix."').dialog('close');
 		return false;
 		});";
 
