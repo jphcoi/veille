@@ -64,6 +64,7 @@ echo "<style>
 
 $liste_termes_autocomplete='['; // liste pour l'autocomplete
 $tableauTermsJS=''; //dico pour construire l'url après l'auto complete
+$vraidicotermesjs=array(); //vrai dico.
 $resultat=mysql_query("select id,forme_principale FROM concepts ORDER by forme_principale") or die ("Requête non executée.");
 while ($ligne=mysql_fetch_array($resultat)){
 	$id=$ligne['id'];
@@ -75,9 +76,10 @@ while ($ligne=mysql_fetch_array($resultat)){
 	if ($my_period==-1) $add_concept_now=1;
 	if ($add_concept_now) {
 		$liste_termes_brute[] = $terme;
-                $liste_termes_autocomplete.='"'.$terme.'",';
+        $liste_termes_autocomplete.='"'.$terme.'",';
 		$id_termes_brute[] = $id;
-                $tableauTermsJS.='DicoTerms["'.$terme.'"]='.$id.';';
+        $tableauTermsJS.='DicoTerms["'.$terme.'"]='.$id.';';
+        $vraidicotermesjs[$terme]=$id;
 		}
 	$dico_termes[$id]=$terme;
 }
@@ -245,33 +247,34 @@ echo "</table>";
 
 // script autocomplete
 
-echo $tableauTermsJS;
+$myvar='';
+foreach (array_keys($vraidicotermesjs) as $k)
+{
+	$myvar.='
+	{ label: "'.$k.'", value: "'.$vraidicotermesjs[$k].'" },';
+}
 
-echo '<script>
+$myvar=str_replace(',]','
+		]','var projects = ['.$myvar.']');
+
+echo '
+	<script>
 	$(function() {
-		var availableTerms = '.$liste_termes_autocomplete.';
+		'.$myvar.';
 		$( "#terms" ).autocomplete({
-			source: availableTerms,                       
-		});            
-        $( ".selector" ).autocomplete({
-               minLength: 3,
-               select: function(event, ui) {
-               alert("test");
-               var DicoTerms = new Array();';
-echo $tableauTermsJS.';';
-echo '	       var url="chart.php?id_concept="+$.DicoTerms[ui.item.label];
-               alert(url);
-                 if(url) {
-                   location.href = url;
-                   return false;
-                    }
-                   return true;
-                    }
-                });
-
+			minLength: 0,
+			source: projects,
+			focus: function( event, ui ) {
+				$( "#terms" ).val( ui.item.label);
+				return false;
+				},
+			select: function( event, ui ) {
+				location.href="chart.php?id_concept="+ui.item.value;
+				return false;
+				}
+			});
 	});
-	</script>
-';
+	</script>';
 
 
 //on ferme l'acces à la base de donnees
