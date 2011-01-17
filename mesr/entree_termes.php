@@ -246,12 +246,10 @@ echo '<script>
 	$(function() {
 		var availableTerms = '.$liste_termes_autocomplete.';
 		$( "#terms" ).autocomplete({
-			source: availableTerms,                       
+			source: availableTerms                       
 		});            
                 $( ".selector" ).autocomplete({
-                   minLength: 3,
                    select: function(event, ui) {
-                   alert("test");
                    var DicoTerms = new Array();';
                 echo $tableauTermsJS.';';
                 echo   'var url="chart.php?id_concept="+$.DicoTerms[ui.item.label];
