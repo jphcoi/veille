@@ -305,7 +305,7 @@ $query="select * FROM partitions WHERE id_partition=".$id_partition;
 $resultat=mysql_query($query) or die ("<b>Requête non exécutée (récupération de info de partition)</b>.");
 $partition_infos=mysql_fetch_array($resultat);
 if ($partition_infos[nb_period_covered]>1){
-    list($jscriptmp,$linkFilThematique)=FTInfo($jscriptmp,$partition_infos,'#ffffff');
+    list($jscriptmp,$linkFilThematique)=FTInfo($jscriptmp,$partition_infos[id_partition],'#ffffff');
     $imagestar=imagestar($partition_infos[id_partition]);
     
 };

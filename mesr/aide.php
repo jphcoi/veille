@@ -42,7 +42,7 @@ echo "<div class='demo'>
 
 	<ul>
 <table width=100% class=tableitems>
-<tr valign=top></td><td><h2 class=subtitle>".$titleheader."</h2></tr>
+0<tr valign=top></td><td><h2 class=subtitle>".$titleheader."</h2></tr>
 </table >
 		<li><a href='#tabs-1'>À propos de cette plateforme</a></li>
 		<li><a href='#tabs-2'>Ontologie </a></li>
@@ -134,18 +134,24 @@ echo "
 <p>Contrairement aux explorations s'appuyant sur des termes choisis <i>a priori</i>
 ayant pour entrée le niveau 'micro', les entrées par les niveaux <a href=aide.php?selectedTab=2><font color=blue>'meso' et 'macro'</font></a> permettent
 de sélectionner des sujets à partir de leur profil d'évolution et donc de suggérer des
-parcours et des sujets à étudier.</p>
-
-<p>La liste des fils thématique permet d'accéder au champ thématique le plus récent d'un fil thématique donné.</p>
+parcours et des sujets à étudier. Les fils thématiques ont des scores, représentés par des étoiles
+qui indiquent de degré d'attention maximal que la blogosphère leur a accordé.
+</p>
+<p>La liste des fils thématiques permet d'accéder aux champ thématiques.
+<ul>
+<li type=circle>Un clic sur le score d'un fil thématique permet de se rendre directement à la période où
+celui-ci suscitait le plus d'activité,
+<li type=circle> Un clic sur le nom d'un fil thématique permet de se rendre
+sur son champ thématique le plus récent.
+</ul></p>
 <center><img src='images/FTlink.jpg' border=1></a><br/></center>
 
-<p>Lors du parcours des champ thématiques, le nom du fil thématique auquel celui-ci appartient
+<p>Lors du parcours des champ thématiques, le nom du fil thématique auquel celui-ci est rattaché
  est rappelé en dessous du nom de celui-ci. </p>
 <center><img src='images/FT.jpg'  border=1></a><br/></center>
 
-<p>Un click sur le nom d'un fil thématique vous ramène aux champs thématiques
-les plus récents de ce fil thématique. Le cas échéant, plusieurs choix vous sont
-proposés comme ci-dessous.
+<p>Dans cette vue, un clic sur le nom d'un fil thématique vous donne des informations sur le fil thématique
+et vous propose des liens vers des périodes remarquable de de fil thématique.
 <center><img src='images/FTpopup.jpg'  border=1></a><br/></center>
 
 ";
