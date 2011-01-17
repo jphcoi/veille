@@ -262,6 +262,7 @@ echo '
 	$(function() {
 		'.$myvar.';
 		$( "#terms" ).autocomplete({
+
 			minLength: 0,
 			source: projects,
 			focus: function( event, ui ) {

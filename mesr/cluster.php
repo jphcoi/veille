@@ -304,9 +304,10 @@ include("banner.php");
 $query="select * FROM partitions WHERE id_partition=".$id_partition;
 $resultat=mysql_query($query) or die ("<b>Requête non exécutée (récupération de info de partition)</b>.");
 $partition_infos=mysql_fetch_array($resultat);
-list($jscriptmp,$linkFilThematique)=linkFilThematique($jscriptmp,$id_partition,$partition_infos,$backdarker);
 if ($partition_infos[nb_period_covered]>1){
-list($jscriptmp,$linkstar)=linkstar($jscriptmp,$partition_infos[id_partition],$partition_infos,str_replace('-',' ', $periode));
+    list($jscriptmp,$linkFilThematique)=FTInfo($jscriptmp,$partition_infos,'#ffffff');
+    $imagestar=imagestar($partition_infos[id_partition]);
+    
 };
 list($jscriptmp,$linkcluster)=link2clusters($jscriptmp,$partition_infos[id_partition],
         $partition_infos,str_replace('-',' ', $periode));
@@ -325,7 +326,7 @@ if ($partition_infos[nb_period_covered]>1) {
     echo '<table width=100% ><tr><td width=100 valign=top>
     <span align=left style="font-variant:small-caps; font-size: x-small;color:#ffffff">
     fil thématique :</span><br/> ';
-    echo $linkstar.'</td><td valign=top><span style="font-size: x-small;">'.$linkFilThematique.'</span></td></table>';
+    echo $imagestar.'</td><td valign=top><span style="font-size: x-small;">'.$linkFilThematique.'</span></td></table>';
     };
 echo '<td align=right><span style="font-size:8pt;">'.str_replace(" ","&nbsp;",get_string_periode($my_period)).'<br/>'.$linkcluster.'</span>&nbsp;&nbsp;</td>';
 echo '</tr></table>';
