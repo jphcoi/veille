@@ -135,13 +135,12 @@ $clusters=getClutersFromThisPeriod($id_partition,$ligne['periodWithMaxScore']);
     return $linkstarString  ;
 }
 
-    function FTInfo($jscriptmp,$id_partition,$color_link) {
-$query="select * FROM partitions WHERE id_partition=".$id_partition;
-$resultat=mysql_query($query) or die ("<b>Requête non exécutée (récupération de info de partition)</b>.");
-$partition_infos=mysql_fetch_array($resultat);
+function FTInfo($jscriptmp,$id_partition,$color_link) {
+    $query="select * FROM partitions WHERE id_partition=".$id_partition;
+    $resultat=mysql_query($query) or die ("<b>Requête non exécutée (récupération de info de partition)</b>.");
+    $partition_infos=mysql_fetch_array($resultat);
 //    global $imagestar;
-$imagestar=imagestar($id_partition);
-
+    $imagestar=imagestar($id_partition);
     $linkstarString=linkstarString($partition_infos[id_partition],$imagestar);
 // Construit le popup d'info d'un champs thématique
 
@@ -160,25 +159,41 @@ $imagestar=imagestar($id_partition);
 			return false;
 			});";
 
-    if (count($last_period_clusters)>1) {
-         $cluster_Link_html='Ce fil thématique comporte plusieurs champs en dernière période ('.get_string_periode(str_replace(' ','-',$last_period_clusters[0][periode])).') :<ul>';
-        for ($i=0;$i<count($last_period_clusters);$i++) {
-            $cluster_Link_html.='<li><a href="'.$last_period_clusters[$i][attribut].'">
+    if (strcmp($last_period_clusters[0][periode], $partition_infos[periodWithMaxScore])==0) {
+        if (count($last_period_clusters)>1) {
+            $cluster_Link_html.='Ce fil thématique atteint le maximum de sa popularité sur sa période la plus récente  ('.get_string_periode(str_replace(' ','-',$last_period_clusters[0][periode])).') avec les champs suivants :<ul>';
+            for ($i=0;$i<count($last_period_clusters);$i++) {
+                $cluster_Link_html.='<li><a href="'.$last_period_clusters[$i][attribut].'">
                 <font color=blue>'.str_replace('---','/',remove_popo($last_period_clusters[$i][label])).'</font></a></li>';
-        }
-        $cluster_Link_html.='</ul>';
-    }else {
-         $cluster_Link_html='Le champ le plus récent de ce fil thématique est '.
-         '<a href="'.$last_period_clusters[0][attribut].'">
+            }
+            $cluster_Link_html.='</ul>';
+        }else {
+            $cluster_Link_html.='Ce fil thématique atteint le maximum de sa popularité sur sa période la plus récente avec le champ '.
+                    '<a href="'.$last_period_clusters[0][attribut].'">
                 <font color=blue>'.str_replace('---','/',remove_popo($last_period_clusters[0][label])).'</font></a> (période '.get_string_periode(str_replace(' ','-',$last_period_clusters[0][periode])).')';
+        }
+    }else {
+        $cluster_Link_html='<p>'.$linkstarString.'</p>';
+        if (count($last_period_clusters)>1) {
+            $cluster_Link_html.='Ce fil thématique comporte plusieurs champs en dernière période ('.get_string_periode(str_replace(' ','-',$last_period_clusters[0][periode])).') :<ul>';
+            for ($i=0;$i<count($last_period_clusters);$i++) {
+                $cluster_Link_html.='<li><a href="'.$last_period_clusters[$i][attribut].'">
+                <font color=blue>'.str_replace('---','/',remove_popo($last_period_clusters[$i][label])).'</font></a></li>';
+            }
+            $cluster_Link_html.='</ul>';
+        }else {
+            $cluster_Link_html.='Le champ le plus récent de ce fil thématique est '.
+                    '<a href="'.$last_period_clusters[0][attribut].'">
+                <font color=blue>'.str_replace('---','/',remove_popo($last_period_clusters[0][label])).'</font></a> (période '.get_string_periode(str_replace(' ','-',$last_period_clusters[0][periode])).')';
+        }
     }
+
     $fils_thematique_html='<a href scr=# id="openerfilThematique'.$id_partition.'">
             <font color='.$color_link.'>'.substr(remove_popo($partition_infos[label]),0,-1).'</font></a>';
 
 
     echo '<span id="dialogfilThematique'.$id_partition.'" style="display:none;" title="'.
     str_replace('lpopostrophe ', "l'", $partition_infos[label]).'">';
-    echo '<p>'.$linkstarString.'</p>';
     echo '<p>'.$cluster_Link_html.'</p>';
     echo '<br/><b>Caractéristiques de ce fil thématique :</b>';
     echo '<ul>
