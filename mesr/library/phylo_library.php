@@ -1,4 +1,4 @@
-<?php
+    <?php
 /// Librarie de fonctions relatives aux phylogénies et fils thématiques
 
 ///////////////////////////////////////
@@ -161,7 +161,7 @@ $imagestar=imagestar($id_partition);
 			});";
 
     if (count($last_period_clusters)>1) {
-         $cluster_Link_html='Ce fil thématique comporte plusieurs champs en dernière période :<ul>';
+         $cluster_Link_html='Ce fil thématique comporte plusieurs champs en dernière période ('.get_string_periode(str_replace(' ','-',$last_period_clusters[0][periode])).') :<ul>';
         for ($i=0;$i<count($last_period_clusters);$i++) {
             $cluster_Link_html.='<li><a href="'.$last_period_clusters[$i][attribut].'">
                 <font color=blue>'.str_replace('---','/',remove_popo($last_period_clusters[$i][label])).'</font></a></li>';
@@ -170,7 +170,7 @@ $imagestar=imagestar($id_partition);
     }else {
          $cluster_Link_html='Le champ le plus récent de ce fil thématique est '.
          '<a href="'.$last_period_clusters[0][attribut].'">
-                <font color=blue>'.str_replace('---','/',remove_popo($last_period_clusters[0][label])).'</font></a>';
+                <font color=blue>'.str_replace('---','/',remove_popo($last_period_clusters[0][label])).'</font></a> (période '.get_string_periode(str_replace(' ','-',$last_period_clusters[0][periode])).')';
     }
     $fils_thematique_html='<a href scr=# id="openerfilThematique'.$id_partition.'">
             <font color='.$color_link.'>'.substr(remove_popo($partition_infos[label]),0,-1).'</font></a>';
