@@ -7,7 +7,7 @@ if ($nopred) $back_avant='background-color:'.$backdarker.';';
 echo '<td width=22% class=tableitems style="font-variant:small-caps; size:xxx-small; font-style:italic;">';
 if ($nopred&&($partition_infos[nb_period_covered]>1)){
     echo '<div align=center class="ui-widget-last" style="font-style:normal;">
-<b>Caractéristiques du champ thématique</b>
+<b>Caractéristiques du fil thématique</b>
 <ul>
 <li type=circle>Popularité maximale '.$linkstar.'<br/><span style="font-size: x-small;" >('.get_short_string_periode(str_replace(' ', '-',$partition_infos['periodWithMaxScore'])).')</span> '.
 '<li type=circle>Extention : du <span style="font-size: x-small;" >'.get_date_since($partition_infos['first_period']).'</span> au <span style="font-size: x-small;" >'.get_date_since($partition_infos['last_period']).'</span>'.
@@ -50,7 +50,7 @@ global $partition_infos;
 if ($nosucc) $back_apres='background-color:'.$backdarker.';';
 echo '<td width=22% class=tableitems style="font-variant:small-caps; size:xxx-small; font-style:italic">';
 if ($nosucc&&($partition_infos[nb_period_covered]>1)) echo '<div align=center  class="ui-widget-last"  style="font-style:normal;">
-<b>Caractéristiques du champ thématique</b>
+<b>Caractéristiques du fil thématique</b>
 <ul>
 <li type=circle>Popularité maximale '.$linkstar.'<br/><span style="font-size: x-small;" >('.get_short_string_periode(str_replace(' ', '-',$partition_infos['periodWithMaxScore'])).')</span> '.
 '<li type=circle>Extention : du <span style="font-size: x-small;" >'.get_date_since($partition_infos['first_period']).'</span> au <span style="font-size: x-small;" >'.get_date_since($partition_infos['last_period']).'</span>'.
