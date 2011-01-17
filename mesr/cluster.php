@@ -623,10 +623,7 @@ if ($nav=="socsem"){
 	$maxdata=0;
 	foreach($list_of_concepts as $idconcept)
 	{
-		//echo '<br>';
-	
 		$id_concept = intval( $idconcept);
-		//echo '<br>'.'concept '.$id_concept.' ["'.$dico_termes[$id_concept].']"<br>';
 		$sql = 'SELECT COUNT(*), Reponse.jours FROM(SELECT id_b,jours FROM socsem WHERE concept='.$id_concept.' and jours>= '.$dated.' GROUP by id_b) Reponse GROUP by jours';
 		$resultat=mysql_query($sql);
 		$data[$j]=array();
@@ -636,15 +633,9 @@ if ($nav=="socsem"){
 				$tmpval=intval($ligne[0]);
 				$data[$j][intval($ligne[1])]=$tmpval;//echo "jour:".$ligne[1].' nb de billets= '.$ligne[0].'<br>';
 				if ($tmpval>$maxdata) $maxdata=$tmpval;
-			}
-		
-		//print_r($data);
+			}		
 		$j=$j+1;
 	}
-	//print_r($data);
-	//print_r($datalabels);
-	//echo '<p>';
-	//echo '<p>';
 	$maxdata*=1.05;
 	include('include/cluster_punch.php');
 	echo $ggraph;
