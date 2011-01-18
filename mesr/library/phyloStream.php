@@ -79,6 +79,7 @@ mysql_query($query);
         echo '<br/>'.$sql.'<br/>';
         mysql_query($sql) or die("<bInserts non effectués)</b>.");
 
+
         echo ' Calcul des score pour les autres branches<br/>';
         $query="select * FROM partitions WHERE nb_period_covered >=2 AND nb_period_covered<".$phylo_min_nb_periods_covered;
         batchPartitionScore($query,$first_period,$last_period,$dT,$time_steps);
