@@ -11,7 +11,7 @@ mysql_connect( $server,$user,$password);if ($encodage=="utf-8") mysql_query("SET
 if ($user!="root") mysql_query("SET NAMES utf8;");
 
 
-$gexfPath=substr($hrefrootroot,1,strrpos($hrefrootroot,'/')).'data/';
+$gexfPath=substr($hrefrootroot,1,strrpos($hrefrootroot,'/')).'/tinaweb';
 echo 'Gexf exporté dans:'.$gexfPath;
 echo '</br>';
 $gexfFileName='current.gexf';

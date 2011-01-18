@@ -5,14 +5,9 @@ include("phyloheader.php");
 
 /// on récupère pour chaque catégorie les données similapré-calculées pour les streamgraph
 
-//// Branches en suspens
-$cle='branches_suspens_'.$phylo_min_nb_periods_covered;
-$json_dataSuspens=getValue($cle);
-//////////
-include('include/streamgraphSuspens.php');
+
 echo $myaboveSuspens;
-$phyloquery="select * FROM partitions WHERE nb_period_covered >= $phylo_min_nb_periods_covered
-AND last_period<".($last_period-2*$dT);
+$phyloquery="select * FROM partitions WHERE nb_period_covered >= 3";
 $phyloresultat=mysql_query($phyloquery) or die ("<b>Requête non exécutée (récupération des principales thématiques)</b>.");
 
 
@@ -30,17 +25,18 @@ echo "</h2></tr>
 </table >
 		<li><a href='phylo.php?selectedTab=1'>Actifs</a></li>
 		<li><a href='phyloTab2.php?selectedTab=2'>Potentiellement émergents </a></li>
-		<li><a href='#tabs-3'>En Suspens</a></li>
+		<li><a href='phyloTab3.php?selectedTab=3'>En Suspens</a></li>
+                <li><a href='#tabs-4'>Tous</a></li>
 	</ul>
 	<div id='tabs-1'>
 	</div>
 	<div id='tabs-2'>
 	</div>
-	<div id='tabs-3'>";
+        <div id='tabs-3'>
+	</div>
+	<div id='tabs-4'>";
 		$branch_list=branch_list_string($phyloresultat,$depth,$min_similarity);
-        echo "<h3>Fils thématiques passés <span style='font-size: x-small;'> (couvrant au moins 4 périodes)</span></h3>";
-        echo $myscriptSuspens;	
-        echo '<br/>';
+        echo "<h3>Tous champs thématiques <span style='font-size: x-small;'> (couvrant au moins 3 périodes)</span></h3>";
         echo $branch_list;
 
 echo "       	</div>
