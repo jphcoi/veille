@@ -36,7 +36,7 @@ echo "</h2></tr>
 	<div id='tabs-1'>
 	</div>
 	<div id='tabs-2'>";
-            $branch_list=branch_list_string($phyloresultat,$depth,$min_similarity);
+            $branch_list=branch_list_string($phyloresultat,$depth,$min_similarity,'grouplist');
             echo "<h3>Thématiques potentiellement émergentes <span style='font-size: x-small;'> (couvrant au plus 3 périodes)</span></h3>";
             echo $myscriptEmergentes;
             echo '<br/>';
