@@ -53,6 +53,7 @@ echo '<form id="reservation">
 		<option value=50>maximal (&ge;50%)</option>
 	</select>&nbsp;
 	</form>';
+
 echo '</td>';
 echo '<td width=100px><div id="slider"></div>';
 echo '</td>';
