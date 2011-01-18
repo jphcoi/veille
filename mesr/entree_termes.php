@@ -179,7 +179,15 @@ echo '<td width=2.5%></td></tr></table>';
 echo '<p>';
 
 echo '<table width=100% class=tableitems>';
-echo '<tr valign=top><td width=2.5%></td><td width='.$widthcolumn.'%>';
+echo '<tr valign=top><td width=2.5%></td>';
+
+echo '<td width=95%>';
+
+$jscriptmp.="$('.bigscrollPane').scrollbar;";
+echo '<div class="bigscrollPane">';
+echo '<table width=100% class=tableitems><tr>';
+
+echo '<td width='.$widthcolumn.'%>';
 
 if ($my_period!=-1) {
 	if ($clause_fils_pere=='') 
@@ -235,6 +243,10 @@ for($i=1;$i<=$ncolumns;$i++){
 	}
 	echo "</td><td width=3%></td><td width=".$widthcolumn."%>";
 	}
+echo '</td>';
+echo '</tr></table>';
+echo '</div>';
+	
 echo "</td><td width=2.5%></td></tr></table>";
 
 echo '<table width=100% class=tableitems><tr valign=top><td width=2.5%></td><td width=97.5%><hr width=95% align=left><div style="font-variant:small-caps;">total: '.count($liste_termes_brute).' termes.</div></td><td width=2.5%></td></tr>';
