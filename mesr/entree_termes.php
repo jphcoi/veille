@@ -61,8 +61,6 @@ echo "<style>
 //*******************************************
 //bloc choix du terme
 //*******************************************
-
-$liste_termes_autocomplete='['; // liste pour l'autocomplete
 $vraidicotermesjs=array(); //vrai dico.
 $resultat=mysql_query("select id,forme_principale FROM concepts ORDER by forme_principale") or die ("Requête non executée.");
 while ($ligne=mysql_fetch_array($resultat)){
@@ -75,16 +73,11 @@ while ($ligne=mysql_fetch_array($resultat)){
 	if ($my_period==-1) $add_concept_now=1;
 	if ($add_concept_now) {
 		$liste_termes_brute[] = $terme;
-        $liste_termes_autocomplete.='"'.$terme.'",';
 		$id_termes_brute[] = $id;
         $vraidicotermesjs[$terme]=$id;
 		}
 	$dico_termes[$id]=$terme;
 }
-$liste_termes_autocomplete=substr($liste_termes_autocomplete,0,-1);
-$liste_termes_autocomplete.=']';
-
-
 
 
 $liste_termes=array();
@@ -170,21 +163,31 @@ echo "</tr></table>";
 if ($list_of_periods[count($list_of_periods)-1]==$my_period) $clause_fils_pere = '';
 else {
 	$clause_fils_pere = 'nb_sons+nb_fathers>='.$orphan_filter;
-	echo '
-		<table class=commentitems width=100%><tr><td width=2.5%></td>';
-        echo '<td><td class="ui-widget" float=right>
-	<label for="terms" style="font-variant:small-caps; font-weight:bold;">rechercher: </label>
-	<input id="terms" /></td></td>';
-        echo '<td><b style="font-variant:small-caps;">accès direct aux termes commençant par&nbsp;:</b> '.$initiales.'<br>
-		<i>(nb: les termes grisés ne sont associés à aucun champ thématique)</i>
-		</td>';
- 
-
-        echo '<td width=2.5%></td></tr></table>';
 	}
 
-echo '<p><table width=100% class=tableitems>';
-echo '<tr valign=top><td width=2.5%></td><td width='.$widthcolumn.'%>';
+echo '
+	<table class=commentitems width=100%><tr><td width=2.5%></td>';
+echo '<td class="ui-widget" float=right align=left>
+	<label for="terms" style="font-variant:small-caps; font-weight:bold;">rechercher: </label>
+	<input id="terms" /></td>';
+
+echo '<td align=left><b style="font-variant:small-caps;">accès direct aux termes commençant par&nbsp;:</b><br> '.$initiales.'<br>
+		<i>(nb: les termes grisés ne sont associés à aucun champ thématique)</i>
+		</td>';
+echo '<td width=2.5%></td></tr></table>';
+
+echo '<p>';
+
+echo '<table width=100% class=tableitems>';
+echo '<tr valign=top><td width=2.5%></td>';
+
+echo '<td width=95%>';
+
+$jscriptmp.="$('.bigscrollPane').scrollbar;";
+echo '<div class="bigscrollPane">';
+echo '<table width=100% class=tableitems><tr>';
+
+echo '<td width='.$widthcolumn.'%>';
 
 if ($my_period!=-1) {
 	if ($clause_fils_pere=='') 
@@ -240,6 +243,10 @@ for($i=1;$i<=$ncolumns;$i++){
 	}
 	echo "</td><td width=3%></td><td width=".$widthcolumn."%>";
 	}
+echo '</td>';
+echo '</tr></table>';
+echo '</div>';
+	
 echo "</td><td width=2.5%></td></tr></table>";
 
 echo '<table width=100% class=tableitems><tr valign=top><td width=2.5%></td><td width=97.5%><hr width=95% align=left><div style="font-variant:small-caps;">total: '.count($liste_termes_brute).' termes.</div></td><td width=2.5%></td></tr>';
@@ -259,10 +266,8 @@ $myvar=str_replace(',]','
 		
 if ($my_period!=-1) $myjsperiod='+"&periode='.$my_period.'"'; else $myjsperiod='';
 
-echo '
-	<script>
-	$(function() {
-		'.$myvar.';
+$jscriptmp.='
+	'.$myvar.';
 		$( "#terms" ).autocomplete({
 			minLength: 0,
 			source: projects,
@@ -274,9 +279,10 @@ echo '
 				location.href="chart.php?id_concept="+ui.item.value'.$myjsperiod.';
 				return false;
 				}
-			});
-	});
-	</script>';
+			});';
+
+echo '
+	<script> $(function() { '.$jscriptmp.' });</script>';
 
 
 //on ferme l'acces à la base de donnees

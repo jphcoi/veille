@@ -182,9 +182,10 @@ while (count($order)>0){
     echo '<li>'.$authors[$index].'<br/>';
     echo '</ul>';
 }
-echo "<h3>Briques logiciel</h3>
+echo "<h3>Briques logicielles</h3>
 En dehors des développements faits par les auteurs, cette plateforme intègre :
 <ul> 
+<li><a href='http://jquery.com/' target='blank'><font color=".$color.">JQuery</font></a><br/>
 <li><a href='http://vis.stanford.edu/protovis/' target='blank'><font color=".$color.">Protovis</font></a><br/>
 <li><a href='http://ofnodesandedges.com/toolbox/gexfwalker/' target='blank'><font color=".$color.">Gexfwalker</font></a><br/>
 <li><a href='http://raphaeljs.com/'><font color=".$color." target='blank'>Raphaël—JavaScript Library</font></a><br/>
