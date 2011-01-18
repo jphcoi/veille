@@ -185,7 +185,7 @@ while (count($order)>0){
 
 echo "<h3>Briques logiciel</h3>
 En dehors des développements faits par les auteurs, cette plateforme intègre :
-<ul>
+<ul> 
 <li><a href='http://vis.stanford.edu/protovis/'><font color=".$color.">Protovis</font></a><br/>
 <li><a href='http://ofnodesandedges.com/toolbox/gexfwalker/'><font color=".$color.">Gexfwalker</font></a><br/>
 <li><a href='http://raphaeljs.com/'><font color=".$color.">Raphaël—JavaScript Library</font></a><br/>
