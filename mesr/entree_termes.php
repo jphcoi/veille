@@ -170,18 +170,18 @@ echo "</tr></table>";
 if ($list_of_periods[count($list_of_periods)-1]==$my_period) $clause_fils_pere = '';
 else {
 	$clause_fils_pere = 'nb_sons+nb_fathers>='.$orphan_filter;
-	echo '
-		<table class=commentitems width=100%><tr><td width=2.5%></td>';
-        echo '<td><td class="ui-widget" float=right>
+	}
+
+echo '
+	<table class=commentitems width=100%><tr><td width=2.5%></td>';
+echo '<td><td class="ui-widget" float=right>
 	<label for="terms" style="font-variant:small-caps; font-weight:bold;">rechercher: </label>
 	<input id="terms" /></td></td>';
-        echo '<td><b style="font-variant:small-caps;">accès direct aux termes commençant par&nbsp;:</b> '.$initiales.'<br>
+
+echo '<td><b style="font-variant:small-caps;">accès direct aux termes commençant par&nbsp;:</b> '.$initiales.'<br>
 		<i>(nb: les termes grisés ne sont associés à aucun champ thématique)</i>
 		</td>';
- 
-
-        echo '<td width=2.5%></td></tr></table>';
-	}
+echo '<td width=2.5%></td></tr></table>';
 
 echo '<p><table width=100% class=tableitems>';
 echo '<tr valign=top><td width=2.5%></td><td width='.$widthcolumn.'%>';
