@@ -1191,13 +1191,17 @@ function display_billets_plus($info_sources,$list_of_concepts,$my_period,$type_n
 		
 	foreach(array_keys($info_sources) as $key)
 	{
-		$max_pert=10;
+		
+		$max_pert=.10;
 		for ($i=0;$i<count($info_sources[$key]['titres']);$i++){
 			$pertmp=$info_sources[$key]['pertinences'][$i];
-			if ($pertmp>$max_pert) $pertmp=$max_pert;
+			if ($pertmp>$max_pert) $max_pert=$pertmp;
 			}
-		$sourcetagid=id_maker($pertmp);
+		
+		$sourcetagid=id_maker($max_pert);
 		$sourcetagidtext='value="pert'.$sourcetagid.'"';
+
+		//print_r($info_sources[$key]['pertinences']); echo $max_pert.'<br>'.$sourcetagidtext.'<br>';
 		
 		echo '<table width=100% id=tab"'.$info_sources[$key]['idauteur'].'" '.$sourcetagidtext.' cellspacing=0 cellpadding=0 style="display:none;">';
 		//>';

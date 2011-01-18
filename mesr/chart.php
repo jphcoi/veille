@@ -94,7 +94,12 @@ echo '</h2></td><td width=2.5%></td></tr></table>';
 if ($nav=="thema")
 {
 //bloc recuperation infos cluster
-$resultat=mysql_query("SELECT * from cluster WHERE concept='".$id_concept."' ORDER by periode,label_1,label_2,id_cluster") or die ("Requête non exécutée.");
+
+if ($list_of_periods[count($list_of_periods)-1]==$periode)
+$clause_fils_pere = '';
+else
+$clause_fils_pere = 'AND nb_sons+nb_fathers>='.$orphan_filter;
+$resultat=mysql_query("SELECT * from cluster WHERE concept=".$id_concept." ".$clause_fils_pere.' ORDER by periode,label_1,label_2,id_cluster') or die ("Requête non exécutée.");
 $check1 = mysql_num_rows($resultat);
 
 
@@ -132,7 +137,8 @@ $clause_fils_pere = 'AND nb_sons+nb_fathers>='.$orphan_filter;
 
 
 // on relance la requete SQL maintenant que l'on s'est débarrasser des champs sans successeur (if any)
-$resultat=mysql_query("SELECT * from cluster WHERE concept='".$id_concept."' ".$clause_fils_pere.' ORDER by periode,label_1,label_2,id_cluster') or die ("Requête non exécutée.");
+//$resultat=mysql_query("SELECT * from cluster WHERE concept='".$id_concept."' ".$clause_fils_pere.' ORDER by periode,label_1,label_2,id_cluster') or die ("Requête non exécutée.");
+mysql_data_seek  ( $resultat  , 0  );
 $check1 = mysql_num_rows($resultat);
 
 $cluster=array();
