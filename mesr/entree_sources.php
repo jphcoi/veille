@@ -175,7 +175,7 @@ $jscriptmp.='
 				return false;
 				},
 			select: function(event, ui) {
-				location.href="chart.php?id_concept="+ui.item.value'.$myjsperiod.';
+				location.href="source.php?id_source="+ui.item.value'.$myjsperiod.';
 				return false;
 				}
 			});';
