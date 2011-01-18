@@ -181,8 +181,6 @@ while (count($order)>0){
     echo '<li>'.$authors[$index].'<br/>';
     echo '</ul>';
 }
-
-
 echo "<h3>Briques logiciel</h3>
 En dehors des développements faits par les auteurs, cette plateforme intègre :
 <ul> 
@@ -190,13 +188,8 @@ En dehors des développements faits par les auteurs, cette plateforme intègre :
 <li><a href='http://ofnodesandedges.com/toolbox/gexfwalker/'><font color=".$color.">Gexfwalker</font></a><br/>
 <li><a href='http://raphaeljs.com/'><font color=".$color.">Raphaël—JavaScript Library</font></a><br/>
 </ul>
-
-
-";
-
-echo "</div>
+</div>
 </div>";
-
 
 echo '
 	<script> $(function() { '.$jscriptmp.' });</script>';
