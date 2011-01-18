@@ -34,7 +34,7 @@ mysql_query($query) or die ("<b>Requête non exécutée (creation de la table pa
 echo 'computing partitions <br/>';
 $resultat=mysql_query("select id_cluster_univ FROM cluster GROUP by id_cluster_univ") or die ("<b>Requête non exécutée (récupération de la liste des clusters)</b>.");
 
-$depth=2; // labellise les branches avec leur 5 termes les plus fréquents
+$depth=2; // labellise les branches avec leur  termes les plus fréquents
 
 //variables
 $nbPartition=0; // nombre de partitions
@@ -116,7 +116,7 @@ while (count($current_partition)>0){
    $macrobranch['nb_terms']=count($macrobranch_terms);
    $macrobranch['terms']=implode("_", array_keys($macrobranch_terms));
    $macrobranch['terms_occ']=implode("_", $macrobranch_terms);
-   if ($macrobranch['nb_fields']<3){
+   if ($macrobranch['nb_period_covered']<3){
    $label_infos=macrobranch_label($macrobranch_terms,1);
     }else{
     $label_infos=macrobranch_label($macrobranch_terms,$depth);

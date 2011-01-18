@@ -178,7 +178,7 @@ while (count($label_rows_remaining_to_process)>0){
                 };
                 $j++;
             }else {
-                $min_similarity=2;
+                $min_similarity=1;
                 $p=similarity(remove_popo($target_branches[$j][label]),$candidateLabel);
             if ($p>$min_similarity){
                 $exit_here=1;
