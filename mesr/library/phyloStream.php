@@ -50,10 +50,6 @@ UNIQUE KEY `cle` (`cle`)
 ";
 mysql_query($query);
 
-        echo ' Calcul des score pour les autres branches<br/>';
-        $query="select * FROM partitions WHERE nb_period_covered >=2 AND nb_period_covered<".$phylo_min_nb_periods_covered;
-        batchPartitionScore($query,$first_period,$last_period,$dT,$time_steps);
-
 
         echo ' Calcul des branches actives<br/>';
         $query="select * FROM partitions WHERE nb_period_covered >=".$phylo_min_nb_periods_covered.
@@ -82,6 +78,10 @@ mysql_query($query);
         $sql="INSERT INTO data (cle,valeur) VALUES ('".$cle."','$json_data') ON DUPLICATE KEY UPDATE cle='".$cle."',valeur='$json_data';";
         echo '<br/>'.$sql.'<br/>';
         mysql_query($sql) or die("<bInserts non effectués)</b>.");
+
+        echo ' Calcul des score pour les autres branches<br/>';
+        $query="select * FROM partitions WHERE nb_period_covered >=2 AND nb_period_covered<".$phylo_min_nb_periods_covered;
+        batchPartitionScore($query,$first_period,$last_period,$dT,$time_steps);
 
 
 
