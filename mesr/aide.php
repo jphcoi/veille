@@ -163,9 +163,9 @@ echo "</td><td width=2.5%></td></tr></table>
 <div id='tabs-4'>";
 $authors=array();
 $color='DarkGreen';
-$authors[]="<a href='http://camille.roth.free.fr'><font color=".$color.">Camille Roth</font></a>, Chargé de recherche au CNRS, CAMS/EHESS, ISC-PIF";
-$authors[]="<a href='http://jph.cointet.free.fr'><font color=".$color.">Jean-Philippe Cointet</font></a>, INRA SenS, IFRIS, CorText, ISC-PIF ";
-$authors[]="<a href='http://chavalarias.com'><font color=".$color.">David Chavalarias</font></a>, Chargé de Recherche au CNRS, CREA, ISC-PIF";
+$authors[]="<a href='http://camille.roth.free.fr' target='blank'><font color=".$color.">Camille Roth</font></a>, Chargé de recherche au CNRS, CAMS/EHESS, ISC-PIF";
+$authors[]="<a href='http://jph.cointet.free.fr' target='blank'><font color=".$color.">Jean-Philippe Cointet</font></a>, INRA SenS, IFRIS, CorText, ISC-PIF ";
+$authors[]="<a href='http://chavalarias.com' target='blank'><font color=".$color.">David Chavalarias</font></a>, Chargé de Recherche au CNRS, CREA, ISC-PIF";
 
 
 
@@ -185,9 +185,9 @@ while (count($order)>0){
 echo "<h3>Briques logiciel</h3>
 En dehors des développements faits par les auteurs, cette plateforme intègre :
 <ul> 
-<li><a href='http://vis.stanford.edu/protovis/'><font color=".$color.">Protovis</font></a><br/>
-<li><a href='http://ofnodesandedges.com/toolbox/gexfwalker/'><font color=".$color.">Gexfwalker</font></a><br/>
-<li><a href='http://raphaeljs.com/'><font color=".$color.">Raphaël—JavaScript Library</font></a><br/>
+<li><a href='http://vis.stanford.edu/protovis/' target='blank'><font color=".$color.">Protovis</font></a><br/>
+<li><a href='http://ofnodesandedges.com/toolbox/gexfwalker/' target='blank'><font color=".$color.">Gexfwalker</font></a><br/>
+<li><a href='http://raphaeljs.com/'><font color=".$color." target='blank'>Raphaël—JavaScript Library</font></a><br/>
 </ul>
 </div>
 </div>";
