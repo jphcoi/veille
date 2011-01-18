@@ -133,27 +133,28 @@ echo "<tr valign=top><td width=2.5%></td><td style=\"font-size:small;\">";
 echo "
 <h3>Exploration à l'aide des fils thématiques</h3>
 <p>Contrairement aux explorations s'appuyant sur des termes choisis <i>a priori</i>
-ayant pour entrée le niveau 'micro', les entrées par les niveaux <a href=aide.php?selectedTab=2><font color=blue>'meso' et 'macro'</font></a> permettent
+ayant pour entrée le niveau 'micro', les entrées par les niveaux
+<a href=aide.php?selectedTab=2><font color=blue>'meso' et 'macro'</font></a> permettent
 de sélectionner des sujets à partir de leur profil d'évolution et donc de suggérer des
 parcours et des sujets à étudier. Les fils thématiques ont des scores, représentés par des étoiles
 qui indiquent de degré d'attention maximal que la blogosphère leur a accordé.
 </p>
-<p>La liste des fils thématiques permet d'accéder aux champ thématiques.
+<p>La <a href='phylo.php'><font color=blue>liste des fils thématiques</font></a> permet d'accéder aux champ thématiques.
 <ul>
 <li type=circle>Un clic sur le score d'un fil thématique permet de se rendre directement à la période où
 celui-ci a suscité le plus d'activité,
-<li type=circle> Un clic sur le nom d'un fil thématique permet de se rendre
-sur son champ thématique le plus récent.
-</ul></p>
+</ul>
 <center><img src='images/FTlink.jpg' border=1></a><br/></center>
+<ul><li type=circle> Un clic sur le nom d'un fil thématique vous donne des informations sur le fil thématique
+et vous propose des liens vers des périodes remarquable de de fil thématique.
+</ul>
+<center><img src='images/FTpopup.jpg'  border=1></a><br/></center>
+</p>
 
 <p>Lors du parcours des champ thématiques, le nom du fil thématique auquel celui-ci est rattaché
- est rappelé en dessous du nom de celui-ci. </p>
-<center><img src='images/FT.jpg'  border=1></a><br/></center>
+ est rappelé en dessous du nom de celui-ci et est également cliquable pour obtenir des informations. </p>
 
-<p>Dans cette vue, un clic sur le nom d'un fil thématique vous donne des informations sur le fil thématique
-et vous propose des liens vers des périodes remarquable de de fil thématique.
-<center><img src='images/FTpopup.jpg'  border=1></a><br/></center>
+<center><img src='images/FT.jpg'  border=1></a><br/></center>
 
 ";
 echo "</td><td width=2.5%></td></tr></table>
