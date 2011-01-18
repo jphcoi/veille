@@ -11,7 +11,7 @@ echo 'taille maximum des branches émergentes :'.$phylo_recent_min_nb_periods_co
 //connexion a la base de donnees
 
 include("../parametre.php");
-mysql_connect( $server,$user,$password);if ($encodage=="utf-8") mysql_query("SET NAMES utf8;");
+$ink=mysql_connect( $server,$user,$password);if ($encodage=="utf-8") mysql_query("SET NAMES utf8;");
 @mysql_select_db($database) or die( "Unable to select database");
 //à préciser lorsqu'on est sur sciencemapping.com
 if ($user!="root") mysql_query("SET NAMES utf8;");
@@ -178,13 +178,14 @@ return $JSON_string;
 
 function batchPartitionScore($query,$first_period,$last_period,$dT,$time_steps) {
 // calcul les scores pour un ensemble de données de partition d'une requête sur la table partition
+    echo 'calul des score sur petites branches<br/>';
+    echo $query.'<br/>';
     $resultat=mysql_query($query) or die ("<b>Requête non exécutée (récupération des principales thématiques)</b>.");
     while ($partition_resultat=mysql_fetch_array($resultat)) {
         //infos sur la partition
         $id_partition=$partition_resultat[id_partition];
         $partition_label=$partition_resultat[label];
         partitionScore($id_partition,$first_period,$last_period,$dT,$time_steps);
-        return '';
     }
 }
 
@@ -205,16 +206,16 @@ $penetration_thematique=0.4;//overlap_size/cluster_size
 
 for ($i=$first_period;$i<=$last_period;$i+=$time_steps) {
     $period_string=($i-$dT).' '.$i;
-    echo $period_string.'<br/>';
+    //echo $period_string.'<br/>';
     $period_score=0;
     $sql="SELECT id_cluster,periode FROM cluster WHERE pseudo=$id_partition AND periode='".$period_string."' GROUP BY id_cluster";
-    echo '<br/>'.$sql;
+    //echo '<br/>'.$sql;
     $resultat=mysql_query($sql) or die ("<b>Requête non exécutée (récupération des clusters d'une période pour une partition)</b>.");
-    echo $sql.'<br/>';
+    //echo $sql.'<br/>';
     $count=0;
     while ($ligne=mysql_fetch_array($resultat)) {
         $commande_sql_pert = "SELECT id_billet,id_auteur,overlap_size,billet_size,cluster_size from biparti where cluster = '".$ligne[id_cluster]."' AND periode = '".$ligne[periode]."' AND overlap_size/cluster_size/log10(10+billet_size-overlap_size)>=".$seuil_pertinence." and overlap_size/cluster_size>".$penetration_thematique;
-        echo $commande_sql_pert.'<br/>';
+        //echo $commande_sql_pert.'<br/>';
         $billet_list=mysql_query($commande_sql_pert) or die ("<b>Requête non exécutée (récupération des billets associés à un cluster)</b>.");
         $auteur_score=array(); //
         while ($billet=mysql_fetch_array($billet_list)) {
@@ -231,14 +232,16 @@ for ($i=$first_period;$i<=$last_period;$i+=$time_steps) {
         }
         $period_score+=array_sum($auteur_score)/10;
     }
-    echo $count.' billets<br/>';
-    echo ' ------------------------<br/>';
+    //echo $count.' billets<br/>';
+    //echo ' ------------------------<br/>';
     $JSON_string.=round($period_score,4).', ';
     if ($partitionScore<$period_score){
         $partitionScore=$period_score;
         $periodWithMaxScore=$period_string;
     }
 }
+echo 'partition '.$id_partition.'with score'.$partitionScore.'at '.$periodWithMaxScore.'<br/>';
+    //echo ' ------------------------<br/>';
 
 $sqlScore="INSERT INTO partitions (id_partition,score,periodWithMaxScore) VALUES ('".$id_partition."','".$partitionScore."','".$periodWithMaxScore."') ON DUPLICATE KEY UPDATE id_partition='".$id_partition."',
 score='".$partitionScore."', periodWithMaxScore='".$periodWithMaxScore."'";
