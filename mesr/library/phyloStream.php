@@ -83,8 +83,6 @@ mysql_query($query);
         echo '<br/>'.$sql.'<br/>';
         mysql_query($sql) or die("<bInserts non effectués)</b>.");
 
-
-
 ////////////////////////////////
 ///////Fonction locales /////////
 ////////////////////////////////
