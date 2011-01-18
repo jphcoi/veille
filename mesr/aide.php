@@ -42,11 +42,12 @@ echo "<div class='demo'>
 
 	<ul>
 <table width=100% class=tableitems>
-0<tr valign=top></td><td><h2 class=subtitle>".$titleheader."</h2></tr>
+<tr valign=top></td><td><h2 class=subtitle>".$titleheader."</h2></tr>
 </table >
 		<li><a href='#tabs-1'>À propos de cette plateforme</a></li>
 		<li><a href='#tabs-2'>Ontologie </a></li>
 		<li><a href='#tabs-3'>Navigation</a></li>
+		<li><a href='#tabs-4'>Crédits</a></li>
 	</ul>
 	<div id='tabs-1'>";
 
@@ -155,11 +156,48 @@ et vous propose des liens vers des périodes remarquable de de fil thématique.
 <center><img src='images/FTpopup.jpg'  border=1></a><br/></center>
 
 ";
-echo '</td><td width=2.5%></td></tr></table>
+echo "</td><td width=2.5%></td></tr></table>
 
 </div>
-</div>
-</div>';
+<div id='tabs-4'>";
+$authors=array();
+$color='DarkGreen';
+$authors[]="<a href='http://camille.roth.free.fr'><font color=".$color.">Camille Roth</font></a>, Chargé de recherche au CNRS, CAMS/EHESS, ISC-PIF";
+$authors[]="<a href='http://jph.cointet.free.fr'><font color=".$color.">Jean-Philippe Cointet</font></a>, INRA SenS, IFRIS, CorText, ISC-PIF ";
+$authors[]="<a href='http://chavalarias.com'><font color=".$color.">David Chavalarias</font></a>, Chargé de Recherche au CNRS, CREA, ISC-PIF";
+
+
+
+$random=array();
+$random[]=rand(1,100);
+$random[]=rand(1,100);
+$random[]=rand(1,100);
+uasort($random,'compare');
+$order=array_keys($random);
+echo '<h3>Auteurs</h3>';
+while (count($order)>0){
+    $index=array_pop($order);
+    echo '<ul>';
+    echo '<li>'.$authors[$index].'<br/>';
+    echo '</ul>';
+}
+
+
+echo "<h3>Briques logiciel</h3>
+En dehors des développements faits par les auteurs, cette plateforme intègre :
+<ul>
+<li><a href='http://vis.stanford.edu/protovis/'><font color=".$color.">Protovis</font></a><br/>
+<li><a href='http://ofnodesandedges.com/toolbox/gexfwalker/'><font color=".$color.">Gexfwalker</font></a><br/>
+<li><a href='http://raphaeljs.com/'><font color=".$color.">Raphaël—JavaScript Library</font></a><br/>
+</ul>
+
+
+";
+
+echo "</div>
+</div>";
+
+
 echo '
 	<script> $(function() { '.$jscriptmp.' });</script>';
 echo "<script>
