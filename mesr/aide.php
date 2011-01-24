@@ -92,7 +92,7 @@ sont des ensembles de termes qui décrivent le contexte d'une discussion. Ils so
 de contenus provenant <a href='aide.php?selectecTab=1'><font color=blue>des sources</font></a>.
 Cette recherche de contenu peut-être étendue
 à tous le web depuis la page de profil d'un champ thématique via l'icône Google <img src='images/googleGinv.png' width=18px>. La
-liste des champs thématiques est accéssible via le lien <a href='entree_clusters.php'><font color=blue>CHAMPS THEMATIQUES</font></a> dans le menu de navigation.
+liste des champs thématiques est accessible via le lien <a href='entree_clusters.php'><font color=blue>CHAMPS THEMATIQUES</font></a> dans le menu de navigation.
 <li> <b>Les cartes</b> (niveau <i>'macro'</i>) montrent l'articulation des champs thématiques à une période donnée, la proximité des problématiques abordées. Elles sont
 accessibles via le lien <a href='global.php'><font color=blue>CARTES</font></a> dans le menu de navigation.
 <li> <b>Les fils thématiques</b> (niveau <i>'macro-temporel'</i>) permettent d'appréhender le déroulement temporel
@@ -114,7 +114,7 @@ intégrés au sein de fils thématiques qui permettent de suivre
 leurs evolutions et leurs mutations.
 Au sein d'un fil thématique, un champ thématique peut provenir d'une évolution
 linéaire ou être le fruit de la rencontre de plusieurs
-thématiques antérieures. Il peut également donner naisssance à une ou plusieurs champs thématiques
+thématiques antérieures. Il peut également donner naissance à une ou plusieurs champs thématiques
 sur les périodes ultérieures. L'ensemble des
 fils thématiques peut-être <a href='phylo.php'><font color=blue>visualisé de manière interactive</font></a> comme ci-dessous.</span>
 </p><p>

@@ -30,7 +30,7 @@ include("banner.php");
 
 echo '<table width=100% class=tableitems>';
 echo '<tr valign=top><td width=2.5%></td><td>';
-echo '<h2 class=subtitle>exploration de la source "<i>'.$source[0].'</i>"';
+echo '<h2 class=subtitle>exploration de la source "<i><href src=http://'.$source[0].' target="blank">'.$source[0].'</a></i>"';
 echo '</h2>';
 echo '</td><td width=2.5%></td></tr></table>';
 
