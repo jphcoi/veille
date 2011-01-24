@@ -10,7 +10,7 @@ if ($user!="root") mysql_query("SET NAMES utf8;");
 $titleheader="liste des sources";
 include("include/header.php");
 include("banner.php");
-
+$jscriptmp='';
 
 //$resultat=mysql_query("select id,auteurs FROM auteurs ORDER by auteurs") or die ("Requête non executée.");
 
@@ -46,6 +46,7 @@ while ($billes=mysql_fetch_array($liste_cluster_billet)){
 mysql_close();
 $liste_termes=array();
 $id_termes=array();
+$vraidicotermesjs=array(); //dico pour l'autocomplete
 $initiale="";
 $initiales='';
 for($i=0;$i<count($liste_termes_brute);$i++){
@@ -78,33 +79,110 @@ for($i=1;$i<$ncolumns;$i++){
 $columns[$ncolumns]=array($increment,$count-1);
 $flipped_haystack = array_flip($liste_source_cluster); 
 //pour eviter ça ://in_array($id,$liste_source_cluster)
-echo '<p><table width=100% class=tableitems>';
-echo '<tr valign=top><td width=2.5%></td><td><h2 class=subtitle>liste complète des sources</h2></td><td width=2.5%></td></tr></table>';
+echo '<p>';
 echo '<table width=100% class=tableitems>';
-echo '<tr><td width=2.5%></td><td width=95%>';
-echo '<b style="font-variant:small-caps;">accès direct aux sources dont le nom commence par&nbsp;:&nbsp;</b> <span style="font-size:x-small;">'.$initiales.'</span><br>';
-echo '</td><td width=2.5%></td></tr></table>';
-echo '<p><table width=100% class=tableitems>';
-echo '<tr valign=top><td width=2.5%></td><td width='.$widthcolumn.'%>';
-//print_r($liste_source_cluster);
+echo '<tr valign=top><td width=2.5%></td><td><h2 class=subtitle>liste complète des sources</h2></td><td width=2.5%></td></tr>';
+echo '</table>';
 
-//print_r($id_termes)
- for($i=1;$i<=$ncolumns;$i++){
- 	for($j=$columns[$i][0];$j<=$columns[$i][1];$j++){
- 		$id=$id_termes[$j];
- 		if ($id>-1) {if (isset($flipped_haystack[$id])) {echo('<a href=source.php?id_source='.$id.'&periode=-1>');}else{ echo('<a style="color:#333333;" href=source.php?id_source='.$id.'&periode=-1>');}  		echo($liste_termes[$j]);  echo('</a>');}
- 		else
-			{echo($liste_termes[$j]);}
- 		echo("<br>");
-}		
+echo '<table width=100% class=commentitems>';
+echo '<tr><td width=2.5%></td>';
+echo '
+	<td class="ui-widget" float=right>
+	<label for="terms" style="font-variant:small-caps; font-weight:bold;">rechercher: </label>
+	<input id="terms" /></td>';
+echo '<td>';
+echo '<b style="font-variant:small-caps;font-size:x-small;">accès direct aux sources dont le nom commence par&nbsp;:&nbsp;</b><br> '.$initiales.'<br>';
+echo '</td><td width=2.5%></td></tr>';
+echo '</table>';
 
- 	echo "</td><td width=3%></td><td width=".$widthcolumn."%>";
- 	}
- echo "</td><td width=2.5%></td></tr></table>";
+echo '<p>';
+
+$jscriptmp.="$('.bigscrollPane').scrollbar;";
+
+echo '<table width=100%>';
+echo '<tr valign=top>';
+echo '<td width=2.5%></td>';
+
+echo '<td width=95%>';
+	
+	echo '<div class="bigscrollPane">';
+	echo '<table width=100% class=tableitems>';
+	echo '<tr valign=top>';
+	echo '<td width='.$widthcolumn.'%>';
+
+	for($i=1;$i<=$ncolumns;$i++){
+ 		for($j=$columns[$i][0];$j<=$columns[$i][1];$j++){
+ 			$id=$id_termes[$j];
+ 			$terme=$liste_termes[$j];
+	 		if ($id>-1) 
+	 			{
+	 				if (isset($flipped_haystack[$id])) 
+	 					{
+	 						echo('<a href=source.php?id_source='.$id.'&periode=-1>');
+	 					}
+	 				else
+	 					{ 
+	 						echo('<a style="color:#333333;" href=source.php?id_source='.$id.'&periode=-1>');
+	 					}  
+	 				echo($terme);
+	 				$vraidicotermesjs[$terme]=$id;
+	 				echo('</a>');
+	 			}
+ 			else
+				{
+					echo($terme);
+				}
+	 		echo("<br>");
+		}		
+	 	echo "</td><td width=3%></td><td width=".$widthcolumn."%>";
+	}
+
+	echo '</td>';
+	echo '</tr>';
+	echo '</table>';
+	echo '</div>';
+
+echo "</td>";
+
+echo '<td width=2.5%></td>';
+echo '</tr></table>';
 
  
  echo '<table width=100% class=tableitems><tr valign=top><td width=2.5%></td><td width=97.5%><hr width=95% align=left><div style="font-variant:small-caps;">total: '.count($liste_termes_brute).' sources.</div></td><td width=2.5%></td></tr>';
  echo "</table>";
+
+
+// SCRIPT AUTO-COMPLETE
+
+$myvar='';
+foreach (array_keys($vraidicotermesjs) as $k)
+{
+	$myvar.='
+	{ label: "'.$k.'", value: "'.$vraidicotermesjs[$k].'" },';
+}
+
+$myvar=str_replace(',]','
+		]','var projects = ['.$myvar.']');
+
+
+$jscriptmp.='
+	'.$myvar.';
+		$( "#terms" ).autocomplete({
+			minLength: 4,
+			source: projects,
+			focus: function(event, ui) {
+				$( "#terms" ).val(ui.item.label);
+				return false;
+				},
+			select: function(event, ui) {
+				location.href="source.php?id_source="+ui.item.value'.$myjsperiod.';
+				return false;
+				}
+			});';
+
+echo '
+	<script> $(function() { '.$jscriptmp.' });</script>';
+
 
 include("footer.php");
 ?>

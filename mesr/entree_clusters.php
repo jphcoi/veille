@@ -172,7 +172,11 @@ echo '<b style="font-variant:small-caps;">accès direct aux champs commençant p
 echo '</td><td width=2.5%></td></tr></table>';
 echo '<p><table width=100% class=tableitems>';
 echo '<tr valign=top><td width=2.5%></td>';
+
+echo '<td width=95%><div class="bigscrollPane"><table width=100% class=tableitems><tr>';
 display_columns(3,$clean_liste_termes);
+echo '</tr></table></div></td>';
+
 echo '<td width=2.5%></td></tr></table><p>';
 
 echo '<table width=100% class=tableitems><tr valign=top><td width=2.5%></td><td width=97.5%><hr width=95% align=left><div style="font-variant:small-caps;">soit '.count($clusters_clean).' dénominations uniques "générique - spécifique" de champs thématiques sur un total de '.count($liste_termes_brute).' champs thématiques uniques pour cette période.</div></td><td width=2.5%></td></tr>';

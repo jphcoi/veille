@@ -71,8 +71,11 @@ echo "<p>Le périmètre thématique associé à <i>'Santé et Environnement'</i>
 à partir d'une analyse des documents. Il est constitué de <a href=entree_termes.php><font color=blue>".$nbNGram." termes</font></a>. Cette liste est
 mise à jour régulièrement pour suivre l'actualité. La liste de ces termes
 est accessible à partir du lien <a href=entree_termes.php><font color=blue>TERMES</font></a> qui figure dans le menu de navigation.</p>
-</td><td width=2.5%></td></tr></table></div>
 
+<h3>Vademecum</h3>
+<p>Un document succinct rappelant l'essentiel des concepts et fonctionnalités de cette plate-forme est <b><a href=\"MESR-Vademecum.pdf\" style=\"color:blue;\">accessible ici</a></b>.
+
+</td><td width=2.5%></td></tr></table></div>
 
 
 <div id='tabs-2'>";
@@ -182,9 +185,10 @@ while (count($order)>0){
     echo '<li>'.$authors[$index].'<br/>';
     echo '</ul>';
 }
-echo "<h3>Briques logiciel</h3>
+echo "<h3>Briques logicielles</h3>
 En dehors des développements faits par les auteurs, cette plateforme intègre :
 <ul> 
+<li><a href='http://jquery.com/' target='blank'><font color=".$color.">JQuery</font></a><br/>
 <li><a href='http://vis.stanford.edu/protovis/' target='blank'><font color=".$color.">Protovis</font></a><br/>
 <li><a href='http://ofnodesandedges.com/toolbox/gexfwalker/' target='blank'><font color=".$color.">Gexfwalker</font></a><br/>
 <li><a href='http://raphaeljs.com/'><font color=".$color." target='blank'>Raphaël—JavaScript Library</font></a><br/>
