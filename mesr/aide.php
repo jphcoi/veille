@@ -73,7 +73,10 @@ mise à jour régulièrement pour suivre l'actualité. La liste de ces termes
 est accessible à partir du lien <a href=entree_termes.php><font color=blue>TERMES</font></a> qui figure dans le menu de navigation.</p>
 
 <h3>Vademecum</h3>
-<p>Un document succinct rappelant l'essentiel des concepts et fonctionnalités de cette plate-forme est <b><a href=\"MESR-Vademecum.pdf\" style=\"color:blue;\">accessible ici</a></b>.
+<p>Un document succinct rappelant l'essentiel des concepts et fonctionnalités de cette plate-forme est
+accessible au format <b><a href=\"http://chavalarias.free.fr/mesr/MESR-Vademecum.pdf\" style=\"color:blue;\">PDF</a></b> ou
+<b><a href=\"http://chavalarias.free.fr/mesr/MESR-Vademecum.doc\" style=\"color:blue;\">word</a></b> avec le login mesr et le 
+mot de passe chercheur.
 
 </td><td width=2.5%></td></tr></table></div>
 
