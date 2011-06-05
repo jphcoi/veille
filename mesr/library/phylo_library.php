@@ -606,8 +606,6 @@ return false;
     return array($jscriptmp,$linkcluster);
 }
 
-
-
 function getPartitionLastPeriodClusters($id_partition) {
 //renvoie un array contenant les infos des clusters de la dernière période de la
 //partition concernée
@@ -809,11 +807,12 @@ return $resultat;
 ////////////////////////////////
 ///////Calcul des streamgraphs /////////
 ////////////////////////////////
+
+
 function query2streamgraphData($query,$first_period,$last_period,$dT,$time_steps){
 // transforme un ensemble de données de partition d'une requête sur la table partition en un streamgraph par partition
 
 $resultat=mysql_query($query) or die ("<b>Requête non exécutée (récupération des principales thématiques)</b>.");
-
 
 $year_String='var years = [';
 for ($i=$first_period;$i<=$last_period;$i+=$time_steps){
@@ -836,10 +835,41 @@ while ($partition_resultat=mysql_fetch_array($resultat)){
 $streamgraphString=substr($streamgraphString,0,-1).'};';
 return $streamgraphString;
 }
+
+function id_partition2streamgraphData($id_partition,$level,$first_period,$last_period,$dT,$time_steps){
+// calcul le JSon du streamgraph d'une partition en catégorisant les blogs suivant la catégorisation Linkfluence $category
+
+$category_list=split(",",getValue($category));
+    
+$query="select * FROM partitions WHERE id_partition=".$id_partition;    
+$resultat=mysql_query($query) or die ("<b>Requête non exécutée (récupération des principales thématiques)</b>.");
+$partition_resultat=mysql_fetch_array($resultat);
+
+$year_String='var years = [';
+for ($i=$first_period;$i<=$last_period;$i+=$time_steps){
+    $year_String.=$i.', ';
+}
+$year_String=substr($year_String,0,-2).'];';
+echo $year_String;
+// ajout des var pour chaque branche
+$streamgraphString=$year_String.'var dynamics= {';
+
+while (count($category_list)>0){
+    $current_category=array_pop($category_list);
+    //infos sur la partition
+    $streamgraphString.='"'.$current_category.'":'.partition2JSON($id_partition,$first_period,$last_period,$dT,$time_steps,$level,$current_category);
+    }
+$streamgraphString=substr($streamgraphString,0,-1).'};';
+return $streamgraphString;
+}
+
 /////////////////////////////////////////////
-function partition2JSON($id_partition,$first_period,$last_period,$dT,$time_steps){
+
+function partition2JSON($id_partition,$first_period,$last_period,$dT,$time_steps,$level='none',$category='none'){
 // transforme un ensemble de champs d'une partition en un JSon pour streagraph
 // { activity: [ value1, ..., valueN]}
+// lorsque que category et level sont précisés, level, level est une des catégories linkfluence (categorie1, ..., categorie2) 
+// et category est le nom de la catégorie cible ex: 'politique'
 $partitionScore=0;
 $periodWithMaxScore=0;
 $JSON_string="{ activity: [";
@@ -859,25 +889,38 @@ for ($i=$first_period;$i<=$last_period;$i+=$time_steps) {
     $resultat=mysql_query($sql) or die ("<b>Requête non exécutée (récupération des clusters d'une période pour une partition)</b>.");
     echo $sql.'<br/>';
     $count=0;
-    while ($ligne=mysql_fetch_array($resultat)) {
-        $commande_sql_pert = "SELECT id_billet,id_auteur,overlap_size,billet_size,cluster_size from biparti where cluster = '".$ligne[id_cluster]."' AND periode = '".$ligne[periode]."' AND overlap_size/cluster_size/log10(10+billet_size-overlap_size)>=".$seuil_pertinence." and overlap_size/cluster_size>".$penetration_thematique;
-        echo $commande_sql_pert.'<br/>';
-        $billet_list=mysql_query($commande_sql_pert) or die ("<b>Requête non exécutée (récupération des billets associés à un cluster)</b>.");
-        $auteur_score=array(); //
-        while ($billet=mysql_fetch_array($billet_list)) {
-            $score=$billet[overlap_size]/$billet[cluster_size]/log10(10+$billet[billet_size]-$billet[overlap_size]);
-            //echo $billet[id_auteur].'<br/>';
-            if ($auteur_score[$billet[id_auteur]]!=null) {
-                if ($score>$auteur_score[$billet[id_auteur]]) {
-                    $auteur_score[$billet[id_auteur]]=$score;
+    while ($ligne = mysql_fetch_array($resultat)) {
+            $commande_sql_pert = "SELECT id_billet,id_auteur,overlap_size,billet_size,cluster_size from biparti where cluster = '" . $ligne[id_cluster] . "' AND periode = '" . $ligne[periode] . "' AND overlap_size/cluster_size/log10(10+billet_size-overlap_size)>=" . $seuil_pertinence . " and overlap_size/cluster_size>" . $penetration_thematique;
+            echo $commande_sql_pert . '<br/>';
+            $billet_list = mysql_query($commande_sql_pert) or die("<b>Requête non exécutée (récupération des billets associés à un cluster)</b>.");
+            $auteur_score = array(); //
+            while ($billet = mysql_fetch_array($billet_list)) {
+
+                if ($category != 'none') {
+                    // on récupère la catégorie du billet pour voir si c'est la bonne
+                    $sql_billet = "SELECT " . $level . " FROM billets WHERE id=" . $billet[id_billet];
+                    $resultat = mysql_query($sql) or die("<b>Requête non exécutée (récupération des billets)</b>.");
+                    $category_ok = ($billet[id_billet] == $category);
                 }
-            }else {
-                $auteur_score[$billet[id_auteur]]=$score;
-                $count++;
+
+                if (($category == 'none') || $category_ok) {
+
+                    $score = $billet[overlap_size] / $billet[cluster_size] / log10(10 + $billet[billet_size] - $billet[overlap_size]);
+                    //echo $billet[id_auteur].'<br/>';
+                    if ($auteur_score[$billet[id_auteur]] != null) {
+                        if ($score > $auteur_score[$billet[id_auteur]]) {
+                            $auteur_score[$billet[id_auteur]] = $score;
+                        }
+                    } else {
+                        $auteur_score[$billet[id_auteur]] = $score;
+                        $count++;
+                    }
+                }
             }
+            $period_score+=array_sum($auteur_score) / 10;
+       
+            
         }
-        $period_score+=array_sum($auteur_score)/10;
-    }
     echo $count.' billets<br/>';
     echo ' ------------------------<br/>';
     $JSON_string.=round($period_score,4).', ';
@@ -889,13 +932,16 @@ for ($i=$first_period;$i<=$last_period;$i+=$time_steps) {
 $JSON_string=substr($JSON_string,0,-2);
 $JSON_string.='] },';
 
-$sqlScore="INSERT INTO partitions (id_partition,score,periodWithMaxScore) VALUES ('".$id_partition."','".$partitionScore."','".$periodWithMaxScore."') ON DUPLICATE KEY UPDATE id_partition='".$id_partition."',
-score='".$partitionScore."', periodWithMaxScore='".$periodWithMaxScore."'";
-echo $sqlScore;
-mysql_query($sqlScore) or die ("<b>Insert of total_number_of_cluster failed</b>.");;
+if ($category == 'none'){ // pour le streamgraph des partitions, on stocke en base le score max pour les ratings
+    $sqlScore="INSERT INTO partitions (id_partition,score,periodWithMaxScore) VALUES ('".$id_partition."','".$partitionScore."','".$periodWithMaxScore."') ON DUPLICATE KEY UPDATE id_partition='".$id_partition."',
+    score='".$partitionScore."', periodWithMaxScore='".$periodWithMaxScore."'";
+    echo $sqlScore;
+    mysql_query($sqlScore) or die ("<b>Insert of total_number_of_cluster failed</b>.");;    
+}
 
 return $JSON_string;
 }
+
 
 function batchPartitionScore($query,$first_period,$last_period,$dT,$time_steps) {
 // calcul les scores pour un ensemble de données de partition d'une requête sur la table partition

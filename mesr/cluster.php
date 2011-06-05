@@ -3,6 +3,7 @@ include("login_check.php");
 include("library/fonctions_php.php");
 include("parametre.php");
 
+
 $all_periode=0;
 $jscriptmp="";
 
@@ -582,11 +583,16 @@ if ($nav=="phylo"){
 	echo '</tr>';
 	echo '</table>';
 	
+        /// Affichage du streamgraph du fil thématique
+       // id_partition2streamgraphData($id_partition,'categorie3',$partition_infos[first_period],$partition_infos[last_period],14,7);
+        
 	
 	//echo '<hr>';
 	include("cluster_nav_billets.php");
 
 }
+
+
 
 
 //// BLOC NAVIGATION SEMANTIQUE

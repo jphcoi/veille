@@ -15,6 +15,10 @@ include('cluster_library.php');
 /////////////////////////
 
 
+function pt($string){
+    // juste pour afficher avec retour à la ligne
+echo $string."<br/>";
+}
 
 function error(){
 $query="select * FROM partifgdfgtions WHERE nb_period_covered >= $phylo_min_nb_periods_covered";

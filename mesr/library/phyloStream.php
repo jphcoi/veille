@@ -2,10 +2,6 @@
 
 include("fonctions_php.php");
 include("../parametres/parametresPhylo.php");
-include("phylo_library.php");
-echo 'test';
-
-pt('TEST');
 
 // génère les streamgraphes de branches phylogénétiques en les catégorisant 
 // active, emergente, en suspens
@@ -67,18 +63,19 @@ mysql_query($query);
 for ($i = 1; $i < 4; $i++) {
     $categorie = "categorie" . $i;
     $query = "select " . $categorie . " FROM billets GROUP BY " . $categorie;
+    pt($query);
     $resultat = mysql_query($query) or die("<b>Requête non exécutée (récupération des principales thématiques)</b>");
     $categ = "";
-    while ($ligne = mysql_fetch_array($resultat)) {
+    while ($ligne = mysql_fetch_array($resultat)) {        
         $categ.=$ligne[$categorie] . ',';
+
     }
-    $categ = substr($categorie1, 0, -1);
+    $categ = substr($categ, 0, -1);
     $sql = "INSERT INTO data (cle,valeur) VALUES ('" . $categorie . "','" . $categ . "') ON DUPLICATE KEY UPDATE cle='" . $categorie . "',valeur='" . $categ . "';";
     echo '<br/>' . $sql . '<br/>';
     mysql_query($sql) or die("<bInserts de categories dans data non effectués)</b>.");
 }
 
-error();
 ///////////////////////////////////////////////////////////////////////////////
         /// Calcul des streamgraphs pour chaque type de branches: emergentes, actives, en suspens 
         ///////////////////////////////////////////////////////////////////////////////        
