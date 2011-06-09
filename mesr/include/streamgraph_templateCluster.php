@@ -48,7 +48,7 @@ startyear='.$partition_infos[first_period].',
 endyear='.$partition_infos[last_period].',
 sp = pv.Scale.linear(0,1).range(0,sh);
 var sDateArray = new Array();
-var speriods=sx.ticks(20);
+var speriods=sx.ticks(Math.min(10,years.length));
 for(var time in speriods) {
 var snewDate = new Date( );
 //14610 = nombre de jours écoulés entre 1er janvier 70 et 1er janvier 2010
@@ -129,7 +129,7 @@ svis.add(pv.Panel)
 .text(function(d, sp) shorten_label(sp.key.substring(1)));
 /* X-axis ticks and labels. */
 svis.add(pv.Rule)
-.data(sx.ticks(20))
+.data(sx.ticks(Math.min(10,years.length)))
 .left(sx)
 .bottom(-6)
 .height(5)

@@ -846,17 +846,15 @@ if ($current_category==''){
 }else{
     $categoryType="categorie".($level+1); 
 }
-    
 if ($current_category==''){// on prend toutes les catégories du niveau cible
     $category_list=split(",",getValue($categoryType));    
 } else{// on crée un tableau avec toutes les sous catégories de la catégorie parente $current_category
-     $category_list=array();
-    $query = "select " . $categoryType . " FROM billets WHERE 'categorie".$level."'=".$current_category." GROUP BY " . $categoryType;
-    //pt($query);
+    $category_list=array();
+    $query = "select " . $categoryType . " FROM `billets`  WHERE categorie".$level."='".$current_category."' GROUP BY " . $categoryType;
     $resultat = mysql_query($query) or die("<b>Requête non exécutée (récupération des principales thématiques)</b>");
     $categ = "";
     while ($ligne = mysql_fetch_array($resultat)) {        
-        $category_list[]=$ligne[$categorie];
+        $category_list[]=$ligne[$categoryType];
     }    
 }
    
@@ -871,7 +869,6 @@ for ($i=$first_period;$i<=$last_period;$i+=$time_steps){
     $year_String.=$i.', ';
 }
 $year_String=substr($year_String,0,-2).'];';
-//echo $year_String;
 // ajout des var pour chaque branche
 $streamgraphString=$year_String.'var dynamics= {';
 
