@@ -39,10 +39,10 @@ dynamics.forEach(function(d) percentage(d));
 dynamics.forEach(function(d) d.coarse = d.people);
 /* Sizing parameters and scales. */
 var sw = .88*document.body.clientWidth,
-sh = 350,
+sh = 200,
 sx = pv.Scale.linear('.$partition_infos[first_period].', '.$partition_infos[last_period].').range(0, sw),
 sy = pv.Scale.linear(0, 10).range(0, sh),
-color = pv.Scale.ordinal(1, 2).range("#33f", "#f33"),
+color = pv.Scale.ordinal(1, 2).range("brown", "red"),
 alpha = pv.Scale.linear(pv.values(sumByJob)).range(.3, 0.9),
 startyear='.$partition_infos[first_period].',
 endyear='.$partition_infos[last_period].',
