@@ -43,37 +43,9 @@ $time_steps=$last_period_list[1]-$last_period_list[0]; // pas de la fenêtre gli
 $query="ALTER TABLE partitions ADD periodWithMaxScore varchar(50);";
 mysql_query($query);// or die ("<b>Requête non exécutée (creation du champ occurrences_in_cluster dans la table concepts)</b>.");
 
-//////////
-/// creation de la table
-$query="
-CREATE TABLE IF NOT EXISTS `data` (
-`cle` varchar(50) DEFAULT NULL,
-`valeur` text DEFAULT NULL,
-UNIQUE KEY `cle` (`cle`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
-";
-mysql_query($query);
 
 
 
-///////////////////////////////////////////////////////////////////////////////
-/// Ajout de quelques données utilisées pour les streamgraphs dans la table data
-///////////////////////////////////////////////////////////////////////////////        
-
-for ($i = 1; $i < 4; $i++) {
-    $categorie = "categorie" . $i;
-    $query = "select " . $categorie . " FROM billets GROUP BY " . $categorie;
-    pt($query);
-    $resultat = mysql_query($query) or die("<b>Requête non exécutée (récupération des principales thématiques)</b>");
-    $categ = "";
-    while ($ligne = mysql_fetch_array($resultat)) {        
-        $categ.=$ligne[$categorie] . ',';        
-    }
-    $categ = substr($categ, 0, -1);
-    $sql = "INSERT INTO data (cle,valeur) VALUES ('" . $categorie . "','" . $categ . "') ON DUPLICATE KEY UPDATE cle='" . $categorie . "',valeur='" . $categ . "';";
-    echo '<br/>' . $sql . '<br/>';
-    mysql_query($sql) or die("<bInserts de categories dans data non effectués)</b>.");
-}
 
 ///////////////////////////////////////////////////////////////////////////////
         /// Calcul des streamgraphs pour chaque type de branches: emergentes, actives, en suspens 
