@@ -66,8 +66,8 @@ mysql_query($query);// or die ("<b>Requête non exécutée (creation du champ oc
         $cle='branches_actives_'.$phylo_min_nb_periods_covered;
         $sql="INSERT INTO data (cle,valeur) VALUES ('".$cle."','$json_data') ON DUPLICATE KEY UPDATE cle='".$cle."',valeur='$json_data';";
         echo '<br/>'.$sql.'<br/>';
-        mysql_query($sql) or die("<bInserts non effectués)</b>.");
-
+        mysql_query($sql) or die("<bInserts non effectués)</b>.");        
+        
         echo ' Calcul des branches émergente<br/>';
         $query="select * FROM partitions WHERE nb_period_covered > 1 AND nb_fields>2 AND nb_period_covered <=".$phylo_min_nb_periods_covered.
             " AND last_period>=".($last_period-2*$dT);

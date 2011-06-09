@@ -832,6 +832,7 @@ while ($partition_resultat=mysql_fetch_array($resultat)){
     $streamgraphString.='"'.remove_popo(substr($partition_label,0,-1)).'":'.partition2JSON($id_partition,$first_period,$last_period,$dT,$time_steps);
     }
 $streamgraphString=substr($streamgraphString,0,-1).'};';
+//pt($streamgraphString);
 return $streamgraphString;
 }
 
@@ -858,7 +859,7 @@ if ($current_category==''){// on prend toutes les catégories du niveau cible
     }    
 }
    
-// on retire les infos de la macrobranche concernée    
+// on consulte les infos de la macrobranche concernée    
 $query="select * FROM partitions WHERE id_partition=".$id_partition;    
 $resultat=mysql_query($query) or die ("<b>Requête non exécutée (récupération des principales thématiques)</b>.");
 $partition_resultat=mysql_fetch_array($resultat);
@@ -879,6 +880,7 @@ while (count($category_list)>0){
     $streamgraphString.='"'.$category.'":'.partition2JSON($id_partition,$first_period,$last_period,$dT,$time_steps,$categoryType,$category);
     }
 $streamgraphString=substr($streamgraphString,0,-1).'};';
+//pt($streamgraphString);
 return $streamgraphString;
 }
 
@@ -906,15 +908,18 @@ for ($i=$first_period;$i<=$last_period;$i+=$time_steps) {
     $period_string = ($i - $dT) . ' ' . $i;      
 
     //echo $period_string.'<br/>';
-    $period_score=0;
     $sql="SELECT id_cluster,periode FROM cluster WHERE pseudo='".$id_partition."' AND periode='".$period_string."' GROUP BY id_cluster";
     $resultat=mysql_query($sql) or die ("<b>Requête non exécutée (récupération des clusters d'une période pour une partition)</b>.");
+    
     $count=0;
+    $period_score=0;   // score de la période
+    $auteur_score = array(); // liste des score max des auteurs qui s'expriment sur ce fil thématique à cette période
+    
     while ($ligne = mysql_fetch_array($resultat)) {
             $commande_sql_pert = "SELECT id_billet,id_auteur,overlap_size,billet_size,cluster_size from biparti where cluster = '" . $ligne[id_cluster] . "' AND periode = '" . $ligne[periode] . "' AND overlap_size/cluster_size/log10(10+billet_size-overlap_size)>=" . $seuil_pertinence . " and overlap_size/cluster_size>" . $penetration_thematique;
                          
             $billet_list = mysql_query($commande_sql_pert) or die("<b>Requête non exécutée (récupération des billets associés à un cluster)</b>.");
-            $auteur_score = array(); //
+            
             while ($billet = mysql_fetch_array($billet_list)) {
                 if ($category != 'none') {                    
                     // on récupère la catégorie du billet pour voir si c'est la bonne
@@ -922,14 +927,14 @@ for ($i=$first_period;$i<=$last_period;$i+=$time_steps) {
                     $resultat = mysql_query($sql_billet) or die("<b>Requête non exécutée (récupération des billets)</b>.");
                     while ($ligne = mysql_fetch_array($resultat)) {
                         //pt($ligne[$categoryType]);
-                        $category_ok = (trim($ligne[$categoryType]) == $category);
+                        $category_ok = (trim($ligne[$categoryType]) == trim($category));
                     }                                        
                 }
                 //pt($ligne[$categoryType]." - ".$category);                                
 
                 if (($category == 'none') || $category_ok) {
 
-                    $score = $billet[overlap_size] / $billet[cluster_size] / log10(10 + $billet[billet_size] - $billet[overlap_size]);
+                    $score = $billet[overlap_size] / $billet[cluster_size] / log10(10 + $billet[billet_size] - $billet[overlap_size]);                    
                     //echo $billet[id_auteur].'<br/>';
                     if ($auteur_score[$billet[id_auteur]] != null) {
                         if ($score > $auteur_score[$billet[id_auteur]]) {
@@ -941,8 +946,9 @@ for ($i=$first_period;$i<=$last_period;$i+=$time_steps) {
                     }
                 }
             }
-            $period_score+=array_sum($auteur_score) / 10;            
+                       
         } 
+    $period_score+=array_sum($auteur_score) / 10; 
         
     //echo $count.' billets<br/>';
     //echo ' ------------------------<br/>';
