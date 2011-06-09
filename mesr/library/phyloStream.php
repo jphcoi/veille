@@ -38,6 +38,13 @@ $period_string=explode(' ',$period_string);
 $dT=$period_string[1]-$period_string[0];// fenêtre temporelle utilisée pour le calcul des clusters
 $time_steps=$last_period_list[1]-$last_period_list[0]; // pas de la fenêtre glissante
 
+$sql="INSERT INTO data (cle,valeur) VALUES ('dT','$dT') ON DUPLICATE KEY UPDATE cle='dT',valeur=$dT;";
+mysql_query($sql) or die ("<b>Insert of dT failed</b>.");;
+echo 'fenetre temporelle '.$dT.' inserted in table data at dT'.'<br/>';
+
+$sql="INSERT INTO data (cle,valeur) VALUES ('time_steps','$time_steps') ON DUPLICATE KEY UPDATE cle='time_steps',valeur=$time_steps;";
+mysql_query($sql) or die ("<b>Insert of time_steps failed</b>.");;
+echo 'pas de temps '.$time_steps.' inserted in table data at time_steps'.'<br/>';
 
 //// Occurrences de termes dans les clusters
 $query="ALTER TABLE partitions ADD periodWithMaxScore varchar(50);";
