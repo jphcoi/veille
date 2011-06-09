@@ -583,6 +583,7 @@ if ($nav=="phylo"){
 	echo '</table>';
 	
         /// Affichage du streamgraph du fil thématique
+        //$JSonFilThematique=id_partition2streamgraphData($id_partition,3,'',$partition_infos[first_period],$partition_infos[last_period],14,7);        
         $JSonFilThematique=id_partition2streamgraphData($id_partition,3,'',$partition_infos[first_period],$partition_infos[last_period],14,7);        
         include('include/streamgraphFilThematique.php');
         echo $myaboveFilThematique;

@@ -14,6 +14,6 @@ $myscriptFilThematique='<table class=tableitems width="100%">
 <td align="left">Evolution Temporelle';
 $myscriptFilThematique.=$out[0];
 
-include('streamgraph_template.php');
+include('streamgraph_templateCluster.php');
 $myscriptFilThematique.=$myscriptstream;
 ?>
