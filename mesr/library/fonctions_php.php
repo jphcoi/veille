@@ -1,6 +1,5 @@
 <?php // Cv1
 
-
 $backdark="#DDDDDD";
 $backdarker="#CCCCCC";
 $skipper="<td width=2.5%></td>";

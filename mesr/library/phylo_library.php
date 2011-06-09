@@ -905,7 +905,11 @@ $seuil_pertinence=0.3;//overlap_size/cluster_size/log10(10+billet_size-overlap_s
 $penetration_thematique=0.4;//overlap_size/cluster_size
 
 for ($i=$first_period;$i<=$last_period;$i+=$time_steps) {
-    $period_string=($i-$dT+1).' '.$i;
+    if ($category != 'none') { // élucider le problème de décalage 
+            $period_string = ($i - $dT + 1) . ' ' . $i;
+        } else {
+            $period_string = ($i - $dT) . ' ' . $i;
+        }
     //echo $period_string.'<br/>';
     $period_score=0;
     $sql="SELECT id_cluster,periode FROM cluster WHERE pseudo='".$id_partition."' AND periode='".$period_string."' GROUP BY id_cluster";

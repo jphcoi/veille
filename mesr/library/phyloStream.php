@@ -67,8 +67,7 @@ for ($i = 1; $i < 4; $i++) {
     $resultat = mysql_query($query) or die("<b>Requête non exécutée (récupération des principales thématiques)</b>");
     $categ = "";
     while ($ligne = mysql_fetch_array($resultat)) {        
-        $categ.=$ligne[$categorie] . ',';
-
+        $categ.=$ligne[$categorie] . ',';        
     }
     $categ = substr($categ, 0, -1);
     $sql = "INSERT INTO data (cle,valeur) VALUES ('" . $categorie . "','" . $categ . "') ON DUPLICATE KEY UPDATE cle='" . $categorie . "',valeur='" . $categ . "';";
