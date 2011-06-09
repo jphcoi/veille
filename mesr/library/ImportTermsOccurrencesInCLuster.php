@@ -1,5 +1,7 @@
 <?php
-/// Calcul un certain nombre de stats dont les occurrences de termes dans les clusters
+/// Calcul un certain nombre de stats et données utilisées
+// de façon récurrente (dont i.e. les occurrences de termes dans les clusters)
+// celles-ci sont stockées dans la table data
 
 include("fonctions_php.php");
 include("../parametre.php");
@@ -95,6 +97,28 @@ while ($ligne=mysql_fetch_array($concepts)) {
     mysql_query($sql) or die ("<b>Insert of partition data failed</b>.");;
     echo 'occurrences for '.$ngram_id.'updated to'.$nb_occ.'<br/>';
 
+}
+
+
+
+
+///////////////////////////////////////////////////////////////////////////////
+/// Ajout de quelques données utilisées pour les streamgraphs dans la table data
+///////////////////////////////////////////////////////////////////////////////        
+
+for ($i = 1; $i < 4; $i++) {
+    $categorie = "categorie" . $i;
+    $query = "select " . $categorie . " FROM billets GROUP BY " . $categorie;
+    pt($query);
+    $resultat = mysql_query($query) or die("<b>Requête non exécutée (récupération des principales thématiques)</b>");
+    $categ = "";
+    while ($ligne = mysql_fetch_array($resultat)) {        
+        $categ.=$ligne[$categorie] . ',';        
+    }
+    $categ = substr($categ, 0, -1);
+    $sql = "INSERT INTO data (cle,valeur) VALUES ('" . $categorie . "','" . $categ . "') ON DUPLICATE KEY UPDATE cle='" . $categorie . "',valeur='" . $categ . "';";
+    echo '<br/>' . $sql . '<br/>';
+    mysql_query($sql) or die("<bInserts de categories dans data non effectués)</b>.");
 }
 
 
