@@ -46,6 +46,7 @@ color = pv.Scale.ordinal(1, 2).range("brown", "red"),
 alpha = pv.Scale.linear(pv.values(sumByJob)).range(.3, 0.9),
 startyear='.$partition_infos[first_period].',
 endyear='.$partition_infos[last_period].',
+factor=sw/('.$partition_infos[last_period].'-'.$partition_infos[first_period].')
 sp = pv.Scale.linear(0,1).range(0,sh);
 var sDateArray = new Array();
 var speriods=sx.ticks(Math.min(10,years.length));
@@ -68,6 +69,13 @@ var svis = new pv.Panel()
 /* A background bar to reset the search query. */
 svis.add(pv.Bar)
 .fillStyle("lightgray")
+.event("click", function() search(""))
+.cursor("pointer");
+svis.add(pv.Bar)
+.fillStyle("white")
+.width(('.$debut_fin[1].'-'.$debut_fin[0].')*factor)
+.data([factor*('.$debut_fin[0].'-'.$partition_infos[first_period].')])
+.left(function(d) d)
 .event("click", function() search(""))
 .cursor("pointer");
 /* Y-axis ticks and labels. */
@@ -107,6 +115,11 @@ var area = svis.add(pv.Layout.Stack)
 //.fillStyle(pv.ramp( "#afd", "#a0a").by(Math.random))
 //.anchor("top").add(pv.Line)
 //.strokeStyle("#cccccc")
+
+// ajout de un indicateur de periode courante
+
+/////////////////
+
 
 .cursor("pointer")
 .event("mouseover", function(d) this.alpha(1).title(d.job))
