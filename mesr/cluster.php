@@ -583,7 +583,6 @@ if ($nav=="phylo"){
 	echo '</table>';
 	
         $debut_fin=split('-',$my_period);  // bornes de la période courante
-        pt($debut_fin[0]);
         /// Affichage du streamgraph du fil thématique
         //$JSonFilThematique=id_partition2streamgraphData($id_partition,3,'',$partition_infos[first_period],$partition_infos[last_period],14,7);        
         //$JSonFilThematique=id_partition2streamgraphData($id_partition,2,'politique',$partition_infos[first_period],$partition_infos[last_period],14,7);        
