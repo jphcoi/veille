@@ -586,7 +586,7 @@ if ($nav=="phylo"){
         /// Affichage du streamgraph du fil thématique
         //$JSonFilThematique=id_partition2streamgraphData($id_partition,3,'',$partition_infos[first_period],$partition_infos[last_period],14,7);        
         //$JSonFilThematique=id_partition2streamgraphData($id_partition,2,'politique',$partition_infos[first_period],$partition_infos[last_period],14,7);        
-        $JSonFilThematique=id_partition2streamgraphData($id_partition,3,'',$partition_infos[first_period],$partition_infos[last_period],  getValue('dT'),  getValue('time_steps'));        
+        $JSonFilThematique=id_partition2streamgraphData($id_partition,2,'politique',$partition_infos[first_period],$partition_infos[last_period],  getValue('dT'),  getValue('time_steps'));        
         include('include/streamgraphFilThematique.php');
         echo $myaboveFilThematique;
         echo $myscriptFilThematique;
