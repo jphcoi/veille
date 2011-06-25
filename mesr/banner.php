@@ -60,7 +60,7 @@ echo '<div id="hd" class="ui-widget">
 <div id="title" class="noSelect" style="margin-left:5px; margin-right:5px;">
 <table width="100%" style="font-size:x-large; font-weight:bold; color:DarkSlateGray; font-variant:small-caps;">
 <tr>
-<td align=left>Observatoire de la blogosphère "Santé-Environnement" </td>
+<td align=left>Observatoire de la blogosphère</td>
 <td align=right style="font-size:medium;">';
 echo'<a href=aide.php?selectedTab=1>';
 if ($page=="aide") echo '<span class=bannerselected>'; else echo '<span>';

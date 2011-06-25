@@ -482,6 +482,7 @@ avec les champs suivants :<br/>' . $cluster_Link_html;
 }
 
 function FTInfo($jscriptmp, $id_partition, $color_link) {
+    // donnes les informations sur un fil thématique
     $query = "select * FROM partitions WHERE id_partition=" . $id_partition;
     $resultat = mysql_query($query) or die("<b>Requête non exécutée (récupération de info de partition)</b>.");
     $partition_infos = mysql_fetch_array($resultat);
@@ -491,6 +492,8 @@ function FTInfo($jscriptmp, $id_partition, $color_link) {
 // Construit le popup d'info d'un champs thématique
 
     $last_period_clusters = getPartitionLastPeriodClusters($id_partition);
+    $first_period_clusters= getPartitionFirstPeriodClusters($id_partition);
+    
 //// préparation des liens de fils thématiques
     $jscriptmp.="
 $('#dialogfilThematique" . $id_partition . "')
@@ -504,6 +507,11 @@ else
 $('#dialogfilThematique" . $id_partition . "').dialog('close');
 return false;
 });";
+    
+  
+    $cluster_Link_html="Ce fil thématique commence le ".get_date("2009-12-31", $partition_infos[first_period])." avec le champ ".
+            '<a href="' . $first_period_clusters[0][attribut] . '">
+<font color=blue>' . str_replace('---', '/', remove_popo($first_period_clusters[0][label])) . '</font></a>'; 
 
     if (strcmp($last_period_clusters[0][periode], $partition_infos[periodWithMaxScore]) == 0) {
         if (count($last_period_clusters) > 1) {
@@ -519,7 +527,7 @@ return false;
 <font color=blue>' . str_replace('---', '/', remove_popo($last_period_clusters[0][label])) . '</font></a> (période ' . get_string_periode(str_replace(' ', '-', $last_period_clusters[0][periode])) . ')';
         }
     } else {
-        $cluster_Link_html = '<p>' . $linkstarString . '</p>';
+        $cluster_Link_html.= '<p>' . $linkstarString . '</p>';
         if (count($last_period_clusters) > 1) {
             $cluster_Link_html.='Ce fil thématique comporte plusieurs champs en dernière période (' . get_string_periode(str_replace(' ', '-', $last_period_clusters[0][periode])) . ') :<ul>';
             for ($i = 0; $i < count($last_period_clusters); $i++) {
@@ -601,15 +609,23 @@ function getPartitionLastPeriodClusters($id_partition) {
     while ($part = mysql_fetch_array($partQuery)) {
         $partition_infos = $part;
     }
-
 // Récupère tous les clusters de la dernière période
-    $last_period_clusters = array();
-    $sql = "SELECT * FROM cluster WHERE periode='" . $partition_infos[last_period_string] . "' AND pseudo=" . $partition_infos['id_partition'] . " GROUP BY id_cluster";
-    $resultat = mysql_query($sql) or die("Champ thématique de la dernière période non récupérés");
-    while ($partit = mysql_fetch_array($resultat)) {
-        array_push($last_period_clusters, $partit);
-    }
     return getClutersFromThisPeriod($partition_infos['id_partition'], $partition_infos[last_period_string]);
+}
+
+function getPartitionFirstPeriodClusters($id_partition) {
+//renvoie un array contenant les infos des clusters de la dernière période de la
+//partition concernée
+// Infos de la partitions concernée
+    $sql = "SELECT * FROM partitions WHERE id_partition=" . $id_partition;
+    $partQuery = mysql_query($sql);
+    while ($part = mysql_fetch_array($partQuery)) {
+        $partition_infos = $part;
+    }
+    $first_day=$partition_infos[first_period] +1;
+// Récupère tous les clusters de la dernière période
+    $first_period_string = $first_day . ' ' . ($first_day + getValue('dT')); 
+    return getClutersFromThisPeriod($partition_infos['id_partition'], $first_period_string);
 }
 
 function getClutersFromThisPeriod($id_partition, $period) {
