@@ -40,13 +40,13 @@ dynamics.forEach(function(d) d.coarse = d.people);
 /* Sizing parameters and scales. */
 var sw = .88*document.body.clientWidth,
 sh = 200,
-sx = pv.Scale.linear('.$partition_infos[first_period].', '.$partition_infos[last_period].').range(0, sw),
+sx = pv.Scale.linear('.($partition_infos[first_period]-2*$time_steps).', '.$partition_infos[last_period].').range(0, sw),
 sy = pv.Scale.linear(0, 10).range(0, sh),
 color = pv.Scale.ordinal(1, 2).range("brown", "red"),
 alpha = pv.Scale.linear(pv.values(sumByJob)).range(.3, 0.9),
-startyear='.$partition_infos[first_period].',
+startyear='.($partition_infos[first_period]-2*$time_steps).',
 endyear='.$partition_infos[last_period].',
-factor=sw/('.$partition_infos[last_period].'-'.$partition_infos[first_period].')
+factor=sw/('.$partition_infos[last_period].'-'.($partition_infos[first_period]-2*$time_steps).')
 sp = pv.Scale.linear(0,1).range(0,sh);
 var sDateArray = new Array();
 var speriods=sx.ticks(Math.min(10,years.length));
@@ -74,7 +74,7 @@ svis.add(pv.Bar)
 svis.add(pv.Bar)
 .fillStyle("white")
 .width(('.$debut_fin[1].'-'.$debut_fin[0].')*factor)
-.data([factor*('.$debut_fin[0].'-'.$partition_infos[first_period].')])
+.data([factor*('.$debut_fin[0].'-'.($partition_infos[first_period]-2*$time_steps).')])
 .left(function(d) d)
 .event("click", function() search(""))
 .cursor("pointer");

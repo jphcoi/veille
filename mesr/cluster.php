@@ -586,14 +586,24 @@ if ($nav=="phylo"){
         /// Affichage du streamgraph du fil thématique
         //$JSonFilThematique=id_partition2streamgraphData($id_partition,3,'',$partition_infos[first_period],$partition_infos[last_period],14,7);        
         //$JSonFilThematique=id_partition2streamgraphData($id_partition,2,'politique',$partition_infos[first_period],$partition_infos[last_period],14,7);        
-        $JSonFilThematique=id_partition2streamgraphData($id_partition,2,'politique',$partition_infos[first_period],$partition_infos[last_period],  getValue('dT'),  getValue('time_steps'));        
-        include('include/streamgraphFilThematique.php');
-        echo $myaboveFilThematique;
-        echo $myscriptFilThematique;
-	
-	//echo '<hr>';
-	include("cluster_nav_billets.php");
+        $FTcategory=3; // niveau pour calculer les fils thématiques
+        $FTSubcategory = ''; //filtre de sous catégorie
+    $JsonFilThematiqueKey = "FT" . '-' . $id_partition . '-' . $FTcategory . '-' . $FTSubcategory . '-' . $partition_infos[first_period] . '-' . $partition_infos[last_period] . getValue('dT') . '-' . getValue('time_steps');    
+        $JSonFilThematique = getValue($JsonFilThematiqueKey);
+        if ($JSonFilThematique==null){            
+            $JSonFilThematique = id_partition2streamgraphData($id_partition, $FTcategory, $FTSubcategory, $partition_infos[first_period], $partition_infos[last_period], getValue('dT'), getValue('time_steps'));
+        $sql = "INSERT INTO data (cle,valeur) VALUES ('" . $JsonFilThematiqueKey . "','$JSonFilThematique') ON DUPLICATE KEY UPDATE cle='" . $JsonFilThematiqueKey . "',valeur='$JSonFilThematique';";
+        //mysql_query($sql) or die("<bInserts JSON Fil thematique non effectués)</b>.");
+        }
+        
+   $time_steps=getValue("time_steps");
 
+    include('include/streamgraphFilThematique.php');
+    echo $myaboveFilThematique;
+    echo $myscriptFilThematique;
+
+    //echo '<hr>';
+    include("cluster_nav_billets.php");
 }
 
 

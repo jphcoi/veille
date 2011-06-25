@@ -493,7 +493,7 @@ function FTInfo($jscriptmp, $id_partition, $color_link) {
 
     $last_period_clusters = getPartitionLastPeriodClusters($id_partition);
     $first_period_clusters= getPartitionFirstPeriodClusters($id_partition);
-    
+  
 //// préparation des liens de fils thématiques
     $jscriptmp.="
 $('#dialogfilThematique" . $id_partition . "')
@@ -509,20 +509,20 @@ return false;
 });";
     
   
-    $cluster_Link_html="Ce fil thématique commence le ".get_date("2009-12-31", $partition_infos[first_period])." avec le champ ".
+    $cluster_Link_html="Ce fil thématique commence le ".get_date("2009-12-31", $partition_infos[first_period]-2*getValue(time_step))." avec le champ ".
             '<a href="' . $first_period_clusters[0][attribut] . '">
 <font color=blue>' . str_replace('---', '/', remove_popo($first_period_clusters[0][label])) . '</font></a>'; 
 
     if (strcmp($last_period_clusters[0][periode], $partition_infos[periodWithMaxScore]) == 0) {
         if (count($last_period_clusters) > 1) {
-            $cluster_Link_html.='Ce fil thématique atteint le maximum de sa popularité sur sa période la plus récente (' . get_string_periode(str_replace(' ', '-', $last_period_clusters[0][periode])) . ') avec les champs suivants :<ul>';
+            $cluster_Link_html.='Il atteint le maximum de sa popularité sur sa période la plus récente (' . get_string_periode(str_replace(' ', '-', $last_period_clusters[0][periode])) . ') avec les champs suivants :<ul>';
             for ($i = 0; $i < count($last_period_clusters); $i++) {
                 $cluster_Link_html.='<li><a href="' . $last_period_clusters[$i][attribut] . '">
 <font color=blue>' . str_replace('---', '/', remove_popo($last_period_clusters[$i][label])) . '</font></a></li>';
             }
             $cluster_Link_html.='</ul>';
         } else {
-            $cluster_Link_html.='Ce fil thématique atteint le maximum de sa popularité sur sa période la plus récente avec le champ ' .
+            $cluster_Link_html.='Il atteint le maximum de sa popularité sur sa période la plus récente avec le champ ' .
                     '<a href="' . $last_period_clusters[0][attribut] . '">
 <font color=blue>' . str_replace('---', '/', remove_popo($last_period_clusters[0][label])) . '</font></a> (période ' . get_string_periode(str_replace(' ', '-', $last_period_clusters[0][periode])) . ')';
         }
@@ -622,7 +622,8 @@ function getPartitionFirstPeriodClusters($id_partition) {
     while ($part = mysql_fetch_array($partQuery)) {
         $partition_infos = $part;
     }
-    $first_day=$partition_infos[first_period] +1;
+    $first_day=$partition_infos[first_period]- getValue('dT') ;
+    
 // Récupère tous les clusters de la dernière période
     $first_period_string = $first_day . ' ' . ($first_day + getValue('dT')); 
     return getClutersFromThisPeriod($partition_infos['id_partition'], $first_period_string);
@@ -631,7 +632,7 @@ function getPartitionFirstPeriodClusters($id_partition) {
 function getClutersFromThisPeriod($id_partition, $period) {
 // Récupère tous les clusters de la période
     $clusters = array();
-    $sql = "SELECT * FROM cluster WHERE periode='" . $period . "' AND pseudo=" . $id_partition . " GROUP BY id_cluster";
+    $sql = "SELECT * FROM cluster WHERE periode='" . $period . "' AND pseudo=" . $id_partition . " GROUP BY id_cluster"; 
     $resultat = mysql_query($sql) or die("Champ thématique de la dernière période non récupérés");
     while ($partit = mysql_fetch_array($resultat)) {
         array_push($clusters, $partit);
@@ -810,7 +811,7 @@ function query2streamgraphData($query, $first_period, $last_period, $dT, $time_s
     $resultat = mysql_query($query) or die("<b>Requête non exécutée (récupération des principales thématiques)</b>.");
 
     $year_String = 'var years = [';
-    for ($i = $first_period; $i <= $last_period; $i+=$time_steps) {
+    for ($i = $first_period-2*$time_steps; $i <= $last_period; $i+=$time_steps) {
         $year_String.=$i . ', ';
     }
     $year_String = substr($year_String, 0, -2) . '];';
@@ -861,10 +862,12 @@ function id_partition2streamgraphData($id_partition, $level, $current_category, 
 
 // on génère la liste des années
     $year_String = 'var years = [';
-    for ($i = $first_period; $i <= $last_period; $i+=$time_steps) {
+    for ($i = $first_period-2*$time_steps; $i <= $last_period; $i+=$time_steps) {
         $year_String.=$i . ', ';
     }
+    
     $year_String = substr($year_String, 0, -2) . '];';
+ 
 // ajout des var pour chaque branche
     $streamgraphString = $year_String . 'var dynamics= {';
 
@@ -947,6 +950,12 @@ function partition2JSON($id_partition, $first_period, $last_period, $dT, $time_s
         //echo $count.' billets<br/>';
         //echo ' ------------------------<br/>';
         $JSON_string.=round($period_score, 4) . ', ';
+        
+        if (($i == $first_period)|($i == $last_period)){
+        $JSON_string.=round($period_score, 4) . ', ';    
+        }
+            
+        
         if ($partitionScore < $period_score) {
             $partitionScore = $period_score;
             $periodWithMaxScore = $period_string;
@@ -954,7 +963,6 @@ function partition2JSON($id_partition, $first_period, $last_period, $dT, $time_s
     }
     $JSON_string = substr($JSON_string, 0, -2);
     $JSON_string.='] },';
-
     if ($category == 'none') { // pour le streamgraph des partitions, on stocke en base le score max pour les ratings
         $sqlScore = "INSERT INTO partitions (id_partition,score,periodWithMaxScore) VALUES ('" . $id_partition . "','" . $partitionScore . "','" . $periodWithMaxScore . "') ON DUPLICATE KEY UPDATE id_partition='" . $id_partition . "',
     score='" . $partitionScore . "', periodWithMaxScore='" . $periodWithMaxScore . "'";

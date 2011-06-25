@@ -40,11 +40,11 @@ dynamics.forEach(function(d) d.coarse = d.people);
 /* Sizing parameters and scales. */
 var sw = .88*document.body.clientWidth,
 sh = 350,
-sx = pv.Scale.linear('.$dated.', '.$datef.').range(0, sw),
+sx = pv.Scale.linear('.($dated-2*$time_steps).', '.$datef.').range(0, sw),
 sy = pv.Scale.linear(0, 10).range(0, sh),
 color = pv.Scale.ordinal(1, 2).range("#33f", "#f33"),
 alpha = pv.Scale.linear(pv.values(sumByJob)).range(.3, 0.9),
-startyear='.$dated.',
+startyear='.($dated-2*$time_steps).',
 endyear='.$datef.',
 sp = pv.Scale.linear(0,1).range(0,sh);
 var sDateArray = new Array();
