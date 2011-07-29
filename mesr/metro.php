@@ -306,8 +306,8 @@ echo '
 <script type="text/javascript" charset="utf-8">
 
         window.onload = function () {
-            var R = Raphael(document.getElementById("metro"), 800, 50);
-            var x = 10, y = 20, r = 10;
+            var R = Raphael(document.getElementById("metro"), 800, 150);
+            var x = 10, y = 130, r = 10;
             d=200;            
             
             var S="M"+x+ " " + y + "L" + (x+d) + " " + y;
@@ -316,7 +316,8 @@ echo '
                 .click(function (event) {window.open("http://chavalarias.com","_self");});
             
             R.ball(x+d, y, r, Math.random());
-
+            var t = R.text(x+d, y-2*10-10, "phylogeny");
+            t.attr({rotation: -30, "text-anchor":"start"});
         };
     </script>';
 
