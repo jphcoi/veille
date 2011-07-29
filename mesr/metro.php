@@ -2,7 +2,11 @@
 include("login_check.php");
 include("library/fonctions_php.php");
 include("parametre.php");
-$jsprotovis="TRUE";
+
+
+
+$raphael=TRUE;
+$jsprotovis=TRUE;
 $all_periode=0;
 $jscriptmp="";
 
@@ -296,7 +300,27 @@ if ($nav=="cooc" or $nav=="soc" or $nav=="socsem") $jsprotovis="TRUE";
 include("include/header.php");
 include("banner.php");
 
+///////////////// Module pour préparer la visu de phylo en Raphael
 
+echo '
+<script type="text/javascript" charset="utf-8">
+
+        window.onload = function () {
+            var R = Raphael(document.getElementById("metro"), 800, 50);
+            var x = 10, y = 20, r = 10;
+            d=200;            
+            
+            var S="M"+x+ " " + y + "L" + (x+d) + " " + y;
+            var c = R.path(S);
+            R.ball(x, y, r, Math.random())
+                .click(function (event) {window.open("http://chavalarias.com","_self");});
+            
+            R.ball(x+d, y, r, Math.random());
+
+        };
+    </script>';
+
+///////////////// Module pour préparer la visu de phylo en Raphael
 
 ////////////////////////////
 /// MODULE DE NAVIGATION ///
@@ -600,9 +624,11 @@ if ($nav=="phylo"){
 
     include('include/streamgraphFilThematique.php');
     echo $myaboveFilThematique;
-    echo $myscriptFilThematique;
+    echo $myscriptFilThematique;  
 
-    //echo '<hr>';
+            
+    //
+    echo  '<div id="metro"></div>';
     include("cluster_nav_billets.php");
 }
 

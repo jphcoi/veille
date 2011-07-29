@@ -511,11 +511,11 @@ return false;
   
     $cluster_Link_html="Ce fil thématique commence le ".get_date("2009-12-31", $partition_infos[first_period]-2*getValue(time_step))." avec le champ ".
             '<a href="' . $first_period_clusters[0][attribut] . '">
-<font color=blue>' . str_replace('---', '/', remove_popo($first_period_clusters[0][label])) . '</font></a>'; 
+<font color=blue>' . str_replace('---', '/', remove_popo($first_period_clusters[0][label])) . '</font></a>. '; 
 
     if (strcmp($last_period_clusters[0][periode], $partition_infos[periodWithMaxScore]) == 0) {
         if (count($last_period_clusters) > 1) {
-            $cluster_Link_html.='Il atteint le maximum de sa popularité sur sa période la plus récente (' . get_string_periode(str_replace(' ', '-', $last_period_clusters[0][periode])) . ') avec les champs suivants :<ul>';
+            $cluster_Link_html.=' Il atteint le maximum de sa popularité sur sa période la plus récente (' . get_string_periode(str_replace(' ', '-', $last_period_clusters[0][periode])) . ') avec les champs suivants :<ul>';
             for ($i = 0; $i < count($last_period_clusters); $i++) {
                 $cluster_Link_html.='<li><a href="' . $last_period_clusters[$i][attribut] . '">
 <font color=blue>' . str_replace('---', '/', remove_popo($last_period_clusters[$i][label])) . '</font></a></li>';
