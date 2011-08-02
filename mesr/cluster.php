@@ -307,6 +307,7 @@ if(isset( $_GET['periode'])) $my_period=$_GET['periode']; else die("<h1>Agrégat
 if(isset( $_GET['nav'])) $nav=$_GET['nav']; else $nav="phylo";
 $periode=$my_period;
 
+
 //connexion a la base de donnees
 mysql_connect( $server,$user,$password);if ($encodage=="utf-8") mysql_query("SET NAMES utf8;");
 @mysql_select_db($database) or die( "Unable to select database");
@@ -428,7 +429,7 @@ echo '
 <script type="text/javascript" charset="utf-8">
 
         window.onload = function () {
-            var R = Raphael("metro"), x = 1200, y =60, r = 5;
+            var R = Raphael("metro"), x = 800, y =60, r = 5;
             d=200;            
             ';
 
@@ -443,7 +444,7 @@ for ($i=0;$i<count($phylo_structure['cluster_id']);$i++){
             '; 
         echo 'var x2_'.$nb_path.'='.($phylo_structure['x'][$index]-$period_min)*1/$timespan.'*x , y2_'.$nb_path.'=y*'.($phylo_structure['y'][$index]/$ymax).';
             ';
-        echo 'var S="M"+(20+x-x1_'.$nb_path.')+ " " + y1_'.$nb_path.' + "L" + (20+x-x2_'.$nb_path.')+ " " + y2_'.$nb_path.";
+        echo 'var S="M"+(x1_'.$nb_path.')+ " " + y1_'.$nb_path.' + "L" + (x2_'.$nb_path.')+ " " + y2_'.$nb_path.";
             ";
         
         echo 'var c'.$nb_path. '= R.path(S);';
@@ -453,12 +454,19 @@ for ($i=0;$i<count($phylo_structure['cluster_id']);$i++){
 
 for ($i=0;$i<count($phylo_structure['cluster_id']);$i++){
         echo 'var x1_'.$i.'='.($phylo_structure['x'][$i]-$period_min)*1/$timespan.'*x, y1_'.$i.'=y*'.($phylo_structure['y'][$i]/$ymax).';
-            ';
-    
+            ';        
+    //pt($id_cluster+'-'+$phylo_structure['cluster_id'][$i]);
+    if ($id_cluster=$phylo_structure['cluster_id'][$i]){
     echo '
-            R.ball((20+x-x1_'.$i.'),y1_'.$i.', r, Math.random())
+            R.ball((x1_'.$i.'),y1_'.$i.', r, 0.5)
                 .click(function (event) {window.open("'.str_replace('amp;','', $phylo_structure['attribut'][$i]).'","_self");});                       
         ';
+    }else{
+        echo '
+            R.ball((20+x-x1_'.$i.'),y1_'.$i.', r, 0.1)
+                .click(function (event) {window.open("'.str_replace('amp;','', $phylo_structure['attribut'][$i]).'","_self");});                       
+        ';
+    }
 };
 
 echo '
