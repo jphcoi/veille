@@ -51,7 +51,9 @@ function create_phylo_structure($partition_id) {
             $phylo['cluster_id'][] = $ligne['id_cluster_univ'];
             $phylo['attribut'][]=$ligne['attribut'];     
             $p = split(' ', $ligne['periode']);
-            $phylo['period'][] = $p[0];
+            $phylo['period1'][] = $p[0];
+            $phylo['cluster_id_local'][] = $ligne['id_cluster'];
+            $phylo['label'][] = $ligne['label'];
             $phylo['period2'][] = $p[1];
             $phylo['length_to_end'][] = 0;
             $phylo['exit'][] = 0; // marqueur utile pour la suite pour voir s'il le noeud doit encore être traité
@@ -78,10 +80,10 @@ function create_phylo_structure($partition_id) {
     
     // on trie par période
     
-    array_multisort($phylo['period'], SORT_DESC, SORT_NUMERIC, $phylo['cluster_id'], $phylo['length_to_end'], $phylo['fathers'], 
-            $phylo['sons'], $phylo['exit'], $phylo['x'], $phylo['y'],$phylo['period2']);
+    array_multisort($phylo['period1'], SORT_DESC, SORT_NUMERIC, $phylo['cluster_id'], $phylo['length_to_end'], $phylo['fathers'],$phylo['cluster_id_local'], 
+            $phylo['sons'], $phylo['exit'], $phylo['x'], $phylo['y'],$phylo['period2'],$phylo['attribute'],$phylo['label']);
 
-    $period_uniques = sort(array_unique($phylo['period']));
+    $period_uniques = sort(array_unique($phylo['period1']));
     ///$nb_periodes=$period_uniques[-1]-$period_uniques[0];
 
 
@@ -101,7 +103,7 @@ function create_phylo_structure($partition_id) {
     }
 
     
-    $period_uniques = array_unique($phylo['period']);
+    $period_uniques = array_unique($phylo['period1']);
     ///$nb_periodes=$period_uniques[-1]-$period_uniques[0];    
     $y_axis = array(); // donne l'épaisseur de la phylo par période (nombre de branches parallèles
     foreach ($period_uniques as $value) {
@@ -110,14 +112,37 @@ function create_phylo_structure($partition_id) {
 
 
     // on initialise le exit en choisissant l'un des noeuds extrêmes    
-    $phylo['exit'][0] = 1; // on marque comme une sortie le premier noeud, également un bout de chaine
+    $phylo['exit'][count($phylo['exit'])-1] = 1; // on marque comme une sortie le premier noeud, également un bout de chaine
 
     $to_process = true; // dit s'il reste des noeuds à traiter
-
+    $direction=1; // dit si on parcours vers le haut ou le bas
+    $stop=0; // si stop =2 on a changé deux fois de suite de direction et on doit s'arrêter
+    
     while ($to_process) {
-        $next_nodes = array_search(1, $phylo['exit']);
-
+    //for ($l=0;$l<20;$l++){
+    print_r($phylo['exit']);
+    pt("");
+        if ($direction==1){
+            $next_nodes = array_search(1, $phylo['exit']);
+            if (($next_nodes===FALSE)||($next_nodes==='null')){                
+                $direction=0;
+                $stop+=1;
+            }else{
+                $stop=0;
+            }
+        }else{           
+            $next_nodes = array_keys($phylo['exit'],1);
+            $next_nodes =$next_nodes[count($next_nodes)-1];
+            if (($next_nodes===FALSE)||($next_nodes===null)){
+                $direction=1;
+                $stop+=1;
+            }else{
+                $stop=0;
+            }
+        }
+        
         if (!is_bool($next_nodes)) { // s'il reste des 'sorties'            
+            pt('processing node'.$phylo['label'][$next_nodes].'from periode'.$phylo['period1'][$next_nodes]);
             $current_sons = $phylo['sons'][$next_nodes];
 
             foreach ($current_sons as $value) {
@@ -136,13 +161,16 @@ function create_phylo_structure($partition_id) {
                 }
             }unset($value);
 
-            $phylo['x'][$next_nodes] = $phylo['period'][$next_nodes];
-             $y_axis[$phylo['period'][$next_nodes]] = $y_axis[$phylo['period'][$next_nodes]] + 1;
-            $phylo['y'][$next_nodes] = $y_axis[$phylo['period'][$next_nodes]];
+            $phylo['x'][$next_nodes] = $phylo['period1'][$next_nodes];
+             $y_axis[$phylo['period1'][$next_nodes]] = $y_axis[$phylo['period1'][$next_nodes]] + 1;
+            $phylo['y'][$next_nodes] = $y_axis[$phylo['period1'][$next_nodes]];
             $clusters_processed[$next_nodes] = 1;
             $phylo['exit'][$next_nodes] = 0;
         } else {
-            $to_process = 0;
+            if ($stop>2){
+                $to_process = 0;
+            }
+            
         }
         
     }
@@ -403,7 +431,6 @@ if (count($cluster)>0)
 
 
 
-
 $label1_current=$dico_termes[$cluster[0]["label_1"]];
 $label2_current=$dico_termes[$cluster[0]["label_2"]];
 $lettre_current=$cluster[0]["lettre"];
@@ -416,35 +443,42 @@ if ($nav=="cooc" or $nav=="soc" or $nav=="socsem") $jsprotovis="TRUE";
 include("include/header.php");
 include("banner.php");
 
+
 ///////////////// Module pour préparer la visu de phylo en Raphael
 
 $phylo_structure=create_phylo_structure($id_partition);
 $ymax=max($phylo_structure['y']);
 
-$period_uniques = array_unique($phylo_structure['period']);
-$timespan=$period_uniques[0]-$period_uniques[count($period_uniques)];    
+// données de périodes
+$period_uniques = array_unique($phylo_structure['period1']);
+$timespan=max($period_uniques)-min($period_uniques);    
 $period_min=min($period_uniques);
+$myperiod1=split(' ',derange_periode($my_period));
+$dt=$myperiod1[1]-$myperiod1[0];
+$nb_stations=floor($timespan/$dt);
+$myperiod1=$myperiod1[0];
+$ytrans=100; // espace pour les noms de station
+$raphael_height=200;
 
 echo '
 <script type="text/javascript" charset="utf-8">
 
         window.onload = function () {
-            var R = Raphael("metro"), x = 800, y =60, r = 5;
+            var R = Raphael("metro"), x =0.9* $(window).width(), y ='.$raphael_height.', r = 5;
             d=200;            
             ';
 
-
-
+// on trace les lignes
 $nb_path=0;
 for ($i=0;$i<count($phylo_structure['cluster_id']);$i++){
     foreach ($phylo_structure['sons'][$i] as $value) {
         $nb_path+=1;
         $index=array_search($value, $phylo_structure['cluster_id']);
-        echo 'var x1_'.$nb_path.'='.($phylo_structure['x'][$i]-$period_min)*1/$timespan.'*x, y1_'.$nb_path.'=y*'.($phylo_structure['y'][$i]/$ymax).';
+        echo 'var x1_'.$nb_path.'='.($phylo_structure['x'][$i]-$period_min)*1/$timespan.'*(x-60)+40, y1_'.$nb_path.'='.$ytrans.'+(y-'.$ytrans.')*'.($phylo_structure['y'][$i]/$ymax).';
             '; 
-        echo 'var x2_'.$nb_path.'='.($phylo_structure['x'][$index]-$period_min)*1/$timespan.'*x , y2_'.$nb_path.'=y*'.($phylo_structure['y'][$index]/$ymax).';
+        echo 'var x2_'.$nb_path.'='.($phylo_structure['x'][$index]-$period_min)*1/$timespan.'*(x-60)+40 , y2_'.$nb_path.'='.$ytrans.'+(y-'.$ytrans.')*'.($phylo_structure['y'][$index]/$ymax).';
             ';
-        echo 'var S="M"+(x1_'.$nb_path.')+ " " + y1_'.$nb_path.' + "L" + (x2_'.$nb_path.')+ " " + y2_'.$nb_path.";
+        echo 'var S="M"+(x1_'.$nb_path.')+ ", " + y1_'.$nb_path.' + "L" + (x2_'.$nb_path.')+ " " + y2_'.$nb_path.";
             ";
         
         echo 'var c'.$nb_path. '= R.path(S);';
@@ -452,19 +486,33 @@ for ($i=0;$i<count($phylo_structure['cluster_id']);$i++){
 };
 
 
+// on trace les balles
 for ($i=0;$i<count($phylo_structure['cluster_id']);$i++){
-        echo 'var x1_'.$i.'='.($phylo_structure['x'][$i]-$period_min)*1/$timespan.'*x, y1_'.$i.'=y*'.($phylo_structure['y'][$i]/$ymax).';
+        echo 'var x1_'.$i.'='.($phylo_structure['x'][$i]-$period_min)*1/$timespan.'*(x-60)+40, y1_'.$i.'='.$ytrans.'+(y-'.$ytrans.')*'.($phylo_structure['y'][$i]/$ymax).';
             ';        
-    //pt($id_cluster+'-'+$phylo_structure['cluster_id'][$i]);
-    if ($id_cluster=$phylo_structure['cluster_id'][$i]){
+    
+    if (($id_cluster==$phylo_structure['cluster_id_local'][$i])&&($phylo_structure['period1'][$i]==$myperiod1)){
     echo '
-            R.ball((x1_'.$i.'),y1_'.$i.', r, 0.5)
-                .click(function (event) {window.open("'.str_replace('amp;','', $phylo_structure['attribut'][$i]).'","_self");});                       
+            R.circle((x1_'.$i.'),y1_'.$i.', 2*r);
+            var t = R.text(x1_'.$i.',(y1_'.$i.'-2*10), "'.$phylo_structure['label'][$i].'");
+            var width = t.getBBox().width; 
+            var trans=width*Math.cos(-30);
+            t.attr({rotation: -30, "text-anchor":"start"});        
+            t.translate(0,-trans-10);
+            var bal=R.ball(x1_'.$i.',y1_'.$i.', r, 0)
+                .click(function (event) {window.open("'.str_replace('amp;','', $phylo_structure['attribut'][$i]).'","_self");});                  
+                
         ';
     }else{
         echo '
-            R.ball((20+x-x1_'.$i.'),y1_'.$i.', r, 0.1)
-                .click(function (event) {window.open("'.str_replace('amp;','', $phylo_structure['attribut'][$i]).'","_self");});                       
+            var bal=R.ball(x1_'.$i.',y1_'.$i.', r, 0.5)
+                .click(function (event) {window.open("'.str_replace('amp;','', $phylo_structure['attribut'][$i]).'","_self");}); 
+            var t = R.text(x1_'.$i.',(y1_'.$i.'-2*10), "'.$phylo_structure['label'][$i].'");
+            var width = t.getBBox().width; 
+            var trans=width*Math.cos(-30);
+            t.attr({rotation: -30, "text-anchor":"start"});        
+            t.translate(0,-trans-10);
+            
         ';
     }
 };
