@@ -79,9 +79,7 @@ function create_phylo_structure($partition_id) {
     
     array_multisort($phylo['period'], SORT_DESC, SORT_NUMERIC, $phylo['cluster_id'], $phylo['length_to_end'], $phylo['fathers'], 
             $phylo['sons'], $phylo['exit'], $phylo['x'], $phylo['y']);
-    print_r($phylo);
-    pt('');
-    
+
     $period_uniques = sort(array_unique($phylo['period']));
     ///$nb_periodes=$period_uniques[-1]-$period_uniques[0];
 
@@ -147,8 +145,7 @@ function create_phylo_structure($partition_id) {
         }
         
     }
-    print_r($phylo);
-    return phylo;
+    return $phylo;
 }
 
 function list_clusters($periodes,$clusters,$okperiode)
@@ -419,25 +416,56 @@ include("banner.php");
 
 ///////////////// Module pour préparer la visu de phylo en Raphael
 
+$phylo_structure=create_phylo_structure($id_partition);
+$ymax=max($phylo_structure['y']);
+
+$period_uniques = array_unique($phylo_structure['period']);
+$timespan=$period_uniques[0]-$period_uniques[count($period_uniques)];    
+$period_min=min($period_uniques);
+
 echo '
 <script type="text/javascript" charset="utf-8">
 
         window.onload = function () {
-            var R = Raphael(document.getElementById("metro"), 800, 150);
-            var x = 10, y = 130, r = 10;
+            var R = Raphael("metro"), x = 400, y =60, r = 5;
             d=200;            
-            
-            var S="M"+x+ " " + y + "L" + (x+d) + " " + y;
-            var c = R.path(S);
-            R.ball(x, y, r, Math.random())
-                .click(function (event) {window.open("http://chavalarias.com","_self");});
-            
-            R.ball(x+d, y, r, Math.random());
-            var t = R.text(x+d, y-2*10-10, "phylogeny");
-            t.attr({rotation: -30, "text-anchor":"start"});
+            ';
+
+
+
+$nb_path=0;
+for ($i=0;$i<count($phylo_structure['cluster_id']);$i++){
+    foreach ($phylo_structure['sons'][$i] as $value) {
+        $nb_path+=1;
+        $index=array_search($value, $phylo_structure['cluster_id']);
+        echo 'var x1_'.$nb_path.'='.($phylo_structure['x'][$i]-$period_min)*1/$timespan.'*x+3*r, y1_'.$nb_path.'=y*'.($phylo_structure['y'][$i]/$ymax).';
+            '; 
+        echo 'var x2_'.$nb_path.'='.($phylo_structure['x'][$index]-$period_min)*1/$timespan.'*x+3*r , y2_'.$nb_path.'=y*'.($phylo_structure['y'][$index]/$ymax).';
+            ';
+        echo 'var S="M"+x1_'.$nb_path.'+ " " + y1_'.$nb_path.' + "L" + x2_'.$nb_path.'+ " " + y2_'.$nb_path.";
+            ";
+        
+        echo 'var c'.$nb_path. '= R.path(S);';
+        }
+};
+
+
+for ($i=0;$i<count($phylo_structure['cluster_id']);$i++){
+        echo 'var x1_'.$i.'='.($phylo_structure['x'][$i]-$period_min)*1/$timespan.'*x+3*r, y1_'.$i.'=y*'.($phylo_structure['y'][$i]/$ymax).';
+            ';
+    
+    echo '
+            R.ball(x1_'.$i.',y1_'.$i.', r, Math.random())
+                .click(function (event) {window.open("http://google.com","_self");});                       
+        ';
+};
+
+echo '
         };
     </script>';
 
+
+        
 ///////////////// 
 
 ////////////////////////////
