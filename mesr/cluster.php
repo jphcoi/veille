@@ -211,7 +211,7 @@ while ($ligne=mysql_fetch_array($resultat)) $cluster[]=$ligne;
 $sql="SELECT pseudo FROM cluster WHERE id_cluster=".$id_cluster." AND periode=\"".derange_periode($periode)."\" ";
 $resultat=mysql_query($sql) or die ("Requête non executée.");
 while ($partit=mysql_fetch_array($resultat)) {
-    $id_partition=$partit[pseudo];
+    $id_partition=$partit[pseudo];   
 }
 
 ////////////////////////////////////////////////////////
