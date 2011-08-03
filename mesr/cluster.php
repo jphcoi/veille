@@ -119,9 +119,6 @@ function create_phylo_structure($partition_id) {
     $stop=0; // si stop =2 on a changé deux fois de suite de direction et on doit s'arrêter
     
     while ($to_process) {
-    //for ($l=0;$l<20;$l++){
-    print_r($phylo['exit']);
-    pt("");
         if ($direction==1){
             $next_nodes = array_search(1, $phylo['exit']);
             if (($next_nodes===FALSE)||($next_nodes==='null')){                
@@ -142,7 +139,7 @@ function create_phylo_structure($partition_id) {
         }
         
         if (!is_bool($next_nodes)) { // s'il reste des 'sorties'            
-            pt('processing node'.$phylo['label'][$next_nodes].'from periode'.$phylo['period1'][$next_nodes]);
+            //pt('processing node'.$phylo['label'][$next_nodes].'from periode'.$phylo['period1'][$next_nodes]);
             $current_sons = $phylo['sons'][$next_nodes];
 
             foreach ($current_sons as $value) {
@@ -457,7 +454,7 @@ $myperiod1=split(' ',derange_periode($my_period));
 $dt=$myperiod1[1]-$myperiod1[0];
 $nb_stations=floor($timespan/$dt);
 $myperiod1=$myperiod1[0];
-$ytrans=100; // espace pour les noms de station
+$ytrans=50; // espace pour les noms de station
 $raphael_height=200;
 
 echo '
@@ -494,25 +491,26 @@ for ($i=0;$i<count($phylo_structure['cluster_id']);$i++){
     if (($id_cluster==$phylo_structure['cluster_id_local'][$i])&&($phylo_structure['period1'][$i]==$myperiod1)){
     echo '
             R.circle((x1_'.$i.'),y1_'.$i.', 2*r);
-            var t = R.text(x1_'.$i.',(y1_'.$i.'-2*10), "'.$phylo_structure['label'][$i].'");
-            var width = t.getBBox().width; 
-            var trans=width*Math.cos(-30);
-            t.attr({rotation: -30, "text-anchor":"start"});        
-            t.translate(0,-trans-10);
+            var t = R.text(50,10,"'.$phylo_structure['label'][$i].'");
+            var twidth = t.getBBox().width; 
+            var trans=twidth*Math.cos(Math.pi-10);
+            t.attr({ "text-anchor":"start","font-size":22,"font-weight":"bold","fill":"grey"});        
             var bal=R.ball(x1_'.$i.',y1_'.$i.', r, 0)
                 .click(function (event) {window.open("'.str_replace('amp;','', $phylo_structure['attribut'][$i]).'","_self");});                  
                 
         ';
     }else{
         echo '
-            var bal=R.ball(x1_'.$i.',y1_'.$i.', r, 0.5)
-                .click(function (event) {window.open("'.str_replace('amp;','', $phylo_structure['attribut'][$i]).'","_self");}); 
-            var t = R.text(x1_'.$i.',(y1_'.$i.'-2*10), "'.$phylo_structure['label'][$i].'");
-            var width = t.getBBox().width; 
-            var trans=width*Math.cos(-30);
-            t.attr({rotation: -30, "text-anchor":"start"});        
-            t.translate(0,-trans-10);
-            
+          
+
+            var bal=R.ball(x1_'.$i.',y1_'.$i.', r, 0.5);                
+            var t_'.$i.' = R.text(x1_'.$i.','.$ytrans.'-10, "'.$phylo_structure['label'][$i].'");           
+            t_'.$i.'.attr({"text-anchor":"start","font-size":20});        
+            t_'.$i.'.hide();
+            var c_'.$i.'=R.circle((x1_'.$i.'),y1_'.$i.', 1.5*r).attr({fill: "red",opacity:0});
+            c_'.$i.'.mouseover(function (event) {t_'.$i.'.show();});
+            c_'.$i.'.mouseout(function (event) {t_'.$i.'.hide();});
+            c_'.$i.'.click(function (event) {window.open("'.str_replace('amp;','', $phylo_structure['attribut'][$i]).'","_self");}); 
         ';
     }
 };
