@@ -35,144 +35,7 @@ function display_term_table($l,$b){
 }	
 
 
-function create_phylo_structure($partition_id) {
-    //créer une structure de type multi_array décrivant une macro-branch de phylogénie avec les champs suivants
-    // cluster_ids,period, length_to_end (distance restant sur la sous chaine),length_from_start (distance parcourue depuis le début),fathers,sons 
-    // on sélectionne tous les clusters
-    // X et Y donnent les dimensions de la feuilles sur laquelle est tracée la phylo
 
-    $phylo = array();
-    $listed_clusters=array();
-    $resultat = mysql_query("SELECT * FROM cluster WHERE pseudo=" . $partition_id) or die("Requête non executée.");
-    while ($ligne = mysql_fetch_array($resultat)) {
-        $cluster_id_exist = array_search($ligne['id_cluster_univ'],$listed_clusters);
-        if (is_bool($cluster_id_exist)) {//le cluster n'est pas encore répertorié
-            array_push($listed_clusters,$ligne['id_cluster_univ']);
-            $phylo['cluster_id'][] = $ligne['id_cluster_univ'];
-            $phylo['attribut'][]=$ligne['attribut'];     
-            $p = split(' ', $ligne['periode']);
-            $phylo['period1'][] = $p[0];
-            $phylo['cluster_id_local'][] = $ligne['id_cluster'];
-            $phylo['label'][] = $ligne['label'];
-            $phylo['period2'][] = $p[1];
-            $phylo['length_to_end'][] = 0;
-            $phylo['exit'][] = 0; // marqueur utile pour la suite pour voir s'il le noeud doit encore être traité
-            // on récupère pères et fils            
-            $resultat_sons = mysql_query("SELECT id_cluster_2_univ FROM `phylo` WHERE id_cluster_1_univ=" . $ligne['id_cluster_univ']) or die("fils non récupérés.");
-            $resultat_fathers = mysql_query("SELECT id_cluster_1_univ FROM `phylo` WHERE id_cluster_2_univ=" . $ligne['id_cluster_univ']) or die("fils non récupérés.");
-            $sons = array();
-            $fathers = array();
-            while ($ligne_sons = mysql_fetch_array($resultat_sons)) {
-                $sons[] = $ligne_sons['id_cluster_2_univ'];
-            }
-
-            while ($ligne_fathers = mysql_fetch_array($resultat_fathers)) {
-                $fathers[] = $ligne_fathers['id_cluster_1_univ'];
-            }
-            $phylo['fathers'][] = $fathers;
-            $phylo['sons'][] = $sons;
-            $phylo['x'][] = 0; // positions initialisées en 0
-            $phylo['y'][] = 0;
-           
-        }
-        
-    }
-    
-    // on trie par période
-    
-    array_multisort($phylo['period1'], SORT_DESC, SORT_NUMERIC, $phylo['cluster_id'], $phylo['length_to_end'], $phylo['fathers'],$phylo['cluster_id_local'], 
-            $phylo['sons'], $phylo['exit'], $phylo['x'], $phylo['y'],$phylo['period2'],$phylo['attribute'],$phylo['label']);
-
-    $period_uniques = sort(array_unique($phylo['period1']));
-    ///$nb_periodes=$period_uniques[-1]-$period_uniques[0];
-
-
-    $clusters_processed = array();
-    // On calcule pour chaque cluster sa distance à l'extremité de sa branche (non utilisé pour le moment)
-    for ($i = 0; $i < count($phylo['cluster_id']); $i++) {
-        $clusters_processed[$i] = 0; // on initialise le marqueur de traitement de la spatialisation
-        $length_to_end = 0;
-        if (!empty($phylo['sons'][$i])) {            
-            for ($j = 0; $j < count($phylo['sons'][$i]); $j++) {                               
-                if ($phylo['length_to_end'][array_search($phylo['sons'][$i][$j],$phylo['cluster_id'])] > $length_to_end-1) {
-                    $length_to_end = $phylo['length_to_end'][array_search($phylo['sons'][$i][$j],$phylo['cluster_id'])]+1;
-                }
-            }
-            $phylo['length_to_end'][$i] = $length_to_end;
-        }
-    }
-
-    
-    $period_uniques = array_unique($phylo['period1']);
-    ///$nb_periodes=$period_uniques[-1]-$period_uniques[0];    
-    $y_axis = array(); // donne l'épaisseur de la phylo par période (nombre de branches parallèles
-    foreach ($period_uniques as $value) {
-        $y_axis[$value] = 0;
-    }unset($value);
-
-
-    // on initialise le exit en choisissant l'un des noeuds extrêmes    
-    $phylo['exit'][count($phylo['exit'])-1] = 1; // on marque comme une sortie le premier noeud, également un bout de chaine
-
-    $to_process = true; // dit s'il reste des noeuds à traiter
-    $direction=1; // dit si on parcours vers le haut ou le bas
-    $stop=0; // si stop =2 on a changé deux fois de suite de direction et on doit s'arrêter
-    
-    while ($to_process) {
-        if ($direction==1){
-            $next_nodes = array_search(1, $phylo['exit']);
-            if (($next_nodes===FALSE)||($next_nodes==='null')){                
-                $direction=0;
-                $stop+=1;
-            }else{
-                $stop=0;
-            }
-        }else{           
-            $next_nodes = array_keys($phylo['exit'],1);
-            $next_nodes =$next_nodes[count($next_nodes)-1];
-            if (($next_nodes===FALSE)||($next_nodes===null)){
-                $direction=1;
-                $stop+=1;
-            }else{
-                $stop=0;
-            }
-        }
-        
-        if (!is_bool($next_nodes)) { // s'il reste des 'sorties'            
-            //pt('processing node'.$phylo['label'][$next_nodes].'from periode'.$phylo['period1'][$next_nodes]);
-            $current_sons = $phylo['sons'][$next_nodes];
-
-            foreach ($current_sons as $value) {
-                $index=array_search($value, $phylo['cluster_id']);
-                if ($clusters_processed[$index] == 0) {
-                    $phylo['exit'][$index] = 1;
-                }
-            }unset($value);
-
-            $current_fathers = $phylo['fathers'][$next_nodes];
-
-            foreach ($current_fathers as $value) {
-                $index=array_search($value, $phylo['cluster_id']);
-                if ($clusters_processed[$index] == 0) {
-                    $phylo['exit'][$index] = 1;
-                }
-            }unset($value);
-
-            $phylo['x'][$next_nodes] = $phylo['period1'][$next_nodes];
-             $y_axis[$phylo['period1'][$next_nodes]] = $y_axis[$phylo['period1'][$next_nodes]] + 1;
-            $phylo['y'][$next_nodes] = $y_axis[$phylo['period1'][$next_nodes]];
-            $clusters_processed[$next_nodes] = 1;
-            $phylo['exit'][$next_nodes] = 0;
-        } else {
-            if ($stop>2){
-                $to_process = 0;
-            }
-            
-        }
-        
-    }
-    return $phylo;
-}
 
 function list_clusters($periodes,$clusters,$okperiode)
 {
@@ -455,65 +318,19 @@ $dt=$myperiod1[1]-$myperiod1[0];
 $nb_stations=floor($timespan/$dt);
 $myperiod1=$myperiod1[0];
 $ytrans=50; // espace pour les noms de station
-$raphael_height=200;
+$raphael_height=250;
 
 echo '
 <script type="text/javascript" charset="utf-8">
 
         window.onload = function () {
-            var R = Raphael("metro"), x =0.9* $(window).width(), y ='.$raphael_height.', r = 5;
+            var R = Raphael("metro",$(window).width(),'.$raphael_height.');
+            var x =0.9* $(window).width(), y ='.$raphael_height.', r = 5;
             d=200;            
             ';
 
-// on trace les lignes
-$nb_path=0;
-for ($i=0;$i<count($phylo_structure['cluster_id']);$i++){
-    foreach ($phylo_structure['sons'][$i] as $value) {
-        $nb_path+=1;
-        $index=array_search($value, $phylo_structure['cluster_id']);
-        echo 'var x1_'.$nb_path.'='.($phylo_structure['x'][$i]-$period_min)*1/$timespan.'*(x-60)+40, y1_'.$nb_path.'='.$ytrans.'+(y-'.$ytrans.')*'.($phylo_structure['y'][$i]/$ymax).';
-            '; 
-        echo 'var x2_'.$nb_path.'='.($phylo_structure['x'][$index]-$period_min)*1/$timespan.'*(x-60)+40 , y2_'.$nb_path.'='.$ytrans.'+(y-'.$ytrans.')*'.($phylo_structure['y'][$index]/$ymax).';
-            ';
-        echo 'var S="M"+(x1_'.$nb_path.')+ ", " + y1_'.$nb_path.' + "L" + (x2_'.$nb_path.')+ " " + y2_'.$nb_path.";
-            ";
-        
-        echo 'var c'.$nb_path. '= R.path(S);';
-        }
-};
 
-
-// on trace les balles
-for ($i=0;$i<count($phylo_structure['cluster_id']);$i++){
-        echo 'var x1_'.$i.'='.($phylo_structure['x'][$i]-$period_min)*1/$timespan.'*(x-60)+40, y1_'.$i.'='.$ytrans.'+(y-'.$ytrans.')*'.($phylo_structure['y'][$i]/$ymax).';
-            ';        
-    
-    if (($id_cluster==$phylo_structure['cluster_id_local'][$i])&&($phylo_structure['period1'][$i]==$myperiod1)){
-    echo '
-            R.circle((x1_'.$i.'),y1_'.$i.', 2*r);
-            var t = R.text(50,10,"'.$phylo_structure['label'][$i].'");
-            var twidth = t.getBBox().width; 
-            var trans=twidth*Math.cos(Math.pi-10);
-            t.attr({ "text-anchor":"start","font-size":22,"font-weight":"bold","fill":"grey"});        
-            var bal=R.ball(x1_'.$i.',y1_'.$i.', r, 0)
-                .click(function (event) {window.open("'.str_replace('amp;','', $phylo_structure['attribut'][$i]).'","_self");});                  
-                
-        ';
-    }else{
-        echo '
-          
-
-            var bal=R.ball(x1_'.$i.',y1_'.$i.', r, 0.5);                
-            var t_'.$i.' = R.text(x1_'.$i.','.$ytrans.'-10, "'.$phylo_structure['label'][$i].'");           
-            t_'.$i.'.attr({"text-anchor":"start","font-size":20});        
-            t_'.$i.'.hide();
-            var c_'.$i.'=R.circle((x1_'.$i.'),y1_'.$i.', 1.5*r).attr({fill: "red",opacity:0});
-            c_'.$i.'.mouseover(function (event) {t_'.$i.'.show();});
-            c_'.$i.'.mouseout(function (event) {t_'.$i.'.hide();});
-            c_'.$i.'.click(function (event) {window.open("'.str_replace('amp;','', $phylo_structure['attribut'][$i]).'","_self");}); 
-        ';
-    }
-};
+phylo_plot($phylo_structure,$ytrans,$timespan,$period_min,$screen_width,$myperiod1);
 
 echo '
         };
@@ -828,8 +645,11 @@ if ($nav=="phylo"){
     echo $myscriptFilThematique;  
 
             
-    //
+    ///// On insère l'applet Raphael
     echo  '<div id="metro"></div>';
+    ///// On insère l'applet Raphael
+    
+    
     include("cluster_nav_billets.php");
 }
 
