@@ -65,7 +65,7 @@ for ($i=0;$i<count($phylo_structure['cluster_univ_id']);$i++){
     
         echo '         
             var bal_'.$phylo_structure['cluster_univ_id'][$i].'=R.ball(x_'.$phylo_structure['cluster_univ_id'][$i].',y_'.$phylo_structure['cluster_univ_id'][$i].', r, '.$hue.');                                    
-            var t_'.$phylo_structure['cluster_univ_id'][$i].' = R.text(x_'.$phylo_structure['cluster_univ_id'][$i].',y_'.$phylo_structure['cluster_univ_id'][$i].'-20, "'.''.$phylo_structure['label'][$i].'");                           
+            var t_'.$phylo_structure['cluster_univ_id'][$i].' = R.text(x_'.$phylo_structure['cluster_univ_id'][$i].',y_'.$phylo_structure['cluster_univ_id'][$i].'-20, "'.''.str_replace('dpopostrophe ', "d'", $phylo_structure['label'][$i]).'");                           
         
 
             t_'.$phylo_structure['cluster_univ_id'][$i].'.attr({"text-anchor":"center","font-size":20});        
