@@ -371,10 +371,14 @@ function array_search_filtered($array, $dim_filter, $dim_filter_val, $target_dim
     foreach ($array1 as $value) {
         $array_filtered[$value] = $array[$target_dim][$value];
     }
+    if ($array_filtered!=null){
     if ($funct==='max'){
         $result = array_keys($array_filtered, max($array_filtered));        
     }else{
         $result = array_keys($array_filtered, min($array_filtered));        
+    }        
+    }else{
+        $result = null;
     }
         
     return $result;

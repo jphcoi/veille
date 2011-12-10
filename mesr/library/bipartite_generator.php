@@ -37,7 +37,7 @@ $datef=max($last_period_list);
 $query="select * FROM partitions WHERE nb_period_covered >=".$phylo_min_nb_periods_covered;
 $resultat=mysql_query($query) or die ("<b>Requête non exécutée (récupération des principales thématiques)</b>.");
 $fieldsList=array();// list des champs de la partition
-$termsList=array();// liste des termes présents dans les champs avec leurs cooc avec les autres termes
+$termsMatrix=array();// liste des termes présents dans les champs avec leurs cooc avec les autres termes
 while ($ligne=mysql_fetch_array($resultat)) {
     $sql="select * FROM cluster WHERE pseudo=".$ligne[id_partition]." GROUP BY id_cluster_univ";
     $clusterQuery=mysql_query($sql) or die ("<b>Requête non exécutée (récupération de clusters d'une partition)</b>.");
@@ -59,29 +59,29 @@ while ($ligne=mysql_fetch_array($resultat)) {
         while ($clusterLigne=mysql_fetch_array($termQuery)) {
             $clusterTerms[]=$clusterLigne[concept];
         }
-
+        
         // on calcul au passage les occurrences et co-occurrences des termes dans les clusters sélectionnés
         for ($k=0;$k<count($clusterTerms);$k++){
-           if ($termsList[$clusterTerms[$k]]!=null) {
-                $termsList[$clusterTerms[$k]][occ]=$termsList[$clusterTerms[$k]][occ]+1;
+           if ($termsMatrix[$clusterTerms[$k]]!=null) {
+                $termsMatrix[$clusterTerms[$k]][occ]=$termsMatrix[$clusterTerms[$k]][occ]+1;
                 for($l=0;$l<count($clusterTerms);$l++){
-                    if ($termsList[$clusterTerms[$k]][cooc][$clusterTerms[$l]]!=null) {
-                        $termsList[$clusterTerms[$k]][cooc][$clusterTerms[$l]]+=1;
+                    if ($termsMatrix[$clusterTerms[$k]][cooc][$clusterTerms[$l]]!=null) {
+                        $termsMatrix[$clusterTerms[$k]][cooc][$clusterTerms[$l]]+=1;
                     }else{
-                        $termsList[$clusterTerms[$k]][cooc][$clusterTerms[$l]]=1;
+                        $termsMatrix[$clusterTerms[$k]][cooc][$clusterTerms[$l]]=1;
                     }
                 }
             }else {
-                $termsList[$clusterTerms[$k]][occ]=1;
+                $termsMatrix[$clusterTerms[$k]][occ]=1;
                 for($l=0;$l<count($clusterTerms);$l++){
-                    if ($termsList[$clusterTerms[$k]][cooc][$clusterTerms[$l]]!=null) {
-                        $termsList[$clusterTerms[$k]][cooc][$clusterTerms[$l]]+=1;
+                    if ($termsMatrix[$clusterTerms[$k]][cooc][$clusterTerms[$l]]!=null) {
+                        $termsMatrix[$clusterTerms[$k]][cooc][$clusterTerms[$l]]+=1;
                     }else{
-                        $termsList[$clusterTerms[$k]][cooc][$clusterTerms[$l]]=1;
+                        $termsMatrix[$clusterTerms[$k]][cooc][$clusterTerms[$l]]=1;
                     }
                 }
             }
-            //print_r($termsList);
+            //print_r($termsMatrix);
         }
     }
 }
@@ -90,7 +90,7 @@ while ($ligne=mysql_fetch_array($resultat)) {
 //print_r($fieldsList);
 //echo '<br/>';
 echo 'Liste des termes<br/>';
-//print_r($termsList);
+//print_r($termsMatrix);
 
 
 
@@ -132,7 +132,7 @@ for ($i=0;$i<count($fieldsList);$i++) {
 }
 
 // liste des termes
-$conceptIds=array_keys($termsList);
+$conceptIds=array_keys($termsMatrix);
 for ($j=0;$j<count($conceptIds);$j++) {
     $nodeId=$conceptIds[$j];
     $nodesInfo=mysql_query("SELECT * FROM concepts WHERE id=".$nodeId);
@@ -144,8 +144,8 @@ for ($j=0;$j<count($conceptIds);$j++) {
     fputs($gexfFile,'<viz:color b="0" g="0"  r="255"/>'."\n");
     fputs($gexfFile,'<viz:position x="'.rand(0,3).'"    y="'.rand(0,3).'"  z="0" />'."\n");
     fputs($gexfFile,'<attvalues> <attvalue for="0" value="NGram"/>'."\n");
-    fputs($gexfFile,'<attvalue for="1" value="'.$termsList[$nodeId][occ].'"/>'."\n");
-    fputs($gexfFile,'<attvalue for="4" value="'.$termsList[$nodeId][occ].'"/>'."\n");
+    fputs($gexfFile,'<attvalue for="1" value="'.$termsMatrix[$nodeId][occ].'"/>'."\n");
+    fputs($gexfFile,'<attvalue for="4" value="'.$termsMatrix[$nodeId][occ].'"/>'."\n");
     fputs($gexfFile,'</attvalues></node>'."\n");
 }
 
@@ -195,12 +195,12 @@ for ($i=0;$i<count($fieldsList);$i++) {
 }
 
 // ecriture des liens semantiques
-$terms=array_keys($termsList);
+$terms=array_keys($termsMatrix);
 //print_r($terms);
 for ($i=0;$i<count($terms);$i++) {
     $nodeId1=$terms[$i];
     echo 'node2 '.$nodeId1.'<br/>';
-    $neighbors=$termsList[$nodeId1][cooc];
+    $neighbors=$termsMatrix[$nodeId1][cooc];
     $neighborsIds=array_keys($neighbors);
     for ($j=0;$j<count($neighborsIds);$j++) {
         if ($neighborsIds[$j]!=$nodeId1) {
@@ -238,4 +238,4 @@ function recup_info($tag_avant,$tag_apres,$ligne)
 
 ////////////////////////////////
 
-?>0
+?>

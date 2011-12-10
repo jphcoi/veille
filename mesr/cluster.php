@@ -3,7 +3,7 @@ include("login_check.php");
 include("library/fonctions_php.php");
 include("parametre.php");
 
-
+//error_reporting(0); // retire les warning php
 
 $raphael=TRUE;
 $jsprotovis=TRUE;
@@ -628,8 +628,8 @@ if ($nav=="phylo"){
         /// Affichage du streamgraph du fil thématique
         //$JSonFilThematique=id_partition2streamgraphData($id_partition,3,'',$partition_infos[first_period],$partition_infos[last_period],14,7);        
         //$JSonFilThematique=id_partition2streamgraphData($id_partition,2,'politique',$partition_infos[first_period],$partition_infos[last_period],14,7);        
-        $FTcategory=3; // niveau pour calculer les fils thématiques
-        $FTSubcategory = ''; //filtre de sous catégorie
+        $FTcategory=3; // niveau pour calculer les fils thémaiques
+        $FTSubcategory = ''; //filtre de sous catégorie 'politique'
     $JsonFilThematiqueKey = "FT" . '-' . $id_partition . '-' . $FTcategory . '-' . $FTSubcategory . '-' . $partition_infos[first_period] . '-' . $partition_infos[last_period] . getValue('dT') . '-' . getValue('time_steps');    
         $JSonFilThematique = getValue($JsonFilThematiqueKey);
         if ($JSonFilThematique==null){            

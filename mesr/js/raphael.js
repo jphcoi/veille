@@ -2582,7 +2582,7 @@
             x = x || 0;
             y = y || 0;
             width = width || 512;
-            height = height || 342;
+            height = height || 200;
             width == +width && (width += "px");
             height == +height && (height += "px");
             res.width = 1e3;
