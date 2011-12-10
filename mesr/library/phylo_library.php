@@ -61,11 +61,11 @@ for ($i=0;$i<count($phylo_structure['cluster_univ_id']);$i++){
                 
         ';
     }else{
-    
+   // 
     
         echo '         
             var bal_'.$phylo_structure['cluster_univ_id'][$i].'=R.ball(x_'.$phylo_structure['cluster_univ_id'][$i].',y_'.$phylo_structure['cluster_univ_id'][$i].', r, '.$hue.');                                    
-            var t_'.$phylo_structure['cluster_univ_id'][$i].' = R.text(x_'.$phylo_structure['cluster_univ_id'][$i].',y_'.$phylo_structure['cluster_univ_id'][$i].'-20, "'.$phylo_structure['label'][$i].'");                           
+            var t_'.$phylo_structure['cluster_univ_id'][$i].' = R.text(x_'.$phylo_structure['cluster_univ_id'][$i].',y_'.$phylo_structure['cluster_univ_id'][$i].'-20, "'.''.$phylo_structure['label'][$i].'");                           
         
 
             t_'.$phylo_structure['cluster_univ_id'][$i].'.attr({"text-anchor":"center","font-size":20});        
@@ -84,7 +84,7 @@ for ($i=0;$i<count($phylo_structure['cluster_univ_id']);$i++){
 }
 
 function create_phylo_structure($partition_id) {
-     //Pour fabriquation de phylo avec Raphael. 
+     //Créer une spatialisation de la phylo en parcourant le réseau de proche en proche
     //crée une structure de type multi_array décrivant une macro-branch de phylogénie avec les champs suivants
     // cluster_ids (identifiant unique d'un cluster),period1,period2, 
     // length_to_end (distance restant sur la sous chaine),length_from_start (distance parcourue depuis le début),fathers,sons     
@@ -109,7 +109,11 @@ function create_phylo_structure($partition_id) {
             $phylo['label'][] = $ligne['label'];
             $phylo['period2'][] = $p[1];
             $phylo['length_to_end'][] = 0;
-            $phylo['exit'][] = 0; // marqueur utile pour la suite pour voir s'il le noeud doit encore être traité
+            $phylo['exit'][] = 0; // marqueur utile pour la suite pour voir s'il le noeud doit encore être traité                                 
+            $phylo['count'][] = 0; // pour le debugg
+            
+            
+            
             // on récupère pères et fils            
             $resultat_sons = mysql_query("SELECT id_cluster_2_univ FROM `phylo` WHERE id_cluster_1_univ=" . $ligne['id_cluster_univ']) or die("fils non récupérés.");
             $resultat_fathers = mysql_query("SELECT id_cluster_1_univ FROM `phylo` WHERE id_cluster_2_univ=" . $ligne['id_cluster_univ']) or die("fils non récupérés.");
@@ -131,7 +135,7 @@ function create_phylo_structure($partition_id) {
         
     }
     
-    $period_uniques = $phylo['period1'];
+        $period_uniques = $phylo['period1'];
     
     $period_uniques=array_unique($period_uniques);// périodes par ordre décroissant
     sort($period_uniques);
@@ -181,13 +185,13 @@ function create_phylo_structure($partition_id) {
 ///////////////////////////////////////////
 
     
-    $y_axis = array(); // donne l'épaisseur de la phylo par période (nombre de branches parallèles
+    $y_axis = array(); // donne l'épaisseur de la phylo par période (nombre de branches parallèles)
     foreach ($period_uniques as $value) {
         $y_axis[$value] = 1;
     }unset($value);
 
 
-    // on initialise le exit en choisissant l'un des noeuds extrêmes   
+    // on initialise le exit en choisissant l'un des noeuds extrêmes qui a le plus de périodes antécédentes
     $firstCandidates=array_search(max($phylo['length_to_start']),$phylo['length_to_start']);
     $phylo['exit'][$firstCandidates] = 1; // on marque comme une sortie le premier noeud, également un bout de chaine
 
@@ -197,15 +201,18 @@ function create_phylo_structure($partition_id) {
     $direction=1; // dit si on parcours vers le haut ou le bas (0 bas, 1 haut)
     $directionChanged=0;// dit si on vient de changer de direction
     $stop=0; // si stop =2 on a changé deux fois de suite de direction et on doit s'arrêter
-    $next_nodes= array_search_filtered($phylo,'exit',1,'length_to_start','max');  // noeud d'ou l'on vient. Initialisé à la même valeur que le premier noeud
+    
+    $next_nodes= array_search_filtered($phylo,'exit',1,'length_to_start','max');  
+    // noeud d'ou l'on vient. Initialisé à la même valeur que le premier noeud
+    
     $next_nodes=$next_nodes[0];
     
     
     
     while ($to_process) {        
-        $previous_node=$next_nodes;      
+        $previous_node=$next_nodes;// on garde en mémoire le noeud que l'on vient de traiter      
         if ($direction==1){// on remonte la phylo                
-                $next_nodes =  array_search_filtered($phylo,'exit',max(1,max($phylo['exit'])),'length_to_start','max');                   
+                $next_nodes =  array_search_filtered($phylo,'exit',max(1,max($phylo['exit'])),'length_to_start','min');                   
             if (count($next_nodes)==0){                                
                 $direction=0;
                 $directionChanged=1;
@@ -216,7 +223,7 @@ function create_phylo_structure($partition_id) {
                 $stop=0;
             }
         }else{// on redescend la phylo            
-                $next_nodes = array_search_filtered($phylo,'exit',min(-1,min($phylo['exit'])),'length_to_end','max');    
+                $next_nodes = array_search_filtered($phylo,'exit',min(-1,min($phylo['exit'])),'length_to_end','min');    
                 
                 // on regarde s'il y a des pères                
 //                $neighborsId=array();
@@ -242,11 +249,12 @@ function create_phylo_structure($partition_id) {
             
             //$y_axis[$phylo['period1'][$next_nodes]] = $y_axis[$phylo['period1'][$next_nodes]] + 1;
             if ($end_reached==1){    
-                $y_axis[$phylo['period1'][$next_nodes]] = $y_axis[$phylo['period1'][$next_nodes]] + 1;
+                $y_axis[$phylo['period1'][$next_nodes]] = $y_axis[$phylo['period1'][$next_nodes]] +1;
                 $end_reached=0;
             }else{                                
                 foreach ($period_uniques as $period){
-                    if (($period>=min($phylo['period1'][$next_nodes],$phylo['period1'][$previous_node]))&&($period<=max($phylo['period1'][$next_nodes],$phylo['period1'][$previous_node]))){
+                    if (($period>=min($phylo['period1'][$next_nodes],$phylo['period1'][$previous_node]))
+                            &&($period<=max($phylo['period1'][$next_nodes],$phylo['period1'][$previous_node]))){
                         //pt($y_axis[$phylo['period1'][$previous_node]]);
                         $y_axis[$period]=$phylo['y'][$previous_node];                       
                     }                                        
@@ -323,9 +331,19 @@ function create_phylo_structure($partition_id) {
 //            }
 //            
        
+            $y=0;// on s'assure qu'il n'y a pas de noeud entre un père et son fils avec une ordonnée supérieure à
+            // celles du père et du fils
+            foreach ($period_uniques as $period){
+            if (($period>=min($phylo['period1'][$next_nodes],$phylo['period1'][$previous_node]))
+                            &&($period<=max($phylo['period1'][$next_nodes],$phylo['period1'][$previous_node]))){
+                        //pt($y_axis[$phylo['period1'][$previous_node]]);
+                        if ($y<$y_axis[$period]){
+                            $y=$y_axis[$period];
+                        }                    
+                }                                        
+            }
             
-            
-            $phylo['y'][$next_nodes] = $y_axis[$phylo['period1'][$next_nodes]];
+            $phylo['y'][$next_nodes] =$y;// $y_axis[$phylo['period1'][$next_nodes]];
             $clusters_processed[$next_nodes] = 1;
             $counter+=1;
             $phylo['counter'][$next_nodes]=$counter;
@@ -341,6 +359,7 @@ function create_phylo_structure($partition_id) {
     }
     $dbh=NULL;
     return $phylo;
+
 }
 
 function pta($array){
